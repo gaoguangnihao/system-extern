@@ -1,0 +1,9 @@
+how to get coredump 
+
+ 1. CONFIG_COREDUMP=y msm8909-perf_defconfig  need rebuild boot 
+
+ 2. adb shell  setprop persist.debug.coredump all/b2g
+
+ 3. echo "/data/core/%e.%p.%t.core" > /proc/sys/kernel/core_pattern
+
+ 4. echo "1" > /proc/sys/fs/suid_dumpable

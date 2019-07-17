@@ -1,0 +1,7 @@
+adb root
+adb remount
+adb shell setprop kaios.log.enable 1
+adb shell setprop kaios.log.filter hal:5
+adb shell stop b2g
+adb shell start b2g
+
