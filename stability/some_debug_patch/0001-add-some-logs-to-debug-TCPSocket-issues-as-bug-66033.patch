@@ -1,0 +1,908 @@
+From 8a282022a5821bfdcd4c5068e58388f1b9cb1110 Mon Sep 17 00:00:00 2001
+From: "dahui.cui" <dahui.cui@kaiostech.com>
+Date: Fri, 19 Jul 2019 16:53:56 +0800
+Subject: [PATCH] add some logs to debug TCPSocket issues as bug 66033
+
+---
+ dom/network/TCPSocket.cpp                  | 96 ++++++++++++++++++++++++++----
+ dom/network/TCPSocketChild.cpp             | 28 ++++++++-
+ dom/network/TCPSocketParent.cpp            | 32 ++++++++--
+ netwerk/base/nsSocketTransportService2.cpp |  2 +
+ 4 files changed, 142 insertions(+), 16 deletions(-)
+
+diff --git a/dom/network/TCPSocket.cpp b/dom/network/TCPSocket.cpp
+index 6cbb340..0a21ebd 100644
+--- a/dom/network/TCPSocket.cpp
++++ b/dom/network/TCPSocket.cpp
+@@ -52,6 +52,14 @@ NS_INTERFACE_MAP_BEGIN_CYCLE_COLLECTION(LegacyMozTCPSocket)
+   NS_INTERFACE_MAP_ENTRY(nsISupports)
+ NS_INTERFACE_MAP_END
+ 
++
++extern mozilla::LazyLogModule gTCPSocketLog;
++
++#define TCPSOCKET_LOG12(args)     MOZ_LOG(gTCPSocketLog, mozilla::LogLevel::Debug, args)
++#define TCPSOCKET_LOG_ENABLED22() MOZ_LOG_TEST(gTCPSocketLog, mozilla::LogLevel::Debug)
++
++
++
+ LegacyMozTCPSocket::LegacyMozTCPSocket(nsPIDOMWindowInner* aWindow)
+ : mGlobal(do_QueryInterface(aWindow))
+ {
+@@ -68,6 +76,7 @@ LegacyMozTCPSocket::Open(const nsAString& aHost,
+                          mozilla::ErrorResult& aRv)
+ {
+   AutoJSAPI api;
++    TCPSOCKET_LOG12(("%s: DHCUICUI-----LegacyMozTCPSocket::Open", __FUNCTION__));
+   if (NS_WARN_IF(!api.Init(mGlobal))) {
+     aRv.Throw(NS_ERROR_FAILURE);
+     return nullptr;
+@@ -83,6 +92,7 @@ LegacyMozTCPSocket::Listen(uint16_t aPort,
+                            const nsAString& aAddress,
+                            mozilla::ErrorResult& aRv)
+ {
++  TCPSOCKET_LOG12(("%s: DHCUICUI-----LegacyMozTCPSocket::Listen", __FUNCTION__));
+   AutoJSAPI api;
+   if (NS_WARN_IF(!api.Init(mGlobal))) {
+     return nullptr;
+@@ -97,6 +107,7 @@ LegacyMozTCPSocket::WrapObject(JSContext* aCx,
+                                JS::Handle<JSObject*> aGivenProto,
+                                JS::MutableHandle<JSObject*> aReflector)
+ {
++  TCPSOCKET_LOG12(("%s: DHCUICUI-----LegacyMozTCPSocket::WrapObject", __FUNCTION__));
+   return LegacyMozTCPSocketBinding::Wrap(aCx, this, aGivenProto, aReflector);
+ }
+ 
+@@ -152,6 +163,7 @@ NS_INTERFACE_MAP_END_INHERITING(DOMEventTargetHelper)
+ TCPSocket::TCPSocket(nsIGlobalObject* aGlobal, const nsAString& aHost, uint16_t aPort,
+                      bool aSsl, bool aUseArrayBuffers)
+   : DOMEventTargetHelper(aGlobal)
++  , mActorDestroy(false)
+   , mReadyState(TCPReadyState::Closed)
+   , mUseArrayBuffers(aUseArrayBuffers)
+   , mHost(aHost)
+@@ -172,6 +184,7 @@ TCPSocket::TCPSocket(nsIGlobalObject* aGlobal, const nsAString& aHost, uint16_t
+   , mInIsolatedMozBrowser(false)
+ #endif
+ {
++  TCPSOCKET_LOG12(("%s: DHCUICUI-----TCPSocket::TCPSocket", __FUNCTION__));
+   if (aGlobal) {
+     nsCOMPtr<nsPIDOMWindowInner> window = do_QueryInterface(aGlobal);
+     if (window) {
+@@ -182,6 +195,7 @@ TCPSocket::TCPSocket(nsIGlobalObject* aGlobal, const nsAString& aHost, uint16_t
+ 
+ TCPSocket::~TCPSocket()
+ {
++    TCPSOCKET_LOG12(("%s: DHCUICUI-----~~~TCPSocket::TCPSocket", __FUNCTION__));
+   if (mObserversActive) {
+     nsCOMPtr<nsIObserverService> obs = do_GetService("@mozilla.org/observer-service;1");
+     if (obs) {
+@@ -194,6 +208,7 @@ TCPSocket::~TCPSocket()
+ nsresult
+ TCPSocket::CreateStream()
+ {
++  TCPSOCKET_LOG12(("%s: DHCUICUI-----TCPSocket::CreateStream", __FUNCTION__));
+   nsresult rv = mTransport->OpenInputStream(0, 0, 0, getter_AddRefs(mSocketInputStream));
+   NS_ENSURE_SUCCESS(rv, rv);
+   rv = mTransport->OpenOutputStream(nsITransport::OPEN_UNBUFFERED, 0, 0, getter_AddRefs(mSocketOutputStream));
+@@ -248,6 +263,8 @@ TCPSocket::CreateStream()
+ nsresult
+ TCPSocket::InitWithUnconnectedTransport(nsISocketTransport* aTransport)
+ {
++
++    TCPSOCKET_LOG12(("%s: DHCUICUI-----TCPSocket::InitWithUnconnectedTransport", __FUNCTION__));
+   mReadyState = TCPReadyState::Connecting;
+   mTransport = aTransport;
+ 
+@@ -266,6 +283,7 @@ TCPSocket::InitWithUnconnectedTransport(nsISocketTransport* aTransport)
+ nsresult
+ TCPSocket::Init()
+ {
++  TCPSOCKET_LOG12(("%s: DHCUICUI-----TCPSocket::Init", __FUNCTION__));
+   nsCOMPtr<nsIObserverService> obs = do_GetService("@mozilla.org/observer-service;1");
+   if (obs) {
+     mObserversActive = true;
+@@ -300,6 +318,7 @@ TCPSocket::Init()
+ void
+ TCPSocket::InitWithSocketChild(TCPSocketChild* aSocketBridge)
+ {
++  TCPSOCKET_LOG12(("%s: DHCUICUI-----TCPSocket::InitWithSocketChild", __FUNCTION__));
+   mSocketBridgeChild = aSocketBridge;
+   mReadyState = TCPReadyState::Open;
+   mSocketBridgeChild->SetSocket(this);
+@@ -310,6 +329,7 @@ TCPSocket::InitWithSocketChild(TCPSocketChild* aSocketBridge)
+ nsresult
+ TCPSocket::InitWithTransport(nsISocketTransport* aTransport)
+ {
++  TCPSOCKET_LOG12(("%s: DHCUICUI-----TCPSocket::InitWithTransport", __FUNCTION__));
+   mTransport = aTransport;
+   nsresult rv = CreateStream();
+   NS_ENSURE_SUCCESS(rv, rv);
+@@ -338,6 +358,7 @@ TCPSocket::InitWithTransport(nsISocketTransport* aTransport)
+ void
+ TCPSocket::UpgradeToSecure(mozilla::ErrorResult& aRv)
+ {
++  TCPSOCKET_LOG12(("%s: DHCUICUI-----TCPSocket::UpgradeToSecure", __FUNCTION__));
+   if (mReadyState != TCPReadyState::Open) {
+     aRv.Throw(NS_ERROR_FAILURE);
+     return;
+@@ -381,12 +402,14 @@ NS_IMPL_ISUPPORTS(CopierCallbacks, nsIRequestObserver)
+ NS_IMETHODIMP
+ CopierCallbacks::OnStartRequest(nsIRequest* aRequest, nsISupports* aContext)
+ {
++  TCPSOCKET_LOG12(("%s: DHCUICUI-----CopierCallbacks::OnStartRequest", __FUNCTION__));
+   return NS_OK;
+ }
+ 
+ NS_IMETHODIMP
+ CopierCallbacks::OnStopRequest(nsIRequest* aRequest, nsISupports* aContext, nsresult aStatus)
+ {
++  TCPSOCKET_LOG12(("%s: DHCUICUI-----CopierCallbacks::OnStopRequest", __FUNCTION__));
+   mOwner->NotifyCopyComplete(aStatus);
+   mOwner = nullptr;
+   return NS_OK;
+@@ -396,10 +419,12 @@ CopierCallbacks::OnStopRequest(nsIRequest* aRequest, nsISupports* aContext, nsre
+ nsresult
+ TCPSocket::EnsureCopying()
+ {
++    TCPSOCKET_LOG12(("%s: DHCUICUI-----TCPSocket::EnsureCopying", __FUNCTION__));
+   if (mAsyncCopierActive) {
+     return NS_OK;
+   }
+ 
++    TCPSOCKET_LOG12(("%s: DHCUICUI-----TCPSocket::EnsureCopying 1", __FUNCTION__));
+   mAsyncCopierActive = true;
+   RefPtr<CopierCallbacks> callbacks = new CopierCallbacks(this);
+   return mMultiplexStreamCopier->AsyncCopy(callbacks, nullptr);
+@@ -408,9 +433,10 @@ TCPSocket::EnsureCopying()
+ void
+ TCPSocket::NotifyCopyComplete(nsresult aStatus)
+ {
++  TCPSOCKET_LOG12(("%s,mActorDestroy is %d ,Status is %d : DHCUICUI-----TCPSocket::NotifyCopyComplete", __FUNCTION__,mActorDestroy,aStatus));
+   mAsyncCopierActive = false;
+   mMultiplexStream->RemoveStream(0);
+-  if (mSocketBridgeParent) {
++  if (!mActorDestroy && mSocketBridgeParent) {
+     mozilla::Unused << mSocketBridgeParent->SendUpdateBufferedAmount(BufferedAmount(),
+                                                                      mTrackingNumber);
+   }
+@@ -467,6 +493,7 @@ TCPSocket::NotifyCopyComplete(nsresult aStatus)
+ void
+ TCPSocket::ActivateTLS()
+ {
++  TCPSOCKET_LOG12(("%s: DHCUICUI-----TCPSocket::ActivateTLS", __FUNCTION__));
+   nsCOMPtr<nsISupports> securityInfo;
+   mTransport->GetSecurityInfo(getter_AddRefs(securityInfo));
+   nsCOMPtr<nsISSLSocketControl> socketControl = do_QueryInterface(securityInfo);
+@@ -478,6 +505,7 @@ TCPSocket::ActivateTLS()
+ NS_IMETHODIMP
+ TCPSocket::FireErrorEvent(const nsAString& aName, const nsAString& aType)
+ {
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::FireErrorEvent",__FUNCTION__));
+   if (mSocketBridgeParent) {
+     mSocketBridgeParent->FireErrorEvent(aName, aType, mReadyState);
+     return NS_OK;
+@@ -501,6 +529,7 @@ TCPSocket::FireErrorEvent(const nsAString& aName, const nsAString& aType)
+ NS_IMETHODIMP
+ TCPSocket::FireEvent(const nsAString& aType)
+ {
++ TCPSOCKET_LOG12(("%s DHCUICUI-----TCPSocket::FireEvent", __FUNCTION__));
+   if (mSocketBridgeParent) {
+     mSocketBridgeParent->FireEvent(aType, mReadyState);
+     return NS_OK;
+@@ -518,6 +547,8 @@ NS_IMETHODIMP
+ TCPSocket::FireDataArrayEvent(const nsAString& aType,
+                               const InfallibleTArray<uint8_t>& buffer)
+ {
++
++  TCPSOCKET_LOG12(("%s: DHCUICUI-----TCPSocket::FireDataArrayEvent", __FUNCTION__));
+   AutoJSAPI api;
+   if (NS_WARN_IF(!api.Init(GetOwnerGlobal()))) {
+     return NS_ERROR_FAILURE;
+@@ -536,6 +567,7 @@ NS_IMETHODIMP
+ TCPSocket::FireDataStringEvent(const nsAString& aType,
+                                const nsACString& aString)
+ {
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::FireDataStringEvent", __FUNCTION__));
+   AutoJSAPI api;
+   if (NS_WARN_IF(!api.Init(GetOwnerGlobal()))) {
+     return NS_ERROR_FAILURE;
+@@ -553,6 +585,8 @@ TCPSocket::FireDataStringEvent(const nsAString& aType,
+ nsresult
+ TCPSocket::FireDataEvent(JSContext* aCx, const nsAString& aType, JS::Handle<JS::Value> aData)
+ {
++
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::FireDataEvent", __FUNCTION__));
+   MOZ_ASSERT(!mSocketBridgeParent);
+ 
+   RootedDictionary<TCPSocketEventInit> init(aCx);
+@@ -571,30 +605,36 @@ TCPSocket::FireDataEvent(JSContext* aCx, const nsAString& aType, JS::Handle<JS::
+ JSObject*
+ TCPSocket::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto)
+ {
++    TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::WrapObject", __FUNCTION__));
+   return TCPSocketBinding::Wrap(aCx, this, aGivenProto);
+ }
+ 
+ void
+ TCPSocket::GetHost(nsAString& aHost)
+ {
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::GetHost", __FUNCTION__));
+   aHost.Assign(mHost);
+ }
+ 
+ uint32_t
+ TCPSocket::Port()
+ {
++    TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::port", __FUNCTION__));
+   return mPort;
+ }
+ 
+ bool
+ TCPSocket::Ssl()
+ {
++    TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::ssl", __FUNCTION__));
+   return mSsl;
+ }
+ 
+ uint64_t
+ TCPSocket::BufferedAmount()
+ {
++    TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::BufferedAmount", __FUNCTION__));
++
+   if (mSocketBridgeChild) {
+     return mBufferedAmount;
+   }
+@@ -609,6 +649,7 @@ TCPSocket::BufferedAmount()
+ void
+ TCPSocket::Suspend()
+ {
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::Suspend", __FUNCTION__));
+   if (mSocketBridgeChild) {
+     mSocketBridgeChild->SendSuspend();
+     return;
+@@ -622,6 +663,7 @@ TCPSocket::Suspend()
+ void
+ TCPSocket::Resume(mozilla::ErrorResult& aRv)
+ {
++    TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::Resume", __FUNCTION__));
+   if (mSocketBridgeChild) {
+     mSocketBridgeChild->SendResume();
+     return;
+@@ -645,6 +687,7 @@ TCPSocket::MaybeReportErrorAndCloseIfOpen(nsresult status) {
+   SaveNetworkStats(true);
+ #endif
+ 
++    TCPSOCKET_LOG12(("%s:,status is %d  DHCUICUI-----TCPSocket::MaybeReportErrorAndCloseIfOpen", __FUNCTION__,status));
+   // If we're closed, we've already reported the error or just don't need to
+   // report the error.
+   if (mReadyState == TCPReadyState::Closed) {
+@@ -765,17 +808,19 @@ TCPSocket::MaybeReportErrorAndCloseIfOpen(nsresult status) {
+ void
+ TCPSocket::Close()
+ {
++      TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::Close 1", __FUNCTION__));
++
+   if (mReadyState == TCPReadyState::Closed || mReadyState == TCPReadyState::Closing) {
+     return;
+   }
+-
++      TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::Close 2", __FUNCTION__));
+   mReadyState = TCPReadyState::Closing;
+ 
+   if (mSocketBridgeChild) {
+     mSocketBridgeChild->SendClose();
+     return;
+   }
+-
++      TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::Close 3", __FUNCTION__));
+   uint32_t count = 0;
+   if (mMultiplexStream) {
+     mMultiplexStream->GetCount(&count);
+@@ -797,6 +842,7 @@ TCPSocket::SendWithTrackingNumber(const nsACString& aData,
+                                   const uint32_t& aTrackingNumber,
+                                   mozilla::ErrorResult& aRv)
+ {
++        TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::SendWithTrackingNumber ", __FUNCTION__));
+   MOZ_ASSERT(mSocketBridgeParent);
+   mTrackingNumber = aTrackingNumber;
+   // The JSContext isn't necessary for string values; it's a codegen limitation.
+@@ -806,11 +852,12 @@ TCPSocket::SendWithTrackingNumber(const nsACString& aData,
+ bool
+ TCPSocket::Send(JSContext* aCx, const nsACString& aData, mozilla::ErrorResult& aRv)
+ {
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::Send 1-1 ", __FUNCTION__));
+   if (mReadyState != TCPReadyState::Open) {
+     aRv.Throw(NS_ERROR_FAILURE);
+     return false;
+   }
+-
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::Send 1-2 ", __FUNCTION__));
+   uint64_t byteLength;
+   nsCOMPtr<nsIInputStream> stream;
+   if (mSocketBridgeChild) {
+@@ -839,6 +886,7 @@ TCPSocket::SendWithTrackingNumber(JSContext* aCx,
+                                   const uint32_t& aTrackingNumber,
+                                   mozilla::ErrorResult& aRv)
+ {
++    TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::SendWithTrackingNumber ", __FUNCTION__));
+   MOZ_ASSERT(mSocketBridgeParent);
+   mTrackingNumber = aTrackingNumber;
+   Send(aCx, aData, aByteOffset, aByteLength, aRv);
+@@ -851,13 +899,15 @@ TCPSocket::Send(JSContext* aCx,
+                 const Optional<uint32_t>& aByteLength,
+                 mozilla::ErrorResult& aRv)
+ {
++
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::send 2-1 ", __FUNCTION__));
+   if (mReadyState != TCPReadyState::Open) {
+     aRv.Throw(NS_ERROR_FAILURE);
+     return false;
+   }
+ 
+   nsCOMPtr<nsIArrayBufferInputStream> stream;
+-
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::send 2-2 ", __FUNCTION__));
+   aData.ComputeLengthAndData();
+   uint32_t byteLength = aByteLength.WasPassed() ? aByteLength.Value() : aData.Length();
+ 
+@@ -895,14 +945,14 @@ TCPSocket::Send(nsIInputStream* aStream, uint32_t aByteLength)
+     // called.
+     mWaitingForDrain = true;
+   }
+-
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::send 3-1 ", __FUNCTION__));
+   if (mSocketBridgeChild) {
+     // In the child, we just add the buffer length to our bufferedAmount and let
+     // the parent update our bufferedAmount when the data have been sent.
+     mBufferedAmount = newBufferedAmount;
+     return !bufferFull;
+   }
+-
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::send 3-2 ", __FUNCTION__));
+   if (mWaitingForStartTLS) {
+     // When we are waiting for starttls, newStream is added to pendingData
+     // and will be appended to multiplexStream after tls had been set up.
+@@ -943,6 +993,7 @@ TCPSocket::CreateAcceptedSocket(nsIGlobalObject* aGlobal,
+                                 nsISocketTransport* aTransport,
+                                 bool aUseArrayBuffers)
+ {
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::CreateAcceptedSocket 1 ", __FUNCTION__));
+   RefPtr<TCPSocket> socket = new TCPSocket(aGlobal, EmptyString(), 0, false, aUseArrayBuffers);
+   nsresult rv = socket->InitWithTransport(aTransport);
+   NS_ENSURE_SUCCESS(rv, nullptr);
+@@ -954,6 +1005,7 @@ TCPSocket::CreateAcceptedSocket(nsIGlobalObject* aGlobal,
+                                 TCPSocketChild* aBridge,
+                                 bool aUseArrayBuffers)
+ {
++    TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::CreateAcceptedSocket 2 ", __FUNCTION__));
+   RefPtr<TCPSocket> socket = new TCPSocket(aGlobal, EmptyString(), 0, false, aUseArrayBuffers);
+   socket->InitWithSocketChild(aBridge);
+   return socket.forget();
+@@ -966,6 +1018,7 @@ TCPSocket::Constructor(const GlobalObject& aGlobal,
+                        const SocketOptions& aOptions,
+                        mozilla::ErrorResult& aRv)
+ {
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::Constructor ", __FUNCTION__));
+   nsCOMPtr<nsIGlobalObject> global = do_QueryInterface(aGlobal.GetAsSupports());
+   RefPtr<TCPSocket> socket =
+     new TCPSocket(global, aHost, aPort, aOptions.mUseSecureTransport,
+@@ -982,9 +1035,14 @@ TCPSocket::Constructor(const GlobalObject& aGlobal,
+ nsresult
+ TCPSocket::CreateInputStreamPump()
+ {
++
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::CreateInputStreamPump 1 ", __FUNCTION__));
+   if (!mSocketInputStream) {
+     return NS_ERROR_NOT_AVAILABLE;
+   }
++
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::CreateInputStreamPump 2", __FUNCTION__));
++
+   nsresult rv;
+   mInputStreamPump = do_CreateInstance("@mozilla.org/network/input-stream-pump;1", &rv);
+   NS_ENSURE_SUCCESS(rv, rv);
+@@ -1006,10 +1064,11 @@ NS_IMETHODIMP
+ TCPSocket::OnTransportStatus(nsITransport* aTransport, nsresult aStatus,
+                              int64_t aProgress, int64_t aProgressMax)
+ {
++  TCPSOCKET_LOG12(("%s: aStatus is %d DHCUICUI-----TCPSocket::OnTransportStatus 1", __FUNCTION__,aStatus));
+   if (static_cast<uint32_t>(aStatus) != nsISocketTransport::STATUS_CONNECTED_TO) {
+     return NS_OK;
+   }
+-
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::OnTransportStatus 2", __FUNCTION__));
+   mReadyState = TCPReadyState::Open;
+   FireEvent(NS_LITERAL_STRING("open"));
+ 
+@@ -1022,10 +1081,11 @@ NS_IMETHODIMP
+ TCPSocket::OnInputStreamReady(nsIAsyncInputStream* aStream)
+ {
+   // Only used for detecting if the connection was refused.
+-
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::OnInputStreamReady 1", __FUNCTION__));
+   uint64_t dummy;
+   nsresult rv = aStream->Available(&dummy);
+   if (NS_FAILED(rv)) {
++    TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::OnInputStreamReady 2", __FUNCTION__));
+     MaybeReportErrorAndCloseIfOpen(NS_ERROR_CONNECTION_REFUSED);
+   }
+   return NS_OK;
+@@ -1034,6 +1094,7 @@ TCPSocket::OnInputStreamReady(nsIAsyncInputStream* aStream)
+ NS_IMETHODIMP
+ TCPSocket::OnStartRequest(nsIRequest* aRequest, nsISupports* aContext)
+ {
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::OnStartRequest ", __FUNCTION__));
+   return NS_OK;
+ }
+ 
+@@ -1046,7 +1107,7 @@ TCPSocket::OnDataAvailable(nsIRequest* aRequest, nsISupports* aContext, nsIInput
+   mRxBytes += aCount;
+   SaveNetworkStats(false);
+ #endif
+-
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::OnDataAvailable ", __FUNCTION__));
+   if (mUseArrayBuffers) {
+     nsTArray<uint8_t> buffer;
+     buffer.SetCapacity(aCount);
+@@ -1106,7 +1167,7 @@ TCPSocket::OnStopRequest(nsIRequest* aRequest, nsISupports* aContext, nsresult a
+   nsresult rv = mMultiplexStream->GetCount(&count);
+   NS_ENSURE_SUCCESS(rv, rv);
+   bool bufferedOutput = count != 0;
+-
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::OnStopRequest 1", __FUNCTION__));
+   mInputStreamPump = nullptr;
+ 
+   if (bufferedOutput && NS_SUCCEEDED(aStatus)) {
+@@ -1118,6 +1179,7 @@ TCPSocket::OnStopRequest(nsIRequest* aRequest, nsISupports* aContext, nsresult a
+     return NS_OK;
+   }
+ 
++ TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::OnStopRequest 2", __FUNCTION__));
+   // We call this even if there is no error.
+   MaybeReportErrorAndCloseIfOpen(aStatus);
+   return NS_OK;
+@@ -1126,12 +1188,14 @@ TCPSocket::OnStopRequest(nsIRequest* aRequest, nsISupports* aContext, nsresult a
+ void
+ TCPSocket::SetSocketBridgeParent(TCPSocketParent* aBridgeParent)
+ {
++   TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::SetSocketBridgeParent", __FUNCTION__));
+   mSocketBridgeParent = aBridgeParent;
+ }
+ 
+ void
+ TCPSocket::SetAppIdAndBrowser(uint32_t aAppId, bool aInIsolatedMozBrowser)
+ {
++     TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::SetAppIdAndBrowser", __FUNCTION__));
+ #ifdef MOZ_WIDGET_GONK
+   mAppId = aAppId;
+   mInIsolatedMozBrowser = aInIsolatedMozBrowser;
+@@ -1141,6 +1205,7 @@ TCPSocket::SetAppIdAndBrowser(uint32_t aAppId, bool aInIsolatedMozBrowser)
+ NS_IMETHODIMP
+ TCPSocket::UpdateReadyState(uint32_t aReadyState)
+ {
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::UpdateReadyState", __FUNCTION__));
+   MOZ_ASSERT(mSocketBridgeChild);
+   mReadyState = static_cast<TCPReadyState>(aReadyState);
+   return NS_OK;
+@@ -1149,6 +1214,8 @@ TCPSocket::UpdateReadyState(uint32_t aReadyState)
+ NS_IMETHODIMP
+ TCPSocket::UpdateBufferedAmount(uint32_t aBufferedAmount, uint32_t aTrackingNumber)
+ {
++
++    TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::UpdateBufferedAmount 1", __FUNCTION__));
+   if (aTrackingNumber != mTrackingNumber) {
+     return NS_OK;
+   }
+@@ -1156,9 +1223,11 @@ TCPSocket::UpdateBufferedAmount(uint32_t aBufferedAmount, uint32_t aTrackingNumb
+   if (!mBufferedAmount) {
+     if (mWaitingForDrain) {
+       mWaitingForDrain = false;
++        TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::UpdateBufferedAmount 2", __FUNCTION__));
+       return FireEvent(NS_LITERAL_STRING("drain"));
+     }
+   }
++    TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::UpdateBufferedAmount 3", __FUNCTION__));
+   return NS_OK;
+ }
+ 
+@@ -1166,6 +1235,8 @@ TCPSocket::UpdateBufferedAmount(uint32_t aBufferedAmount, uint32_t aTrackingNumb
+ void
+ TCPSocket::SaveNetworkStats(bool aEnforce)
+ {
++
++  TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::SaveNetworkStats", __FUNCTION__));
+   if (!mTxBytes && !mRxBytes) {
+     // There is no traffic at all. No need to save statistics.
+     return;
+@@ -1196,6 +1267,7 @@ TCPSocket::SaveNetworkStats(bool aEnforce)
+ NS_IMETHODIMP
+ TCPSocket::Observe(nsISupports* aSubject, const char* aTopic, const char16_t* aData)
+ {
++      TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::Observe", __FUNCTION__));
+   if (!strcmp(aTopic, "inner-window-destroyed")) {
+     nsCOMPtr<nsISupportsPRUint64> wrapper = do_QueryInterface(aSubject);
+     NS_ENSURE_TRUE(wrapper, NS_ERROR_FAILURE);
+@@ -1219,6 +1291,8 @@ TCPSocket::Observe(nsISupports* aSubject, const char* aTopic, const char16_t* aD
+ bool
+ TCPSocket::ShouldTCPSocketExist(JSContext* aCx, JSObject* aGlobal)
+ {
++
++    TCPSOCKET_LOG12(("%s:DHCUICUI-----TCPSocket::ShouldTCPSocketExist", __FUNCTION__));
+   JS::Rooted<JSObject*> global(aCx, aGlobal);
+   if (nsContentUtils::IsSystemPrincipal(nsContentUtils::ObjectPrincipal(global))) {
+     return true;
+diff --git a/dom/network/TCPSocketChild.cpp b/dom/network/TCPSocketChild.cpp
+index 280c585..44f1e9d 100644
+--- a/dom/network/TCPSocketChild.cpp
++++ b/dom/network/TCPSocketChild.cpp
+@@ -19,6 +19,12 @@
+ 
+ using mozilla::net::gNeckoChild;
+ 
++extern mozilla::LazyLogModule gTCPSocketLogc;
++
++#define TCPSOCKET_LOGC(args)     MOZ_LOG(gTCPSocketLogc, mozilla::LogLevel::Debug, args)
++#define TCPSOCKET_LOG_ENABLED() MOZ_LOG_TEST(gTCPSocketLogc, mozilla::LogLevel::Debug)
++
++
+ namespace IPC {
+ 
+ bool
+@@ -26,6 +32,7 @@ DeserializeArrayBuffer(JSContext* cx,
+                        const InfallibleTArray<uint8_t>& aBuffer,
+                        JS::MutableHandle<JS::Value> aVal)
+ {
++  TCPSOCKET_LOGC(("%s: DHCUICUI-----DeserializeArrayBuffer", __FUNCTION__));
+   mozilla::UniquePtr<uint8_t[], JS::FreePolicy> data(js_pod_malloc<uint8_t>(aBuffer.Length()));
+   if (!data)
+       return false;
+@@ -71,16 +78,19 @@ NS_INTERFACE_MAP_END
+ TCPSocketChildBase::TCPSocketChildBase()
+ : mIPCOpen(false)
+ {
++  TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChildBase", __FUNCTION__));
+   mozilla::HoldJSObjects(this);
+ }
+ 
+ TCPSocketChildBase::~TCPSocketChildBase()
+ {
++    TCPSOCKET_LOGC(("%s: DHCUICUI-----~~~~~TCPSocketChildBase", __FUNCTION__));
+   mozilla::DropJSObjects(this);
+ }
+ 
+ NS_IMETHODIMP_(MozExternalRefCountType) TCPSocketChild::Release(void)
+ {
++    TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChild::Release", __FUNCTION__));
+   nsrefcnt refcnt = TCPSocketChildBase::Release();
+   if (refcnt == 1 && mIPCOpen) {
+     PTCPSocketChild::SendRequestDelete();
+@@ -99,7 +109,7 @@ void
+ TCPSocketChild::SendOpen(nsITCPSocketCallback* aSocket, bool aUseSSL, bool aUseArrayBuffers)
+ {
+   mSocket = aSocket;
+-
++TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChild::SendOpen", __FUNCTION__));
+   AddIPDLReference();
+   gNeckoChild->SendPTCPSocketConstructor(this, mHost, mPort);
+   MOZ_ASSERT(mFilterName.IsEmpty()); // Currently nobody should use this
+@@ -112,6 +122,7 @@ TCPSocketChild::SendWindowlessOpenBind(nsITCPSocketCallback* aSocket,
+                                        const nsACString& aLocalHost, uint16_t aLocalPort,
+                                        bool aUseSSL)
+ {
++  TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChild::SendWindowlessOpenBind", __FUNCTION__));
+   mSocket = aSocket;
+   AddIPDLReference();
+   gNeckoChild->SendPTCPSocketConstructor(this,
+@@ -125,6 +136,7 @@ TCPSocketChild::SendWindowlessOpenBind(nsITCPSocketCallback* aSocket,
+ void
+ TCPSocketChildBase::ReleaseIPDLReference()
+ {
++  TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChildBase::ReleaseIPDLReference", __FUNCTION__));
+   MOZ_ASSERT(mIPCOpen);
+   mIPCOpen = false;
+   this->Release();
+@@ -133,6 +145,7 @@ TCPSocketChildBase::ReleaseIPDLReference()
+ void
+ TCPSocketChildBase::AddIPDLReference()
+ {
++  TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChildBase::AddIPDLReference", __FUNCTION__));
+   MOZ_ASSERT(!mIPCOpen);
+   mIPCOpen = true;
+   this->AddRef();
+@@ -146,6 +159,7 @@ bool
+ TCPSocketChild::RecvUpdateBufferedAmount(const uint32_t& aBuffered,
+                                          const uint32_t& aTrackingNumber)
+ {
++  TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChild::RecvUpdateBufferedAmount", __FUNCTION__));
+   mSocket->UpdateBufferedAmount(aBuffered, aTrackingNumber);
+   return true;
+ }
+@@ -155,6 +169,7 @@ TCPSocketChild::RecvCallback(const nsString& aType,
+                              const CallbackData& aData,
+                              const uint32_t& aReadyState)
+ {
++    TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChild::RecvCallback", __FUNCTION__));
+   mSocket->UpdateReadyState(aReadyState);
+ 
+   if (aData.type() == CallbackData::Tvoid_t) {
+@@ -183,6 +198,7 @@ TCPSocketChild::RecvCallback(const nsString& aType,
+ void
+ TCPSocketChild::SendSend(const nsACString& aData, uint32_t aTrackingNumber)
+ {
++      TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChild::SendSend 11", __FUNCTION__));
+   SendData(nsCString(aData), aTrackingNumber);
+ }
+ 
+@@ -192,6 +208,8 @@ TCPSocketChild::SendSend(const ArrayBuffer& aData,
+                          uint32_t aByteLength,
+                          uint32_t aTrackingNumber)
+ {
++
++  TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChild::SendSend 22 ", __FUNCTION__));
+   uint32_t buflen = aData.Length();
+   uint32_t offset = std::min(buflen, aByteOffset);
+   uint32_t nbytes = std::min(buflen - aByteOffset, aByteLength);
+@@ -209,6 +227,7 @@ TCPSocketChild::SendSend(const ArrayBuffer& aData,
+ NS_IMETHODIMP
+ TCPSocketChild::SendSendArray(nsTArray<uint8_t>& aArray, uint32_t aTrackingNumber)
+ {
++  TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChild::SendSendArray" ,__FUNCTION__));
+   SendData(aArray, aTrackingNumber);
+   return NS_OK;
+ }
+@@ -216,24 +235,29 @@ TCPSocketChild::SendSendArray(nsTArray<uint8_t>& aArray, uint32_t aTrackingNumbe
+ void
+ TCPSocketChild::SetSocket(TCPSocket* aSocket)
+ {
++    TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChild::SetSocket" ,__FUNCTION__));
+   mSocket = aSocket;
+ }
+ 
+ void
+ TCPSocketChild::GetHost(nsAString& aHost)
+ {
++  TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChild::GetHost" ,__FUNCTION__));
+   aHost = mHost;
+ }
+ 
+ void
+ TCPSocketChild::GetPort(uint16_t* aPort)
+ {
++    TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChild::GetPort" ,__FUNCTION__));
+   *aPort = mPort;
+ }
+ 
+ nsresult
+ TCPSocketChild::SetFilterName(const nsACString& aFilterName)
+ {
++
++      TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChild::SetFilterName" ,__FUNCTION__));
+   if (!mFilterName.IsEmpty()) {
+     // filter name can only be set once.
+     return NS_ERROR_FAILURE;
+@@ -245,6 +269,8 @@ TCPSocketChild::SetFilterName(const nsACString& aFilterName)
+ bool
+ TCPSocketChild::RecvRequestDelete()
+ {
++
++        TCPSOCKET_LOGC(("%s: DHCUICUI-----TCPSocketChild::RecvRequestDelete" ,__FUNCTION__));
+   mozilla::Unused << Send__delete__(this);
+   return true;
+ }
+diff --git a/dom/network/TCPSocketParent.cpp b/dom/network/TCPSocketParent.cpp
+index b6e024c..7f727e5 100644
+--- a/dom/network/TCPSocketParent.cpp
++++ b/dom/network/TCPSocketParent.cpp
+@@ -24,9 +24,9 @@
+ //
+ // set NSPR_LOG_MODULES=TCPSocket:5
+ //
+-extern mozilla::LazyLogModule gTCPSocketLog;
+-#define TCPSOCKET_LOG(args)     MOZ_LOG(gTCPSocketLog, mozilla::LogLevel::Debug, args)
+-#define TCPSOCKET_LOG_ENABLED() MOZ_LOG_TEST(gTCPSocketLog, mozilla::LogLevel::Debug)
++extern mozilla::LazyLogModule gTCPSocketLogp;
++#define TCPSOCKET_LOG(args)     MOZ_LOG(gTCPSocketLogp, mozilla::LogLevel::Debug, args)
++#define TCPSOCKET_LOG_ENABLED11() MOZ_LOG_TEST(gTCPSocketLogp, mozilla::LogLevel::Debug)
+ 
+ namespace IPC {
+ 
+@@ -44,6 +44,7 @@ namespace dom {
+ static void
+ FireInteralError(mozilla::net::PTCPSocketParent* aActor, uint32_t aLineNo)
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----FireInteralError", __FUNCTION__));
+   mozilla::Unused <<
+       aActor->SendCallback(NS_LITERAL_STRING("onerror"),
+                            TCPError(NS_LITERAL_STRING("InvalidStateError"), NS_LITERAL_STRING("Internal error")),
+@@ -61,11 +62,13 @@ NS_IMPL_CYCLE_COLLECTING_RELEASE(TCPSocketParentBase)
+ TCPSocketParentBase::TCPSocketParentBase()
+ : mIPCOpen(false)
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----TCPSocketParentBase", __FUNCTION__));
+   mObserver = new mozilla::net::OfflineObserver(this);
+ }
+ 
+ TCPSocketParentBase::~TCPSocketParentBase()
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----~~~TCPSocketParentBase", __FUNCTION__));
+   if (mObserver) {
+     mObserver->RemoveObserver();
+   }
+@@ -74,6 +77,7 @@ TCPSocketParentBase::~TCPSocketParentBase()
+ uint32_t
+ TCPSocketParent::GetAppId()
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----GetAppId", __FUNCTION__));
+   const PContentParent *content = Manager()->Manager();
+   if (PBrowserParent* browser = SingleManagedOrNull(content->ManagedPBrowserParent())) {
+     TabParent *tab = TabParent::GetFrom(browser);
+@@ -86,6 +90,7 @@ TCPSocketParent::GetAppId()
+ bool
+ TCPSocketParent::GetInIsolatedMozBrowser()
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----GetInIsolatedMozBrowser", __FUNCTION__));
+   const PContentParent *content = Manager()->Manager();
+   if (PBrowserParent* browser = SingleManagedOrNull(content->ManagedPBrowserParent())) {
+     TabParent *tab = TabParent::GetFrom(browser);
+@@ -98,6 +103,7 @@ TCPSocketParent::GetInIsolatedMozBrowser()
+ nsresult
+ TCPSocketParent::OfflineNotification(nsISupports *aSubject)
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----OfflineNotification", __FUNCTION__));
+   nsCOMPtr<nsIAppOfflineInfo> info(do_QueryInterface(aSubject));
+   if (!info) {
+     return NS_OK;
+@@ -125,6 +131,7 @@ TCPSocketParent::OfflineNotification(nsISupports *aSubject)
+ void
+ TCPSocketParentBase::ReleaseIPDLReference()
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----ReleaseIPDLReference", __FUNCTION__));
+   MOZ_ASSERT(mIPCOpen);
+   mIPCOpen = false;
+   this->Release();
+@@ -133,6 +140,7 @@ TCPSocketParentBase::ReleaseIPDLReference()
+ void
+ TCPSocketParentBase::AddIPDLReference()
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----AddIPDLReference", __FUNCTION__));
+   MOZ_ASSERT(!mIPCOpen);
+   mIPCOpen = true;
+   this->AddRef();
+@@ -140,6 +148,7 @@ TCPSocketParentBase::AddIPDLReference()
+ 
+ NS_IMETHODIMP_(MozExternalRefCountType) TCPSocketParent::Release(void)
+ {
++      TCPSOCKET_LOG(("%s: DHCUICUI-----Release", __FUNCTION__));
+   nsrefcnt refcnt = TCPSocketParentBase::Release();
+   if (refcnt == 1 && mIPCOpen) {
+     mozilla::Unused << PTCPSocketParent::SendRequestDelete();
+@@ -152,6 +161,7 @@ bool
+ TCPSocketParent::RecvOpen(const nsString& aHost, const uint16_t& aPort, const bool& aUseSSL,
+                           const bool& aUseArrayBuffers)
+ {
++    TCPSOCKET_LOG(("%s: DHCUICUI-----RecvOpen", __FUNCTION__));
+   // We don't have browser actors in xpcshell, and hence can't run automated
+   // tests without this loophole.
+   if (net::UsingNeckoIPCSecurity() &&
+@@ -186,6 +196,7 @@ TCPSocketParent::RecvOpenBind(const nsCString& aRemoteHost,
+                               const bool&     aUseArrayBuffers,
+                               const nsCString& aFilter)
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----RecvOpenBind", __FUNCTION__));
+   if (net::UsingNeckoIPCSecurity() &&
+       !AssertAppProcessPermission(Manager()->Manager(), "tcp-socket")) {
+     FireInteralError(this, __LINE__);
+@@ -297,6 +308,7 @@ bool
+ TCPSocketParent::RecvData(const SendableData& aData,
+                           const uint32_t& aTrackingNumber)
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----RecvData", __FUNCTION__));
+   ErrorResult rv;
+ 
+   if (mFilter) {
+@@ -347,6 +359,7 @@ TCPSocketParent::RecvData(const SendableData& aData,
+ bool
+ TCPSocketParent::RecvClose()
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----RecvClose", __FUNCTION__));
+   NS_ENSURE_TRUE(mSocket, true);
+   mSocket->Close();
+   return true;
+@@ -355,18 +368,21 @@ TCPSocketParent::RecvClose()
+ void
+ TCPSocketParent::FireErrorEvent(const nsAString& aName, const nsAString& aType, TCPReadyState aReadyState)
+ {
++    TCPSOCKET_LOG(("%s: DHCUICUI-----FireErrorEvent", __FUNCTION__));
+   SendEvent(NS_LITERAL_STRING("error"), TCPError(nsString(aName), nsString(aType)), aReadyState);
+ }
+ 
+ void
+ TCPSocketParent::FireEvent(const nsAString& aType, TCPReadyState aReadyState)
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----FireEvent", __FUNCTION__));
+   return SendEvent(aType, mozilla::void_t(), aReadyState);
+ }
+ 
+ void
+ TCPSocketParent::FireArrayBufferDataEvent(nsTArray<uint8_t>& aBuffer, TCPReadyState aReadyState)
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----FireArrayBufferDataEvent", __FUNCTION__));
+   InfallibleTArray<uint8_t> arr;
+   arr.SwapElements(aBuffer);
+ 
+@@ -390,6 +406,7 @@ TCPSocketParent::FireArrayBufferDataEvent(nsTArray<uint8_t>& aBuffer, TCPReadySt
+ void
+ TCPSocketParent::FireStringDataEvent(const nsACString& aData, TCPReadyState aReadyState)
+ {
++    TCPSOCKET_LOG(("%s: DHCUICUI-----FireStringDataEvent", __FUNCTION__));
+   SendableData data((nsCString(aData)));
+ 
+   MOZ_ASSERT(!mFilter, "Socket filtering doesn't support nsCString");
+@@ -400,6 +417,7 @@ TCPSocketParent::FireStringDataEvent(const nsACString& aData, TCPReadyState aRea
+ void
+ TCPSocketParent::SendEvent(const nsAString& aType, CallbackData aData, TCPReadyState aReadyState)
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----SendEvent", __FUNCTION__));
+   mozilla::Unused << PTCPSocketParent::SendCallback(nsString(aType), aData,
+                                                     static_cast<uint32_t>(aReadyState));
+ }
+@@ -407,12 +425,14 @@ TCPSocketParent::SendEvent(const nsAString& aType, CallbackData aData, TCPReadyS
+ void
+ TCPSocketParent::SetSocket(TCPSocket *socket)
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----SetSocket", __FUNCTION__));
+   mSocket = socket;
+ }
+ 
+ nsresult
+ TCPSocketParent::GetHost(nsAString& aHost)
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----GetHost", __FUNCTION__));
+   if (!mSocket) {
+     NS_ERROR("No internal socket instance mSocket!");
+     return NS_ERROR_FAILURE;
+@@ -424,6 +444,7 @@ TCPSocketParent::GetHost(nsAString& aHost)
+ nsresult
+ TCPSocketParent::GetPort(uint16_t* aPort)
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----GetPort", __FUNCTION__));
+   if (!mSocket) {
+     NS_ERROR("No internal socket instance mSocket!");
+     return NS_ERROR_FAILURE;
+@@ -435,7 +456,9 @@ TCPSocketParent::GetPort(uint16_t* aPort)
+ void
+ TCPSocketParent::ActorDestroy(ActorDestroyReason why)
+ {
++  TCPSOCKET_LOG(("%s: DHCUICUI-----ActorDestroy", __FUNCTION__));
+   if (mSocket) {
++    mSocket->mActorDestroy = true;
+     mSocket->Close();
+   }
+   mSocket = nullptr;
+@@ -443,7 +466,8 @@ TCPSocketParent::ActorDestroy(ActorDestroyReason why)
+ 
+ bool
+ TCPSocketParent::RecvRequestDelete()
+-{
++{  
++  TCPSOCKET_LOG(("%s: DHCUICUI-----RecvRequestDelete", __FUNCTION__));
+   mozilla::Unused << Send__delete__(this);
+   return true;
+ }
+diff --git a/netwerk/base/nsSocketTransportService2.cpp b/netwerk/base/nsSocketTransportService2.cpp
+index 0100b37..90b8a22b 100644
+--- a/netwerk/base/nsSocketTransportService2.cpp
++++ b/netwerk/base/nsSocketTransportService2.cpp
+@@ -37,6 +37,8 @@ using namespace mozilla::net;
+ LazyLogModule gSocketTransportLog("nsSocketTransport");
+ LazyLogModule gUDPSocketLog("UDPSocket");
+ LazyLogModule gTCPSocketLog("TCPSocket");
++LazyLogModule gTCPSocketLogc("TCPSocketc");
++LazyLogModule gTCPSocketLogp("TCPSocketp");
+ 
+ nsSocketTransportService *gSocketTransportService = nullptr;
+ Atomic<PRThread*, Relaxed> gSocketThread;
+-- 
+2.7.4
+
