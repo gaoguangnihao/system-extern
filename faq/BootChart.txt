@@ -1,0 +1,7 @@
+Android - Bootchart
+
+sudo apt-get install pybootchartgui
+sudo apt-get install libgnome2-bin
+adb shell 'echo $TIMEOUT > /data/bootchart/start'
+
+Path: /system/core/init
