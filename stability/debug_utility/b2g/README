@@ -1,0 +1,8 @@
+- adb shell b2g-ps : To check the changes of processes status. b2g-ps -t
+- adb shell top : To check the usage of processes.//top -n 1 -d 1 -m 30 -t
+- adb shell debuggerd -b PID : To get the backtrace of all threads in the target process.
+- adb shell b2g-info : To get memory info about b2g 
+- adb shell strace 
+- adb shell df 
+- adb shell mount 
+- adb shell 'ls -l /dev/block/platform/soc.0/7824900.sdhci/by-name' //for qualcomm
