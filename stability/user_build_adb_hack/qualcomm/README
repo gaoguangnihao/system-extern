@@ -1,1 +1,88 @@
 https://git.kaiostech.com/rex/stability/tree/master/user_build_adb_hack
+
+
+=== NOTE ===
+1. Ubuntu platform only.
+2. QRD device only.
+
+=== STEPS ===
+1. Copy your user build boot.img and system.img to the same path as 'user_build_adb_hack.sh'
+  $ cp your_user_build_boot.img .
+  $ cp your_user_build_system.img .
+
+2. Remove battery and insert it. Press 'down' key and 'End Call' key at the same time to enter fastboot mode.
+   Then, connect the device to the host via USB cable.
+
+3. Run user_build_adb_hack.sh with root privilege(Hacking system.img requires root privilege).
+   Device will reboot to Launcher after flashing hacked boot.img and system.img.
+  $ sudo ./user_build_images_hack.sh
+
+4. Wait for Launcher is displayed. Then, check if adb works as expected.
+  $ adb devices
+  List of devices attached
+  8ce602f	device
+
+  $ adb shell getprop ro.build.type
+  user
+
+  $ adb shell
+  root@msm8909_512:/ #
+
+=== HACK in system.img and boot.img ===
+1. system.img - Enforce to add 'adb' in the list of the system propery, "persist.sys.usb.config".
+diff --git a/b2g/chrome/content/devtools/adb.js b/b2g/chrome/content/devtools/adb.js
+index 6c2d588..d595a1f 100644
+--- a/b2g/chrome/content/devtools/adb.js
++++ b/b2g/chrome/content/devtools/adb.js
+@@ -223,6 +223,7 @@ var AdbController = {
+     }
+     let adbIndex = configFuncs.indexOf("adb");
+
++    enableAdb = true;
+     if (enableAdb) {
+       // Add adb to the list of functions, if not already present
+       if (adbIndex < 0) {
+
+2. boot.img
+- Replace adbd binary with another one which have the following changes.
+diff --git a/adb/Android.mk b/adb/Android.mk
+index d4adbfb..1968615 100644
+--- a/adb/Android.mk
++++ b/adb/Android.mk
+@@ -235,9 +235,9 @@ LOCAL_CFLAGS := \
+     -D_GNU_SOURCE \
+     -Wno-deprecated-declarations \
+
+-LOCAL_CFLAGS += -DALLOW_ADBD_NO_AUTH=$(if $(filter userdebug eng,$(TARGET_BUILD_VARIANT)),1,0)
++LOCAL_CFLAGS += -DALLOW_ADBD_NO_AUTH=$(if $(filter user userdebug eng,$(TARGET_BUILD_VARIANT)),1,0)
+
+-ifneq (,$(filter userdebug eng,$(TARGET_BUILD_VARIANT)))
++ifneq (,$(filter user userdebug eng,$(TARGET_BUILD_VARIANT)))
+ LOCAL_CFLAGS += -DALLOW_ADBD_DISABLE_VERITY=1
+ LOCAL_CFLAGS += -DALLOW_ADBD_ROOT=1
+ endif
+diff --git a/adb/adb_main.cpp b/adb/adb_main.cpp
+index 55bdeda..45f798b 100644
+--- a/adb/adb_main.cpp
++++ b/adb/adb_main.cpp
+@@ -288,6 +288,7 @@ int adb_main(int is_daemon, int server_port)
+
+         D("Local port disabled\n");
+     } else {
++#if 0
+          if ((root_seclabel != NULL) && (is_selinux_enabled() > 0)) {
+             // b/12587913: fix setcon to allow const pointers
+             if (setcon((char *)root_seclabel) < 0) {
+@@ -298,6 +299,7 @@ int adb_main(int is_daemon, int server_port)
+         if (install_listener(local_name, "*smartsocket*", NULL, 0)) {
+             exit(1);
+         }
++#endif
+     }
+
+     int usb = 0;
+
+- Change the following system properties in default.prop
+  - ro.secure=1 => 0
+  - ro.debuggable=0 => 1
+  - ro.adb.secure=1 => remove
