@@ -1,0 +1,51 @@
+
+
+nsDOMDeviceStorage::OnDiskSpaceWatcher
+
+
+/gecko/hal/gonk/GonkDiskSpaceWatcher.cpp 
+/gecko/dom/devicestorage/DeviceStorageStatics.cpp 
+
+DOMStorageObserver.cpp
+
+DOMStorageObserver::Observe ===>disk-space-watcher
+
+    if (!strcmp(aTopic, "disk-space-watcher")) {
+      if (NS_LITERAL_STRING("full").Equals(aData)) {
+        Notify("low-disk-space");
+     } else if (NS_LITERAL_STRING("free").Equals(aData)) {
+        Notify("no-low-disk-space");
+     }
+
+
+DOMStorageManager.cpp
+
+    if (!strcmp(aTopic, "low-disk-space")) {
+     if (mType == LocalStorage) {
+       nsCOMPtr<nsIObserverService> obs = mozilla::services::GetObserverService();
+        if (obs) {
+         obs->NotifyObservers(nullptr, "dom-storage2-full", nullptr);
+       }
+       mLowDiskSpace = true;
+      }
+
+
+
+system app 
+
+Services.obs.addObserver(this, 'almost-low-disk-space', false);
+
+
+/apps/system/src/
+==>storage_watcher.js
+
+
+
+DeviceStorageWatcher listens for nsIDOMDeviceStorage.onchange events (see Bug 861921)
+
+
+
+
+this._appStorage = navigator.getDeviceStorage('apps')
+
+ popupStorageFullDialog   show 
