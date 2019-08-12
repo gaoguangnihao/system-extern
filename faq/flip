@@ -1,0 +1,83 @@
+
+gecko/widget/gonk/libui/KeycodeLabels.h
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gecko/widget/gonk/nsAppShell.cpp
+KeyEventDispatcher::Dispatch
+
+/gecko/widget/NativeKeyToDOMKeyName.h
+
+KEY_MAP_ANDROID (Flip, AKEYCODE_FLIP)
+
+mDOMKeyNameIndex == KEY_NAME_INDEX_Flip)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+hal::NotifyFlipStateFromInputDevice(!IsKeyPress()) //Notify of a change in the flip state from input device.
+
+hal::UpdateFlipState
+
+
+sFlipObservers.BroadcastInformation
+
+
+
+
+typedef Observer<bool> FlipObserver;
+
+class FlipManager final : public DOMEventTargetHelper
+                       , public FlipObserver
+
+
+
+~~~~~~~~~~~~~~~~register~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+partial interface Navigator {
+  [Throws, Pref="dom.flip.enabled", CheckPermissions="flip", AvailableIn=CertifiedApps]
+  Promise<FlipManager> getFlipManager();
+};
+
+
+Navigator::GetFlipManager -> 
+             		   new FlipManager(mWindow)	               
+			   FlipManager::Init       -> 
+						    hal::RegisterFlipObserver
+                             
+~~~~~~~~~~~~~~~~register~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+FlipManager::Notify   - > 
+                         DispatchTrustedEvent(NS_LITERAL_STRING("flipchange")
+
+
+
+`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~event ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+
+     define IMPL_EVENT_HANDLER(_event)                                        \
+ inline mozilla::dom::EventHandlerNonNull* GetOn##_event()               \
+  {                                                                       \
+    if (NS_IsMainThread()) {                                              \
+      return GetEventHandler(nsGkAtoms::on##_event, EmptyString());       \
+    }                                                                     \
+    return GetEventHandler(nullptr, NS_LITERAL_STRING(#_event));          \
+  }                                                                       \
+ inline void SetOn##_event(mozilla::dom::EventHandlerNonNull* aCallback) \
+ {                                                                       \
+    if (NS_IsMainThread()) {                                              \
+      SetEventHandler(nsGkAtoms::on##_event, EmptyString(), aCallback);   \
+    } else {                                                              \
+     SetEventHandler(nullptr, NS_LITERAL_STRING(#_event), aCallback);    \
+    }                                                                     \
+ }
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``
+
+gecko/dom/webidl/FlipManager.webidl -> 
+
+					attribute EventHandler onflipchange
+
+
+
+screen_manager.js
+                 -->>  this._flipManager.addEventListener('flipchange', this)
+          
+
