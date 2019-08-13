@@ -1,0 +1,161 @@
+
+https://bugzilla.mozilla.org/show_bug.cgi?id=1131927
+
+02-25 06:48:02.749  3844  3862 I AutoMounter: Changing mode from 'Disable' to 'Enable-MTP'
+02-25 06:48:02.749  3844  3862 D AutoMounter: Calling UpdateState due to mode set to 3
+02-25 06:48:02.749  3844  3862 I AutoMounter: Failed to get property, ro.kaios.usb.state_node, use default value.
+02-25 06:48:02.749  3844  3862 D AutoMounter: IsUsbCablePluggedIn: state = 'CONFIGURED'
+02-25 06:48:02.749  3844  3862 I AutoMounter: Failed to get property, ro.kaios.usb.functions_node, use default value.
+02-25 06:48:02.749  3844  3862 D AutoMounter: GetStatus: USB functions: 'diag,serial,rmnet,ffs'
+02-25 06:48:02.749  3844  3862 I AutoMounter: Failed to get property, ro.kaios.usb.state_node, use default value.
+02-25 06:48:02.749  3844  3862 D AutoMounter: IsUsbConfigured: state = 'CONFIGURED'
+02-25 06:48:02.749  3844  3862 I AutoMounter: Failed to get property, ro.kaios.ums.directory_node, use default value.
+02-25 06:48:02.749  3844  3862 D AutoMounter: IsUsbFunctionEnabled('diag,serial_smd,rmnet_qti_bam,adb', 'mass_storage'): returning false
+02-25 06:48:02.749  3844  3862 I AutoMounter: Failed to get property, ro.kaios.mtp.directory_node, use default value.
+02-25 06:48:02.749  3844  3862 D AutoMounter: UpdateState: ums:A0C0E0 mtp:A1C0E1 rndis:0 mode:3 usb:1 mState:IDLE
+02-25 06:48:02.749  3844  3862 D AutoMounter: IsUsbFunctionEnabled('diag,serial_smd,rmnet_qti_bam,adb', 'mtp'): returning false
+02-25 06:48:02.749  3844  3862 D AutoMounter: IsUsbFunctionEnabled('diag,serial_smd,rmnet_qti_bam,adb', 'adb'): returning true
+02-25 06:48:02.749  3844  3862 D AutoMounter: IsUsbFunctionEnabled('mtp', 'adb'): returning false
+02-25 06:48:02.749  3844  3862 I AutoMounter: SetUsbFunction(mtp) sys.usb.config from 'diag,serial_smd,rmnet_qti_bam,adb' to 'mtp,adb'
+02-25 06:48:02.749  3844  3862 I AutoMounter: AutoMounter state changed from IDLE to MTP_CONFIGURING
+02-25 06:48:02.759  3844  3862 I AutoMounter: UpdateState: ums:A0C0E0 mtp:A1C0E1 mode:3 usb:1 tryToShare:0 state:MTP_CONFIGURING
+02-25 06:48:02.759  3844  3862 I AutoMounter: UpdateState: Volume sdcard is Mounted and inserted @ /data/usbmsc_mnt gen 1 locked 0 sharing x
+02-25 06:48:02.759  3844  3862 I AutoMounterSetting: Changing status from 'Disabled' to 'Enabled'
+02-25 06:48:02.759  3844  3844 I Gecko   : [SUB1] QCONTENT_HELPER Received observer notification: mozsettings-changed
+02-25 06:48:02.759  3844  3844 I Gecko   : [SUB0] QCONTENT_HELPER Received observer notification: mozsettings-changed
+02-25 06:48:02.819  4780  4780 I Settings: Content JS LOG: ***back to previous page*** 
+02-25 06:48:02.819  4780  4780 I Settings:     at _findNaviId (app://settings.gaiamobile.org/js/navigation_map.js:453:13)
+02-25 06:48:02.819  4780  4780 I FocusManager: << focus() called >>
+02-25 06:48:02.819  4780  4780 I FocusManager:    trying to set focus on, tag: LI, id: , class: focus
+02-25 06:48:02.829  4780  4780 I FocusManager:    current focused element, tag: INPUT, id: , class: 
+02-25 06:48:02.829  4780  4780 I FocusManager: <- blur on, tag: INPUT, id: , class: 
+02-25 06:48:02.829  4780  4780 I FocusManager: -> focus is now on, tag: LI, id: , class: focus
+02-25 06:48:02.839  3844  3844 I Gecko   : [SUB1] QCONTENT_HELPER Received observer notification: mozsettings-changed
+02-25 06:48:02.839  3844  3844 I Gecko   : [SUB0] QCONTENT_HELPER Received observer notification: mozsettings-changed
+02-25 06:48:02.849  4780  4780 I Settings: Content JS LOG: NavigationMap update 
+02-25 06:48:02.849  4780  4780 I Settings:     at _update (app://settings.gaiamobile.org/js/navigation_map.js:423:7)
+02-25 06:48:02.859  4780  4780 I FocusManager: << focus() called >>
+02-25 06:48:02.859  4780  4780 I FocusManager:    trying to set focus on, tag: LI, id: , class: focus
+02-25 06:48:02.869  4780  4780 I FocusManager: Warning: element is already focused.
+02-25 06:48:02.889  4780  4780 I Gecko   : [BrowserElement] event type: keyup, key: Enter, target: [object HTMLLIElement], class: focus
+02-25 06:48:02.889  4780  4780 I Gecko   : [BrowserElement] event type: keyup, key: MicrophoneToggle, target: [object HTMLLIElement], class: focus
+02-25 06:48:02.889  3844  3844 I WakeLock: Acquire cpu wakelock
+02-25 06:48:02.919  3844  3844 I WakeLock: Release cpu wakelock
+02-25 06:48:02.949  3844  3844 D AutoMounter: UsbCable switch device: 1 state: unplugged
+02-25 06:48:02.949  3844  3862 D AutoMounter: Calling UpdateState due to USBCableEvent
+02-25 06:48:02.949  3844  3862 I AutoMounter: Failed to get property, ro.kaios.usb.state_node, use default value.
+02-25 06:48:02.949  3844  3862 D AutoMounter: IsUsbCablePluggedIn: state = 'DISCONNECTED'
+02-25 06:48:02.949  3844  3862 I AutoMounter: Failed to get property, ro.kaios.usb.functions_node, use default value.
+02-25 06:48:02.949  3844  3862 D AutoMounter: GetStatus: USB functions: 'mtp,ffs'
+02-25 06:48:02.949  3844  3862 I AutoMounter: Failed to get property, ro.kaios.usb.state_node, use default value.
+02-25 06:48:02.949  3844  3862 D AutoMounter: IsUsbConfigured: state = 'DISCONNECTED'
+02-25 06:48:02.949  3844  3862 I AutoMounter: Failed to get property, ro.kaios.ums.directory_node, use default value.
+02-25 06:48:02.949  3844  3862 D AutoMounter: IsUsbFunctionEnabled('diag,serial_smd,rmnet_qti_bam,adb', 'mass_storage'): returning false
+02-25 06:48:02.949  3844  3862 I AutoMounter: Failed to get property, ro.kaios.mtp.directory_node, use default value.
+02-25 06:48:02.949  3844  3862 D AutoMounter: UpdateState: ums:A0C0E0 mtp:A1C0E1 rndis:0 mode:3 usb:0 mState:MTP_CONFIGURING
+02-25 06:48:02.949  3844  3862 I AutoMounter: UpdateState: ums:A0C0E0 mtp:A1C0E1 mode:3 usb:0 tryToShare:0 state:MTP_CONFIGURING
+02-25 06:48:02.949  3844  3862 I AutoMounter: UpdateState: Volume sdcard is Mounted and inserted @ /data/usbmsc_mnt gen 1 locked 0 sharing x
+02-25 06:48:03.019  4306  4306 E sdcard  : missing packages.list; retrying
+02-25 06:48:03.119  4780  4780 I FocusManager: << focus() called >>
+02-25 06:48:03.119  4780  4780 I FocusManager:    trying to set focus on, tag: FORM, id: softkeyPanel, class: skbar none-paddings visible focused
+02-25 06:48:03.119  4780  4780 I FocusManager: Warning: element is not focusable.
+02-25 06:48:03.279  3844  3844 D AutoMounter: UsbCable switch device: 1 state: plugged
+02-25 06:48:03.279  3844  3862 D AutoMounter: Calling UpdateState due to USBCableEvent
+02-25 06:48:03.279  3844  3862 I AutoMounter: Failed to get property, ro.kaios.usb.state_node, use default value.
+02-25 06:48:03.279  3844  3862 D AutoMounter: IsUsbCablePluggedIn: state = 'CONFIGURED'
+02-25 06:48:03.279  3844  3862 I AutoMounter: Failed to get property, ro.kaios.usb.functions_node, use default value.
+02-25 06:48:03.279  3844  3862 D AutoMounter: GetStatus: USB functions: 'mtp,ffs'
+02-25 06:48:03.279  3844  3862 I AutoMounter: Failed to get property, ro.kaios.usb.state_node, use default value.
+02-25 06:48:03.279  3844  3862 D AutoMounter: IsUsbConfigured: state = 'CONFIGURED'
+02-25 06:48:03.279  3844  3862 I AutoMounter: Failed to get property, ro.kaios.ums.directory_node, use default value.
+02-25 06:48:03.279  3844  3862 D AutoMounter: IsUsbFunctionEnabled('diag,serial_smd,rmnet_qti_bam,adb', 'mass_storage'): returning false
+02-25 06:48:03.279  3844  3862 I AutoMounter: Failed to get property, ro.kaios.mtp.directory_node, use default value.
+02-25 06:48:03.279  3844  3862 D AutoMounter: UpdateState: ums:A0C0E0 mtp:A1C1E1 rndis:0 mode:3 usb:1 mState:MTP_CONFIGURING
+02-25 06:48:03.279  3844  3862 I AutoMounter: Starting MtpServer
+02-25 06:48:03.279  3844  3862 I MozMtp  : Init: Opened '/dev/mtp_usb' fd 145
+02-25 06:48:03.279  3844  3862 I AutoMounter: AutoMounter state changed from MTP_CONFIGURING to MTP_STARTED
+02-25 06:48:03.289  3844  3862 I AutoMounter: UpdateState: ums:A0C0E0 mtp:A1C1E1 mode:3 usb:1 tryToShare:0 state:MTP_STARTED
+02-25 06:48:03.289  3844  3862 I AutoMounter: UpdateState: Volume sdcard is Mounted and inserted @ /data/usbmsc_mnt gen 1 locked 0 sharing x
+02-25 06:48:03.289  3844  3844 I Gecko   : XXX FIXME : Dispatch a mozChromeEvent: mtp-state-changed
+02-25 06:48:03.289  3844  4906 I MozMtp  : Run: MozMtpServer started
+02-25 06:48:03.289  3844  4906 I MozMtp  : MozMtpStorage: Storage constructed for Volume sdcard mStorageID 0x00010001
+02-25 06:48:03.289  3844  4906 I MozMtp  : Notify: Volume sdcard mStorageID 0x00010001 state changed to Mounted SharingEnabled: 0
+02-25 06:48:03.289  3844  4906 I MozMtp  : StorageAvailable: Adding Volume sdcard mStorageID 0x00010001 mountPoint /data/usbmsc_mnt to MozMtpDatabase
+02-25 06:48:03.289  3844  4906 I MozMtp  : AddStorage: added 4 items from tree '/data/usbmsc_mnt'
+02-25 06:48:03.289  3844  4906 I MozMtp  : StorageAvailable: Adding Volume sdcard mStorageID 0x00010001 mountPoint /data/usbmsc_mnt to MtpServer
+02-25 06:48:03.289  3844  4906 I MozMtp  : Notify: Volume sdcard mStorageID 0x00010001 state changed to Mounted SharingEnabled: 0
+02-25 06:48:03.289  3844  4906 I MozMtp  : sessionStarted: 
+02-25 06:48:03.299  3844  4906 I MozMtp  : getSupportedPlaybackFormats: returning Supported Playback Formats
+02-25 06:48:03.299  3844  4906 I MozMtp  : getSupportedCaptureFormats: returning MTP_FORMAT_ASSOCIATION, MTP_FORMAT_PNG
+02-25 06:48:03.299  3844  4906 I MozMtp  : getSupportedDeviceProperties: 
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  3844 I GeckoConsole: Content JS LOG: [SuplHandler][75.914] handling mozChromeEvent 
+02-25 06:48:03.299  3844  3844 I GeckoConsole:     at BaseModule.prototype.debug (app://system.gaiamobile.org/js/base_module.js:25:422)
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+02-25 06:48:03.299  3844  4906 I MozMtp  : getObjectPropertyDesc: Property: MTP_PROPERTY_OBJECT_SIZE 0x0000dc04
+
+
+root@msm8909_512:/ # getprop |grep product                                     
+[ro.build.product]: [msm8909_512]
+[ro.product.board]: [msm8909]
+[ro.product.brand]: [qcom]
+[ro.product.cpu.abi]: [armeabi-v7a]
+[ro.product.cpu.abi2]: [armeabi]
+[ro.product.cpu.abilist]: [armeabi-v7a,armeabi]
+[ro.product.cpu.abilist32]: [armeabi-v7a,armeabi]
+[ro.product.cpu.abilist64]: []
+[ro.product.device]: [msm8909_512]
+[ro.product.locale]: [en-US]
+[ro.product.manufacturer]: [QUALCOMM]
+[ro.product.model]: [msm8909_512]
+[ro.product.name]: [msm8909_512]
+
+
+linux OS
+
+[503880.397650] usb 1-2: USB disconnect, device number 81
+[503884.464220] usb 1-2: new high-speed USB device number 82 using xhci_hcd
+[503884.613562] usb 1-2: New USB device found, idVendor=1782, idProduct=5d24
+[503884.613572] usb 1-2: New USB device strings: Mfr=1, Product=2,
+SerialNumber=3
+[503884.613579] usb 1-2: Product: Spreadtrum Phone
+[503884.613585] usb 1-2: Manufacturer: Spreadtrum
+[503884.613590] usb 1-2: SerialNumber: 0190319124238
+[503884.615423] usb-storage 1-2:1.0: USB Mass Storage device detected
+[503884.615992] scsi host3: usb-storage 1-2:1.0
+[503884.707212] usb 1-2: USB disconnect, device number 82
+[503885.076285] usb 1-2: new high-speed USB device number 83 using xhci_hcd
+[503885.225739] usb 1-2: New USB device found, idVendor=1782, idProduct=4002
+[503885.225750] usb 1-2: New USB device strings: Mfr=1, Product=2,
+SerialNumber=3
+[503885.225756] usb 1-2: Product: Spreadtrum Phone
+[503885.225762] usb 1-2: Manufacturer: Spreadtrum
+[503885.225768] usb 1-2: SerialNumber: 0190319124238
+
+
+
+window os 
+
+MTP 
+
+
+KAIOS
+gecko/dom/system/gonk/MozMtpServer.cpp 
+
