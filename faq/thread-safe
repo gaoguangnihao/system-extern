@@ -1,0 +1,45 @@
+
+63885/60318/67892/
+https://bugzilla.mozilla.org/show_bug.cgi?id=1351558
+1303967/1379325/1350682/1564345
+
+1376009 		Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PCookieServiceChild::SendGetCookieString 	Core 	Networking: Cookies 	amchung 	RESO 	FIXE 	2017-08-30
+1269036 		crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::dom::PBrowser::Transition from ABORT: __delete__()d actor 	Core 	DOM: Content Process 	kanru 	RESO 	FIXE 	2016-09-03
+1379325 		Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PHttpChannel::Transition 	Core 	Networking 	polo.hellfire 	RESO 	FIXE 	2017-07-24
+1269854 		Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PTCPSocket::Transition from ABORT: __delete__()d actor, on chatous.com 	Core 	Networking 	jduell.mcbugs 	RESO 	WONT 	2018-10-01
+1418795 		Crash in mozilla::ipc::LogicError | mozilla::net::PHttpChannelChild::SendDivertOnDataAvailable 	Core 	DOM: Service Workers 	bugmail 	RESO 	DUPL 	2018-01-18
+1290310 		Crash in Abort | __delete__()d actor | mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::dom::PBrowser::Transition 	Core 	DOM: Content Process 	nobody 	RESO 	DUPL 	2016-08-05
+1422578 		Crash in Abort | __delete__()d actor | mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PHttpChannel::Transition 	WebExtensions 	Request Handling 	kmaglione+bmo 	RESO 	FIXE 	2018-06-19
+1303967 		Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::dom::PBrowser::Transition 	Core 	DOM: Content Process 	bill.mccloskey 	RESO 	FIXE 	2016-10-03
+1429707 		Crash in mozilla::ipc::LogicError | mozilla::layout::PRemotePrintJobChild::SendFinalizePrint 	Core 	Printing: Setup 	nobody 	RESO 	DUPL 	2018-04-10
+1318725 		Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::a11y::PDocAccessible::Transition 	Core 	Disability Access AP 	nobody 	RESO 	WORK 	2017-01-04
+1483911 		Crash in mozilla::ipc::LogicError | mozilla::a11y::PDocAccessibleChild::SendScrollingEvent 	Core 	Disability Access AP 	eitan 	VERI 	FIXE 	2018-08-23
+1321275 		[webvr] Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::gfx::PVRLayer::Transition 	Core 	WebVR 	kgilbert 	RESO 	FIXE 	2017-07-18
+1541114 		Crash in [@ mozilla::ipc::LogicError | mozilla::net::PTCPSocketParent::SendUpdateBufferedAmount] 	Core 	Networking 	kershaw 	RESO 	FIXE 	2019-06-07
+1328106 		[e10s] Crash in Abort | __delete__()d actor | mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PTCPSocket::Transition 	Core 	DOM: Core & HTML 	xeonchen 	RESO 	FIXE 	2019-03-13
+1544000 		Crash in [@ mozilla::ipc::LogicError | mozilla::net::PTCPSocketChild::SendRequestDelete] 	Core 	Networking 	kershaw 	RESO 	FIXE 	2019-06-20
+1336386 		Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::layers::Animatable::MaybeDestroy 	Core 	Web Painting 	nobody 	RESO 	WONT 	2018-12-01
+1545980 		Crash in [@ mozilla::ipc::LogicError | mozilla::layers::PWebRenderBridgeChild::SendClearCachedResources] 	Core 	Graphics: WebRender 	sotaro.ikeda.g 	RESO 	FIXE 	2019-05-21
+1341451 		Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::gfx::PVRLayerChild::SendDestroy 	Core 	Graphics 	nobody 	RESO 	WONT 	2018-10-01
+1350330 		Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::layers::PLayerTransactionChild::SendReleaseCompositable 	Core 	Graphics 	vincent.liu1013 	RESO 	FIXE 	2017-04-18
+1350568 		Crash in Abort | corrupted actor state | mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PStunAddrsRequestParent::SendOnStunAddrsAvailable 	Core 	WebRTC: Networking 	mfroman 	RESO 	FIXE 	2017-09-04
+1350682 		Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::layers::PVideoBridge::Transition 	Core 	WebVR 	dmu 	RESO 	FIXE 	2017-09-04
+1351558 		Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PHttpChannel::Transition 	Core 	Networking 	polo.hellfire 	RESO 	FIXE 	2017-09-04
+1363614 		Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::dom::PBrowser::Transition 	Core 	DOM: Content Process 	ehsan 	RESO 	FIXE 	2017-05-11
+1374939 		Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PCookieService::Transition 	Core 	Networking: Cookies 	amchung 	RESO 	DUPL 	2017-08-22
+1269033 		[skiplist] please add "mozilla::ipc::LogicError" to prefix_signature_re 	Socorro 	General 	dbaron 	RESO 	FIXE 	2016-05-02
+1564345 		Intermittent Last test finished | application crashed [@ mozilla::ipc::LogicError(char const*)] 	Core 	IPC 	nobody 	NEW 	--- 	2019-07-28 
+
+
+
+crash is about trying to send IPC messages on a dead IPC actor
+
+atomic --> setter/getter
+
+Atomic types are types that encapsulate a value whose access is guaranteed to not cause data races and can be used to synchronize memory accesses among different threads
+
+
+This header declares two C++ classes, atomic and atomic_flag, that implement all the features of atomic types in self-contained classes. The header also declares an entire set of C-style types and functions compatible with the atomic support in C
+
+
+
