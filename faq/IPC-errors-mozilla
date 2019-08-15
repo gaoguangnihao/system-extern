@@ -1,0 +1,28 @@
+Bug ID	Type	Summary	Product	Component	Assignee	Status	Resolution	Updated
+1564345	defect	Intermittent Last test finished | application crashed [@ mozilla::ipc::LogicError(char const*)]	Core	IPC	nobody	NEW	 ---	2019-07-28 23:42:02
+1269854	defect	Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PTCPSocket::Transition from ABORT: __delete__()d actor, on chatous.com	Core	Networking	jduell.mcbugs	RESOLVED	WONTFIX	2018-10-01 05:21:16
+1269036	defect	crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::dom::PBrowser::Transition from ABORT: __delete__()d actor	Core	DOM: Content Processes	kanru	RESOLVED	FIXED	2016-09-03 21:54:19
+1541114	defect	Crash in [@ mozilla::ipc::LogicError | mozilla::net::PTCPSocketParent::SendUpdateBufferedAmount]	Core	Networking	kershaw	RESOLVED	FIXED	2019-06-07 14:13:12
+1544000	defect	Crash in [@ mozilla::ipc::LogicError | mozilla::net::PTCPSocketChild::SendRequestDelete]	Core	Networking	kershaw	RESOLVED	FIXED	2019-06-20 14:11:24
+1350568	defect	Crash in Abort | corrupted actor state | mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PStunAddrsRequestParent::SendOnStunAddrsAvailable	Core	WebRTC: Networking	mfroman	RESOLVED	FIXED	2017-09-04 02:09:01
+1418795	defect	Crash in mozilla::ipc::LogicError | mozilla::net::PHttpChannelChild::SendDivertOnDataAvailable	Core	DOM: Service Workers	bugmail	RESOLVED	DUPLICATE	2018-01-18 05:09:27
+1422578	defect	Crash in Abort | __delete__()d actor | mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PHttpChannel::Transition	WebExtensions	Request Handling	kmaglione+bmo	RESOLVED	FIXED	2018-06-19 13:04:32
+1545980	defect	Crash in [@ mozilla::ipc::LogicError | mozilla::layers::PWebRenderBridgeChild::SendClearCachedResources]	Core	Graphics: WebRender	sotaro.ikeda.g	RESOLVED	FIXED	2019-05-21 12:11:36
+1321275	defect	[webvr] Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::gfx::PVRLayer::Transition	Core	WebVR	kgilbert	RESOLVED	FIXED	2017-07-18 19:42:54
+1341451	defect	Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::gfx::PVRLayerChild::SendDestroy	Core	Graphics	nobody	RESOLVED	WONTFIX	2018-10-01 05:23:08
+1429707	defect	Crash in mozilla::ipc::LogicError | mozilla::layout::PRemotePrintJobChild::SendFinalizePrint	Core	Printing: Setup	nobody	RESOLVED	DUPLICATE	2018-04-10 16:20:05
+1350330	defect	Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::layers::PLayerTransactionChild::SendReleaseCompositable	Core	Graphics	vincent.liu1013	RESOLVED	FIXED	2017-04-18 01:23:50
+1374939	defect	Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PCookieService::Transition	Core	Networking: Cookies	amchung	RESOLVED	DUPLICATE	2017-08-22 19:48:50
+1376009	defect	Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PCookieServiceChild::SendGetCookieString	Core	Networking: Cookies	amchung	RESOLVED	FIXED	2017-08-30 08:00:54
+1303967	defect	Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::dom::PBrowser::Transition	Core	DOM: Content Processes	bill.mccloskey	RESOLVED	FIXED	2016-10-03 07:01:40
+1269033	task	[skiplist] please add "mozilla::ipc::LogicError" to prefix_signature_re	Socorro	General	dbaron	RESOLVED	FIXED	2016-05-02 02:32:33
+1350682	defect	Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::layers::PVideoBridge::Transition	Core	WebVR	dmu	RESOLVED	FIXED	2017-09-04 02:09:14
+1363614	defect	Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::dom::PBrowser::Transition	Core	DOM: Content Processes	ehsan	RESOLVED	FIXED	2017-05-11 13:55:08
+1290310	defect	Crash in Abort | __delete__()d actor | mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::dom::PBrowser::Transition	Core	DOM: Content Processes	nobody	RESOLVED	DUPLICATE	2016-08-05 11:59:14
+1318725	defect	Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::a11y::PDocAccessible::Transition	Core	Disability Access APIs	nobody	RESOLVED	WORKSFORME	2017-01-04 04:29:18
+1336386	defect	Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::layers::Animatable::MaybeDestroy	Core	Web Painting	nobody	RESOLVED	WONTFIX	2018-12-01 05:03:52
+1351558	defect	Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PHttpChannel::Transition	Core	Networking	polo.hellfire	RESOLVED	FIXED	2017-09-04 02:09:24
+1379325	defect	Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PHttpChannel::Transition	Core	Networking	polo.hellfire	RESOLVED	FIXED	2017-07-24 02:45:16
+1328106	defect	[e10s] Crash in Abort | __delete__()d actor | mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PTCPSocket::Transition	Core	DOM: Core & HTML	xeonchen	RESOLVED	FIXED	2019-03-13 06:42:05
+1483911	defect	Crash in mozilla::ipc::LogicError | mozilla::a11y::PDocAccessibleChild::SendScrollingEvent	Core	Disability Access APIs	eitan	VERIFIED	FIXED	2018-08-23 08:54:10
+
