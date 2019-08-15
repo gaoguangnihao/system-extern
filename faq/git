@@ -2,6 +2,16 @@ git format-patch -1 413f0cb0b438d59f3bbc9ed03322ee0ae46ef617
 git commit --amend 
 git am
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+how git rebase
+
+git checkout master
+git pull
+git checkout Bug-68639
+git rebase 
+git push -f dhcui Bug-68639:Bug-68639
+
+
 ~~~~~~~~~~~~~~~~~~~~how push your code to KAI~~~~~~~~~~~~~~~~~~~~
 1.add ssk key in https://git.kaiostech.com/ 
 2.git clone git@git.kaiostech.com:KaiOS/gecko48.git
