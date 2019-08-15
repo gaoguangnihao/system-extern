@@ -1,0 +1,37 @@
+git format-patch -1 413f0cb0b438d59f3bbc9ed03322ee0ae46ef617
+git commit --amend 
+git am
+
+~~~~~~~~~~~~~~~~~~~~how push your code to KAI~~~~~~~~~~~~~~~~~~~~
+1.add ssk key in https://git.kaiostech.com/ 
+2.git clone git@git.kaiostech.com:KaiOS/gecko48.git
+3.fork to self git@git.kaiostech.com:dhcui/gecko48.git
+4.git remote add dhcui git@git.kaiostech.com:dhcui/gecko48.git
+git remote -v 
+5.git checkout -b Bug-68639
+6.git add
+7.git commit -m "Bug 68639 - Crash in Abort | __delete__()d actor. r=danny,shawn"
+8.Generator MR and submit
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~ modify if need ~~~~~~~~~~~~~~~~~~~~~~~
+
+1. git reset HEAD^ / git commit --amend (only for commit)
+2. modify (add commit)
+3. git push -f dhcui Bug-68639:Bug-68639
+4.1 add an attachment
+4.2
+<html>
+<head><title>Redirect to KaiOS/gecko48 MR #2403</title>
+  <meta http-equiv="refresh" content="1;
+   url=https://git.kaiostech.com/KaiOS/gecko48/merge_requests/2403" />
+</head>
+<body>Redirect to KaiOS/gecko48 MR #2403</body>
+</html>
+
+4.3 add reviewer
+4.4 generator patch link 
+
+5. detail->edit details text/html
+6. wait review
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
