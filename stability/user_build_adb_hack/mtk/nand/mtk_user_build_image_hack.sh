@@ -140,7 +140,7 @@ cd ../
 echo "Creating hacked system.img"
 
 # exec mkfs FIXME parameter maybe need change according to project
-./bin/mkfs_ubifs -F -r system -o system_hack.img -m 4096 -e 253952 -c 1291 -v ubi_android.ini
+./bin/mkfs_ubifs -F -r system -o system_hack.img -m 4096 -e 253952 -c 1027 -v ubi_android.ini
 
 if [ "$?" -ne "0" ] ; then
   echo "Fail to create a mkfs_ubifs"
