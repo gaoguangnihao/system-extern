@@ -130,7 +130,7 @@ fi
 cp system/b2g/omni.ja .
 unzip -q -d omni omni.ja
 cd omni
-sed -i '/configFuncs.indexOf/a\ \ \ \ enableAdb\ =\ true' chrome/chrome/content/devtools/adb.js
+sed -i 's/this.remoteDebuggerEnabled&&(!(this.lockEnabled&&this.locked)||usbFuncActive)/true/' chrome/chrome/content/devtools/adb.js
 zip -q -r omni.ja *
 cp omni.ja ../system/b2g/omni.ja
 cd ../
