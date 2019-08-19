@@ -1,0 +1,502 @@
+diff --git a/b2g/chrome/content/shell.js b/b2g/chrome/content/shell.js
+index 69addb3819c1..d4c5a60570e6 100644
+--- a/b2g/chrome/content/shell.js
++++ b/b2g/chrome/content/shell.js
+@@ -545,6 +545,8 @@ var shell = {
+       return false;
+     }
+ 
++    debug('handleEvent to process event ========> evt.keyCode: ' + evt.keyCode+ ' | evt.type: ' + evt.type);
++
+     let content = this.contentBrowser.contentWindow;
+     switch (evt.type) {
+       case 'keydown':
+diff --git a/layout/base/nsPresShell.cpp b/layout/base/nsPresShell.cpp
+index de1cfb7c8412..21b93df79096 100644
+--- a/layout/base/nsPresShell.cpp
++++ b/layout/base/nsPresShell.cpp
+@@ -205,6 +205,16 @@
+ using namespace mozilla::tasktracer;
+ #endif
+ 
++
++#ifdef MOZ_WIDGET_GONK
++#undef LOG
++#include <android/log.h>
++#define LOG(msg, ...)  __android_log_print(ANDROID_LOG_INFO, "===xiangrui===PresShell", msg, ##__VA_ARGS__)
++#else
++#define LOG(...)
++#endif
++
++
+ #define ANCHOR_SCROLL_FLAGS \
+   (nsIPresShell::SCROLL_OVERFLOW_HIDDEN | nsIPresShell::SCROLL_NO_PARENT_FRAMES)
+ 
+@@ -7022,26 +7032,41 @@ BuildTargetChainForBeforeAfterKeyboardEvent(nsINode* aTarget,
+                                             nsTArray<nsCOMPtr<Element> >& aChain,
+                                             bool& aTargetIsIframe)
+ {
++
++  LOG("BuildTargetChainForBeforeAfterKeyboardEvent: aTargetIsIframe: [%d]", aTargetIsIframe);
++
+   nsCOMPtr<nsIContent> content(do_QueryInterface(aTarget));
+   aTargetIsIframe = content && content->IsHTMLElement(nsGkAtoms::iframe);
+ 
++  bool aTargetIsSearchInput = content && content->IsHTMLElement(nsGkAtoms::input) &&
++    content->AttrValueIs(kNameSpaceID_None, nsGkAtoms::type, nsGkAtoms::search, eCaseMatters);
++
++  LOG("BuildTargetChainForBeforeAfterKeyboardEvent: aTargetIsSearchInput: [%d]", aTargetIsSearchInput);
++
++  LOG("BuildTargetChainForBeforeAfterKeyboardEvent: aTargetIsIframe:xx1: [%d]", aTargetIsIframe);
+   Element* frameElement;
+   // If event target is not an iframe, skip the event target and get its
+   // parent frame.
+-  if (aTargetIsIframe) {
++  if (aTargetIsIframe || aTargetIsSearchInput) {
+     frameElement = aTarget->AsElement();
++    LOG("BuildTargetChainForBeforeAfterKeyboardEvent: frameElement:xx0: [%p]", frameElement);
+   } else {
+     nsPIDOMWindowOuter* window = aTarget->OwnerDoc()->GetWindow();
++    LOG("BuildTargetChainForBeforeAfterKeyboardEvent: window:xx1: [%p]", window);
+     frameElement = window ? window->GetFrameElementInternal() : nullptr;
++    LOG("BuildTargetChainForBeforeAfterKeyboardEvent: frameElement:xx1: [%p]", frameElement);
+   }
+ 
+   // Check permission for all ancestors and add them into the target chain.
+   while (frameElement) {
+     if (CheckPermissionForBeforeAfterKeyboardEvent(frameElement)) {
+       aChain.AppendElement(frameElement);
++    LOG("BuildTargetChainForBeforeAfterKeyboardEvent: frameElement:xx2: [%p]", frameElement);
+     }
+     nsPIDOMWindowOuter* window = frameElement->OwnerDoc()->GetWindow();
++    LOG("BuildTargetChainForBeforeAfterKeyboardEvent: window:xx2: [%p]", window);
+     frameElement = window ? window->GetFrameElementInternal() : nullptr;
++    LOG("BuildTargetChainForBeforeAfterKeyboardEvent: frameElement:xx3: [%p]", frameElement);
+   }
+ }
+ 
+@@ -7051,27 +7076,41 @@ PresShell::DispatchBeforeKeyboardEventInternal(const nsTArray<nsCOMPtr<Element>
+                                                size_t& aChainIndex,
+                                                bool& aDefaultPrevented)
+ {
++
++  LOG("PresShell::DispatchBeforeKeyboardEventInternal: !CanDispatchEvent(&aEvent) : [%d] | (aEvent.mMessage == eKeyDown): [%d]", !CanDispatchEvent(&aEvent), (aEvent.mMessage == eKeyDown));
++
+   size_t length = aChain.Length();
+   if (!CanDispatchEvent(&aEvent) || !length) {
+     return;
+   }
+ 
++  LOG("PresShell::DispatchBeforeKeyboardEventInternal: aDefaultPrevented: [%d] | length: [%d]", aDefaultPrevented, length);
++
+   EventMessage message =
+     (aEvent.mMessage == eKeyDown) ? eBeforeKeyDown : eBeforeKeyUp;
+   nsCOMPtr<EventTarget> eventTarget;
+   // Dispatch before events from the outermost element.
+   for (int32_t i = length - 1; i >= 0; i--) {
+     eventTarget = do_QueryInterface(aChain[i]->OwnerDoc()->GetWindow());
++
++
++ LOG("PresShell::DispatchBeforeKeyboardEventInternal: !CanDispatchEvent(&aEvent) xx1 : [%d] | (eventTarget): [%p]", !CanDispatchEvent(&aEvent), &eventTarget);
++
+     if (!eventTarget || !CanDispatchEvent(&aEvent)) {
+       return;
+     }
+ 
++ LOG("PresShell::DispatchBeforeKeyboardEventInternal: to create beforeEvent(), aEvent.IsTrusted() : [%d] | (eventTarget): [%p]", aEvent.IsTrusted(), &eventTarget);
+     aChainIndex = i;
+     InternalBeforeAfterKeyboardEvent beforeEvent(aEvent.IsTrusted(),
+                                                  message, aEvent.mWidget);
++
+     beforeEvent.AssignBeforeAfterKeyEventData(aEvent, false);
++ LOG("PresShell::DispatchBeforeKeyboardEventInternal: to call EventDispatcher::Dispatch=======> !CanDispatchEvent(&aEvent): [%d] | (eventTarget): [%p]", !CanDispatchEvent(&aEvent), &eventTarget);
++
+     EventDispatcher::Dispatch(eventTarget, mPresContext, &beforeEvent);
+ 
++ LOG("PresShell::DispatchBeforeKeyboardEventInternal: beforeEvent.DefaultPrevented(): [%d]", beforeEvent.DefaultPrevented());
+     if (beforeEvent.DefaultPrevented()) {
+       aDefaultPrevented = true;
+       return;
+@@ -7085,6 +7124,8 @@ PresShell::DispatchAfterKeyboardEventInternal(const nsTArray<nsCOMPtr<Element> >
+                                               bool aEmbeddedCancelled,
+                                               size_t aStartOffset)
+ {
++  LOG("PresShell::DispatchAfterKeyboardEventInternal==============================> with aEmbeddedCancelled: [%d]", aEmbeddedCancelled);
++
+   size_t length = aChain.Length();
+   if (!CanDispatchEvent(&aEvent) || !length) {
+     return;
+@@ -7101,10 +7142,13 @@ PresShell::DispatchAfterKeyboardEventInternal(const nsTArray<nsCOMPtr<Element> >
+       return;
+     }
+ 
++    LOG("PresShell::DispatchAfterKeyboardEventInternal to create afterEvent=======> aEvent.IsTrusted(): [%d]", aEvent.IsTrusted());
++
+     InternalBeforeAfterKeyboardEvent afterEvent(aEvent.IsTrusted(),
+                                                 message, aEvent.mWidget);
+     afterEvent.AssignBeforeAfterKeyEventData(aEvent, false);
+     afterEvent.mEmbeddedCancelled.SetValue(embeddedCancelled);
++    LOG("PresShell::DispatchAfterKeyboardEventInternalto call EventDispatcher::Dispatch AfterKeyboardEvent=======> ");
+     EventDispatcher::Dispatch(eventTarget, mPresContext, &afterEvent);
+     embeddedCancelled = afterEvent.DefaultPrevented();
+   }
+@@ -7115,6 +7159,10 @@ PresShell::DispatchAfterKeyboardEvent(nsINode* aTarget,
+                                       const WidgetKeyboardEvent& aEvent,
+                                       bool aEmbeddedCancelled)
+ {
++
++  LOG("PresShell::DispatchAfterKeyboardEvent===========================>");
++  LOG("PresShell::DispatchAfterKeyboardEvent: aEmbeddedCancelled: [%d] | aEvent.mMessage: [%d]", aEmbeddedCancelled, aEvent.mMessage);
++
+   MOZ_ASSERT(aTarget);
+   MOZ_ASSERT(BeforeAfterKeyboardEventEnabled());
+ 
+@@ -7145,6 +7193,7 @@ void
+ PresShell::HandleEventRejectedByKeyboardApp(
+   nsIContent* aTarget, WidgetKeyboardEvent& aEvent)
+ {
++  LOG("PresShell::HandleEventRejectedByKeyboardApp===========================>");
+   bool wasHandlingKeyBoardEvent = nsContentUtils::IsHandlingKeyBoardEvent();
+   nsContentUtils::SetIsHandlingKeyBoardEvent(true);
+ 
+@@ -7177,6 +7226,9 @@ PresShell::TryRelayToKeyboardApp(WidgetKeyboardEvent& aEvent,
+                                  nsEventStatus* aStatus,
+                                  nsINode* aTarget)
+ {
++
++  LOG("PresShell::TryRelayToKeyboardApp================>");
++
+   bool relayToKeyboard = Preferences::GetBool("b2g.relayToKeyboard.enabled", true);
+   if (XRE_GetProcessType() != GeckoProcessType_Default ||
+       aEvent.mFlags.mGeneratedFromIME || !relayToKeyboard) {
+@@ -7191,12 +7243,18 @@ PresShell::TryRelayToKeyboardApp(WidgetKeyboardEvent& aEvent,
+   bool isActive = false;
+   keyboardAppProxy->GetIsIMEActive(&isActive);
+ 
++
++  LOG("PresShell::TryRelayToKeyboardApp: keyboardAppProxy->GetIsIMEActive: [%d]",
++    isActive);
++
+   // once the function call above is failed, the default value is false
+   // already.
+   if (!isActive) {
++     LOG("PresShell::TryRelayToKeyboardApp: return false when isActive is false...");
+       return false;
+   }
+ 
++  LOG("PresShell::TryRelayToKeyboardApp====SendKey to Keyboard App=====>");
+   rv = keyboardAppProxy->SendKey(&aEvent, aTarget);
+ 
+   if (rv == NS_OK) {
+@@ -7207,9 +7265,14 @@ PresShell::TryRelayToKeyboardApp(WidgetKeyboardEvent& aEvent,
+     // The default behavior should be recovered after the reply from keyboard-
+     // AppProxy.
+     *aStatus = nsEventStatus_eConsumeNoDefault;
++
++    LOG("PresShell::TryRelayToKeyboardApp: end of sendkey with return true...");
++
+     return true;
+   }
+-
++  
++  LOG("PresShell::TryRelayToKeyboardApp: end with return false...");
++  
+   return false;
+ }
+ #endif
+@@ -7221,6 +7284,11 @@ PresShell::HandleKeyboardEvent(nsINode* aTarget,
+                                nsEventStatus* aStatus,
+                                EventDispatchingCallback* aEventCB)
+ {
++
++  LOG("PresShell::HandleKeyboardEvent===================> aEmbeddedCancelled: [%d]", aEmbeddedCancelled);
++  LOG("PresShell::HandleKeyboardEvent: aEvent.mMessage == eKeyPress: [%d] | IsKeyEventOnPlugin(): [%d] | mGeneratedFromIME: [%d] | !BeforeAfterKeyboardEventEnabled(): [%d]",
++    (aEvent.mMessage == eKeyPress), aEvent.IsKeyEventOnPlugin(), aEvent.mFlags.mGeneratedFromIME, (!BeforeAfterKeyboardEventEnabled()));
++
+   MOZ_ASSERT(aTarget);
+   // Dispatch event directly if the event is a keypress event, a key event on
+   // plugin, or there is no need to fire beforeKey* and afterKey* events.
+@@ -7233,6 +7301,7 @@ PresShell::HandleKeyboardEvent(nsINode* aTarget,
+       return;
+     }
+ #endif
++    LOG("PresShell::HandleKeyboardEvent, Dispatch event directly if the event is a keypress event.");
+     EventDispatcher::Dispatch(aTarget, mPresContext,
+                               &aEvent, nullptr, aStatus, aEventCB);
+     return;
+@@ -7255,16 +7324,26 @@ PresShell::HandleKeyboardEvent(nsINode* aTarget,
+   DispatchBeforeKeyboardEventInternal(chain, aEvent, chainIndex,
+                                       defaultPrevented);
+ 
++  //return;
+   // Before event is default-prevented. Dispatch after events with
+   // embeddedCancelled = false to partial items.
++
++  LOG("PresShell::HandleKeyboardEvent: After DispatchBeforeKeyboardEventInternal, defaultPrevented: [%d]" , defaultPrevented);
++
+   if (defaultPrevented) {
+     *aStatus = nsEventStatus_eConsumeNoDefault;
+     DispatchAfterKeyboardEventInternal(chain, aEvent, false, chainIndex);
+     // No need to forward the event to child process.
+     aEvent.StopCrossProcessForwarding();
++
++    LOG("PresShell::HandleKeyboardEvent: No need to forward the event to child process....");
++
+     return;
+   }
+ 
++  LOG("PresShell::HandleKeyboardEvent: !CanDispatchEvent(): [%d]", !CanDispatchEvent());
++
++
+   // Event listeners may kill nsPresContext and nsPresShell.
+   if (!CanDispatchEvent()) {
+     return;
+@@ -7280,9 +7359,12 @@ PresShell::HandleKeyboardEvent(nsINode* aTarget,
+ #endif
+ 
+   // Dispatch actual key event to event target.
++  LOG("PresShell::HandleKeyboardEvent, Dispatch event directly again!!!=========>");
+   EventDispatcher::Dispatch(aTarget, mPresContext,
+                             &aEvent, nullptr, aStatus, aEventCB);
+ 
++  LOG("PresShell::HandleKeyboardEvent: After directly again, defaultPrevented: [%d]" , aEvent.DefaultPrevented());
++
+   if (aEvent.DefaultPrevented()) {
+     // When embedder prevents the default action of actual key event, attribute
+     // 'embeddedCancelled' of after event is false, i.e. |!targetIsIframe|.
+@@ -7293,10 +7375,12 @@ PresShell::HandleKeyboardEvent(nsINode* aTarget,
+   }
+ 
+   // Event listeners may kill nsPresContext and nsPresShell.
++  LOG("PresShell::HandleKeyboardEvent: targetIsIframe: [%d] | !CanDispatchEvent(): [%d]", targetIsIframe, !CanDispatchEvent());
+   if (targetIsIframe || !CanDispatchEvent()) {
+     return;
+   }
+ 
++  LOG("PresShell::HandleKeyboardEvent: Final DispatchAfterKeyboardEventInternal with defaultPrevented: [%d]" , aEvent.DefaultPrevented());
+   // Dispatch after events to all items in the chain.
+   DispatchAfterKeyboardEventInternal(chain, aEvent, aEvent.DefaultPrevented());
+ }
+@@ -7308,6 +7392,13 @@ PresShell::HandleEvent(nsIFrame* aFrame,
+                        nsEventStatus* aEventStatus,
+                        nsIContent** aTargetContent)
+ {
++
++  LOG("PresShell::HandleEvent========eBeforeKeyDown[%d] | eKeyDown[%d] | eAfterKeyDown[%d] | eKeyPress[%d] | eBeforeKeyUp[%d] | eKeyUp[%d] | eAfterKeyUp[%d] ======>",
++    aEvent->mMessage == eBeforeKeyDown, aEvent->mMessage == eKeyDown, aEvent->mMessage == eAfterKeyDown, aEvent->mMessage == eKeyPress,
++    aEvent->mMessage == eBeforeKeyUp, aEvent->mMessage == eKeyUp, aEvent->mMessage == eAfterKeyUp);
++
++  LOG("PresShell::HandleEvent, aDontRetargetEvents: [%d]", aDontRetargetEvents);
++
+ #ifdef MOZ_TASK_TRACER
+   // Make touch events, mouse events and hardware key events to be the source
+   // events of TaskTracer, and originate the rest correlation tasks from here.
+@@ -7324,11 +7415,16 @@ PresShell::HandleEvent(nsIFrame* aFrame,
+ 
+   NS_ASSERTION(aFrame, "aFrame should be not null");
+ 
++  LOG("PresShell::HandleEvent, sPointerEventEnabled: [%d]", sPointerEventEnabled);
++
+   if (sPointerEventEnabled) {
+     nsWeakFrame weakFrame(aFrame);
+     nsCOMPtr<nsIContent> targetContent;
+     DispatchPointerFromMouseOrTouch(this, aFrame, aEvent, aDontRetargetEvents,
+                                     aEventStatus, getter_AddRefs(targetContent));
++
++  LOG("PresShell::HandleEvent, !weakFrame.IsAlive(): [%d]", !weakFrame.IsAlive());
++
+     if (!weakFrame.IsAlive()) {
+       if (targetContent) {
+         aFrame = targetContent->GetPrimaryFrame();
+@@ -7352,6 +7448,8 @@ PresShell::HandleEvent(nsIFrame* aFrame,
+ 
+   RecordMouseLocation(aEvent);
+ 
++  LOG("PresShell::HandleEvent, AccessibleCaretEnabled(): [%d]", AccessibleCaretEnabled());
++
+   if (AccessibleCaretEnabled()) {
+     // We have to target the focus window because regardless of where the
+     // touch goes, we want to access the copy paste manager.
+@@ -7365,6 +7463,7 @@ PresShell::HandleEvent(nsIFrame* aFrame,
+       presShell ? presShell->GetAccessibleCaretEventHub() : nullptr;
+     if (eventHub) {
+       *aEventStatus = eventHub->HandleEvent(aEvent);
++
+       if (*aEventStatus == nsEventStatus_eConsumeNoDefault) {
+         // If the event is consumed, cancel APZC panning by setting
+         // mMultipleActionsPrevented.
+@@ -7401,6 +7500,9 @@ PresShell::HandleEvent(nsIFrame* aFrame,
+                                  : nullptr);
+ 
+   nsCOMPtr<nsIDocument> retargetEventDoc;
++
++  LOG("PresShell::HandleEvent, !aDontRetargetEvents: [%d]", !aDontRetargetEvents);
++  
+   if (!aDontRetargetEvents) {
+     // key and IME related events should not cross top level window boundary.
+     // Basically, such input events should be fired only on focused widget.
+@@ -7454,6 +7556,7 @@ PresShell::HandleEvent(nsIFrame* aFrame,
+           return NS_OK;
+ 
+         nsCOMPtr<nsIPresShell> shell = frame->PresContext()->GetPresShell();
++        LOG("PresShell::HandleEvent, to recall HandleEvent with aDontRetargetEvents: true");
+         return shell->HandleEvent(frame, aEvent, true, aEventStatus);
+       }
+     }
+@@ -7474,6 +7577,8 @@ PresShell::HandleEvent(nsIFrame* aFrame,
+ 
+   nsIFrame* frame = aFrame;
+ 
++  LOG("PresShell::HandleEvent, aEvent->IsUsingCoordinates(): [%d]", aEvent->IsUsingCoordinates());
++
+   if (aEvent->IsUsingCoordinates()) {
+     ReleasePointerCaptureCaller releasePointerCaptureCaller;
+     if (nsLayoutUtils::AreAsyncAnimationsEnabled() && mDocument) {
+@@ -7870,6 +7975,8 @@ PresShell::HandleEvent(nsIFrame* aFrame,
+ 
+   nsresult rv = NS_OK;
+ 
++  LOG("PresShell::HandleEvent, to check frame: [%p]", frame);
++
+   if (frame) {
+     PushCurrentEventInfo(nullptr, nullptr);
+ 
+@@ -7950,6 +8057,9 @@ PresShell::HandleEvent(nsIFrame* aFrame,
+     } else {
+       mCurrentEventFrame = frame;
+     }
++
++    LOG("PresShell::HandleEvent, GetCurrentEventFrame(): [%p]", GetCurrentEventFrame());
++
+     if (GetCurrentEventFrame()) {
+       rv = HandleEventInternal(aEvent, aEventStatus, true);
+     }
+@@ -8103,6 +8213,10 @@ PresShell::HandleEventInternal(WidgetEvent* aEvent,
+                                nsEventStatus* aStatus,
+                                bool aIsHandlingNativeEvent)
+ {
++
++  LOG("PresShell::HandleEventInternal ======================================>");
++
++
+   RefPtr<EventStateManager> manager = mPresContext->EventStateManager();
+   nsresult rv = NS_OK;
+ 
+@@ -8225,16 +8339,20 @@ PresShell::HandleEventInternal(WidgetEvent* aEvent,
+ 
+     // 1. Give event to event manager for pre event state changes and
+     //    generation of synthetic events.
++    LOG("PresShell::HandleEventInternal, Give event to event manager for pre event state changes. (aStatus == nsEventStatus_eIgnore): [%d]", (*aStatus == nsEventStatus_eIgnore));
+     rv = manager->PreHandleEvent(mPresContext, aEvent, mCurrentEventFrame,
+                                  mCurrentEventContent, aStatus);
+ 
++
+     // 2. Give event to the DOM for third party and JS use.
+     if (NS_SUCCEEDED(rv)) {
++    LOG("PresShell::HandleEventInternal, Give event to the DOM for third party and JS use. (aStatus == nsEventStatus_eIgnore): [%d]", (*aStatus == nsEventStatus_eIgnore));
+       bool wasHandlingKeyBoardEvent =
+         nsContentUtils::IsHandlingKeyBoardEvent();
+       if (aEvent->mClass == eKeyboardEventClass) {
+         nsContentUtils::SetIsHandlingKeyBoardEvent(true);
+       }
++      LOG("PresShell::HandleEventInternal, aEvent->IsAllowedToDispatchDOMEvent(): [%d]", aEvent->IsAllowedToDispatchDOMEvent());
+       if (aEvent->IsAllowedToDispatchDOMEvent()) {
+         MOZ_ASSERT(nsContentUtils::IsSafeToRunScript(),
+           "Somebody changed aEvent to cause a DOM event!");
+@@ -8242,6 +8360,7 @@ PresShell::HandleEventInternal(WidgetEvent* aEvent,
+         if (aEvent->mClass == eTouchEventClass) {
+           DispatchTouchEventToDOM(aEvent, aStatus, &eventCB, touchIsNew);
+         } else {
++          LOG("PresShell::HandleEventInternal, to call DispatchEventToDOM: [%d]", (*aStatus == nsEventStatus_eIgnore));
+           DispatchEventToDOM(aEvent, aStatus, &eventCB);
+         }
+       }
+@@ -8251,6 +8370,7 @@ PresShell::HandleEventInternal(WidgetEvent* aEvent,
+       // 3. Give event to event manager for post event state changes and
+       //    generation of synthetic events.
+       if (!mIsDestroying && NS_SUCCEEDED(rv)) {
++      LOG("PresShell::HandleEventInternal, Give event to event manager for post event state changes: [%d]", (*aStatus == nsEventStatus_eIgnore));
+         rv = manager->PostHandleEvent(mPresContext, aEvent,
+                                       GetCurrentEventFrame(), aStatus);
+       }
+@@ -8338,6 +8458,9 @@ PresShell::DispatchEventToDOM(WidgetEvent* aEvent,
+                               nsEventStatus* aStatus,
+                               nsPresShellEventCB* aEventCB)
+ {
++
++  LOG("PresShell::DispatchEventToDOM============================>");
++
+   nsresult rv = NS_OK;
+   nsCOMPtr<nsINode> eventTarget = mCurrentEventContent.get();
+   nsPresShellEventCB* eventCBPtr = aEventCB;
+@@ -8358,13 +8481,17 @@ PresShell::DispatchEventToDOM(WidgetEvent* aEvent,
+   }
+   if (eventTarget) {
+     if (aEvent->mClass == eCompositionEventClass) {
++      LOG("PresShell::DispatchEventToDOM, aEvent is eCompositionEventClass: [%d]", (*aStatus == nsEventStatus_eIgnore));
+       IMEStateManager::DispatchCompositionEvent(eventTarget, mPresContext,
+                                                 aEvent->AsCompositionEvent(),
+                                                 aStatus, eventCBPtr);
++
+     } else if (aEvent->mClass == eKeyboardEventClass) {
++      LOG("PresShell::DispatchEventToDOM, aEvent is eKeyboardEventClass: [%d]", (*aStatus == nsEventStatus_eIgnore));
+       HandleKeyboardEvent(eventTarget, *(aEvent->AsKeyboardEvent()),
+                           false, aStatus, eventCBPtr);
+     } else {
++      LOG("PresShell::DispatchEventToDOM, aEvent is Default EventClass: [%d]", (*aStatus == nsEventStatus_eIgnore));
+       EventDispatcher::Dispatch(eventTarget, mPresContext,
+                                 aEvent, nullptr, aStatus, eventCBPtr);
+     }
+diff --git a/widget/gonk/libui/EventHub.cpp b/widget/gonk/libui/EventHub.cpp
+index 9da29bbeb597..291234354c18 100644
+--- a/widget/gonk/libui/EventHub.cpp
++++ b/widget/gonk/libui/EventHub.cpp
+@@ -16,7 +16,7 @@
+ 
+ #define LOG_TAG "EventHub"
+ 
+-// #define LOG_NDEBUG 0
++#define LOG_NDEBUG 0
+ #include "cutils_log.h"
+ 
+ #include "EventHub.h"
+diff --git a/widget/gonk/libui/InputReader.cpp b/widget/gonk/libui/InputReader.cpp
+index 55d325be3073..61b214435c1c 100644
+--- a/widget/gonk/libui/InputReader.cpp
++++ b/widget/gonk/libui/InputReader.cpp
+@@ -14,13 +14,13 @@
+  * limitations under the License.
+  */
+ 
+-#define LOG_TAG "InputReader"
++#define LOG_TAG "===xiangrui===InputReader"
+ 
+-//#define LOG_NDEBUG 0
++#define LOG_NDEBUG 0
+ #include "cutils_log.h"
+ 
+ // Log debug messages for each raw event received from the EventHub.
+-#define DEBUG_RAW_EVENTS 0
++#define DEBUG_RAW_EVENTS 1
+ 
+ // Log debug messages about touch screen filtering hacks.
+ #define DEBUG_HACKS 0
+@@ -2080,6 +2081,30 @@ void KeyboardInputMapper::process(const RawEvent* rawEvent) {
+                 keyCode = AKEYCODE_UNKNOWN;
+                 flags = 0;
+             }
++            ALOGI("processing key up from device %s with keyCode=%d, scanCode=%d, rawEvent->value=%d",
++                    getDeviceName().string(), keyCode, scanCode, (rawEvent->value != 0));
+             processKey(rawEvent->when, rawEvent->value != 0, keyCode, scanCode, flags);
+             // Simulate an microphonetoggle key if it is enabled but no hardware key.
+             // If device have hardware it need to be mapped to KEY_PROG1(0x148).
+@@ -2113,6 +2138,9 @@ bool KeyboardInputMapper::isKeyboardOrGamepadKey(int32_t scanCode) {
+ void KeyboardInputMapper::processKey(nsecs_t when, bool down, int32_t keyCode,
+         int32_t scanCode, uint32_t policyFlags) {
+ 
++    ALOGI("KeyboardInputMapper::processKey===> %s with keyCode=%d, scanCode=%d, isDown=%d",
++        getDeviceName().string(), keyCode, scanCode, down);
++
+     if (down) {
+         // Rotate key codes according to orientation if needed.
+         if (mParameters.orientationAware && mParameters.hasAssociatedDisplay) {
