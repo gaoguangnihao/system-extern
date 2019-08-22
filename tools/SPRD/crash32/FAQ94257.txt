@@ -1,0 +1,56 @@
+crash commond 
+
+
+1. ls sysdump.core.0*
+sysdump.core.00  sysdump.core.01_0x80000000-0x9fffffff_dump.lst
+
+2. type sysdump.core.*> sysdump.core
+
+linux
+cat sysdump.core.*> sysdump.core
+
+get out/target/product/scx35_sp7731gea_hd/obj/KERNEL/vmlinux
+
+put sysdump.core£¬vmlinux and crash32 on same directory 
+chmod 777 crash32
+./crash32 vmlinux sysdump.core
+
+
+
+
+
+1. log 
+2. rd 
+
+crash> rd console_printk 4
+c0adc5a4:  0000000f 00000004 00000001 00000007   ................
+
+crash> rd 0xc0007000 10
+c0007000:  8001140e 8011140e 8021140e 8031140e   ..........!...1.
+c0007010:  8041140e 8051140e 8061140e 8071140e   ..A...Q...a...q.
+c0007020:  8081140e 8091140e                     ........
+
+
+crash> rd 0xece9fd68  100 -s
+ece9fd68:  59694182 00aed000 00000000 00aed000 
+ece9fd78:  600f0013 00000027 00000026 0000005f 
+ece9fd88:  workqueue_cpu_down_callback_nb.30339 boot_tvec_bases+1176 ec067600 ece9fdfc 
+ece9fd98:  tracing_cpu ece9fdb0 sched_clock_32+116 console_unlock+384 
+
+
+
+3.p 
+
+
+
+
+4.runq
+
+crash> runq
+CPU 0 RUNQUEUE: c154d040
+  CURRENT: PID: 59     TASK: ece98480  COMMAND: "kworker/0:1"
+  RT PRIO_ARRAY: c154d118
+     [no tasks queued]
+  CFS RB_ROOT: c154d0b0
+     [no tasks queued]
+

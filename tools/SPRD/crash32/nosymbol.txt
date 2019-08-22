@@ -1,0 +1,3741 @@
+Operating system: Android
+                  0.0.0 Linux 3.10.65 #1 SMP PREEMPT Thu Nov 2 15:05:12 CST 2017 armv7l
+CPU: arm
+     ARMv7 ARM part(0x4100c070) features: swp,half,thumb,fastmult,vfpv2,edsp,neon,vfpv3,tls,vfpv4,idiva,idivt
+     2 CPUs
+
+Crash reason:  SIGSEGV
+Crash address: 0xafb005ac
+Process uptime: not available
+
+Thread 47 (crashed)
+ 0  libmozglue.so + 0xac94
+     r0 = 0xffff5040    r1 = 0xaef00634    r2 = 0xb3a000c0    r3 = 0xaef00624
+     r4 = 0xaef00000    r5 = 0x0000007a    r6 = 0x00100077    r7 = 0x00000009
+     r8 = 0xaef7a000    r9 = 0xb3a00040   r10 = 0x00009000   r12 = 0xafb00594
+     fp = 0x00000001    sp = 0xad2fffe8    lr = 0xffff5000    pc = 0xb6f01c94
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0xd2c7
+     sp = 0xad300028    pc = 0xb6f042c9
+    Found by: stack scanning
+ 2  libmozglue.so + 0xd471
+     sp = 0xad300068    pc = 0xb6f04473
+    Found by: stack scanning
+ 3  libmozglue.so + 0xd5dd
+     sp = 0xad300088    pc = 0xb6f045df
+    Found by: stack scanning
+ 4  libnss3.so + 0xb5a5f
+     sp = 0xad300090    pc = 0xb46f0a61
+    Found by: stack scanning
+ 5  libnss3.so + 0xb5a57
+     sp = 0xad300094    pc = 0xb46f0a59
+    Found by: stack scanning
+ 6  libnss3.so + 0xa73a7
+     sp = 0xad3000a0    pc = 0xb46e23a9
+    Found by: stack scanning
+ 7  libnss3.so + 0xa893d
+     sp = 0xad3000b0    pc = 0xb46e393f
+    Found by: stack scanning
+ 8  libnss3.so + 0xabaa9
+     sp = 0xad3000c0    pc = 0xb46e6aab
+    Found by: stack scanning
+ 9  libnss3.so + 0x13259e
+     sp = 0xad3000cc    pc = 0xb476d5a0
+    Found by: stack scanning
+10  libnss3.so + 0xc1361
+     sp = 0xad3000e0    pc = 0xb46fc363
+    Found by: stack scanning
+11  libnss3.so + 0xc16af
+     sp = 0xad300118    pc = 0xb46fc6b1
+    Found by: stack scanning
+12  libnss3.so + 0xc16df
+     sp = 0xad300130    pc = 0xb46fc6e1
+    Found by: stack scanning
+13  libnss3.so + 0xc3241
+     sp = 0xad300140    pc = 0xb46fe243
+    Found by: stack scanning
+14  libnss3.so + 0x13259e
+     sp = 0xad300144    pc = 0xb476d5a0
+    Found by: stack scanning
+15  libnss3.so + 0xa3e83
+     sp = 0xad300170    pc = 0xb46dee85
+    Found by: stack scanning
+16  libnss3.so + 0xc5dfd
+     sp = 0xad3001a0    pc = 0xb4700dff
+    Found by: stack scanning
+17  libnss3.so + 0x10fa51
+     sp = 0xad3001a8    pc = 0xb474aa53
+    Found by: stack scanning
+18  libnss3.so + 0xd3fb9
+     sp = 0xad3001e8    pc = 0xb470efbb
+    Found by: stack scanning
+19  libnss3.so + 0xdaf67
+     sp = 0xad3001f8    pc = 0xb4715f69
+    Found by: stack scanning
+20  libnss3.so + 0xb15ad
+     sp = 0xad300258    pc = 0xb46ec5af
+    Found by: stack scanning
+21  libnss3.so + 0x11065b
+     sp = 0xad300260    pc = 0xb474b65d
+    Found by: stack scanning
+22  libnss3.so + 0x11065e
+     sp = 0xad300264    pc = 0xb474b660
+    Found by: stack scanning
+23  libnss3.so + 0x110663
+     sp = 0xad300268    pc = 0xb474b665
+    Found by: stack scanning
+24  libnss3.so + 0x11064e
+     sp = 0xad30026c    pc = 0xb474b650
+    Found by: stack scanning
+25  libnss3.so + 0xaadc1
+     sp = 0xad300288    pc = 0xb46e5dc3
+    Found by: stack scanning
+26  libnss3.so + 0xaae11
+     sp = 0xad300298    pc = 0xb46e5e13
+    Found by: stack scanning
+27  libnss3.so + 0xd9de5
+     sp = 0xad3002b0    pc = 0xb4714de7
+    Found by: stack scanning
+28  libmozglue.so + 0xd43d
+     sp = 0xad3002f0    pc = 0xb6f0443f
+    Found by: stack scanning
+29  libmozglue.so + 0xd5dd
+     sp = 0xad300310    pc = 0xb6f045df
+    Found by: stack scanning
+30  libnss3.so + 0xa73c9
+     sp = 0xad300328    pc = 0xb46e23cb
+    Found by: stack scanning
+31  libnss3.so + 0xa75c7
+     sp = 0xad300338    pc = 0xb46e25c9
+    Found by: stack scanning
+32  libnss3.so + 0xa7c4d
+     sp = 0xad300358    pc = 0xb46e2c4f
+    Found by: stack scanning
+33  libnss3.so + 0xd72e5
+     sp = 0xad3003d8    pc = 0xb47122e7
+    Found by: stack scanning
+34  libnss3.so + 0x13259e
+     sp = 0xad3003e4    pc = 0xb476d5a0
+    Found by: stack scanning
+35  libnss3.so + 0x1250fe
+     sp = 0xad3003fc    pc = 0xb4760100
+    Found by: stack scanning
+36  libnss3.so + 0x125eb6
+     sp = 0xad300400    pc = 0xb4760eb8
+    Found by: stack scanning
+37  libnss3.so + 0x1106e0
+     sp = 0xad300410    pc = 0xb474b6e2
+    Found by: stack scanning
+38  libnss3.so + 0x1106d8
+     sp = 0xad300414    pc = 0xb474b6da
+    Found by: stack scanning
+39  libnss3.so + 0x1106d2
+     sp = 0xad300418    pc = 0xb474b6d4
+    Found by: stack scanning
+40  libnss3.so + 0x1106d6
+     sp = 0xad30041c    pc = 0xb474b6d8
+    Found by: stack scanning
+41  libnss3.so + 0x1106ca
+     sp = 0xad300420    pc = 0xb474b6cc
+    Found by: stack scanning
+42  libc.so + 0x41fef
+     sp = 0xad300428    pc = 0xb47cbff1
+    Found by: stack scanning
+43  libmozglue.so + 0x724f
+     sp = 0xad300438    pc = 0xb6efe251
+    Found by: stack scanning
+44  libnss3.so + 0x13259e
+     sp = 0xad300444    pc = 0xb476d5a0
+    Found by: stack scanning
+45  libnss3.so + 0xb5c0f
+     sp = 0xad300458    pc = 0xb46f0c11
+    Found by: stack scanning
+46  libnss3.so + 0xb5e61
+     sp = 0xad300470    pc = 0xb46f0e63
+    Found by: stack scanning
+47  libxul.so + 0x721cd7
+     sp = 0xad300488    pc = 0xb5127cd9
+    Found by: stack scanning
+48  libxul.so + 0x1cc9bb4
+     sp = 0xad3004a4    pc = 0xb66cfbb6
+    Found by: stack scanning
+49  libc.so + 0x41fef
+     sp = 0xad3004e8    pc = 0xb47cbff1
+    Found by: stack scanning
+50  libmozglue.so + 0x724f
+     sp = 0xad3004f8    pc = 0xb6efe251
+    Found by: stack scanning
+51  libxul.so + 0x724071
+     sp = 0xad300528    pc = 0xb512a073
+    Found by: stack scanning
+52  libxul.so + 0x72da2b
+     sp = 0xad300578    pc = 0xb5133a2d
+    Found by: stack scanning
+53  libxul.so + 0x3bdfb1
+     sp = 0xad3005c0    pc = 0xb4dc3fb3
+    Found by: stack scanning
+54  libxul.so + 0x47c06d
+     sp = 0xad3005c8    pc = 0xb4e8206f
+    Found by: stack scanning
+55  libxul.so + 0x3bdbdd
+     sp = 0xad3005d8    pc = 0xb4dc3bdf
+    Found by: stack scanning
+56  libxul.so + 0x72db97
+     sp = 0xad3005f0    pc = 0xb5133b99
+    Found by: stack scanning
+57  libxul.so + 0x101c82b
+     sp = 0xad300608    pc = 0xb5a2282d
+    Found by: stack scanning
+58  libxul.so + 0x1cc9bb4
+     sp = 0xad300618    pc = 0xb66cfbb6
+    Found by: stack scanning
+59  libxul.so + 0x1e8ead0
+     sp = 0xad300690    pc = 0xb6894ad2
+    Found by: stack scanning
+60  libxul.so + 0x101c303
+     sp = 0xad300698    pc = 0xb5a22305
+    Found by: stack scanning
+61  linker + 0x6c4b
+     sp = 0xad300728    pc = 0xb6f46c4d
+    Found by: stack scanning
+62  libmozglue.so + 0x5e23
+     sp = 0xad300738    pc = 0xb6efce25
+    Found by: stack scanning
+63  libxul.so + 0x101abf5
+     sp = 0xad300760    pc = 0xb5a20bf7
+    Found by: stack scanning
+64  libxul.so + 0x3f93ab
+     sp = 0xad300768    pc = 0xb4dff3ad
+    Found by: stack scanning
+65  libnss3.so + 0xfd5a3
+     sp = 0xad30076c    pc = 0xb47385a5
+    Found by: stack scanning
+66  libnss3.so + 0x116ae5
+     sp = 0xad30077c    pc = 0xb4751ae7
+    Found by: stack scanning
+67  libnss3.so + 0xfd5a3
+     sp = 0xad300780    pc = 0xb47385a5
+    Found by: stack scanning
+68  libc.so + 0x4271f
+     sp = 0xad300784    pc = 0xb47cc721
+    Found by: stack scanning
+69  libc.so + 0x4271f
+     sp = 0xad3007a0    pc = 0xb47cc721
+    Found by: stack scanning
+70  libxul.so + 0x40b37b
+     sp = 0xad3007c8    pc = 0xb4e1137d
+    Found by: stack scanning
+71  libxul.so + 0x10121d9
+     sp = 0xad3007d8    pc = 0xb5a181db
+    Found by: stack scanning
+72  libxul.so + 0x3f93ab
+     sp = 0xad300810    pc = 0xb4dff3ad
+    Found by: stack scanning
+73  libxul.so + 0x509aa5
+     sp = 0xad300828    pc = 0xb4f0faa7
+    Found by: stack scanning
+74  libxul.so + 0x570e03
+     sp = 0xad300848    pc = 0xb4f76e05
+    Found by: stack scanning
+75  libnss3.so + 0xfc93f
+     sp = 0xad30086c    pc = 0xb4737941
+    Found by: stack scanning
+76  libxul.so + 0x40b37b
+     sp = 0xad300870    pc = 0xb4e1137d
+    Found by: stack scanning
+77  libxul.so + 0x57cd9b
+     sp = 0xad300880    pc = 0xb4f82d9d
+    Found by: stack scanning
+78  libmozglue.so + 0xd5dd
+     sp = 0xad300888    pc = 0xb6f045df
+    Found by: stack scanning
+79  libxul.so + 0x224f58e
+     sp = 0xad300890    pc = 0xb6c55590
+    Found by: stack scanning
+80  libxul.so + 0x201078a
+     sp = 0xad300894    pc = 0xb6a1678c
+    Found by: stack scanning
+81  libxul.so + 0x56d439
+     sp = 0xad3008b0    pc = 0xb4f7343b
+    Found by: stack scanning
+82  libxul.so + 0x3fabd9
+     sp = 0xad3008c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+83  libnss3.so + 0xfc9fb
+     sp = 0xad3008f8    pc = 0xb47379fd
+    Found by: stack scanning
+84  libc.so + 0x415db
+     sp = 0xad300918    pc = 0xb47cb5dd
+    Found by: stack scanning
+85  libc.so + 0x415bb
+     sp = 0xad30091c    pc = 0xb47cb5bd
+    Found by: stack scanning
+86  libc.so + 0x415bb
+     sp = 0xad300924    pc = 0xb47cb5bd
+    Found by: stack scanning
+87  libc.so + 0x19235
+     sp = 0xad300928    pc = 0xb47a3237
+    Found by: stack scanning
+88  libnss3.so + 0xfc93f
+     sp = 0xad300964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 0
+ 0  libc.so + 0x168ac
+     r0 = 0xb3a00044    r1 = 0x00000080    r2 = 0x00000002    r3 = 0x00000000
+     r4 = 0xe0000000    r5 = 0x0000000b    r6 = 0x00000080    r7 = 0x000000f0
+     r8 = 0xbefb8084    r9 = 0x00000000   r10 = 0xbefb8088   r12 = 0xbefb8060
+     fp = 0xb6f61c50    sp = 0xbefb8050    lr = 0xb47cbeef    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x19d2153
+     sp = 0xbefb8080    pc = 0xb63d8155
+    Found by: stack scanning
+ 2  libc.so + 0x41fef
+     sp = 0xbefb80b8    pc = 0xb47cbff1
+    Found by: stack scanning
+ 3  libmozglue.so + 0xd377
+     sp = 0xbefb80c8    pc = 0xb6f04379
+    Found by: stack scanning
+ 4  libmozglue.so + 0xd5dd
+     sp = 0xbefb80e8    pc = 0xb6f045df
+    Found by: stack scanning
+ 5  libxul.so + 0x1c1866d
+     sp = 0xbefb80f0    pc = 0xb661e66f
+    Found by: stack scanning
+ 6  libxul.so + 0x1c5d3c9
+     sp = 0xbefb8118    pc = 0xb66633cb
+    Found by: stack scanning
+ 7  libxul.so + 0x21aa3da
+     sp = 0xbefb81a8    pc = 0xb6bb03dc
+    Found by: stack scanning
+ 8  libmozglue.so + 0xa2b7
+     sp = 0xbefb81f8    pc = 0xb6f012b9
+    Found by: stack scanning
+ 9  libmozglue.so + 0xaca9
+     sp = 0xbefb8228    pc = 0xb6f01cab
+    Found by: stack scanning
+10  libxul.so + 0x18da231
+     sp = 0xbefb8240    pc = 0xb62e0233
+    Found by: stack scanning
+11  libxul.so + 0x221af86
+     sp = 0xbefb826c    pc = 0xb6c20f88
+    Found by: stack scanning
+12  libxul.so + 0x221af86
+     sp = 0xbefb8270    pc = 0xb6c20f88
+    Found by: stack scanning
+13  libxul.so + 0x221aefe
+     sp = 0xbefb8278    pc = 0xb6c20f00
+    Found by: stack scanning
+14  libxul.so + 0x18d4deb
+     sp = 0xbefb82e0    pc = 0xb62daded
+    Found by: stack scanning
+15  libxul.so + 0x18e4e5f
+     sp = 0xbefb8368    pc = 0xb62eae61
+    Found by: stack scanning
+16  libxul.so + 0x7bd553
+     sp = 0xbefb8380    pc = 0xb51c3555
+    Found by: stack scanning
+17  libxul.so + 0x1b32e8d
+     sp = 0xbefb83a0    pc = 0xb6538e8f
+    Found by: stack scanning
+18  libxul.so + 0x22687f6
+     sp = 0xbefb8410    pc = 0xb6c6e7f8
+    Found by: stack scanning
+19  libxul.so + 0x23cfc26
+     sp = 0xbefb8428    pc = 0xb6dd5c28
+    Found by: stack scanning
+20  libxul.so + 0x23cfcee
+     sp = 0xbefb842c    pc = 0xb6dd5cf0
+    Found by: stack scanning
+21  libxul.so + 0x1b338d7
+     sp = 0xbefb8448    pc = 0xb65398d9
+    Found by: stack scanning
+22  libxul.so + 0x197322f
+     sp = 0xbefb844c    pc = 0xb6379231
+    Found by: stack scanning
+23  libxul.so + 0x1973227
+     sp = 0xbefb8454    pc = 0xb6379229
+    Found by: stack scanning
+24  libxul.so + 0x1973237
+     sp = 0xbefb846c    pc = 0xb6379239
+    Found by: stack scanning
+25  libxul.so + 0x1973237
+     sp = 0xbefb8474    pc = 0xb6379239
+    Found by: stack scanning
+26  libxul.so + 0x19d3f93
+     sp = 0xbefb8484    pc = 0xb63d9f95
+    Found by: stack scanning
+27  libxul.so + 0x1b33123
+     sp = 0xbefb84b8    pc = 0xb6539125
+    Found by: stack scanning
+28  libxul.so + 0x186810c
+     sp = 0xbefb84d8    pc = 0xb626e10e
+    Found by: stack scanning
+29  libxul.so + 0x1a97479
+     sp = 0xbefb84e8    pc = 0xb649d47b
+    Found by: stack scanning
+30  libxul.so + 0x1babb9f
+     sp = 0xbefb8530    pc = 0xb65b1ba1
+    Found by: stack scanning
+31  libxul.so + 0x23b5566
+     sp = 0xbefb8534    pc = 0xb6dbb568
+    Found by: stack scanning
+32  libxul.so + 0x1aea001
+     sp = 0xbefb8580    pc = 0xb64f0003
+    Found by: stack scanning
+33  libxul.so + 0x1af4e75
+     sp = 0xbefb85a0    pc = 0xb64fae77
+    Found by: stack scanning
+34  libxul.so + 0x95e069
+     sp = 0xbefb85a8    pc = 0xb536406b
+    Found by: stack scanning
+35  libxul.so + 0x22689da
+     sp = 0xbefb85b0    pc = 0xb6c6e9dc
+    Found by: stack scanning
+36  libxul.so + 0x224ca36
+     sp = 0xbefb85dc    pc = 0xb6c52a38
+    Found by: stack scanning
+37  libxul.so + 0x7bd50b
+     sp = 0xbefb85e8    pc = 0xb51c350d
+    Found by: stack scanning
+38  libxul.so + 0x22689da
+     sp = 0xbefb8640    pc = 0xb6c6e9dc
+    Found by: stack scanning
+39  libxul.so + 0x3f76f3
+     sp = 0xbefb8648    pc = 0xb4dfd6f5
+    Found by: stack scanning
+40  libxul.so + 0x95e069
+     sp = 0xbefb8650    pc = 0xb536406b
+    Found by: stack scanning
+41  libmozglue.so + 0xd43d
+     sp = 0xbefb86e0    pc = 0xb6f0443f
+    Found by: stack scanning
+42  libxul.so + 0x1bad717
+     sp = 0xbefb8708    pc = 0xb65b3719
+    Found by: stack scanning
+43  libxul.so + 0x1b2a0fe
+     sp = 0xbefb8750    pc = 0xb6530100
+    Found by: stack scanning
+44  libxul.so + 0x1b2eeef
+     sp = 0xbefb8780    pc = 0xb6534ef1
+    Found by: stack scanning
+45  libxul.so + 0x1b31c03
+     sp = 0xbefb8798    pc = 0xb6537c05
+    Found by: stack scanning
+46  libxul.so + 0x23f6bfe
+     sp = 0xbefb87cc    pc = 0xb6dfcc00
+    Found by: stack scanning
+47  libxul.so + 0x1a4decf
+     sp = 0xbefb87fc    pc = 0xb6453ed1
+    Found by: stack scanning
+48  libxul.so + 0x1b3251f
+     sp = 0xbefb8840    pc = 0xb6538521
+    Found by: stack scanning
+49  libxul.so + 0x3f76f3
+     sp = 0xbefb8850    pc = 0xb4dfd6f5
+    Found by: stack scanning
+50  libxul.so + 0x6dc231
+     sp = 0xbefb8858    pc = 0xb50e2233
+    Found by: stack scanning
+51  libxul.so + 0x6eaf17
+     sp = 0xbefb8860    pc = 0xb50f0f19
+    Found by: stack scanning
+52  libxul.so + 0x3f76f3
+     sp = 0xbefb8868    pc = 0xb4dfd6f5
+    Found by: stack scanning
+53  libxul.so + 0x6dc231
+     sp = 0xbefb8870    pc = 0xb50e2233
+    Found by: stack scanning
+54  libxul.so + 0x6eaf17
+     sp = 0xbefb8878    pc = 0xb50f0f19
+    Found by: stack scanning
+55  libxul.so + 0x7089ed
+     sp = 0xbefb8888    pc = 0xb510e9ef
+    Found by: stack scanning
+56  libxul.so + 0x2011b3e
+     sp = 0xbefb888c    pc = 0xb6a17b40
+    Found by: stack scanning
+57  libxul.so + 0x2267396
+     sp = 0xbefb88a8    pc = 0xb6c6d398
+    Found by: stack scanning
+58  libxul.so + 0x1934d4b
+     sp = 0xbefb88e0    pc = 0xb633ad4d
+    Found by: stack scanning
+59  libxul.so + 0x1af1fb1
+     sp = 0xbefb8918    pc = 0xb64f7fb3
+    Found by: stack scanning
+60  libxul.so + 0x1babb9f
+     sp = 0xbefb8930    pc = 0xb65b1ba1
+    Found by: stack scanning
+61  libxul.so + 0x23cfc26
+     sp = 0xbefb893c    pc = 0xb6dd5c28
+    Found by: stack scanning
+62  libxul.so + 0x23cfc26
+     sp = 0xbefb8964    pc = 0xb6dd5c28
+    Found by: stack scanning
+63  libxul.so + 0x24b76a6
+     sp = 0xbefb898c    pc = 0xb6ebd6a8
+    Found by: stack scanning
+64  libxul.so + 0x24b76a6
+     sp = 0xbefb8998    pc = 0xb6ebd6a8
+    Found by: stack scanning
+65  libxul.so + 0x3efeed
+     sp = 0xbefb89a0    pc = 0xb4df5eef
+    Found by: stack scanning
+66  libxul.so + 0x3eff53
+     sp = 0xbefb89c0    pc = 0xb4df5f55
+    Found by: stack scanning
+67  libxul.so + 0x24b76a6
+     sp = 0xbefb89e8    pc = 0xb6ebd6a8
+    Found by: stack scanning
+
+Thread 1
+ 0  libc.so + 0x42b38
+     r0 = 0x00000003    r1 = 0xc0186201    r2 = 0xb3801890    r3 = 0xb3801888
+     r4 = 0xb28a3090    r5 = 0xb28a30c4    r6 = 0xb28a3060    r7 = 0x00000036
+     r8 = 0xb3801890    r9 = 0xbefba7f4   r10 = 0xb3703000   r12 = 0xb3904320
+     fp = 0xb4844bb1    sp = 0xb3801878    lr = 0xb47d35bd    pc = 0xb47ccb38
+    Found by: given as instruction pointer in context
+ 1  libutils.so + 0x10071
+     sp = 0xb38018f0    pc = 0xb4845073
+    Found by: stack scanning
+ 2  libutils.so + 0xffff
+     sp = 0xb38018f8    pc = 0xb4845001
+    Found by: stack scanning
+ 3  linker + 0x21c4e
+     sp = 0xb3801914    pc = 0xb6f61c50
+    Found by: stack scanning
+ 4  libc.so + 0x415db
+     sp = 0xb3801918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 5  libc.so + 0x415bb
+     sp = 0xb380191c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 6  libc.so + 0x415bb
+     sp = 0xb3801924    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 7  libc.so + 0x19235
+     sp = 0xb3801928    pc = 0xb47a3237
+    Found by: stack scanning
+ 8  linker + 0x21bfe
+     sp = 0xb3801934    pc = 0xb6f61c00
+    Found by: stack scanning
+ 9  libutils.so + 0xfbaf
+     sp = 0xb3801964    pc = 0xb4844bb1
+    Found by: stack scanning
+
+Thread 2
+ 0  libc.so + 0x42b38
+     r0 = 0x00000003    r1 = 0xc0186201    r2 = 0xb3702890    r3 = 0xb3702888
+     r4 = 0xb28a3140    r5 = 0xb28a3174    r6 = 0xb28a3110    r7 = 0x00000036
+     r8 = 0xb3702890    r9 = 0xb3801764   r10 = 0xb3604000   r12 = 0xb3904320
+     fp = 0xb4844bb1    sp = 0xb3702878    lr = 0xb47d35bd    pc = 0xb47ccb38
+    Found by: given as instruction pointer in context
+ 1  libutils.so + 0x10071
+     sp = 0xb37028f0    pc = 0xb4845073
+    Found by: stack scanning
+ 2  libutils.so + 0xffff
+     sp = 0xb37028f8    pc = 0xb4845001
+    Found by: stack scanning
+ 3  libc.so + 0x415db
+     sp = 0xb3702918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 4  libc.so + 0x415bb
+     sp = 0xb370291c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 5  libc.so + 0x415bb
+     sp = 0xb3702924    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 6  libc.so + 0x19235
+     sp = 0xb3702928    pc = 0xb47a3237
+    Found by: stack scanning
+ 7  hwcomposer.sc8830.so + 0x23ffe
+     sp = 0xb3702948    pc = 0xb3604000
+    Found by: stack scanning
+ 8  libutils.so + 0xfbaf
+     sp = 0xb3702964    pc = 0xb4844bb1
+    Found by: stack scanning
+
+Thread 3
+ 0  libc.so + 0x168ac
+     r0 = 0xb39172e8    r1 = 0x00000080    r2 = 0xfffffffe    r3 = 0x00000000
+     r4 = 0xb36025f4    r5 = 0xb3917280    r6 = 0xb35f5d27    r7 = 0x000000f0
+     r8 = 0xfffffffe    r9 = 0x00000000   r10 = 0x00000080   r12 = 0xb35158c0
+     fp = 0xb4844bb1    sp = 0xb35158b0    lr = 0xb47a5c5d    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  hwcomposer.sc8830.so + 0x225f2
+     sp = 0xb35158c8    pc = 0xb36025f4
+    Found by: stack scanning
+ 2  hwcomposer.sc8830.so + 0x15d25
+     sp = 0xb35158d0    pc = 0xb35f5d27
+    Found by: stack scanning
+ 3  hwcomposer.sc8830.so + 0x15d2f
+     sp = 0xb35158e8    pc = 0xb35f5d31
+    Found by: stack scanning
+ 4  libutils.so + 0x10071
+     sp = 0xb35158f0    pc = 0xb4845073
+    Found by: stack scanning
+ 5  libutils.so + 0xffff
+     sp = 0xb35158f8    pc = 0xb4845001
+    Found by: stack scanning
+ 6  linker + 0x21c4e
+     sp = 0xb3515914    pc = 0xb6f61c50
+    Found by: stack scanning
+ 7  libc.so + 0x415db
+     sp = 0xb3515918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 8  libc.so + 0x415bb
+     sp = 0xb351591c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 9  libc.so + 0x415bb
+     sp = 0xb3515924    pc = 0xb47cb5bd
+    Found by: stack scanning
+10  libc.so + 0x19235
+     sp = 0xb3515928    pc = 0xb47a3237
+    Found by: stack scanning
+11  libutils.so + 0xfbaf
+     sp = 0xb3515964    pc = 0xb4844bb1
+    Found by: stack scanning
+12  libEGL.so + 0x6f3e6
+     sp = 0xb3515988    pc = 0xb48fb3e8
+    Found by: stack scanning
+
+Thread 4
+ 0  libc.so + 0x42b3c
+     r0 = 0x00000000    r1 = 0x40044620    r2 = 0x00000000    r3 = 0xb34138d0
+     r4 = 0xb3919380    r5 = 0xb39193a8    r6 = 0xb39193ac    r7 = 0x00000036
+     r8 = 0xb34138f4    r9 = 0xbefb9744   r10 = 0xb3315000   r12 = 0xb391938c
+     fp = 0xb4844bb1    sp = 0xb34138c0    lr = 0xb47d35bd    pc = 0xb47ccb3c
+    Found by: given as instruction pointer in context
+ 1  hwcomposer.sc8830.so + 0xd9f1
+     sp = 0xb34138cc    pc = 0xb35ed9f3
+    Found by: stack scanning
+ 2  hwcomposer.sc8830.so + 0xd9bf
+     sp = 0xb34138e8    pc = 0xb35ed9c1
+    Found by: stack scanning
+ 3  libutils.so + 0x10071
+     sp = 0xb34138f0    pc = 0xb4845073
+    Found by: stack scanning
+ 4  linker + 0x21c4e
+     sp = 0xb3413914    pc = 0xb6f61c50
+    Found by: stack scanning
+ 5  libc.so + 0x415db
+     sp = 0xb3413918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 6  libc.so + 0x415bb
+     sp = 0xb341391c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 7  libc.so + 0x415bb
+     sp = 0xb3413924    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 8  libc.so + 0x19235
+     sp = 0xb3413928    pc = 0xb47a3237
+    Found by: stack scanning
+ 9  libutils.so + 0xfbaf
+     sp = 0xb3413964    pc = 0xb4844bb1
+    Found by: stack scanning
+
+Thread 5
+ 0  libc.so + 0x168ac
+     r0 = 0xb3919404    r1 = 0x00000080    r2 = 0xfffffffe    r3 = 0x00000000
+     r4 = 0xb36024d4    r5 = 0xb39193d0    r6 = 0xb35f23dd    r7 = 0x000000f0
+     r8 = 0xfffffffe    r9 = 0x00000000   r10 = 0x00000080   r12 = 0xb3314860
+     fp = 0xb4844bb1    sp = 0xb3314850    lr = 0xb47a5c5d    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  hwcomposer.sc8830.so + 0x224d2
+     sp = 0xb3314868    pc = 0xb36024d4
+    Found by: stack scanning
+ 2  hwcomposer.sc8830.so + 0x123db
+     sp = 0xb3314870    pc = 0xb35f23dd
+    Found by: stack scanning
+ 3  hwcomposer.sc8830.so + 0x123e9
+     sp = 0xb3314888    pc = 0xb35f23eb
+    Found by: stack scanning
+ 4  linker + 0x21c4e
+     sp = 0xb33148c4    pc = 0xb6f61c50
+    Found by: stack scanning
+ 5  hwcomposer.sc8830.so + 0x123db
+     sp = 0xb33148d4    pc = 0xb35f23dd
+    Found by: stack scanning
+ 6  libutils.so + 0xfbaf
+     sp = 0xb33148ec    pc = 0xb4844bb1
+    Found by: stack scanning
+ 7  libutils.so + 0x10071
+     sp = 0xb33148f0    pc = 0xb4845073
+    Found by: stack scanning
+ 8  libutils.so + 0xffff
+     sp = 0xb33148f8    pc = 0xb4845001
+    Found by: stack scanning
+ 9  linker + 0x21c4e
+     sp = 0xb3314914    pc = 0xb6f61c50
+    Found by: stack scanning
+10  libc.so + 0x415db
+     sp = 0xb3314918    pc = 0xb47cb5dd
+    Found by: stack scanning
+11  libc.so + 0x415bb
+     sp = 0xb331491c    pc = 0xb47cb5bd
+    Found by: stack scanning
+12  libc.so + 0x415bb
+     sp = 0xb3314924    pc = 0xb47cb5bd
+    Found by: stack scanning
+13  libc.so + 0x19235
+     sp = 0xb3314928    pc = 0xb47a3237
+    Found by: stack scanning
+14  libutils.so + 0xfbaf
+     sp = 0xb3314964    pc = 0xb4844bb1
+    Found by: stack scanning
+
+Thread 6
+ 0  libc.so + 0x168ac
+     r0 = 0xb3a00044    r1 = 0x00000080    r2 = 0x00000002    r3 = 0x00000000
+     r4 = 0x00000000    r5 = 0x00000002    r6 = 0x00000080    r7 = 0x000000f0
+     r8 = 0xb30d864c    r9 = 0x00000000   r10 = 0xb30d8650   r12 = 0xb30d8628
+     fp = 0xb30d8980    sp = 0xb30d8618    lr = 0xb47cbeef    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libc.so + 0x41fef
+     sp = 0xb30d8680    pc = 0xb47cbff1
+    Found by: stack scanning
+ 2  libmozglue.so + 0xd377
+     sp = 0xb30d8690    pc = 0xb6f04379
+    Found by: stack scanning
+ 3  libmozglue.so + 0xd5dd
+     sp = 0xb30d86b0    pc = 0xb6f045df
+    Found by: stack scanning
+ 4  libutils.so + 0xe8b3
+     sp = 0xb30d86b8    pc = 0xb48438b5
+    Found by: stack scanning
+ 5  libutils.so + 0x10e67
+     sp = 0xb30d86c0    pc = 0xb4845e69
+    Found by: stack scanning
+ 6  libutils.so + 0x10f63
+     sp = 0xb30d86d8    pc = 0xb4845f65
+    Found by: stack scanning
+ 7  libui.so + 0x87b9
+     sp = 0xb30d86f0    pc = 0xb49077bb
+    Found by: stack scanning
+
+Thread 7
+ 0  libc.so + 0x168ac
+     r0 = 0xb3a00044    r1 = 0x00000080    r2 = 0x00000002    r3 = 0x00000000
+     r4 = 0x00000008    r5 = 0x0000000b    r6 = 0x00000080    r7 = 0x000000f0
+     r8 = 0xb2fcf754    r9 = 0x00000000   r10 = 0xb2fcf758   r12 = 0xb2fcf730
+     fp = 0xb2fcf980    sp = 0xb2fcf720    lr = 0xb47cbeef    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x575fb3
+     sp = 0xb2fcf780    pc = 0xb4f7bfb5
+    Found by: stack scanning
+ 2  libxul.so + 0x57166d
+     sp = 0xb2fcf784    pc = 0xb4f7766f
+    Found by: stack scanning
+ 3  libc.so + 0x41fef
+     sp = 0xb2fcf788    pc = 0xb47cbff1
+    Found by: stack scanning
+ 4  libmozglue.so + 0xd377
+     sp = 0xb2fcf798    pc = 0xb6f04379
+    Found by: stack scanning
+ 5  libxul.so + 0x575fb3
+     sp = 0xb2fcf7b4    pc = 0xb4f7bfb5
+    Found by: stack scanning
+ 6  libmozglue.so + 0xd827
+     sp = 0xb2fcf7b8    pc = 0xb6f04829
+    Found by: stack scanning
+ 7  libxul.so + 0x577edb
+     sp = 0xb2fcf7c8    pc = 0xb4f7dedd
+    Found by: stack scanning
+ 8  libxul.so + 0x575fb3
+     sp = 0xb2fcf7d8    pc = 0xb4f7bfb5
+    Found by: stack scanning
+ 9  libxul.so + 0x577f63
+     sp = 0xb2fcf7f8    pc = 0xb4f7df65
+    Found by: stack scanning
+10  libxul.so + 0x56c603
+     sp = 0xb2fcf808    pc = 0xb4f72605
+    Found by: stack scanning
+11  linker + 0x21c4e
+     sp = 0xb2fcf838    pc = 0xb6f61c50
+    Found by: stack scanning
+12  libxul.so + 0x56d439
+     sp = 0xb2fcf840    pc = 0xb4f7343b
+    Found by: stack scanning
+13  libxul.so + 0x5729e5
+     sp = 0xb2fcf858    pc = 0xb4f789e7
+    Found by: stack scanning
+14  libxul.so + 0x225fdce
+     sp = 0xb2fcf860    pc = 0xb6c65dd0
+    Found by: stack scanning
+15  linker + 0x1ffff
+     sp = 0xb2fcf8c4    pc = 0xb6f60001
+    Found by: stack scanning
+16  libxul.so + 0x571675
+     sp = 0xb2fcf910    pc = 0xb4f77677
+    Found by: stack scanning
+17  libxul.so + 0x57166d
+     sp = 0xb2fcf914    pc = 0xb4f7766f
+    Found by: stack scanning
+18  libc.so + 0x415db
+     sp = 0xb2fcf918    pc = 0xb47cb5dd
+    Found by: stack scanning
+19  libc.so + 0x415bb
+     sp = 0xb2fcf91c    pc = 0xb47cb5bd
+    Found by: stack scanning
+20  libc.so + 0x415bb
+     sp = 0xb2fcf924    pc = 0xb47cb5bd
+    Found by: stack scanning
+21  libc.so + 0x19235
+     sp = 0xb2fcf928    pc = 0xb47a3237
+    Found by: stack scanning
+22  libxul.so + 0x57166d
+     sp = 0xb2fcf964    pc = 0xb4f7766f
+    Found by: stack scanning
+
+Thread 8
+ 0  libc.so + 0x42b38
+     r0 = 0x0000001c    r1 = 0xc0688202    r2 = 0xb1bff890    r3 = 0xb1bff858
+     r4 = 0xb1bff890    r5 = 0xb320d8d8    r6 = 0x00040010    r7 = 0x00000036
+     r8 = 0xb3515980    r9 = 0xb320cdd0   r10 = 0xb1b01000   r12 = 0xb320cdd8
+     fp = 0xb3158e88    sp = 0xb1bff848    lr = 0xb47d35bd    pc = 0xb47ccb38
+    Found by: given as instruction pointer in context
+ 1  libc.so + 0x415db
+     sp = 0xb1bff918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 2  libc.so + 0x415bb
+     sp = 0xb1bff91c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 3  libc.so + 0x415bb
+     sp = 0xb1bff924    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 4  libc.so + 0x19235
+     sp = 0xb1bff928    pc = 0xb47a3237
+    Found by: stack scanning
+
+Thread 9
+ 0  libc.so + 0x42ce4
+     r0 = 0xfffffffc    r1 = 0xb1b00888    r2 = 0x00000000    r3 = 0x00000008
+     r4 = 0xb396f660    r5 = 0xb1b00880    r6 = 0xb1b00888    r7 = 0x000000b1
+     r8 = 0xb3515980    r9 = 0xb396f668   r10 = 0xb1a02000   r12 = 0x00000078
+     fp = 0xb47a54cf    sp = 0xb1b00880    lr = 0xb47a54fd    pc = 0xb47ccce4
+    Found by: given as instruction pointer in context
+ 1  libc.so + 0x415db
+     sp = 0xb1b00918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 2  libc.so + 0x415bb
+     sp = 0xb1b0091c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 3  libc.so + 0x415bb
+     sp = 0xb1b00924    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 4  libc.so + 0x19235
+     sp = 0xb1b00928    pc = 0xb47a3237
+    Found by: stack scanning
+ 5  libc.so + 0x1b4cd
+     sp = 0xb1b00964    pc = 0xb47a54cf
+    Found by: stack scanning
+
+Thread 10
+ 0  libc.so + 0x168ac
+     r0 = 0xb396fb68    r1 = 0x00000080    r2 = 0x00000000    r3 = 0x00000000
+     r4 = 0xb396fb64    r5 = 0xb396fb60    r6 = 0xb396fb64    r7 = 0x000000f0
+     r8 = 0x00000000    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xb19c18a0
+     fp = 0xb31500ac    sp = 0xb19c1890    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libc.so + 0x5619e
+     sp = 0xb19c18f4    pc = 0xb47e01a0
+    Found by: stack scanning
+ 2  libc.so + 0x415db
+     sp = 0xb19c1918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 3  libc.so + 0x415bb
+     sp = 0xb19c191c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 4  libc.so + 0x415bb
+     sp = 0xb19c1924    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 5  libc.so + 0x19235
+     sp = 0xb19c1928    pc = 0xb47a3237
+    Found by: stack scanning
+
+Thread 11
+ 0  libc.so + 0x168ac
+     r0 = 0xb396ffe8    r1 = 0x00000080    r2 = 0x00000000    r3 = 0x00000000
+     r4 = 0xb396ffe4    r5 = 0xb396ffe0    r6 = 0xb396ffe4    r7 = 0x000000f0
+     r8 = 0x00000000    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xb18428a0
+     fp = 0xb31500ac    sp = 0xb1842890    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libc.so + 0x5619e
+     sp = 0xb18428f4    pc = 0xb47e01a0
+    Found by: stack scanning
+ 2  libc.so + 0x415db
+     sp = 0xb1842918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 3  libc.so + 0x415bb
+     sp = 0xb184291c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 4  libc.so + 0x415bb
+     sp = 0xb1842924    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 5  libc.so + 0x19235
+     sp = 0xb1842928    pc = 0xb47a3237
+    Found by: stack scanning
+
+Thread 12
+ 0  libc.so + 0x42bd4
+     r0 = 0xb16447d0    r1 = 0x00000002    r2 = 0x00000000    r3 = 0x00000000
+     r4 = 0x00000000    r5 = 0x00000002    r6 = 0xffffffff    r7 = 0x00000150
+     r8 = 0xffffffff    r9 = 0xb16447d0   r10 = 0xb6e8a9fc   r12 = 0xb1644768
+     fp = 0xb6714567    sp = 0xb1644758    lr = 0xb47a5331    pc = 0xb47ccbd4
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x24849fa
+     sp = 0xb1644784    pc = 0xb6e8a9fc
+    Found by: stack scanning
+ 2  libmozglue.so + 0x7395
+     sp = 0xb1644788    pc = 0xb6efe397
+    Found by: stack scanning
+ 3  libxul.so + 0x525a6f
+     sp = 0xb16447a4    pc = 0xb4f2ba71
+    Found by: stack scanning
+ 4  libxul.so + 0x525aa3
+     sp = 0xb16447b0    pc = 0xb4f2baa5
+    Found by: stack scanning
+ 5  libxul.so + 0x1d0e541
+     sp = 0xb16447b4    pc = 0xb6714543
+    Found by: stack scanning
+ 6  libxul.so + 0x1cd4cfe
+     sp = 0xb16447b8    pc = 0xb66dad00
+    Found by: stack scanning
+ 7  libnss3.so + 0x116ae5
+     sp = 0xb16447bc    pc = 0xb4751ae7
+    Found by: stack scanning
+ 8  libxul.so + 0x3f93ab
+     sp = 0xb1644810    pc = 0xb4dff3ad
+    Found by: stack scanning
+ 9  libnss3.so + 0xfc277
+     sp = 0xb1644848    pc = 0xb4737279
+    Found by: stack scanning
+10  libnss3.so + 0xfc93f
+     sp = 0xb164486c    pc = 0xb4737941
+    Found by: stack scanning
+11  libxul.so + 0x40b37b
+     sp = 0xb1644870    pc = 0xb4e1137d
+    Found by: stack scanning
+12  libxul.so + 0x57cd9b
+     sp = 0xb1644880    pc = 0xb4f82d9d
+    Found by: stack scanning
+13  libmozglue.so + 0xd5dd
+     sp = 0xb1644888    pc = 0xb6f045df
+    Found by: stack scanning
+14  libxul.so + 0x224f58e
+     sp = 0xb1644890    pc = 0xb6c55590
+    Found by: stack scanning
+15  libxul.so + 0x201078a
+     sp = 0xb1644894    pc = 0xb6a1678c
+    Found by: stack scanning
+16  libxul.so + 0x56d439
+     sp = 0xb16448b0    pc = 0xb4f7343b
+    Found by: stack scanning
+17  libxul.so + 0x3fabd9
+     sp = 0xb16448c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+18  libnss3.so + 0xfc9fb
+     sp = 0xb16448f8    pc = 0xb47379fd
+    Found by: stack scanning
+19  linker + 0x21c4e
+     sp = 0xb1644914    pc = 0xb6f61c50
+    Found by: stack scanning
+20  libc.so + 0x415db
+     sp = 0xb1644918    pc = 0xb47cb5dd
+    Found by: stack scanning
+21  libc.so + 0x415bb
+     sp = 0xb164491c    pc = 0xb47cb5bd
+    Found by: stack scanning
+22  libc.so + 0x415bb
+     sp = 0xb1644924    pc = 0xb47cb5bd
+    Found by: stack scanning
+23  libc.so + 0x19235
+     sp = 0xb1644928    pc = 0xb47a3237
+    Found by: stack scanning
+24  libnss3.so + 0xfc93f
+     sp = 0xb1644964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 13
+ 0  libc.so + 0x42bd4
+     r0 = 0xb15454d8    r1 = 0x00000001    r2 = 0x00000000    r3 = 0x00000000
+     r4 = 0x00000000    r5 = 0x00000001    r6 = 0xffffffff    r7 = 0x00000150
+     r8 = 0xffffffff    r9 = 0x00000001   r10 = 0xb1c071c0   r12 = 0xb1545470
+     fp = 0xb1c071c0    sp = 0xb1545460    lr = 0xb47a5331    pc = 0xb47ccbd4
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x7395
+     sp = 0xb1545490    pc = 0xb6efe397
+    Found by: stack scanning
+ 2  libnss3.so + 0xfa231
+     sp = 0xb15454b8    pc = 0xb4735233
+    Found by: stack scanning
+
+Thread 14
+ 0  libc.so + 0x168ac
+     r0 = 0xb3907894    r1 = 0x00000080    r2 = 0x000003e8    r3 = 0x00000000
+     r4 = 0xb28cc510    r5 = 0x00000000    r6 = 0xb3968800    r7 = 0x000000f0
+     r8 = 0x000003e8    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xb1446878
+     fp = 0xb4737941    sp = 0xb1446868    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xb14468a0    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libnss3.so + 0xfc2bf
+     sp = 0xb14468d0    pc = 0xb47372c1
+    Found by: stack scanning
+ 3  libxul.so + 0x1ab8883
+     sp = 0xb14468e0    pc = 0xb64be885
+    Found by: stack scanning
+ 4  libnss3.so + 0xfc9fb
+     sp = 0xb14468f8    pc = 0xb47379fd
+    Found by: stack scanning
+ 5  linker + 0x21c4e
+     sp = 0xb1446914    pc = 0xb6f61c50
+    Found by: stack scanning
+ 6  libc.so + 0x415db
+     sp = 0xb1446918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 7  libc.so + 0x415bb
+     sp = 0xb144691c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 8  libc.so + 0x415bb
+     sp = 0xb1446924    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 9  libc.so + 0x19235
+     sp = 0xb1446928    pc = 0xb47a3237
+    Found by: stack scanning
+10  libnss3.so + 0xfc93f
+     sp = 0xb1446964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 15
+ 0  libc.so + 0x168ac
+     r0 = 0xb3907894    r1 = 0x00000080    r2 = 0x000003e4    r3 = 0x00000000
+     r4 = 0xb28cc510    r5 = 0x00000000    r6 = 0xb3968880    r7 = 0x000000f0
+     r8 = 0x000003e4    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xb1245878
+     fp = 0xb4737941    sp = 0xb1245868    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xb12458a0    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libnss3.so + 0xfc2bf
+     sp = 0xb12458d0    pc = 0xb47372c1
+    Found by: stack scanning
+ 3  libxul.so + 0x1ab8883
+     sp = 0xb12458e0    pc = 0xb64be885
+    Found by: stack scanning
+ 4  libnss3.so + 0xfc9fb
+     sp = 0xb12458f8    pc = 0xb47379fd
+    Found by: stack scanning
+ 5  linker + 0x21c4e
+     sp = 0xb1245914    pc = 0xb6f61c50
+    Found by: stack scanning
+ 6  libc.so + 0x415db
+     sp = 0xb1245918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 7  libc.so + 0x415bb
+     sp = 0xb124591c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 8  libc.so + 0x415bb
+     sp = 0xb1245924    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 9  libc.so + 0x19235
+     sp = 0xb1245928    pc = 0xb47a3237
+    Found by: stack scanning
+10  libnss3.so + 0xfc93f
+     sp = 0xb1245964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 16
+ 0  libc.so + 0x168ac
+     r0 = 0xb3907894    r1 = 0x00000080    r2 = 0x000003e4    r3 = 0x00000000
+     r4 = 0xb28cc510    r5 = 0x00000000    r6 = 0xb3968900    r7 = 0x000000f0
+     r8 = 0x000003e4    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xb1044878
+     fp = 0xb4737941    sp = 0xb1044868    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xb10448a0    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libnss3.so + 0xfc2bf
+     sp = 0xb10448d0    pc = 0xb47372c1
+    Found by: stack scanning
+ 3  libxul.so + 0x1ab8883
+     sp = 0xb10448e0    pc = 0xb64be885
+    Found by: stack scanning
+ 4  libnss3.so + 0xfc9fb
+     sp = 0xb10448f8    pc = 0xb47379fd
+    Found by: stack scanning
+ 5  linker + 0x21c4e
+     sp = 0xb1044914    pc = 0xb6f61c50
+    Found by: stack scanning
+ 6  libc.so + 0x415db
+     sp = 0xb1044918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 7  libc.so + 0x415bb
+     sp = 0xb104491c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 8  libc.so + 0x415bb
+     sp = 0xb1044924    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 9  libc.so + 0x19235
+     sp = 0xb1044928    pc = 0xb47a3237
+    Found by: stack scanning
+10  libnss3.so + 0xfc93f
+     sp = 0xb1044964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 17
+ 0  libc.so + 0x168ac
+     r0 = 0xb3907894    r1 = 0x00000080    r2 = 0x000003ec    r3 = 0x00000000
+     r4 = 0xb28cc510    r5 = 0x00000000    r6 = 0xb3968980    r7 = 0x000000f0
+     r8 = 0x000003ec    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xb0e43878
+     fp = 0xb4737941    sp = 0xb0e43868    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xb0e438a0    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libnss3.so + 0xfc2bf
+     sp = 0xb0e438d0    pc = 0xb47372c1
+    Found by: stack scanning
+ 3  libxul.so + 0x1ab8883
+     sp = 0xb0e438e0    pc = 0xb64be885
+    Found by: stack scanning
+ 4  libnss3.so + 0xfc9fb
+     sp = 0xb0e438f8    pc = 0xb47379fd
+    Found by: stack scanning
+ 5  linker + 0x21c4e
+     sp = 0xb0e43914    pc = 0xb6f61c50
+    Found by: stack scanning
+ 6  libc.so + 0x415db
+     sp = 0xb0e43918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 7  libc.so + 0x415bb
+     sp = 0xb0e4391c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 8  libc.so + 0x415bb
+     sp = 0xb0e43924    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 9  libc.so + 0x19235
+     sp = 0xb0e43928    pc = 0xb47a3237
+    Found by: stack scanning
+10  libnss3.so + 0xfc93f
+     sp = 0xb0e43964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 18
+ 0  libc.so + 0x168ac
+     r0 = 0xb3907894    r1 = 0x00000080    r2 = 0x000003f0    r3 = 0x00000000
+     r4 = 0xb28cc510    r5 = 0x00000000    r6 = 0xb3968a00    r7 = 0x000000f0
+     r8 = 0x000003f0    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xb0c42878
+     fp = 0xb4737941    sp = 0xb0c42868    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xb0c428a0    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libnss3.so + 0xfc2bf
+     sp = 0xb0c428d0    pc = 0xb47372c1
+    Found by: stack scanning
+ 3  libxul.so + 0x1ab8883
+     sp = 0xb0c428e0    pc = 0xb64be885
+    Found by: stack scanning
+ 4  libnss3.so + 0xfc9fb
+     sp = 0xb0c428f8    pc = 0xb47379fd
+    Found by: stack scanning
+ 5  linker + 0x21c4e
+     sp = 0xb0c42914    pc = 0xb6f61c50
+    Found by: stack scanning
+ 6  libc.so + 0x415db
+     sp = 0xb0c42918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 7  libc.so + 0x415bb
+     sp = 0xb0c4291c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 8  libc.so + 0x415bb
+     sp = 0xb0c42924    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 9  libc.so + 0x19235
+     sp = 0xb0c42928    pc = 0xb47a3237
+    Found by: stack scanning
+10  libnss3.so + 0xfc93f
+     sp = 0xb0c42964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 19
+ 0  libc.so + 0x168ac
+     r0 = 0xb3907894    r1 = 0x00000080    r2 = 0x000003e4    r3 = 0x00000000
+     r4 = 0xb28cc510    r5 = 0x00000000    r6 = 0xb3968a80    r7 = 0x000000f0
+     r8 = 0x000003e4    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xb0a41878
+     fp = 0xb4737941    sp = 0xb0a41868    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xb0a418a0    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libnss3.so + 0xfc2bf
+     sp = 0xb0a418d0    pc = 0xb47372c1
+    Found by: stack scanning
+ 3  libxul.so + 0x1ab8883
+     sp = 0xb0a418e0    pc = 0xb64be885
+    Found by: stack scanning
+ 4  libnss3.so + 0xfc9fb
+     sp = 0xb0a418f8    pc = 0xb47379fd
+    Found by: stack scanning
+ 5  linker + 0x21c4e
+     sp = 0xb0a41914    pc = 0xb6f61c50
+    Found by: stack scanning
+ 6  libc.so + 0x415db
+     sp = 0xb0a41918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 7  libc.so + 0x415bb
+     sp = 0xb0a4191c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 8  libc.so + 0x415bb
+     sp = 0xb0a41924    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 9  libc.so + 0x19235
+     sp = 0xb0a41928    pc = 0xb47a3237
+    Found by: stack scanning
+10  libnss3.so + 0xfc93f
+     sp = 0xb0a41964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 20
+ 0  libc.so + 0x168ac
+     r0 = 0xb1c4c624    r1 = 0x00000080    r2 = 0x00000000    r3 = 0x00000000
+     r4 = 0xb03441f0    r5 = 0x00000000    r6 = 0xb1cb9880    r7 = 0x000000f0
+     r8 = 0x00000000    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xb00af848
+     fp = 0xb6ebd568    sp = 0xb00af838    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x24b7566
+     sp = 0xb00af860    pc = 0xb6ebd568
+    Found by: stack scanning
+ 2  libxul.so + 0x24b7546
+     sp = 0xb00af864    pc = 0xb6ebd548
+    Found by: stack scanning
+ 3  libxul.so + 0x24b7506
+     sp = 0xb00af868    pc = 0xb6ebd508
+    Found by: stack scanning
+ 4  libxul.so + 0x24b74ee
+     sp = 0xb00af86c    pc = 0xb6ebd4f0
+    Found by: stack scanning
+ 5  libmozglue.so + 0x6cab
+     sp = 0xb00af870    pc = 0xb6efdcad
+    Found by: stack scanning
+ 6  libnss3.so + 0xfc2bf
+     sp = 0xb00af8a0    pc = 0xb47372c1
+    Found by: stack scanning
+ 7  libxul.so + 0x3f5f89
+     sp = 0xb00af8b0    pc = 0xb4dfbf8b
+    Found by: stack scanning
+ 8  libxul.so + 0x3f6b39
+     sp = 0xb00af8c0    pc = 0xb4dfcb3b
+    Found by: stack scanning
+ 9  libnss3.so + 0xfc93f
+     sp = 0xb00af8f4    pc = 0xb4737941
+    Found by: stack scanning
+10  libnss3.so + 0xfc9fb
+     sp = 0xb00af8f8    pc = 0xb47379fd
+    Found by: stack scanning
+11  linker + 0x21c4e
+     sp = 0xb00af914    pc = 0xb6f61c50
+    Found by: stack scanning
+12  libc.so + 0x415db
+     sp = 0xb00af918    pc = 0xb47cb5dd
+    Found by: stack scanning
+13  libc.so + 0x415bb
+     sp = 0xb00af91c    pc = 0xb47cb5bd
+    Found by: stack scanning
+14  libc.so + 0x415bb
+     sp = 0xb00af924    pc = 0xb47cb5bd
+    Found by: stack scanning
+15  libc.so + 0x19235
+     sp = 0xb00af928    pc = 0xb47a3237
+    Found by: stack scanning
+16  libnss3.so + 0xfc93f
+     sp = 0xb00af964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 21
+ 0  libc.so + 0x42bd4
+     r0 = 0xaffb0798    r1 = 0x00000002    r2 = 0x00000000    r3 = 0x00000000
+     r4 = 0x00000000    r5 = 0x00000002    r6 = 0xffffffff    r7 = 0x00000150
+     r8 = 0xb68b08d8    r9 = 0xb68b0831   r10 = 0xb68b0904   r12 = 0xaffb0748
+     fp = 0xaffb0798    sp = 0xaffb0738    lr = 0xb47a5331    pc = 0xb47ccbd4
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x1eaa82f
+     sp = 0xaffb0748    pc = 0xb68b0831
+    Found by: stack scanning
+ 2  libmozglue.so + 0x7395
+     sp = 0xaffb0768    pc = 0xb6efe397
+    Found by: stack scanning
+ 3  libc.so + 0x4b1e
+     sp = 0xaffb076c    pc = 0xb478eb20
+    Found by: stack scanning
+ 4  libxul.so + 0x115956b
+     sp = 0xaffb0790    pc = 0xb5b5f56d
+    Found by: stack scanning
+ 5  libnss3.so + 0x116ae5
+     sp = 0xaffb07ac    pc = 0xb4751ae7
+    Found by: stack scanning
+ 6  libnss3.so + 0xfd5a3
+     sp = 0xaffb07b0    pc = 0xb47385a5
+    Found by: stack scanning
+ 7  libc.so + 0x4271f
+     sp = 0xaffb07b4    pc = 0xb47cc721
+    Found by: stack scanning
+ 8  libnss3.so + 0x116ae5
+     sp = 0xaffb07bc    pc = 0xb4751ae7
+    Found by: stack scanning
+ 9  libmozglue.so + 0x5e23
+     sp = 0xaffb07e0    pc = 0xb6efce25
+    Found by: stack scanning
+10  libxul.so + 0x3f93ab
+     sp = 0xaffb0810    pc = 0xb4dff3ad
+    Found by: stack scanning
+11  libnss3.so + 0xfc277
+     sp = 0xaffb0848    pc = 0xb4737279
+    Found by: stack scanning
+12  libnss3.so + 0xfc93f
+     sp = 0xaffb086c    pc = 0xb4737941
+    Found by: stack scanning
+13  libxul.so + 0x40b37b
+     sp = 0xaffb0870    pc = 0xb4e1137d
+    Found by: stack scanning
+14  libxul.so + 0x57cd9b
+     sp = 0xaffb0880    pc = 0xb4f82d9d
+    Found by: stack scanning
+15  libmozglue.so + 0xd5dd
+     sp = 0xaffb0888    pc = 0xb6f045df
+    Found by: stack scanning
+16  libxul.so + 0x224f58e
+     sp = 0xaffb0890    pc = 0xb6c55590
+    Found by: stack scanning
+17  libxul.so + 0x201078a
+     sp = 0xaffb0894    pc = 0xb6a1678c
+    Found by: stack scanning
+18  libxul.so + 0x56d439
+     sp = 0xaffb08b0    pc = 0xb4f7343b
+    Found by: stack scanning
+19  libxul.so + 0x3fabd9
+     sp = 0xaffb08c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+20  libnss3.so + 0xfc9fb
+     sp = 0xaffb08f8    pc = 0xb47379fd
+    Found by: stack scanning
+21  linker + 0x21c4e
+     sp = 0xaffb0914    pc = 0xb6f61c50
+    Found by: stack scanning
+22  libc.so + 0x415db
+     sp = 0xaffb0918    pc = 0xb47cb5dd
+    Found by: stack scanning
+23  libc.so + 0x415bb
+     sp = 0xaffb091c    pc = 0xb47cb5bd
+    Found by: stack scanning
+24  libc.so + 0x415bb
+     sp = 0xaffb0924    pc = 0xb47cb5bd
+    Found by: stack scanning
+25  libc.so + 0x19235
+     sp = 0xaffb0928    pc = 0xb47a3237
+    Found by: stack scanning
+26  libnss3.so + 0xfc93f
+     sp = 0xaffb0964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 22
+ 0  libc.so + 0x168ac
+     r0 = 0xb0394bd4    r1 = 0x00000080    r2 = 0x0000001c    r3 = 0x00000000
+     r4 = 0xafd21d80    r5 = 0x00000000    r6 = 0xb0158f80    r7 = 0x000000f0
+     r8 = 0x0000001c    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xafea1848
+     fp = 0xb4737941    sp = 0xafea1838    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xafea1870    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libnss3.so + 0xfc2bf
+     sp = 0xafea18a0    pc = 0xb47372c1
+    Found by: stack scanning
+ 3  libxul.so + 0x4887bf
+     sp = 0xafea18b0    pc = 0xb4e8e7c1
+    Found by: stack scanning
+ 4  libxul.so + 0x49b92d
+     sp = 0xafea18c0    pc = 0xb4ea192f
+    Found by: stack scanning
+ 5  libxul.so + 0x49b977
+     sp = 0xafea18f0    pc = 0xb4ea1979
+    Found by: stack scanning
+ 6  libnss3.so + 0xfc9fb
+     sp = 0xafea18f8    pc = 0xb47379fd
+    Found by: stack scanning
+ 7  linker + 0x21c4e
+     sp = 0xafea1914    pc = 0xb6f61c50
+    Found by: stack scanning
+ 8  libc.so + 0x415db
+     sp = 0xafea1918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 9  libc.so + 0x415bb
+     sp = 0xafea191c    pc = 0xb47cb5bd
+    Found by: stack scanning
+10  libc.so + 0x415bb
+     sp = 0xafea1924    pc = 0xb47cb5bd
+    Found by: stack scanning
+11  libc.so + 0x19235
+     sp = 0xafea1928    pc = 0xb47a3237
+    Found by: stack scanning
+12  libnss3.so + 0xfc93f
+     sp = 0xafea1964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 23
+ 0  libc.so + 0x168ac
+     r0 = 0xb3907824    r1 = 0x00000080    r2 = 0x0000008c    r3 = 0xafcff700
+     r4 = 0xb28cc470    r5 = 0x00000000    r6 = 0xb3907824    r7 = 0x000000f0
+     r8 = 0x0000008c    r9 = 0x00000080   r10 = 0xafcff700   r12 = 0xafcff6d8
+     fp = 0x00000096    sp = 0xafcff6c8    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x1ccc376
+     sp = 0xafcff6f8    pc = 0xb66d2378
+    Found by: stack scanning
+ 2  libc.so + 0x414b7
+     sp = 0xafcff700    pc = 0xb47cb4b9
+    Found by: stack scanning
+ 3  libmozglue.so + 0x6ef7
+     sp = 0xafcff718    pc = 0xb6efdef9
+    Found by: stack scanning
+ 4  libnss3.so + 0xfc049
+     sp = 0xafcff750    pc = 0xb473704b
+    Found by: stack scanning
+ 5  libnss3.so + 0xfc2c7
+     sp = 0xafcff778    pc = 0xb47372c9
+    Found by: stack scanning
+ 6  libxul.so + 0x3f5f89
+     sp = 0xafcff788    pc = 0xb4dfbf8b
+    Found by: stack scanning
+ 7  libxul.so + 0x3fc7b5
+     sp = 0xafcff798    pc = 0xb4e027b7
+    Found by: stack scanning
+ 8  libxul.so + 0x1ccc3d2
+     sp = 0xafcff7a4    pc = 0xb66d23d4
+    Found by: stack scanning
+ 9  libxul.so + 0x1ccc3ae
+     sp = 0xafcff7a8    pc = 0xb66d23b0
+    Found by: stack scanning
+10  libxul.so + 0x1f56df6
+     sp = 0xafcff7ac    pc = 0xb695cdf8
+    Found by: stack scanning
+11  libc.so + 0x18d4b
+     sp = 0xafcff7b0    pc = 0xb47a2d4d
+    Found by: stack scanning
+12  libxul.so + 0x3f93ab
+     sp = 0xafcff810    pc = 0xb4dff3ad
+    Found by: stack scanning
+13  libxul.so + 0x509aa5
+     sp = 0xafcff828    pc = 0xb4f0faa7
+    Found by: stack scanning
+14  libxul.so + 0x570e03
+     sp = 0xafcff848    pc = 0xb4f76e05
+    Found by: stack scanning
+15  libnss3.so + 0xfc93f
+     sp = 0xafcff86c    pc = 0xb4737941
+    Found by: stack scanning
+16  libxul.so + 0x40b37b
+     sp = 0xafcff870    pc = 0xb4e1137d
+    Found by: stack scanning
+17  libxul.so + 0x57cd9b
+     sp = 0xafcff880    pc = 0xb4f82d9d
+    Found by: stack scanning
+18  libmozglue.so + 0xd5dd
+     sp = 0xafcff888    pc = 0xb6f045df
+    Found by: stack scanning
+19  libxul.so + 0x224f58e
+     sp = 0xafcff890    pc = 0xb6c55590
+    Found by: stack scanning
+20  libxul.so + 0x201078a
+     sp = 0xafcff894    pc = 0xb6a1678c
+    Found by: stack scanning
+21  libxul.so + 0x56d439
+     sp = 0xafcff8b0    pc = 0xb4f7343b
+    Found by: stack scanning
+22  libxul.so + 0x3fabd9
+     sp = 0xafcff8c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+23  libnss3.so + 0xfc9fb
+     sp = 0xafcff8f8    pc = 0xb47379fd
+    Found by: stack scanning
+24  libc.so + 0x415db
+     sp = 0xafcff918    pc = 0xb47cb5dd
+    Found by: stack scanning
+25  libc.so + 0x415bb
+     sp = 0xafcff91c    pc = 0xb47cb5bd
+    Found by: stack scanning
+26  libc.so + 0x415bb
+     sp = 0xafcff924    pc = 0xb47cb5bd
+    Found by: stack scanning
+27  libc.so + 0x19235
+     sp = 0xafcff928    pc = 0xb47a3237
+    Found by: stack scanning
+28  libnss3.so + 0xfc93f
+     sp = 0xafcff964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 24
+ 0  libc.so + 0x168ac
+     r0 = 0xb0394c34    r1 = 0x00000080    r2 = 0x0000018c    r3 = 0xafc00718
+     r4 = 0xafd21fb0    r5 = 0x00000000    r6 = 0xb0394c34    r7 = 0x000000f0
+     r8 = 0x0000018c    r9 = 0x00000080   r10 = 0xafc00718   r12 = 0xafc006f0
+     fp = 0xafc007e0    sp = 0xafc006e0    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libc.so + 0x414b7
+     sp = 0xafc00718    pc = 0xb47cb4b9
+    Found by: stack scanning
+ 2  libmozglue.so + 0x6ef7
+     sp = 0xafc00730    pc = 0xb6efdef9
+    Found by: stack scanning
+ 3  libnss3.so + 0xfc049
+     sp = 0xafc00768    pc = 0xb473704b
+    Found by: stack scanning
+ 4  libnss3.so + 0xfc2c7
+     sp = 0xafc00790    pc = 0xb47372c9
+    Found by: stack scanning
+ 5  libxul.so + 0x3f5f89
+     sp = 0xafc007a0    pc = 0xb4dfbf8b
+    Found by: stack scanning
+ 6  libxul.so + 0x3fa583
+     sp = 0xafc007b0    pc = 0xb4e00585
+    Found by: stack scanning
+ 7  libxul.so + 0x2484382
+     sp = 0xafc007c4    pc = 0xb6e8a384
+    Found by: stack scanning
+ 8  libxul.so + 0x2484382
+     sp = 0xafc007c8    pc = 0xb6e8a384
+    Found by: stack scanning
+ 9  libxul.so + 0x2484382
+     sp = 0xafc007cc    pc = 0xb6e8a384
+    Found by: stack scanning
+10  libxul.so + 0x1ccbf67
+     sp = 0xafc007d0    pc = 0xb66d1f69
+    Found by: stack scanning
+11  libxul.so + 0x1ccbf4b
+     sp = 0xafc007d4    pc = 0xb66d1f4d
+    Found by: stack scanning
+12  libxul.so + 0x1ccbf80
+     sp = 0xafc007d8    pc = 0xb66d1f82
+    Found by: stack scanning
+13  libxul.so + 0x3f93ab
+     sp = 0xafc00810    pc = 0xb4dff3ad
+    Found by: stack scanning
+14  libxul.so + 0x509aa5
+     sp = 0xafc00828    pc = 0xb4f0faa7
+    Found by: stack scanning
+15  libxul.so + 0x570e03
+     sp = 0xafc00848    pc = 0xb4f76e05
+    Found by: stack scanning
+16  libnss3.so + 0xfc93f
+     sp = 0xafc0086c    pc = 0xb4737941
+    Found by: stack scanning
+17  libxul.so + 0x40b37b
+     sp = 0xafc00870    pc = 0xb4e1137d
+    Found by: stack scanning
+18  libxul.so + 0x57cddb
+     sp = 0xafc00880    pc = 0xb4f82ddd
+    Found by: stack scanning
+19  libmozglue.so + 0xd5dd
+     sp = 0xafc00888    pc = 0xb6f045df
+    Found by: stack scanning
+20  libxul.so + 0x224f58e
+     sp = 0xafc00890    pc = 0xb6c55590
+    Found by: stack scanning
+21  libxul.so + 0x201078a
+     sp = 0xafc00894    pc = 0xb6a1678c
+    Found by: stack scanning
+22  libxul.so + 0x56d439
+     sp = 0xafc008b0    pc = 0xb4f7343b
+    Found by: stack scanning
+23  libxul.so + 0x3fabd9
+     sp = 0xafc008c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+24  libnss3.so + 0xfc9fb
+     sp = 0xafc008f8    pc = 0xb47379fd
+    Found by: stack scanning
+25  linker + 0x21c4e
+     sp = 0xafc00914    pc = 0xb6f61c50
+    Found by: stack scanning
+26  libc.so + 0x415db
+     sp = 0xafc00918    pc = 0xb47cb5dd
+    Found by: stack scanning
+27  libc.so + 0x415bb
+     sp = 0xafc0091c    pc = 0xb47cb5bd
+    Found by: stack scanning
+28  libc.so + 0x415bb
+     sp = 0xafc00924    pc = 0xb47cb5bd
+    Found by: stack scanning
+29  libc.so + 0x19235
+     sp = 0xafc00928    pc = 0xb47a3237
+    Found by: stack scanning
+30  libnss3.so + 0xfc93f
+     sp = 0xafc00964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 25
+ 0  libc.so + 0x168ac
+     r0 = 0xadd5a830    r1 = 0x00000080    r2 = 0x00000000    r3 = 0x00000000
+     r4 = 0xadd5a824    r5 = 0x00000000    r6 = 0xadd5a82c    r7 = 0x000000f0
+     r8 = 0x00000000    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xaf6ff3d8
+     fp = 0xaf6ff594    sp = 0xaf6ff3c8    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xaf6ff400    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libnss3.so + 0xfc585
+     sp = 0xaf6ff430    pc = 0xb4737587
+    Found by: stack scanning
+ 3  libxul.so + 0x24b74aa
+     sp = 0xaf6ff448    pc = 0xb6ebd4ac
+    Found by: stack scanning
+ 4  libxul.so + 0x3f8651
+     sp = 0xaf6ff450    pc = 0xb4dfe653
+    Found by: stack scanning
+ 5  libxul.so + 0x24b74aa
+     sp = 0xaf6ff474    pc = 0xb6ebd4ac
+    Found by: stack scanning
+ 6  libxul.so + 0x3fa84f
+     sp = 0xaf6ff480    pc = 0xb4e00851
+    Found by: stack scanning
+ 7  libxul.so + 0x24b74aa
+     sp = 0xaf6ff484    pc = 0xb6ebd4ac
+    Found by: stack scanning
+ 8  libxul.so + 0x40b5c5
+     sp = 0xaf6ff4a0    pc = 0xb4e115c7
+    Found by: stack scanning
+ 9  libxul.so + 0x101d5b7
+     sp = 0xaf6ff4c8    pc = 0xb5a235b9
+    Found by: stack scanning
+10  libxul.so + 0x24b769e
+     sp = 0xaf6ff4cc    pc = 0xb6ebd6a0
+    Found by: stack scanning
+11  libxul.so + 0x24b76a6
+     sp = 0xaf6ff4f8    pc = 0xb6ebd6a8
+    Found by: stack scanning
+12  libxul.so + 0x1022467
+     sp = 0xaf6ff500    pc = 0xb5a28469
+    Found by: stack scanning
+13  libxul.so + 0x24b769e
+     sp = 0xaf6ff514    pc = 0xb6ebd6a0
+    Found by: stack scanning
+14  libxul.so + 0x1cbc08a
+     sp = 0xaf6ff518    pc = 0xb66c208c
+    Found by: stack scanning
+15  libxul.so + 0x1cbc0a3
+     sp = 0xaf6ff51c    pc = 0xb66c20a5
+    Found by: stack scanning
+16  libnss3.so + 0xfdd43
+     sp = 0xaf6ff540    pc = 0xb4738d45
+    Found by: stack scanning
+17  libxul.so + 0x3facdd
+     sp = 0xaf6ff548    pc = 0xb4e00cdf
+    Found by: stack scanning
+18  libxul.so + 0x24b74aa
+     sp = 0xaf6ff54c    pc = 0xb6ebd4ac
+    Found by: stack scanning
+19  libxul.so + 0x102277f
+     sp = 0xaf6ff578    pc = 0xb5a28781
+    Found by: stack scanning
+20  libxul.so + 0x24b769e
+     sp = 0xaf6ff598    pc = 0xb6ebd6a0
+    Found by: stack scanning
+21  libxul.so + 0x1028eed
+     sp = 0xaf6ff5b8    pc = 0xb5a2eeef
+    Found by: stack scanning
+22  libxul.so + 0x3bdbdd
+     sp = 0xaf6ff5c8    pc = 0xb4dc3bdf
+    Found by: stack scanning
+23  libnss3.so + 0xfc207
+     sp = 0xaf6ff5f8    pc = 0xb4737209
+    Found by: stack scanning
+24  libxul.so + 0x3cb2af
+     sp = 0xaf6ff610    pc = 0xb4dd12b1
+    Found by: stack scanning
+25  libxul.so + 0x4629b5
+     sp = 0xaf6ff618    pc = 0xb4e689b7
+    Found by: stack scanning
+26  libxul.so + 0x10117cf
+     sp = 0xaf6ff61c    pc = 0xb5a177d1
+    Found by: stack scanning
+27  libxul.so + 0x101d8fd
+     sp = 0xaf6ff638    pc = 0xb5a238ff
+    Found by: stack scanning
+28  libxul.so + 0x101e9f7
+     sp = 0xaf6ff650    pc = 0xb5a249f9
+    Found by: stack scanning
+29  libxul.so + 0x101e171
+     sp = 0xaf6ff658    pc = 0xb5a24173
+    Found by: stack scanning
+30  libxul.so + 0x101e983
+     sp = 0xaf6ff688    pc = 0xb5a24985
+    Found by: stack scanning
+31  libxul.so + 0x101ec0d
+     sp = 0xaf6ff6c0    pc = 0xb5a24c0f
+    Found by: stack scanning
+32  libxul.so + 0x24b769e
+     sp = 0xaf6ff6c4    pc = 0xb6ebd6a0
+    Found by: stack scanning
+33  libxul.so + 0x10237cb
+     sp = 0xaf6ff6d0    pc = 0xb5a297cd
+    Found by: stack scanning
+34  libxul.so + 0x2180fae
+     sp = 0xaf6ff6ec    pc = 0xb6b86fb0
+    Found by: stack scanning
+35  libxul.so + 0x2180fae
+     sp = 0xaf6ff6f0    pc = 0xb6b86fb0
+    Found by: stack scanning
+36  libmozglue.so + 0xd4ff
+     sp = 0xaf6ff718    pc = 0xb6f04501
+    Found by: stack scanning
+37  libxul.so + 0x56d1fe
+     sp = 0xaf6ff740    pc = 0xb4f73200
+    Found by: stack scanning
+38  libxul.so + 0x56d2db
+     sp = 0xaf6ff750    pc = 0xb4f732dd
+    Found by: stack scanning
+39  libxul.so + 0x1028eed
+     sp = 0xaf6ff790    pc = 0xb5a2eeef
+    Found by: stack scanning
+40  libxul.so + 0x1ccbb5d
+     sp = 0xaf6ff794    pc = 0xb66d1b5f
+    Found by: stack scanning
+41  libmozglue.so + 0x6cab
+     sp = 0xaf6ff798    pc = 0xb6efdcad
+    Found by: stack scanning
+42  libmozglue.so + 0x5e23
+     sp = 0xaf6ff7b0    pc = 0xb6efce25
+    Found by: stack scanning
+43  libmozglue.so + 0x603d
+     sp = 0xaf6ff7c0    pc = 0xb6efd03f
+    Found by: stack scanning
+44  libnss3.so + 0xfc2d3
+     sp = 0xaf6ff7c8    pc = 0xb47372d5
+    Found by: stack scanning
+45  libxul.so + 0x147bdbf
+     sp = 0xaf6ff7d0    pc = 0xb5e81dc1
+    Found by: stack scanning
+46  libmozglue.so + 0x5e23
+     sp = 0xaf6ff7e0    pc = 0xb6efce25
+    Found by: stack scanning
+47  libnss3.so + 0xfc277
+     sp = 0xaf6ff7f8    pc = 0xb4737279
+    Found by: stack scanning
+48  libxul.so + 0x3f93ab
+     sp = 0xaf6ff810    pc = 0xb4dff3ad
+    Found by: stack scanning
+49  libnss3.so + 0xfc277
+     sp = 0xaf6ff848    pc = 0xb4737279
+    Found by: stack scanning
+50  libnss3.so + 0xfc93f
+     sp = 0xaf6ff86c    pc = 0xb4737941
+    Found by: stack scanning
+51  libxul.so + 0x40b37b
+     sp = 0xaf6ff870    pc = 0xb4e1137d
+    Found by: stack scanning
+52  libxul.so + 0x57cddb
+     sp = 0xaf6ff880    pc = 0xb4f82ddd
+    Found by: stack scanning
+53  libmozglue.so + 0xd5dd
+     sp = 0xaf6ff888    pc = 0xb6f045df
+    Found by: stack scanning
+54  libxul.so + 0x224f58e
+     sp = 0xaf6ff890    pc = 0xb6c55590
+    Found by: stack scanning
+55  libxul.so + 0x201078a
+     sp = 0xaf6ff894    pc = 0xb6a1678c
+    Found by: stack scanning
+56  libxul.so + 0x56d439
+     sp = 0xaf6ff8b0    pc = 0xb4f7343b
+    Found by: stack scanning
+57  libxul.so + 0x3fabd9
+     sp = 0xaf6ff8c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+58  libnss3.so + 0xfc9fb
+     sp = 0xaf6ff8f8    pc = 0xb47379fd
+    Found by: stack scanning
+59  linker + 0x21c4e
+     sp = 0xaf6ff914    pc = 0xb6f61c50
+    Found by: stack scanning
+60  libc.so + 0x415db
+     sp = 0xaf6ff918    pc = 0xb47cb5dd
+    Found by: stack scanning
+61  libc.so + 0x415bb
+     sp = 0xaf6ff91c    pc = 0xb47cb5bd
+    Found by: stack scanning
+62  libc.so + 0x415bb
+     sp = 0xaf6ff924    pc = 0xb47cb5bd
+    Found by: stack scanning
+63  libc.so + 0x19235
+     sp = 0xaf6ff928    pc = 0xb47a3237
+    Found by: stack scanning
+64  libnss3.so + 0xfc93f
+     sp = 0xaf6ff964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 26
+ 0  libc.so + 0x168ac
+     r0 = 0xaf89c8c4    r1 = 0x00000080    r2 = 0x00000010    r3 = 0x00000000
+     r4 = 0xaf8f45b0    r5 = 0x00000000    r6 = 0xaf8a7280    r7 = 0x000000f0
+     r8 = 0x00000010    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xaf5ffe78
+     fp = 0xb68192a2    sp = 0xaf5ffe68    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xaf5ffea0    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libnss3.so + 0xfc2bf
+     sp = 0xaf5ffed0    pc = 0xb47372c1
+    Found by: stack scanning
+ 3  libxul.so + 0x3f5f89
+     sp = 0xaf5ffee0    pc = 0xb4dfbf8b
+    Found by: stack scanning
+ 4  libxul.so + 0x1097851
+     sp = 0xaf5ffef0    pc = 0xb5a9d853
+    Found by: stack scanning
+ 5  libxul.so + 0x109ee71
+     sp = 0xaf5fff00    pc = 0xb5aa4e73
+    Found by: stack scanning
+ 6  libxul.so + 0x9acc43
+     sp = 0xaf5fff20    pc = 0xb53b2c45
+    Found by: stack scanning
+ 7  libxul.so + 0x109f82f
+     sp = 0xaf5fff28    pc = 0xb5aa5831
+    Found by: stack scanning
+ 8  libxul.so + 0x10a00f5
+     sp = 0xaf5fff48    pc = 0xb5aa60f7
+    Found by: stack scanning
+ 9  libxul.so + 0x3cb293
+     sp = 0xaf5fff50    pc = 0xb4dd1295
+    Found by: stack scanning
+10  libxul.so + 0x9accbf
+     sp = 0xaf5fff68    pc = 0xb53b2cc1
+    Found by: stack scanning
+11  libxul.so + 0x1de9bee
+     sp = 0xaf5fff70    pc = 0xb67efbf0
+    Found by: stack scanning
+12  libxul.so + 0x24a5d9e
+     sp = 0xaf5fff80    pc = 0xb6eabda0
+    Found by: stack scanning
+13  libxul.so + 0xdad6ff
+     sp = 0xaf5fff90    pc = 0xb57b3701
+    Found by: stack scanning
+14  libxul.so + 0x24a5d4e
+     sp = 0xaf5fff94    pc = 0xb6eabd50
+    Found by: stack scanning
+15  libxul.so + 0xdaf63b
+     sp = 0xaf5fffa8    pc = 0xb57b563d
+    Found by: stack scanning
+16  libxul.so + 0x22c255a
+     sp = 0xaf5fffb0    pc = 0xb6cc855c
+    Found by: stack scanning
+17  libxul.so + 0xdaf6eb
+     sp = 0xaf5fffb8    pc = 0xb57b56ed
+    Found by: stack scanning
+18  libxul.so + 0x22c255a
+     sp = 0xaf5fffc4    pc = 0xb6cc855c
+    Found by: stack scanning
+19  libxul.so + 0x22c2f76
+     sp = 0xaf5fffc8    pc = 0xb6cc8f78
+    Found by: stack scanning
+20  libxul.so + 0xdafc5b
+     sp = 0xaf5fffd0    pc = 0xb57b5c5d
+    Found by: stack scanning
+21  libxul.so + 0xb2e551
+     sp = 0xaf600058    pc = 0xb5534553
+    Found by: stack scanning
+22  libxul.so + 0x22c2f76
+     sp = 0xaf600064    pc = 0xb6cc8f78
+    Found by: stack scanning
+23  libxul.so + 0x22c255a
+     sp = 0xaf600078    pc = 0xb6cc855c
+    Found by: stack scanning
+24  libxul.so + 0x1e132a0
+     sp = 0xaf600080    pc = 0xb68192a2
+    Found by: stack scanning
+25  libxul.so + 0xb2e5ed
+     sp = 0xaf6000d0    pc = 0xb55345ef
+    Found by: stack scanning
+26  libxul.so + 0xb2e607
+     sp = 0xaf6000e8    pc = 0xb5534609
+    Found by: stack scanning
+27  libxul.so + 0xa13495
+     sp = 0xaf6000f0    pc = 0xb5419497
+    Found by: stack scanning
+28  libxul.so + 0x107c1a3
+     sp = 0xaf600100    pc = 0xb5a821a5
+    Found by: stack scanning
+29  libxul.so + 0x109e5bb
+     sp = 0xaf600110    pc = 0xb5aa45bd
+    Found by: stack scanning
+30  libxul.so + 0x1079627
+     sp = 0xaf600140    pc = 0xb5a7f629
+    Found by: stack scanning
+31  libxul.so + 0x955baf
+     sp = 0xaf600184    pc = 0xb535bbb1
+    Found by: stack scanning
+32  libxul.so + 0x109e9df
+     sp = 0xaf600198    pc = 0xb5aa49e1
+    Found by: stack scanning
+33  libc.so + 0x562a3
+     sp = 0xaf6001c4    pc = 0xb47e02a5
+    Found by: stack scanning
+34  libc.so + 0x18e5d
+     sp = 0xaf6001c8    pc = 0xb47a2e5f
+    Found by: stack scanning
+35  libc.so + 0x18ec7
+     sp = 0xaf6001e0    pc = 0xb47a2ec9
+    Found by: stack scanning
+36  libc.so + 0x41e59
+     sp = 0xaf6001f0    pc = 0xb47cbe5b
+    Found by: stack scanning
+37  libxul.so + 0x109ec29
+     sp = 0xaf600220    pc = 0xb5aa4c2b
+    Found by: stack scanning
+38  libmozglue.so + 0x5e23
+     sp = 0xaf600250    pc = 0xb6efce25
+    Found by: stack scanning
+39  libmozglue.so + 0x5e23
+     sp = 0xaf600270    pc = 0xb6efce25
+    Found by: stack scanning
+40  libxul.so + 0x3f93ab
+     sp = 0xaf6002a0    pc = 0xb4dff3ad
+    Found by: stack scanning
+41  libxul.so + 0x3fcf0b
+     sp = 0xaf6002b0    pc = 0xb4e02f0d
+    Found by: stack scanning
+42  libxul.so + 0x3da0a9
+     sp = 0xaf6002c8    pc = 0xb4de00ab
+    Found by: stack scanning
+43  libxul.so + 0x40b37b
+     sp = 0xaf600300    pc = 0xb4e1137d
+    Found by: stack scanning
+44  libxul.so + 0x109ee55
+     sp = 0xaf600310    pc = 0xb5aa4e57
+    Found by: stack scanning
+45  libxul.so + 0x1084627
+     sp = 0xaf600338    pc = 0xb5a8a629
+    Found by: stack scanning
+46  libxul.so + 0x10846c7
+     sp = 0xaf600370    pc = 0xb5a8a6c9
+    Found by: stack scanning
+47  libxul.so + 0x24b769e
+     sp = 0xaf600380    pc = 0xb6ebd6a0
+    Found by: stack scanning
+48  libxul.so + 0x10961c3
+     sp = 0xaf6003a0    pc = 0xb5a9c1c5
+    Found by: stack scanning
+49  libxul.so + 0x3d190b
+     sp = 0xaf6003a8    pc = 0xb4dd790d
+    Found by: stack scanning
+50  libxul.so + 0x107ae6d
+     sp = 0xaf6003b0    pc = 0xb5a80e6f
+    Found by: stack scanning
+51  libxul.so + 0x3f76f3
+     sp = 0xaf6003b8    pc = 0xb4dfd6f5
+    Found by: stack scanning
+52  libxul.so + 0x109eab5
+     sp = 0xaf6003d0    pc = 0xb5aa4ab7
+    Found by: stack scanning
+53  libnss3.so + 0xfc207
+     sp = 0xaf6003f0    pc = 0xb4737209
+    Found by: stack scanning
+54  libxul.so + 0x955baf
+     sp = 0xaf60043c    pc = 0xb535bbb1
+    Found by: stack scanning
+55  libxul.so + 0x109ec29
+     sp = 0xaf600458    pc = 0xb5aa4c2b
+    Found by: stack scanning
+56  libnss3.so + 0xfc207
+     sp = 0xaf600460    pc = 0xb4737209
+    Found by: stack scanning
+57  libmozglue.so + 0x5e23
+     sp = 0xaf600488    pc = 0xb6efce25
+    Found by: stack scanning
+58  libmozglue.so + 0x5e23
+     sp = 0xaf6004a8    pc = 0xb6efce25
+    Found by: stack scanning
+59  libxul.so + 0x3f93ab
+     sp = 0xaf6004d8    pc = 0xb4dff3ad
+    Found by: stack scanning
+60  libxul.so + 0x3fcf0b
+     sp = 0xaf6004e8    pc = 0xb4e02f0d
+    Found by: stack scanning
+61  libxul.so + 0x3d018f
+     sp = 0xaf600500    pc = 0xb4dd6191
+    Found by: stack scanning
+62  libxul.so + 0x40b37b
+     sp = 0xaf600538    pc = 0xb4e1137d
+    Found by: stack scanning
+63  libxul.so + 0x10a0281
+     sp = 0xaf600548    pc = 0xb5aa6283
+    Found by: stack scanning
+64  libmozglue.so + 0xd827
+     sp = 0xaf600588    pc = 0xb6f04829
+    Found by: stack scanning
+65  libxul.so + 0x3ce66f
+     sp = 0xaf6005ac    pc = 0xb4dd4671
+    Found by: stack scanning
+66  libxul.so + 0x107bfdd
+     sp = 0xaf6005d8    pc = 0xb5a81fdf
+    Found by: stack scanning
+
+Thread 27
+ 0  libc.so + 0x168ac
+     r0 = 0xaf758604    r1 = 0x00000080    r2 = 0x00000004    r3 = 0x00000000
+     r4 = 0xaf715ba0    r5 = 0x00000000    r6 = 0xaf7fea00    r7 = 0x000000f0
+     r8 = 0x00000004    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xaf3bf770
+     fp = 0xb66d1b77    sp = 0xaf3bf760    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x24843a2
+     sp = 0xaf3bf78c    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 2  libxul.so + 0x24843a2
+     sp = 0xaf3bf790    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 3  libxul.so + 0x1ccbb5d
+     sp = 0xaf3bf794    pc = 0xb66d1b5f
+    Found by: stack scanning
+ 4  libmozglue.so + 0x6cab
+     sp = 0xaf3bf798    pc = 0xb6efdcad
+    Found by: stack scanning
+ 5  libnss3.so + 0xfc2bf
+     sp = 0xaf3bf7c8    pc = 0xb47372c1
+    Found by: stack scanning
+ 6  libxul.so + 0x3f5f89
+     sp = 0xaf3bf7d8    pc = 0xb4dfbf8b
+    Found by: stack scanning
+ 7  libxul.so + 0x3f733f
+     sp = 0xaf3bf7e8    pc = 0xb4dfd341
+    Found by: stack scanning
+ 8  libxul.so + 0x3f935b
+     sp = 0xaf3bf810    pc = 0xb4dff35d
+    Found by: stack scanning
+ 9  libxul.so + 0x509aa5
+     sp = 0xaf3bf828    pc = 0xb4f0faa7
+    Found by: stack scanning
+10  libxul.so + 0x570e03
+     sp = 0xaf3bf848    pc = 0xb4f76e05
+    Found by: stack scanning
+11  libnss3.so + 0xfc93f
+     sp = 0xaf3bf86c    pc = 0xb4737941
+    Found by: stack scanning
+12  libxul.so + 0x40b37b
+     sp = 0xaf3bf870    pc = 0xb4e1137d
+    Found by: stack scanning
+13  libxul.so + 0x57cddb
+     sp = 0xaf3bf880    pc = 0xb4f82ddd
+    Found by: stack scanning
+14  libmozglue.so + 0xd5dd
+     sp = 0xaf3bf888    pc = 0xb6f045df
+    Found by: stack scanning
+15  libxul.so + 0x224f58e
+     sp = 0xaf3bf890    pc = 0xb6c55590
+    Found by: stack scanning
+16  libxul.so + 0x201078a
+     sp = 0xaf3bf894    pc = 0xb6a1678c
+    Found by: stack scanning
+17  libxul.so + 0x56d439
+     sp = 0xaf3bf8b0    pc = 0xb4f7343b
+    Found by: stack scanning
+18  libxul.so + 0x3fabd9
+     sp = 0xaf3bf8c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+19  libnss3.so + 0xfc9fb
+     sp = 0xaf3bf8f8    pc = 0xb47379fd
+    Found by: stack scanning
+20  linker + 0x21c4e
+     sp = 0xaf3bf914    pc = 0xb6f61c50
+    Found by: stack scanning
+21  libc.so + 0x415db
+     sp = 0xaf3bf918    pc = 0xb47cb5dd
+    Found by: stack scanning
+22  libc.so + 0x415bb
+     sp = 0xaf3bf91c    pc = 0xb47cb5bd
+    Found by: stack scanning
+23  libc.so + 0x415bb
+     sp = 0xaf3bf924    pc = 0xb47cb5bd
+    Found by: stack scanning
+24  libc.so + 0x19235
+     sp = 0xaf3bf928    pc = 0xb47a3237
+    Found by: stack scanning
+25  libnss3.so + 0xfc93f
+     sp = 0xaf3bf964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 28
+ 0  libc.so + 0x168ac
+     r0 = 0xaf758614    r1 = 0x00000080    r2 = 0x00000004    r3 = 0x00000000
+     r4 = 0xaf715bf0    r5 = 0x00000000    r6 = 0xaf7fec80    r7 = 0x000000f0
+     r8 = 0x00000004    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xaf2c0770
+     fp = 0xb66d1b77    sp = 0xaf2c0760    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x24843a2
+     sp = 0xaf2c078c    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 2  libxul.so + 0x24843a2
+     sp = 0xaf2c0790    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 3  libxul.so + 0x1ccbb5d
+     sp = 0xaf2c0794    pc = 0xb66d1b5f
+    Found by: stack scanning
+ 4  libmozglue.so + 0x6cab
+     sp = 0xaf2c0798    pc = 0xb6efdcad
+    Found by: stack scanning
+ 5  libnss3.so + 0xfc2bf
+     sp = 0xaf2c07c8    pc = 0xb47372c1
+    Found by: stack scanning
+ 6  libxul.so + 0x3f5f89
+     sp = 0xaf2c07d8    pc = 0xb4dfbf8b
+    Found by: stack scanning
+ 7  libxul.so + 0x3f733f
+     sp = 0xaf2c07e8    pc = 0xb4dfd341
+    Found by: stack scanning
+ 8  libxul.so + 0x3f935b
+     sp = 0xaf2c0810    pc = 0xb4dff35d
+    Found by: stack scanning
+ 9  libxul.so + 0x509aa5
+     sp = 0xaf2c0828    pc = 0xb4f0faa7
+    Found by: stack scanning
+10  libxul.so + 0x570e03
+     sp = 0xaf2c0848    pc = 0xb4f76e05
+    Found by: stack scanning
+11  libnss3.so + 0xfc93f
+     sp = 0xaf2c086c    pc = 0xb4737941
+    Found by: stack scanning
+12  libxul.so + 0x40b37b
+     sp = 0xaf2c0870    pc = 0xb4e1137d
+    Found by: stack scanning
+13  libxul.so + 0x57cddb
+     sp = 0xaf2c0880    pc = 0xb4f82ddd
+    Found by: stack scanning
+14  libmozglue.so + 0xd5dd
+     sp = 0xaf2c0888    pc = 0xb6f045df
+    Found by: stack scanning
+15  libxul.so + 0x224f58e
+     sp = 0xaf2c0890    pc = 0xb6c55590
+    Found by: stack scanning
+16  libxul.so + 0x201078a
+     sp = 0xaf2c0894    pc = 0xb6a1678c
+    Found by: stack scanning
+17  libxul.so + 0x56d439
+     sp = 0xaf2c08b0    pc = 0xb4f7343b
+    Found by: stack scanning
+18  libxul.so + 0x3fabd9
+     sp = 0xaf2c08c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+19  libnss3.so + 0xfc9fb
+     sp = 0xaf2c08f8    pc = 0xb47379fd
+    Found by: stack scanning
+20  linker + 0x21c4e
+     sp = 0xaf2c0914    pc = 0xb6f61c50
+    Found by: stack scanning
+21  libc.so + 0x415db
+     sp = 0xaf2c0918    pc = 0xb47cb5dd
+    Found by: stack scanning
+22  libc.so + 0x415bb
+     sp = 0xaf2c091c    pc = 0xb47cb5bd
+    Found by: stack scanning
+23  libc.so + 0x415bb
+     sp = 0xaf2c0924    pc = 0xb47cb5bd
+    Found by: stack scanning
+24  libc.so + 0x19235
+     sp = 0xaf2c0928    pc = 0xb47a3237
+    Found by: stack scanning
+25  libnss3.so + 0xfc93f
+     sp = 0xaf2c0964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 29
+ 0  libc.so + 0x168ac
+     r0 = 0xaf4113d4    r1 = 0x00000080    r2 = 0x00000010    r3 = 0x00000000
+     r4 = 0xaf428880    r5 = 0x00000000    r6 = 0xaf478400    r7 = 0x000000f0
+     r8 = 0x00000010    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xaf13f770
+     fp = 0xb66d1b77    sp = 0xaf13f760    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x24843a2
+     sp = 0xaf13f78c    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 2  libxul.so + 0x24843a2
+     sp = 0xaf13f790    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 3  libxul.so + 0x1ccbb5d
+     sp = 0xaf13f794    pc = 0xb66d1b5f
+    Found by: stack scanning
+ 4  libmozglue.so + 0x6cab
+     sp = 0xaf13f798    pc = 0xb6efdcad
+    Found by: stack scanning
+ 5  libnss3.so + 0xfc2bf
+     sp = 0xaf13f7c8    pc = 0xb47372c1
+    Found by: stack scanning
+ 6  libxul.so + 0x3f5f89
+     sp = 0xaf13f7d8    pc = 0xb4dfbf8b
+    Found by: stack scanning
+ 7  libxul.so + 0x3f733f
+     sp = 0xaf13f7e8    pc = 0xb4dfd341
+    Found by: stack scanning
+ 8  libxul.so + 0x3f935b
+     sp = 0xaf13f810    pc = 0xb4dff35d
+    Found by: stack scanning
+ 9  libnss3.so + 0xfc277
+     sp = 0xaf13f848    pc = 0xb4737279
+    Found by: stack scanning
+10  libnss3.so + 0xfc93f
+     sp = 0xaf13f86c    pc = 0xb4737941
+    Found by: stack scanning
+11  libxul.so + 0x40b37b
+     sp = 0xaf13f870    pc = 0xb4e1137d
+    Found by: stack scanning
+12  libxul.so + 0x57cddb
+     sp = 0xaf13f880    pc = 0xb4f82ddd
+    Found by: stack scanning
+13  libmozglue.so + 0xd5dd
+     sp = 0xaf13f888    pc = 0xb6f045df
+    Found by: stack scanning
+14  libxul.so + 0x224f58e
+     sp = 0xaf13f890    pc = 0xb6c55590
+    Found by: stack scanning
+15  libxul.so + 0x201078a
+     sp = 0xaf13f894    pc = 0xb6a1678c
+    Found by: stack scanning
+16  libxul.so + 0x56d439
+     sp = 0xaf13f8b0    pc = 0xb4f7343b
+    Found by: stack scanning
+17  libxul.so + 0x3fabd9
+     sp = 0xaf13f8c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+18  libnss3.so + 0xfc9fb
+     sp = 0xaf13f8f8    pc = 0xb47379fd
+    Found by: stack scanning
+19  linker + 0x21c4e
+     sp = 0xaf13f914    pc = 0xb6f61c50
+    Found by: stack scanning
+20  libc.so + 0x415db
+     sp = 0xaf13f918    pc = 0xb47cb5dd
+    Found by: stack scanning
+21  libc.so + 0x415bb
+     sp = 0xaf13f91c    pc = 0xb47cb5bd
+    Found by: stack scanning
+22  libc.so + 0x415bb
+     sp = 0xaf13f924    pc = 0xb47cb5bd
+    Found by: stack scanning
+23  libc.so + 0x19235
+     sp = 0xaf13f928    pc = 0xb47a3237
+    Found by: stack scanning
+24  libnss3.so + 0xfc93f
+     sp = 0xaf13f964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 30
+ 0  libc.so + 0x168ac
+     r0 = 0xaef08624    r1 = 0x00000080    r2 = 0x0000000c    r3 = 0x00000000
+     r4 = 0xaef06b00    r5 = 0x00000000    r6 = 0xaefb1d80    r7 = 0x000000f0
+     r8 = 0x0000000c    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xaeeff770
+     fp = 0xb66d1b77    sp = 0xaeeff760    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x24843a2
+     sp = 0xaeeff78c    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 2  libxul.so + 0x24843a2
+     sp = 0xaeeff790    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 3  libxul.so + 0x1ccbb5d
+     sp = 0xaeeff794    pc = 0xb66d1b5f
+    Found by: stack scanning
+ 4  libmozglue.so + 0x6cab
+     sp = 0xaeeff798    pc = 0xb6efdcad
+    Found by: stack scanning
+ 5  libnss3.so + 0xfc2bf
+     sp = 0xaeeff7c8    pc = 0xb47372c1
+    Found by: stack scanning
+ 6  libxul.so + 0x3f5f89
+     sp = 0xaeeff7d8    pc = 0xb4dfbf8b
+    Found by: stack scanning
+ 7  libxul.so + 0x3f733f
+     sp = 0xaeeff7e8    pc = 0xb4dfd341
+    Found by: stack scanning
+ 8  libxul.so + 0x3f935b
+     sp = 0xaeeff810    pc = 0xb4dff35d
+    Found by: stack scanning
+ 9  libnss3.so + 0xfc277
+     sp = 0xaeeff848    pc = 0xb4737279
+    Found by: stack scanning
+10  libnss3.so + 0xfc93f
+     sp = 0xaeeff86c    pc = 0xb4737941
+    Found by: stack scanning
+11  libxul.so + 0x40b37b
+     sp = 0xaeeff870    pc = 0xb4e1137d
+    Found by: stack scanning
+12  libxul.so + 0x57cddb
+     sp = 0xaeeff880    pc = 0xb4f82ddd
+    Found by: stack scanning
+13  libmozglue.so + 0xd5dd
+     sp = 0xaeeff888    pc = 0xb6f045df
+    Found by: stack scanning
+14  libxul.so + 0x224f58e
+     sp = 0xaeeff890    pc = 0xb6c55590
+    Found by: stack scanning
+15  libxul.so + 0x201078a
+     sp = 0xaeeff894    pc = 0xb6a1678c
+    Found by: stack scanning
+16  libxul.so + 0x56d439
+     sp = 0xaeeff8b0    pc = 0xb4f7343b
+    Found by: stack scanning
+17  libxul.so + 0x3fabd9
+     sp = 0xaeeff8c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+18  libnss3.so + 0xfc9fb
+     sp = 0xaeeff8f8    pc = 0xb47379fd
+    Found by: stack scanning
+19  linker + 0x21c4e
+     sp = 0xaeeff914    pc = 0xb6f61c50
+    Found by: stack scanning
+20  libc.so + 0x415db
+     sp = 0xaeeff918    pc = 0xb47cb5dd
+    Found by: stack scanning
+21  libc.so + 0x415bb
+     sp = 0xaeeff91c    pc = 0xb47cb5bd
+    Found by: stack scanning
+22  libc.so + 0x415bb
+     sp = 0xaeeff924    pc = 0xb47cb5bd
+    Found by: stack scanning
+23  libc.so + 0x19235
+     sp = 0xaeeff928    pc = 0xb47a3237
+    Found by: stack scanning
+24  libnss3.so + 0xfc93f
+     sp = 0xaeeff964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 31
+ 0  libc.so + 0x168ac
+     r0 = 0xaea7f7ac    r1 = 0x00000080    r2 = 0x00000000    r3 = 0x00000000
+     r4 = 0xaea7f79c    r5 = 0x00000000    r6 = 0xaea7f79c    r7 = 0x000000f0
+     r8 = 0x00000000    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xaea7f728
+     fp = 0x00000000    sp = 0xaea7f718    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xaea7f750    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libxul.so + 0x57302d
+     sp = 0xaea7f780    pc = 0xb4f7902f
+    Found by: stack scanning
+ 3  libxul.so + 0x509aa5
+     sp = 0xaea7f7a8    pc = 0xb4f0faa7
+    Found by: stack scanning
+ 4  libxul.so + 0x225ff0e
+     sp = 0xaea7f7b8    pc = 0xb6c65f10
+    Found by: stack scanning
+ 5  libxul.so + 0x1d1612a
+     sp = 0xaea7f7e4    pc = 0xb671c12c
+    Found by: stack scanning
+ 6  libxul.so + 0x1d1612a
+     sp = 0xaea7f7e8    pc = 0xb671c12c
+    Found by: stack scanning
+ 7  libxul.so + 0x57166d
+     sp = 0xaea7f7ec    pc = 0xb4f7766f
+    Found by: stack scanning
+ 8  libxul.so + 0x573081
+     sp = 0xaea7f7f0    pc = 0xb4f79083
+    Found by: stack scanning
+ 9  libxul.so + 0x56d5f1
+     sp = 0xaea7f800    pc = 0xb4f735f3
+    Found by: stack scanning
+10  linker + 0x21c4e
+     sp = 0xaea7f834    pc = 0xb6f61c50
+    Found by: stack scanning
+11  libxul.so + 0x56d439
+     sp = 0xaea7f840    pc = 0xb4f7343b
+    Found by: stack scanning
+12  libxul.so + 0x5729e5
+     sp = 0xaea7f858    pc = 0xb4f789e7
+    Found by: stack scanning
+13  libxul.so + 0x225fdce
+     sp = 0xaea7f860    pc = 0xb6c65dd0
+    Found by: stack scanning
+14  linker + 0x1ffff
+     sp = 0xaea7f8c4    pc = 0xb6f60001
+    Found by: stack scanning
+15  libxul.so + 0x571675
+     sp = 0xaea7f910    pc = 0xb4f77677
+    Found by: stack scanning
+16  libxul.so + 0x57166d
+     sp = 0xaea7f914    pc = 0xb4f7766f
+    Found by: stack scanning
+17  libc.so + 0x415db
+     sp = 0xaea7f918    pc = 0xb47cb5dd
+    Found by: stack scanning
+18  libc.so + 0x415bb
+     sp = 0xaea7f91c    pc = 0xb47cb5bd
+    Found by: stack scanning
+19  libc.so + 0x415bb
+     sp = 0xaea7f924    pc = 0xb47cb5bd
+    Found by: stack scanning
+20  libc.so + 0x19235
+     sp = 0xaea7f928    pc = 0xb47a3237
+    Found by: stack scanning
+21  libxul.so + 0x57166d
+     sp = 0xaea7f964    pc = 0xb4f7766f
+    Found by: stack scanning
+
+Thread 32
+ 0  libc.so + 0x168ac
+     r0 = 0xae9807ac    r1 = 0x00000080    r2 = 0x00000000    r3 = 0x00000000
+     r4 = 0xae98079c    r5 = 0x00000000    r6 = 0xae98079c    r7 = 0x000000f0
+     r8 = 0x00000000    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xae980728
+     fp = 0x00000000    sp = 0xae980718    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xae980750    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libxul.so + 0x57302d
+     sp = 0xae980780    pc = 0xb4f7902f
+    Found by: stack scanning
+ 3  libxul.so + 0x509aa5
+     sp = 0xae9807a8    pc = 0xb4f0faa7
+    Found by: stack scanning
+ 4  libxul.so + 0x225ff0e
+     sp = 0xae9807b8    pc = 0xb6c65f10
+    Found by: stack scanning
+ 5  libxul.so + 0x1d1612a
+     sp = 0xae9807e4    pc = 0xb671c12c
+    Found by: stack scanning
+ 6  libxul.so + 0x1d1612a
+     sp = 0xae9807e8    pc = 0xb671c12c
+    Found by: stack scanning
+ 7  libxul.so + 0x57166d
+     sp = 0xae9807ec    pc = 0xb4f7766f
+    Found by: stack scanning
+ 8  libxul.so + 0x573081
+     sp = 0xae9807f0    pc = 0xb4f79083
+    Found by: stack scanning
+ 9  libxul.so + 0x56d5f1
+     sp = 0xae980800    pc = 0xb4f735f3
+    Found by: stack scanning
+10  linker + 0x21c4e
+     sp = 0xae980834    pc = 0xb6f61c50
+    Found by: stack scanning
+11  libxul.so + 0x56d439
+     sp = 0xae980840    pc = 0xb4f7343b
+    Found by: stack scanning
+12  libxul.so + 0x5729e5
+     sp = 0xae980858    pc = 0xb4f789e7
+    Found by: stack scanning
+13  libxul.so + 0x225fdce
+     sp = 0xae980860    pc = 0xb6c65dd0
+    Found by: stack scanning
+14  linker + 0x1ffff
+     sp = 0xae9808c4    pc = 0xb6f60001
+    Found by: stack scanning
+15  libxul.so + 0x571675
+     sp = 0xae980910    pc = 0xb4f77677
+    Found by: stack scanning
+16  libxul.so + 0x57166d
+     sp = 0xae980914    pc = 0xb4f7766f
+    Found by: stack scanning
+17  libc.so + 0x415db
+     sp = 0xae980918    pc = 0xb47cb5dd
+    Found by: stack scanning
+18  libc.so + 0x415bb
+     sp = 0xae98091c    pc = 0xb47cb5bd
+    Found by: stack scanning
+19  libc.so + 0x415bb
+     sp = 0xae980924    pc = 0xb47cb5bd
+    Found by: stack scanning
+20  libc.so + 0x19235
+     sp = 0xae980928    pc = 0xb47a3237
+    Found by: stack scanning
+21  libxul.so + 0x57166d
+     sp = 0xae980964    pc = 0xb4f7766f
+    Found by: stack scanning
+
+Thread 33
+ 0  libc.so + 0x168ac
+     r0 = 0xae8817ac    r1 = 0x00000080    r2 = 0x00000000    r3 = 0x00000000
+     r4 = 0xae88179c    r5 = 0x00000000    r6 = 0xae88179c    r7 = 0x000000f0
+     r8 = 0x00000000    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xae881728
+     fp = 0x00000000    sp = 0xae881718    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xae881750    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libxul.so + 0x57302d
+     sp = 0xae881780    pc = 0xb4f7902f
+    Found by: stack scanning
+ 3  libxul.so + 0x509aa5
+     sp = 0xae8817a8    pc = 0xb4f0faa7
+    Found by: stack scanning
+ 4  libxul.so + 0x225ff0e
+     sp = 0xae8817b8    pc = 0xb6c65f10
+    Found by: stack scanning
+ 5  libxul.so + 0x1d1612a
+     sp = 0xae8817e4    pc = 0xb671c12c
+    Found by: stack scanning
+ 6  libxul.so + 0x1d1612a
+     sp = 0xae8817e8    pc = 0xb671c12c
+    Found by: stack scanning
+ 7  libxul.so + 0x57166d
+     sp = 0xae8817ec    pc = 0xb4f7766f
+    Found by: stack scanning
+ 8  libxul.so + 0x573081
+     sp = 0xae8817f0    pc = 0xb4f79083
+    Found by: stack scanning
+ 9  libxul.so + 0x56d5f1
+     sp = 0xae881800    pc = 0xb4f735f3
+    Found by: stack scanning
+10  linker + 0x21c4e
+     sp = 0xae881834    pc = 0xb6f61c50
+    Found by: stack scanning
+11  libxul.so + 0x56d439
+     sp = 0xae881840    pc = 0xb4f7343b
+    Found by: stack scanning
+12  libxul.so + 0x5729e5
+     sp = 0xae881858    pc = 0xb4f789e7
+    Found by: stack scanning
+13  libxul.so + 0x225fdce
+     sp = 0xae881860    pc = 0xb6c65dd0
+    Found by: stack scanning
+14  linker + 0x1ffff
+     sp = 0xae8818c4    pc = 0xb6f60001
+    Found by: stack scanning
+15  libxul.so + 0x571675
+     sp = 0xae881910    pc = 0xb4f77677
+    Found by: stack scanning
+16  libxul.so + 0x57166d
+     sp = 0xae881914    pc = 0xb4f7766f
+    Found by: stack scanning
+17  libc.so + 0x415db
+     sp = 0xae881918    pc = 0xb47cb5dd
+    Found by: stack scanning
+18  libc.so + 0x415bb
+     sp = 0xae88191c    pc = 0xb47cb5bd
+    Found by: stack scanning
+19  libc.so + 0x415bb
+     sp = 0xae881924    pc = 0xb47cb5bd
+    Found by: stack scanning
+20  libc.so + 0x19235
+     sp = 0xae881928    pc = 0xb47a3237
+    Found by: stack scanning
+21  libxul.so + 0x57166d
+     sp = 0xae881964    pc = 0xb4f7766f
+    Found by: stack scanning
+
+Thread 34
+ 0  libc.so + 0x168ac
+     r0 = 0xae7827ac    r1 = 0x00000080    r2 = 0x00000000    r3 = 0x00000000
+     r4 = 0xae78279c    r5 = 0x00000000    r6 = 0xae78279c    r7 = 0x000000f0
+     r8 = 0x00000000    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xae782728
+     fp = 0x00000000    sp = 0xae782718    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xae782750    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libxul.so + 0x57302d
+     sp = 0xae782780    pc = 0xb4f7902f
+    Found by: stack scanning
+ 3  libxul.so + 0x509aa5
+     sp = 0xae7827a8    pc = 0xb4f0faa7
+    Found by: stack scanning
+ 4  libxul.so + 0x225ff0e
+     sp = 0xae7827b8    pc = 0xb6c65f10
+    Found by: stack scanning
+ 5  libxul.so + 0x1d1612a
+     sp = 0xae7827e4    pc = 0xb671c12c
+    Found by: stack scanning
+ 6  libxul.so + 0x1d1612a
+     sp = 0xae7827e8    pc = 0xb671c12c
+    Found by: stack scanning
+ 7  libxul.so + 0x57166d
+     sp = 0xae7827ec    pc = 0xb4f7766f
+    Found by: stack scanning
+ 8  libxul.so + 0x573081
+     sp = 0xae7827f0    pc = 0xb4f79083
+    Found by: stack scanning
+ 9  libxul.so + 0x56d5f1
+     sp = 0xae782800    pc = 0xb4f735f3
+    Found by: stack scanning
+10  linker + 0x21c4e
+     sp = 0xae782834    pc = 0xb6f61c50
+    Found by: stack scanning
+11  libxul.so + 0x56d439
+     sp = 0xae782840    pc = 0xb4f7343b
+    Found by: stack scanning
+12  libxul.so + 0x5729e5
+     sp = 0xae782858    pc = 0xb4f789e7
+    Found by: stack scanning
+13  libxul.so + 0x225fdce
+     sp = 0xae782860    pc = 0xb6c65dd0
+    Found by: stack scanning
+14  linker + 0x1ffff
+     sp = 0xae7828c4    pc = 0xb6f60001
+    Found by: stack scanning
+15  libxul.so + 0x571675
+     sp = 0xae782910    pc = 0xb4f77677
+    Found by: stack scanning
+16  libxul.so + 0x57166d
+     sp = 0xae782914    pc = 0xb4f7766f
+    Found by: stack scanning
+17  libc.so + 0x415db
+     sp = 0xae782918    pc = 0xb47cb5dd
+    Found by: stack scanning
+18  libc.so + 0x415bb
+     sp = 0xae78291c    pc = 0xb47cb5bd
+    Found by: stack scanning
+19  libc.so + 0x415bb
+     sp = 0xae782924    pc = 0xb47cb5bd
+    Found by: stack scanning
+20  libc.so + 0x19235
+     sp = 0xae782928    pc = 0xb47a3237
+    Found by: stack scanning
+21  libxul.so + 0x57166d
+     sp = 0xae782964    pc = 0xb4f7766f
+    Found by: stack scanning
+
+Thread 35
+ 0  libc.so + 0x168ac
+     r0 = 0xaecdb8c4    r1 = 0x00000080    r2 = 0x00000000    r3 = 0x00000000
+     r4 = 0xaeb40ab0    r5 = 0x00000000    r6 = 0xaecd4300    r7 = 0x000000f0
+     r8 = 0x00000000    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xae683770
+     fp = 0xaeccff24    sp = 0xae683760    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xae683798    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libnss3.so + 0xfc2bf
+     sp = 0xae6837c8    pc = 0xb47372c1
+    Found by: stack scanning
+ 3  libxul.so + 0x8e0365
+     sp = 0xae6837d8    pc = 0xb52e6367
+    Found by: stack scanning
+ 4  libmozglue.so + 0x5e23
+     sp = 0xae6837e0    pc = 0xb6efce25
+    Found by: stack scanning
+ 5  libxul.so + 0x1dd6208
+     sp = 0xae6837e8    pc = 0xb67dc20a
+    Found by: stack scanning
+ 6  libxul.so + 0x3f93ab
+     sp = 0xae683810    pc = 0xb4dff3ad
+    Found by: stack scanning
+ 7  libxul.so + 0x509aa5
+     sp = 0xae683828    pc = 0xb4f0faa7
+    Found by: stack scanning
+ 8  libxul.so + 0x570e03
+     sp = 0xae683848    pc = 0xb4f76e05
+    Found by: stack scanning
+ 9  libnss3.so + 0xfc93f
+     sp = 0xae68386c    pc = 0xb4737941
+    Found by: stack scanning
+10  libxul.so + 0x40b37b
+     sp = 0xae683870    pc = 0xb4e1137d
+    Found by: stack scanning
+11  libxul.so + 0x57cd9b
+     sp = 0xae683880    pc = 0xb4f82d9d
+    Found by: stack scanning
+12  libmozglue.so + 0xd5dd
+     sp = 0xae683888    pc = 0xb6f045df
+    Found by: stack scanning
+13  libxul.so + 0x224f58e
+     sp = 0xae683890    pc = 0xb6c55590
+    Found by: stack scanning
+14  libxul.so + 0x201078a
+     sp = 0xae683894    pc = 0xb6a1678c
+    Found by: stack scanning
+15  libxul.so + 0x56d439
+     sp = 0xae6838b0    pc = 0xb4f7343b
+    Found by: stack scanning
+16  libxul.so + 0x3fabd9
+     sp = 0xae6838c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+17  libnss3.so + 0xfc9fb
+     sp = 0xae6838f8    pc = 0xb47379fd
+    Found by: stack scanning
+18  linker + 0x21c4e
+     sp = 0xae683914    pc = 0xb6f61c50
+    Found by: stack scanning
+19  libc.so + 0x415db
+     sp = 0xae683918    pc = 0xb47cb5dd
+    Found by: stack scanning
+20  libc.so + 0x415bb
+     sp = 0xae68391c    pc = 0xb47cb5bd
+    Found by: stack scanning
+21  libc.so + 0x415bb
+     sp = 0xae683924    pc = 0xb47cb5bd
+    Found by: stack scanning
+22  libc.so + 0x19235
+     sp = 0xae683928    pc = 0xb47a3237
+    Found by: stack scanning
+23  libnss3.so + 0xfc93f
+     sp = 0xae683964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 36
+ 0  libc.so + 0x168ac
+     r0 = 0xaecdb8c4    r1 = 0x00000080    r2 = 0x00000000    r3 = 0x00000000
+     r4 = 0xaeb40ab0    r5 = 0x00000000    r6 = 0xaecd4380    r7 = 0x000000f0
+     r8 = 0x00000000    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xae584770
+     fp = 0xaeccff94    sp = 0xae584760    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xae584798    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libnss3.so + 0xfc2bf
+     sp = 0xae5847c8    pc = 0xb47372c1
+    Found by: stack scanning
+ 3  libxul.so + 0x8e0365
+     sp = 0xae5847d8    pc = 0xb52e6367
+    Found by: stack scanning
+ 4  libmozglue.so + 0x5e23
+     sp = 0xae5847e0    pc = 0xb6efce25
+    Found by: stack scanning
+ 5  libxul.so + 0x1dd6208
+     sp = 0xae5847e8    pc = 0xb67dc20a
+    Found by: stack scanning
+ 6  libxul.so + 0x3f93ab
+     sp = 0xae584810    pc = 0xb4dff3ad
+    Found by: stack scanning
+ 7  libxul.so + 0x509aa5
+     sp = 0xae584828    pc = 0xb4f0faa7
+    Found by: stack scanning
+ 8  libxul.so + 0x570e03
+     sp = 0xae584848    pc = 0xb4f76e05
+    Found by: stack scanning
+ 9  libnss3.so + 0xfc93f
+     sp = 0xae58486c    pc = 0xb4737941
+    Found by: stack scanning
+10  libxul.so + 0x40b37b
+     sp = 0xae584870    pc = 0xb4e1137d
+    Found by: stack scanning
+11  libxul.so + 0x57cd9b
+     sp = 0xae584880    pc = 0xb4f82d9d
+    Found by: stack scanning
+12  libmozglue.so + 0xd5dd
+     sp = 0xae584888    pc = 0xb6f045df
+    Found by: stack scanning
+13  libxul.so + 0x224f58e
+     sp = 0xae584890    pc = 0xb6c55590
+    Found by: stack scanning
+14  libxul.so + 0x201078a
+     sp = 0xae584894    pc = 0xb6a1678c
+    Found by: stack scanning
+15  libxul.so + 0x56d439
+     sp = 0xae5848b0    pc = 0xb4f7343b
+    Found by: stack scanning
+16  libxul.so + 0x3fabd9
+     sp = 0xae5848c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+17  libnss3.so + 0xfc9fb
+     sp = 0xae5848f8    pc = 0xb47379fd
+    Found by: stack scanning
+18  linker + 0x21c4e
+     sp = 0xae584914    pc = 0xb6f61c50
+    Found by: stack scanning
+19  libc.so + 0x415db
+     sp = 0xae584918    pc = 0xb47cb5dd
+    Found by: stack scanning
+20  libc.so + 0x415bb
+     sp = 0xae58491c    pc = 0xb47cb5bd
+    Found by: stack scanning
+21  libc.so + 0x415bb
+     sp = 0xae584924    pc = 0xb47cb5bd
+    Found by: stack scanning
+22  libc.so + 0x19235
+     sp = 0xae584928    pc = 0xb47a3237
+    Found by: stack scanning
+23  libnss3.so + 0xfc93f
+     sp = 0xae584964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 37
+ 0  libc.so + 0x168ac
+     r0 = 0xaecdb964    r1 = 0x00000080    r2 = 0x0000000c    r3 = 0x00000000
+     r4 = 0xaeb40bf0    r5 = 0x00000000    r6 = 0xaecd4400    r7 = 0x000000f0
+     r8 = 0x0000000c    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xae485770
+     fp = 0xb66d1b77    sp = 0xae485760    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x24843a2
+     sp = 0xae48578c    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 2  libxul.so + 0x24843a2
+     sp = 0xae485790    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 3  libxul.so + 0x1ccbb5d
+     sp = 0xae485794    pc = 0xb66d1b5f
+    Found by: stack scanning
+ 4  libmozglue.so + 0x6cab
+     sp = 0xae485798    pc = 0xb6efdcad
+    Found by: stack scanning
+ 5  libnss3.so + 0xfc2bf
+     sp = 0xae4857c8    pc = 0xb47372c1
+    Found by: stack scanning
+ 6  libxul.so + 0x3f5f89
+     sp = 0xae4857d8    pc = 0xb4dfbf8b
+    Found by: stack scanning
+ 7  libxul.so + 0x3f733f
+     sp = 0xae4857e8    pc = 0xb4dfd341
+    Found by: stack scanning
+ 8  libxul.so + 0x3f935b
+     sp = 0xae485810    pc = 0xb4dff35d
+    Found by: stack scanning
+ 9  libnss3.so + 0xfc277
+     sp = 0xae485848    pc = 0xb4737279
+    Found by: stack scanning
+10  libnss3.so + 0xfc93f
+     sp = 0xae48586c    pc = 0xb4737941
+    Found by: stack scanning
+11  libxul.so + 0x40b37b
+     sp = 0xae485870    pc = 0xb4e1137d
+    Found by: stack scanning
+12  libxul.so + 0x57cddb
+     sp = 0xae485880    pc = 0xb4f82ddd
+    Found by: stack scanning
+13  libmozglue.so + 0xd5dd
+     sp = 0xae485888    pc = 0xb6f045df
+    Found by: stack scanning
+14  libxul.so + 0x224f58e
+     sp = 0xae485890    pc = 0xb6c55590
+    Found by: stack scanning
+15  libxul.so + 0x201078a
+     sp = 0xae485894    pc = 0xb6a1678c
+    Found by: stack scanning
+16  libxul.so + 0x56d439
+     sp = 0xae4858b0    pc = 0xb4f7343b
+    Found by: stack scanning
+17  libxul.so + 0x3fabd9
+     sp = 0xae4858c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+18  libnss3.so + 0xfc9fb
+     sp = 0xae4858f8    pc = 0xb47379fd
+    Found by: stack scanning
+19  linker + 0x21c4e
+     sp = 0xae485914    pc = 0xb6f61c50
+    Found by: stack scanning
+20  libc.so + 0x415db
+     sp = 0xae485918    pc = 0xb47cb5dd
+    Found by: stack scanning
+21  libc.so + 0x415bb
+     sp = 0xae48591c    pc = 0xb47cb5bd
+    Found by: stack scanning
+22  libc.so + 0x415bb
+     sp = 0xae485924    pc = 0xb47cb5bd
+    Found by: stack scanning
+23  libc.so + 0x19235
+     sp = 0xae485928    pc = 0xb47a3237
+    Found by: stack scanning
+24  libnss3.so + 0xfc93f
+     sp = 0xae485964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 38
+ 0  libc.so + 0x42a10
+     r0 = 0xfffffffc    r1 = 0xaec29538    r2 = 0x00000010    r3 = 0xffffffff
+     r4 = 0x00000000    r5 = 0x00000008    r6 = 0x00000000    r7 = 0x0000015a
+     r8 = 0x20000000    r9 = 0x00000100   r10 = 0x00000001   r12 = 0xae385788
+     fp = 0x00000007    sp = 0xae385778    lr = 0xb47a3563    pc = 0xb47cca10
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x1eaacd9
+     sp = 0xae3857a4    pc = 0xb68b0cdb
+    Found by: stack scanning
+ 2  libc.so + 0x1956f
+     sp = 0xae3857a8    pc = 0xb47a3571
+    Found by: stack scanning
+ 3  libmozglue.so + 0x6b23
+     sp = 0xae3857b8    pc = 0xb6efdb25
+    Found by: stack scanning
+ 4  libxul.so + 0x115ebc3
+     sp = 0xae3857e8    pc = 0xb5b64bc5
+    Found by: stack scanning
+
+Thread 39
+ 0  libc.so + 0x168ac
+     r0 = 0xb0173544    r1 = 0x00000080    r2 = 0x00000018    r3 = 0x00000000
+     r4 = 0xb0315330    r5 = 0x00000000    r6 = 0xaebeae00    r7 = 0x000000f0
+     r8 = 0x00000018    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xb1743770
+     fp = 0xb66d1b77    sp = 0xb1743760    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x24843a2
+     sp = 0xb174378c    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 2  libxul.so + 0x24843a2
+     sp = 0xb1743790    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 3  libxul.so + 0x1ccbb5d
+     sp = 0xb1743794    pc = 0xb66d1b5f
+    Found by: stack scanning
+ 4  libmozglue.so + 0x6cab
+     sp = 0xb1743798    pc = 0xb6efdcad
+    Found by: stack scanning
+ 5  libnss3.so + 0xfc2bf
+     sp = 0xb17437c8    pc = 0xb47372c1
+    Found by: stack scanning
+ 6  libxul.so + 0x3f5f89
+     sp = 0xb17437d8    pc = 0xb4dfbf8b
+    Found by: stack scanning
+ 7  libxul.so + 0x3f733f
+     sp = 0xb17437e8    pc = 0xb4dfd341
+    Found by: stack scanning
+ 8  libxul.so + 0x3f935b
+     sp = 0xb1743810    pc = 0xb4dff35d
+    Found by: stack scanning
+ 9  libnss3.so + 0xfc277
+     sp = 0xb1743848    pc = 0xb4737279
+    Found by: stack scanning
+10  libnss3.so + 0xfc93f
+     sp = 0xb174386c    pc = 0xb4737941
+    Found by: stack scanning
+11  libxul.so + 0x40b37b
+     sp = 0xb1743870    pc = 0xb4e1137d
+    Found by: stack scanning
+12  libxul.so + 0x57cddb
+     sp = 0xb1743880    pc = 0xb4f82ddd
+    Found by: stack scanning
+13  libmozglue.so + 0xd5dd
+     sp = 0xb1743888    pc = 0xb6f045df
+    Found by: stack scanning
+14  libxul.so + 0x224f58e
+     sp = 0xb1743890    pc = 0xb6c55590
+    Found by: stack scanning
+15  libxul.so + 0x201078a
+     sp = 0xb1743894    pc = 0xb6a1678c
+    Found by: stack scanning
+16  libxul.so + 0x56d439
+     sp = 0xb17438b0    pc = 0xb4f7343b
+    Found by: stack scanning
+17  libxul.so + 0x3fabd9
+     sp = 0xb17438c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+18  libnss3.so + 0xfc9fb
+     sp = 0xb17438f8    pc = 0xb47379fd
+    Found by: stack scanning
+19  linker + 0x21c4e
+     sp = 0xb1743914    pc = 0xb6f61c50
+    Found by: stack scanning
+20  libc.so + 0x415db
+     sp = 0xb1743918    pc = 0xb47cb5dd
+    Found by: stack scanning
+21  libc.so + 0x415bb
+     sp = 0xb174391c    pc = 0xb47cb5bd
+    Found by: stack scanning
+22  libc.so + 0x415bb
+     sp = 0xb1743924    pc = 0xb47cb5bd
+    Found by: stack scanning
+23  libc.so + 0x19235
+     sp = 0xb1743928    pc = 0xb47a3237
+    Found by: stack scanning
+24  libnss3.so + 0xfc93f
+     sp = 0xb1743964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 40
+ 0  libc.so + 0x168ac
+     r0 = 0xb0173674    r1 = 0x00000080    r2 = 0x00000008    r3 = 0x00000000
+     r4 = 0xae14a100    r5 = 0x00000000    r6 = 0xb0175880    r7 = 0x000000f0
+     r8 = 0x00000008    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xadffefd8
+     fp = 0xaf81c8e0    sp = 0xadffefc8    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xadfff000    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libnss3.so + 0xfc2bf
+     sp = 0xadfff030    pc = 0xb47372c1
+    Found by: stack scanning
+ 3  libxul.so + 0x3f5f89
+     sp = 0xadfff040    pc = 0xb4dfbf8b
+    Found by: stack scanning
+ 4  libxul.so + 0x1097851
+     sp = 0xadfff050    pc = 0xb5a9d853
+    Found by: stack scanning
+ 5  libxul.so + 0x109ee71
+     sp = 0xadfff060    pc = 0xb5aa4e73
+    Found by: stack scanning
+ 6  libxul.so + 0x109f82f
+     sp = 0xadfff088    pc = 0xb5aa5831
+    Found by: stack scanning
+ 7  libxul.so + 0x10a00f5
+     sp = 0xadfff0a8    pc = 0xb5aa60f7
+    Found by: stack scanning
+ 8  libmozglue.so + 0xd5dd
+     sp = 0xadfff0b8    pc = 0xb6f045df
+    Found by: stack scanning
+ 9  libxul.so + 0x94ca27
+     sp = 0xadfff0c8    pc = 0xb5352a29
+    Found by: stack scanning
+10  libxul.so + 0xd2dc3b
+     sp = 0xadfff0d4    pc = 0xb5733c3d
+    Found by: stack scanning
+11  libxul.so + 0xa13451
+     sp = 0xadfff0f0    pc = 0xb5419453
+    Found by: stack scanning
+12  libxul.so + 0x107c1a3
+     sp = 0xadfff100    pc = 0xb5a821a5
+    Found by: stack scanning
+13  libxul.so + 0x109e5bb
+     sp = 0xadfff110    pc = 0xb5aa45bd
+    Found by: stack scanning
+14  libxul.so + 0x1079627
+     sp = 0xadfff140    pc = 0xb5a7f629
+    Found by: stack scanning
+15  libxul.so + 0x21bbdfe
+     sp = 0xadfff144    pc = 0xb6bc1e00
+    Found by: stack scanning
+16  libxul.so + 0x1a96099
+     sp = 0xadfff150    pc = 0xb649c09b
+    Found by: stack scanning
+17  libxul.so + 0x955baf
+     sp = 0xadfff184    pc = 0xb535bbb1
+    Found by: stack scanning
+18  libxul.so + 0x109e9df
+     sp = 0xadfff198    pc = 0xb5aa49e1
+    Found by: stack scanning
+19  libxul.so + 0x3b7b2b
+     sp = 0xadfff1d8    pc = 0xb4dbdb2d
+    Found by: stack scanning
+20  libxul.so + 0x109ec29
+     sp = 0xadfff220    pc = 0xb5aa4c2b
+    Found by: stack scanning
+21  libmozglue.so + 0x5e23
+     sp = 0xadfff250    pc = 0xb6efce25
+    Found by: stack scanning
+22  libmozglue.so + 0x5e23
+     sp = 0xadfff270    pc = 0xb6efce25
+    Found by: stack scanning
+23  libxul.so + 0x3f93ab
+     sp = 0xadfff2a0    pc = 0xb4dff3ad
+    Found by: stack scanning
+24  libxul.so + 0x3fcf0b
+     sp = 0xadfff2b0    pc = 0xb4e02f0d
+    Found by: stack scanning
+25  libxul.so + 0x3da0a9
+     sp = 0xadfff2c8    pc = 0xb4de00ab
+    Found by: stack scanning
+26  libxul.so + 0x40b37b
+     sp = 0xadfff300    pc = 0xb4e1137d
+    Found by: stack scanning
+27  libxul.so + 0x109ee55
+     sp = 0xadfff310    pc = 0xb5aa4e57
+    Found by: stack scanning
+28  libxul.so + 0x1084627
+     sp = 0xadfff338    pc = 0xb5a8a629
+    Found by: stack scanning
+29  libxul.so + 0x10846c7
+     sp = 0xadfff370    pc = 0xb5a8a6c9
+    Found by: stack scanning
+30  libxul.so + 0x24b769e
+     sp = 0xadfff380    pc = 0xb6ebd6a0
+    Found by: stack scanning
+31  libxul.so + 0x10961c3
+     sp = 0xadfff3a0    pc = 0xb5a9c1c5
+    Found by: stack scanning
+32  libxul.so + 0x3d190b
+     sp = 0xadfff3a8    pc = 0xb4dd790d
+    Found by: stack scanning
+33  libxul.so + 0x107ae6d
+     sp = 0xadfff3b0    pc = 0xb5a80e6f
+    Found by: stack scanning
+34  libxul.so + 0x3f76f3
+     sp = 0xadfff3b8    pc = 0xb4dfd6f5
+    Found by: stack scanning
+35  libxul.so + 0x109eab5
+     sp = 0xadfff3d0    pc = 0xb5aa4ab7
+    Found by: stack scanning
+36  libnss3.so + 0xfc207
+     sp = 0xadfff3f0    pc = 0xb4737209
+    Found by: stack scanning
+37  libxul.so + 0x955baf
+     sp = 0xadfff43c    pc = 0xb535bbb1
+    Found by: stack scanning
+38  libxul.so + 0x109ec29
+     sp = 0xadfff458    pc = 0xb5aa4c2b
+    Found by: stack scanning
+39  libnss3.so + 0xfccaf
+     sp = 0xadfff460    pc = 0xb4737cb1
+    Found by: stack scanning
+40  libxul.so + 0x24b74aa
+     sp = 0xadfff468    pc = 0xb6ebd4ac
+    Found by: stack scanning
+41  libxul.so + 0x1f552be
+     sp = 0xadfff46c    pc = 0xb695b2c0
+    Found by: stack scanning
+42  libmozglue.so + 0x5e23
+     sp = 0xadfff488    pc = 0xb6efce25
+    Found by: stack scanning
+43  libmozglue.so + 0x5e23
+     sp = 0xadfff4a8    pc = 0xb6efce25
+    Found by: stack scanning
+44  libxul.so + 0x3f93ab
+     sp = 0xadfff4d8    pc = 0xb4dff3ad
+    Found by: stack scanning
+45  libxul.so + 0x3fcf0b
+     sp = 0xadfff4e8    pc = 0xb4e02f0d
+    Found by: stack scanning
+46  libxul.so + 0x3da0a9
+     sp = 0xadfff500    pc = 0xb4de00ab
+    Found by: stack scanning
+47  libxul.so + 0x40b37b
+     sp = 0xadfff538    pc = 0xb4e1137d
+    Found by: stack scanning
+48  libxul.so + 0x10a0281
+     sp = 0xadfff548    pc = 0xb5aa6283
+    Found by: stack scanning
+49  libmozglue.so + 0xd827
+     sp = 0xadfff588    pc = 0xb6f04829
+    Found by: stack scanning
+50  libxul.so + 0x3ce66f
+     sp = 0xadfff5ac    pc = 0xb4dd4671
+    Found by: stack scanning
+51  libxul.so + 0x107bfdd
+     sp = 0xadfff5d8    pc = 0xb5a81fdf
+    Found by: stack scanning
+
+Thread 41
+ 0  libc.so + 0x42b38
+     r0 = 0x00000042    r1 = 0x00006101    r2 = 0x00000000    r3 = 0xadefe8e0
+     r4 = 0xadefe930    r5 = 0xadd36040    r6 = 0xadefe930    r7 = 0x00000036
+     r8 = 0xadefe8ec    r9 = 0xb6ebe530   r10 = 0xb6ebe458   r12 = 0xb6c6b318
+     fp = 0xb50d4f69    sp = 0xadefe8d0    lr = 0xb47d35bd    pc = 0xb47ccb38
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x6cef9f
+     sp = 0xadefe8dc    pc = 0xb50d4fa1
+    Found by: stack scanning
+ 2  libxul.so + 0x6cceeb
+     sp = 0xadefe8f4    pc = 0xb50d2eed
+    Found by: stack scanning
+ 3  linker + 0x21c4e
+     sp = 0xadefe90c    pc = 0xb6f61c50
+    Found by: stack scanning
+ 4  libc.so + 0x415db
+     sp = 0xadefe918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 5  libc.so + 0x415bb
+     sp = 0xadefe91c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 6  libc.so + 0x415bb
+     sp = 0xadefe924    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 7  libc.so + 0x19235
+     sp = 0xadefe928    pc = 0xb47a3237
+    Found by: stack scanning
+ 8  libxul.so + 0x6cef67
+     sp = 0xadefe964    pc = 0xb50d4f69
+    Found by: stack scanning
+
+Thread 42
+ 0  libc.so + 0x168ac
+     r0 = 0xb03747b4    r1 = 0x00000080    r2 = 0x0000001c    r3 = 0x00000000
+     r4 = 0xafdb54c0    r5 = 0x00000000    r6 = 0xaf705e00    r7 = 0x000000f0
+     r8 = 0x0000001c    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xadaff770
+     fp = 0xb66d1b77    sp = 0xadaff760    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x24843a2
+     sp = 0xadaff78c    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 2  libxul.so + 0x24843a2
+     sp = 0xadaff790    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 3  libxul.so + 0x1ccbb5d
+     sp = 0xadaff794    pc = 0xb66d1b5f
+    Found by: stack scanning
+ 4  libmozglue.so + 0x6cab
+     sp = 0xadaff798    pc = 0xb6efdcad
+    Found by: stack scanning
+ 5  libnss3.so + 0xfc2bf
+     sp = 0xadaff7c8    pc = 0xb47372c1
+    Found by: stack scanning
+ 6  libxul.so + 0x3f5f89
+     sp = 0xadaff7d8    pc = 0xb4dfbf8b
+    Found by: stack scanning
+ 7  libxul.so + 0x3f733f
+     sp = 0xadaff7e8    pc = 0xb4dfd341
+    Found by: stack scanning
+ 8  libxul.so + 0x3f935b
+     sp = 0xadaff810    pc = 0xb4dff35d
+    Found by: stack scanning
+ 9  libnss3.so + 0xfc277
+     sp = 0xadaff848    pc = 0xb4737279
+    Found by: stack scanning
+10  libnss3.so + 0xfc93f
+     sp = 0xadaff86c    pc = 0xb4737941
+    Found by: stack scanning
+11  libxul.so + 0x40b37b
+     sp = 0xadaff870    pc = 0xb4e1137d
+    Found by: stack scanning
+12  libxul.so + 0x57cddb
+     sp = 0xadaff880    pc = 0xb4f82ddd
+    Found by: stack scanning
+13  libmozglue.so + 0xd5dd
+     sp = 0xadaff888    pc = 0xb6f045df
+    Found by: stack scanning
+14  libxul.so + 0x224f58e
+     sp = 0xadaff890    pc = 0xb6c55590
+    Found by: stack scanning
+15  libxul.so + 0x201078a
+     sp = 0xadaff894    pc = 0xb6a1678c
+    Found by: stack scanning
+16  libxul.so + 0x56d439
+     sp = 0xadaff8b0    pc = 0xb4f7343b
+    Found by: stack scanning
+17  libxul.so + 0x3fabd9
+     sp = 0xadaff8c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+18  libnss3.so + 0xfc9fb
+     sp = 0xadaff8f8    pc = 0xb47379fd
+    Found by: stack scanning
+19  linker + 0x21c4e
+     sp = 0xadaff914    pc = 0xb6f61c50
+    Found by: stack scanning
+20  libc.so + 0x415db
+     sp = 0xadaff918    pc = 0xb47cb5dd
+    Found by: stack scanning
+21  libc.so + 0x415bb
+     sp = 0xadaff91c    pc = 0xb47cb5bd
+    Found by: stack scanning
+22  libc.so + 0x415bb
+     sp = 0xadaff924    pc = 0xb47cb5bd
+    Found by: stack scanning
+23  libc.so + 0x19235
+     sp = 0xadaff928    pc = 0xb47a3237
+    Found by: stack scanning
+24  libnss3.so + 0xfc93f
+     sp = 0xadaff964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 43
+ 0  libc.so + 0x42bd4
+     r0 = 0xada008f0    r1 = 0x00000002    r2 = 0x00000000    r3 = 0x00000000
+     r4 = 0x00000000    r5 = 0x00000002    r6 = 0xffffffff    r7 = 0x00000150
+     r8 = 0xb6f61c50    r9 = 0xae189be8   r10 = 0xad902000   r12 = 0xada008a8
+     fp = 0xb5f462e9    sp = 0xada00898    lr = 0xb47a5331    pc = 0xb47ccbd4
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x7395
+     sp = 0xada008c8    pc = 0xb6efe397
+    Found by: stack scanning
+ 2  libxul.so + 0x15402e7
+     sp = 0xada008cc    pc = 0xb5f462e9
+    Found by: stack scanning
+ 3  libxul.so + 0x15402af
+     sp = 0xada008f0    pc = 0xb5f462b1
+    Found by: stack scanning
+ 4  libxul.so + 0x15402ed
+     sp = 0xada00910    pc = 0xb5f462ef
+    Found by: stack scanning
+ 5  libxul.so + 0x15402e7
+     sp = 0xada00914    pc = 0xb5f462e9
+    Found by: stack scanning
+ 6  libc.so + 0x415db
+     sp = 0xada00918    pc = 0xb47cb5dd
+    Found by: stack scanning
+ 7  libc.so + 0x415bb
+     sp = 0xada0091c    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 8  libc.so + 0x415bb
+     sp = 0xada00924    pc = 0xb47cb5bd
+    Found by: stack scanning
+ 9  libc.so + 0x19235
+     sp = 0xada00928    pc = 0xb47a3237
+    Found by: stack scanning
+10  libxul.so + 0x15402e7
+     sp = 0xada00964    pc = 0xb5f462e9
+    Found by: stack scanning
+
+Thread 44
+ 0  libc.so + 0x168ac
+     r0 = 0xad6bf7ac    r1 = 0x00000080    r2 = 0x00000000    r3 = 0x00000000
+     r4 = 0xad6bf79c    r5 = 0x00000000    r6 = 0xad6bf79c    r7 = 0x000000f0
+     r8 = 0x00000000    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xad6bf728
+     fp = 0x00000000    sp = 0xad6bf718    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libmozglue.so + 0x6cab
+     sp = 0xad6bf750    pc = 0xb6efdcad
+    Found by: stack scanning
+ 2  libxul.so + 0x57302d
+     sp = 0xad6bf780    pc = 0xb4f7902f
+    Found by: stack scanning
+ 3  libxul.so + 0x509aa5
+     sp = 0xad6bf7a8    pc = 0xb4f0faa7
+    Found by: stack scanning
+ 4  libxul.so + 0x225ff0e
+     sp = 0xad6bf7b8    pc = 0xb6c65f10
+    Found by: stack scanning
+ 5  libxul.so + 0x1d1612a
+     sp = 0xad6bf7e4    pc = 0xb671c12c
+    Found by: stack scanning
+ 6  libxul.so + 0x1d1612a
+     sp = 0xad6bf7e8    pc = 0xb671c12c
+    Found by: stack scanning
+ 7  libxul.so + 0x57166d
+     sp = 0xad6bf7ec    pc = 0xb4f7766f
+    Found by: stack scanning
+ 8  libxul.so + 0x573081
+     sp = 0xad6bf7f0    pc = 0xb4f79083
+    Found by: stack scanning
+ 9  libxul.so + 0x56d5f1
+     sp = 0xad6bf800    pc = 0xb4f735f3
+    Found by: stack scanning
+10  linker + 0x21c4e
+     sp = 0xad6bf834    pc = 0xb6f61c50
+    Found by: stack scanning
+11  libxul.so + 0x56d439
+     sp = 0xad6bf840    pc = 0xb4f7343b
+    Found by: stack scanning
+12  libxul.so + 0x5729e5
+     sp = 0xad6bf858    pc = 0xb4f789e7
+    Found by: stack scanning
+13  libxul.so + 0x225fdce
+     sp = 0xad6bf860    pc = 0xb6c65dd0
+    Found by: stack scanning
+14  linker + 0x1ffff
+     sp = 0xad6bf8c4    pc = 0xb6f60001
+    Found by: stack scanning
+15  libxul.so + 0x571675
+     sp = 0xad6bf910    pc = 0xb4f77677
+    Found by: stack scanning
+16  libxul.so + 0x57166d
+     sp = 0xad6bf914    pc = 0xb4f7766f
+    Found by: stack scanning
+17  libc.so + 0x415db
+     sp = 0xad6bf918    pc = 0xb47cb5dd
+    Found by: stack scanning
+18  libc.so + 0x415bb
+     sp = 0xad6bf91c    pc = 0xb47cb5bd
+    Found by: stack scanning
+19  libc.so + 0x415bb
+     sp = 0xad6bf924    pc = 0xb47cb5bd
+    Found by: stack scanning
+20  libc.so + 0x19235
+     sp = 0xad6bf928    pc = 0xb47a3237
+    Found by: stack scanning
+21  libxul.so + 0x57166d
+     sp = 0xad6bf964    pc = 0xb4f7766f
+    Found by: stack scanning
+
+Thread 45
+ 0  libc.so + 0x168ac
+     r0 = 0xb476ed54    r1 = 0x00000080    r2 = 0x00000002    r3 = 0x00000000
+     r4 = 0x00000000    r5 = 0x00000002    r6 = 0x00000080    r7 = 0x000000f0
+     r8 = 0xad53f26c    r9 = 0x00000000   r10 = 0xad53f270   r12 = 0xad53f248
+     fp = 0xad53f980    sp = 0xad53f238    lr = 0xb47cbeef    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libnss3.so + 0x1106d2
+     sp = 0xad53f260    pc = 0xb474b6d4
+    Found by: stack scanning
+ 2  libnss3.so + 0x1106d6
+     sp = 0xad53f264    pc = 0xb474b6d8
+    Found by: stack scanning
+ 3  libnss3.so + 0x1106ca
+     sp = 0xad53f268    pc = 0xb474b6cc
+    Found by: stack scanning
+ 4  libnss3.so + 0x1250fe
+     sp = 0xad53f26c    pc = 0xb4760100
+    Found by: stack scanning
+ 5  libxul.so + 0x1e8c522
+     sp = 0xad53f27c    pc = 0xb6892524
+    Found by: stack scanning
+ 6  libxul.so + 0x2180fae
+     sp = 0xad53f294    pc = 0xb6b86fb0
+    Found by: stack scanning
+ 7  libc.so + 0x41fef
+     sp = 0xad53f2a0    pc = 0xb47cbff1
+    Found by: stack scanning
+ 8  libmozglue.so + 0x724f
+     sp = 0xad53f2b0    pc = 0xb6efe251
+    Found by: stack scanning
+ 9  libnss3.so + 0x13259e
+     sp = 0xad53f2cc    pc = 0xb476d5a0
+    Found by: stack scanning
+10  libnss3.so + 0xa4613
+     sp = 0xad53f2d0    pc = 0xb46df615
+    Found by: stack scanning
+11  libnss3.so + 0xb5555
+     sp = 0xad53f2e0    pc = 0xb46f0557
+    Found by: stack scanning
+12  libnss3.so + 0xb552b
+     sp = 0xad53f2e4    pc = 0xb46f052d
+    Found by: stack scanning
+13  libnss3.so + 0xc7323
+     sp = 0xad53f2f8    pc = 0xb4702325
+    Found by: stack scanning
+14  libnss3.so + 0xc7387
+     sp = 0xad53f330    pc = 0xb4702389
+    Found by: stack scanning
+15  libnss3.so + 0xcf609
+     sp = 0xad53f348    pc = 0xb470a60b
+    Found by: stack scanning
+16  libnss3.so + 0xcf6f9
+     sp = 0xad53f360    pc = 0xb470a6fb
+    Found by: stack scanning
+17  libnss3.so + 0xcf9df
+     sp = 0xad53f378    pc = 0xb470a9e1
+    Found by: stack scanning
+18  libxul.so + 0x7239ed
+     sp = 0xad53f390    pc = 0xb51299ef
+    Found by: stack scanning
+19  libmozglue.so + 0x5e23
+     sp = 0xad53f3c0    pc = 0xb6efce25
+    Found by: stack scanning
+20  libnss3.so + 0xfc277
+     sp = 0xad53f3d8    pc = 0xb4737279
+    Found by: stack scanning
+21  libxul.so + 0x3da0a9
+     sp = 0xad53f3e8    pc = 0xb4de00ab
+    Found by: stack scanning
+22  libxul.so + 0x723973
+     sp = 0xad53f3f0    pc = 0xb5129975
+    Found by: stack scanning
+23  libxul.so + 0x723ac5
+     sp = 0xad53f408    pc = 0xb5129ac7
+    Found by: stack scanning
+24  libxul.so + 0x2269f66
+     sp = 0xad53f414    pc = 0xb6c6ff68
+    Found by: stack scanning
+25  libxul.so + 0x723aed
+     sp = 0xad53f420    pc = 0xb5129aef
+    Found by: stack scanning
+26  libxul.so + 0x723b7f
+     sp = 0xad53f428    pc = 0xb5129b81
+    Found by: stack scanning
+27  libxul.so + 0x723d4b
+     sp = 0xad53f438    pc = 0xb5129d4d
+    Found by: stack scanning
+28  libxul.so + 0x723ee5
+     sp = 0xad53f440    pc = 0xb5129ee7
+    Found by: stack scanning
+29  libxul.so + 0x72c09f
+     sp = 0xad53f460    pc = 0xb51320a1
+    Found by: stack scanning
+30  libxul.so + 0x723b6b
+     sp = 0xad53f480    pc = 0xb5129b6d
+    Found by: stack scanning
+31  libxul.so + 0x3bdbdd
+     sp = 0xad53f490    pc = 0xb4dc3bdf
+    Found by: stack scanning
+32  libxul.so + 0x1021b3d
+     sp = 0xad53f498    pc = 0xb5a27b3f
+    Found by: stack scanning
+33  libxul.so + 0x228d73e
+     sp = 0xad53f4cc    pc = 0xb6c93740
+    Found by: stack scanning
+34  libxul.so + 0x2180fae
+     sp = 0xad53f4d0    pc = 0xb6b86fb0
+    Found by: stack scanning
+35  libxul.so + 0x1cbce27
+     sp = 0xad53f4d4    pc = 0xb66c2e29
+    Found by: stack scanning
+36  libxul.so + 0x22490de
+     sp = 0xad53f4d8    pc = 0xb6c4f0e0
+    Found by: stack scanning
+37  libxul.so + 0x2180fae
+     sp = 0xad53f4dc    pc = 0xb6b86fb0
+    Found by: stack scanning
+
+Thread 46
+ 0  libc.so + 0x168ac
+     r0 = 0xb0202584    r1 = 0x00000080    r2 = 0x0000000c    r3 = 0x00000000
+     r4 = 0xb0201790    r5 = 0x00000000    r6 = 0xb03bd900    r7 = 0x000000f0
+     r8 = 0x0000000c    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xad3ff6c8
+     fp = 0xb66d1b77    sp = 0xad3ff6b8    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x24843a2
+     sp = 0xad3ff6e4    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 2  libxul.so + 0x24843a2
+     sp = 0xad3ff6e8    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 3  libxul.so + 0x1ccbb5d
+     sp = 0xad3ff6ec    pc = 0xb66d1b5f
+    Found by: stack scanning
+ 4  libmozglue.so + 0x6cab
+     sp = 0xad3ff6f0    pc = 0xb6efdcad
+    Found by: stack scanning
+ 5  libnss3.so + 0xfc2bf
+     sp = 0xad3ff720    pc = 0xb47372c1
+    Found by: stack scanning
+ 6  libxul.so + 0x3f5f89
+     sp = 0xad3ff730    pc = 0xb4dfbf8b
+    Found by: stack scanning
+ 7  libxul.so + 0x3f733f
+     sp = 0xad3ff740    pc = 0xb4dfd341
+    Found by: stack scanning
+ 8  libxul.so + 0x3f935b
+     sp = 0xad3ff768    pc = 0xb4dff35d
+    Found by: stack scanning
+ 9  libnss3.so + 0xfd5a3
+     sp = 0xad3ff76c    pc = 0xb47385a5
+    Found by: stack scanning
+10  libnss3.so + 0x116ae5
+     sp = 0xad3ff77c    pc = 0xb4751ae7
+    Found by: stack scanning
+11  libnss3.so + 0xfd5a3
+     sp = 0xad3ff780    pc = 0xb47385a5
+    Found by: stack scanning
+12  libc.so + 0x4271f
+     sp = 0xad3ff784    pc = 0xb47cc721
+    Found by: stack scanning
+13  libc.so + 0x4271f
+     sp = 0xad3ff7a0    pc = 0xb47cc721
+    Found by: stack scanning
+14  libxul.so + 0x40b37b
+     sp = 0xad3ff7c8    pc = 0xb4e1137d
+    Found by: stack scanning
+15  libxul.so + 0x10121d9
+     sp = 0xad3ff7d8    pc = 0xb5a181db
+    Found by: stack scanning
+16  libxul.so + 0x3f93ab
+     sp = 0xad3ff810    pc = 0xb4dff3ad
+    Found by: stack scanning
+17  libxul.so + 0x509aa5
+     sp = 0xad3ff828    pc = 0xb4f0faa7
+    Found by: stack scanning
+18  libxul.so + 0x570e03
+     sp = 0xad3ff848    pc = 0xb4f76e05
+    Found by: stack scanning
+19  libnss3.so + 0xfc93f
+     sp = 0xad3ff86c    pc = 0xb4737941
+    Found by: stack scanning
+20  libxul.so + 0x40b37b
+     sp = 0xad3ff870    pc = 0xb4e1137d
+    Found by: stack scanning
+21  libxul.so + 0x57cd9b
+     sp = 0xad3ff880    pc = 0xb4f82d9d
+    Found by: stack scanning
+22  libmozglue.so + 0xd5dd
+     sp = 0xad3ff888    pc = 0xb6f045df
+    Found by: stack scanning
+23  libxul.so + 0x224f58e
+     sp = 0xad3ff890    pc = 0xb6c55590
+    Found by: stack scanning
+24  libxul.so + 0x201078a
+     sp = 0xad3ff894    pc = 0xb6a1678c
+    Found by: stack scanning
+25  libxul.so + 0x56d439
+     sp = 0xad3ff8b0    pc = 0xb4f7343b
+    Found by: stack scanning
+26  libxul.so + 0x3fabd9
+     sp = 0xad3ff8c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+27  libnss3.so + 0xfc9fb
+     sp = 0xad3ff8f8    pc = 0xb47379fd
+    Found by: stack scanning
+28  libc.so + 0x415db
+     sp = 0xad3ff918    pc = 0xb47cb5dd
+    Found by: stack scanning
+29  libc.so + 0x415bb
+     sp = 0xad3ff91c    pc = 0xb47cb5bd
+    Found by: stack scanning
+30  libc.so + 0x415bb
+     sp = 0xad3ff924    pc = 0xb47cb5bd
+    Found by: stack scanning
+31  libc.so + 0x19235
+     sp = 0xad3ff928    pc = 0xb47a3237
+    Found by: stack scanning
+32  libnss3.so + 0xfc93f
+     sp = 0xad3ff964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 48
+ 0  libc.so + 0x168ac
+     r0 = 0xb0202d64    r1 = 0x00000080    r2 = 0x00000008    r3 = 0x00000000
+     r4 = 0xaddc1c90    r5 = 0x00000000    r6 = 0xb03be380    r7 = 0x000000f0
+     r8 = 0x00000008    r9 = 0x00000080   r10 = 0x00000000   r12 = 0xad201770
+     fp = 0xb66d1b77    sp = 0xad201760    lr = 0xb47cb3ff    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libxul.so + 0x24843a2
+     sp = 0xad20178c    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 2  libxul.so + 0x24843a2
+     sp = 0xad201790    pc = 0xb6e8a3a4
+    Found by: stack scanning
+ 3  libxul.so + 0x1ccbb5d
+     sp = 0xad201794    pc = 0xb66d1b5f
+    Found by: stack scanning
+ 4  libmozglue.so + 0x6cab
+     sp = 0xad201798    pc = 0xb6efdcad
+    Found by: stack scanning
+ 5  libnss3.so + 0xfc2bf
+     sp = 0xad2017c8    pc = 0xb47372c1
+    Found by: stack scanning
+ 6  libxul.so + 0x3f5f89
+     sp = 0xad2017d8    pc = 0xb4dfbf8b
+    Found by: stack scanning
+ 7  libxul.so + 0x3f733f
+     sp = 0xad2017e8    pc = 0xb4dfd341
+    Found by: stack scanning
+ 8  libxul.so + 0x3f935b
+     sp = 0xad201810    pc = 0xb4dff35d
+    Found by: stack scanning
+ 9  libxul.so + 0x509aa5
+     sp = 0xad201828    pc = 0xb4f0faa7
+    Found by: stack scanning
+10  libxul.so + 0x570e03
+     sp = 0xad201848    pc = 0xb4f76e05
+    Found by: stack scanning
+11  libnss3.so + 0xfc93f
+     sp = 0xad20186c    pc = 0xb4737941
+    Found by: stack scanning
+12  libxul.so + 0x40b37b
+     sp = 0xad201870    pc = 0xb4e1137d
+    Found by: stack scanning
+13  libxul.so + 0x57cddb
+     sp = 0xad201880    pc = 0xb4f82ddd
+    Found by: stack scanning
+14  libmozglue.so + 0xd5dd
+     sp = 0xad201888    pc = 0xb6f045df
+    Found by: stack scanning
+15  libxul.so + 0x224f58e
+     sp = 0xad201890    pc = 0xb6c55590
+    Found by: stack scanning
+16  libxul.so + 0x201078a
+     sp = 0xad201894    pc = 0xb6a1678c
+    Found by: stack scanning
+17  libxul.so + 0x56d439
+     sp = 0xad2018b0    pc = 0xb4f7343b
+    Found by: stack scanning
+18  libxul.so + 0x3fabd9
+     sp = 0xad2018c8    pc = 0xb4e00bdb
+    Found by: stack scanning
+19  libnss3.so + 0xfc9fb
+     sp = 0xad2018f8    pc = 0xb47379fd
+    Found by: stack scanning
+20  linker + 0x21c4e
+     sp = 0xad201914    pc = 0xb6f61c50
+    Found by: stack scanning
+21  libc.so + 0x415db
+     sp = 0xad201918    pc = 0xb47cb5dd
+    Found by: stack scanning
+22  libc.so + 0x415bb
+     sp = 0xad20191c    pc = 0xb47cb5bd
+    Found by: stack scanning
+23  libc.so + 0x415bb
+     sp = 0xad201924    pc = 0xb47cb5bd
+    Found by: stack scanning
+24  libc.so + 0x19235
+     sp = 0xad201928    pc = 0xb47a3237
+    Found by: stack scanning
+25  libnss3.so + 0xfc93f
+     sp = 0xad201964    pc = 0xb4737941
+    Found by: stack scanning
+
+Thread 49
+ 0  libc.so + 0x168ac
+     r0 = 0xb3a00044    r1 = 0x00000080    r2 = 0x00000002    r3 = 0x00000000
+     r4 = 0x00000000    r5 = 0x00000000    r6 = 0x00000080    r7 = 0x000000f0
+     r8 = 0xad10282c    r9 = 0x00000000   r10 = 0xad102830   r12 = 0xad102808
+     fp = 0xad102980    sp = 0xad1027f8    lr = 0xb47cbeef    pc = 0xb47a08ac
+    Found by: given as instruction pointer in context
+ 1  libnss3.so + 0xfc93f
+     sp = 0xad10285c    pc = 0xb4737941
+    Found by: stack scanning
+ 2  libc.so + 0x41fef
+     sp = 0xad102860    pc = 0xb47cbff1
+    Found by: stack scanning
+ 3  libmozglue.so + 0xd377
+     sp = 0xad102870    pc = 0xb6f04379
+    Found by: stack scanning
+ 4  libmozglue.so + 0xd827
+     sp = 0xad102890    pc = 0xb6f04829
+    Found by: stack scanning
+ 5  libnss3.so + 0xfdccd
+     sp = 0xad1028a0    pc = 0xb4738ccf
+    Found by: stack scanning
+ 6  libxul.so + 0x24b74aa
+     sp = 0xad1028a8    pc = 0xb6ebd4ac
+    Found by: stack scanning
+ 7  libxul.so + 0x3fab2b
+     sp = 0xad1028b8    pc = 0xb4e00b2d
+    Found by: stack scanning
+ 8  libxul.so + 0x3fab7d
+     sp = 0xad1028c8    pc = 0xb4e00b7f
+    Found by: stack scanning
+ 9  libnss3.so + 0xfc9fb
+     sp = 0xad1028f8    pc = 0xb47379fd
+    Found by: stack scanning
+10  libc.so + 0x415db
+     sp = 0xad102918    pc = 0xb47cb5dd
+    Found by: stack scanning
+11  libc.so + 0x415bb
+     sp = 0xad10291c    pc = 0xb47cb5bd
+    Found by: stack scanning
+12  libc.so + 0x415bb
+     sp = 0xad102924    pc = 0xb47cb5bd
+    Found by: stack scanning
+13  libc.so + 0x19235
+     sp = 0xad102928    pc = 0xb47a3237
+    Found by: stack scanning
+14  libnss3.so + 0xfc93f
+     sp = 0xad102964    pc = 0xb4737941
+    Found by: stack scanning
+
+Loaded modules:
+0xad58e000 - 0xad595fff  2588645841ssegtnti.sqlite-shm  ???
+0xad599000 - 0xad5a0fff  2918063365piupsah.sqlite-shm  ???
+0xaed9e000 - 0xaeda5fff  226660312ssm.sqlite-shm  ???
+0xaedbb000 - 0xaedeffff  libttspico.so  ???
+0xb1d18000 - 0xb27fffff  bootanimation.zip  ???
+0xb299c000 - 0xb2ecdfff  omni.ja  ???
+0xb2fd0000 - 0xb2fd5fff  lights.sc8830.so  ???
+0xb30d9000 - 0xb30ddfff  power.sc8830.so  ???
+0xb3562000 - 0xb3567fff  sprd_gsp.sc8830.so  ???
+0xb3568000 - 0xb35d8fff  fb0  ???
+0xb35d9000 - 0xb35dffff  libmemoryheapion.so  ???
+0xb35e0000 - 0xb3604fff  hwcomposer.sc8830.so  ???  (WARNING: No symbols, hwcomposer.sc8830.so, FCACFA406608184D6F09E12D3C78CDAF0)
+0xb3802000 - 0xb38fffff  binder  ???
+0xb3b03000 - 0xb3b73fff  fb0  ???
+0xb3b77000 - 0xb3b7bfff  libion.so  ???
+0xb3b7c000 - 0xb3b85fff  libGLESv1_CM.so  ???
+0xb3b87000 - 0xb3b90fff  gralloc.sc8830.so  ???
+0xb3b91000 - 0xb3bb0fff  __properties__  ???
+0xb3bb3000 - 0xb3bc1fff  libcommon_time_client.so  ???
+0xb3bc2000 - 0xb3bcafff  libspeexresampler.so  ???
+0xb3bcb000 - 0xb3bdcfff  libunwind.so  ???
+0xb3c23000 - 0xb3c2dfff  libbase.so  ???
+0xb3c2e000 - 0xb3c47fff  libprotobuf-cpp-lite.so  ???
+0xb3c48000 - 0xb3c4efff  libusbhost.so  ???
+0xb3c50000 - 0xb3c5afff  libcamera_metadata.so  ???
+0xb3c5b000 - 0xb3c6efff  libnl.so  ???
+0xb3c70000 - 0xb3c7afff  libnbaio.so  ???
+0xb3c7b000 - 0xb3c83fff  libaudioutils.so  ???
+0xb3c84000 - 0xb3ca4fff  libRScpp.so  ???
+0xb3ca5000 - 0xb3cadfff  libstagefright_avc_common.so  ???
+0xb3cae000 - 0xb3cb2fff  libstagefright_enc_common.so  ???
+0xb3cb3000 - 0xb3cb9fff  libpowermanager.so  ???
+0xb3cba000 - 0xb3cd5fff  libz.so  ???
+0xb3cd6000 - 0xb3cf3fff  libvorbisidec.so  ???
+0xb3cf4000 - 0xb3cfafff  libstagefright_yuv.so  ???
+0xb3cfc000 - 0xb3d4ffff  libsonivox.so  ???
+0xb3d55000 - 0xb3d8ffff  libopus.so  ???
+0xb3d90000 - 0xb3d95fff  libnetd_client.so  ???
+0xb3d96000 - 0xb3d9ffff  libmediautils.so  ???
+0xb3eb7000 - 0xb402dfff  libicui18n.so  ???
+0xb402e000 - 0xb4044fff  libexpat.so  ???
+0xb405f000 - 0xb4069fff  libbacktrace.so  ???
+0xb406b000 - 0xb4073fff  libnetutils.so  ???
+0xb4074000 - 0xb407afff  libwpa_client.so  ???
+0xb407b000 - 0xb40eafff  libGLES_trace.so  ???
+0xb40eb000 - 0xb40f9fff  libGLESv2.so  ???
+0xb40fa000 - 0xb427bfff  librt9.so  ???
+0xb4294000 - 0xb429cfff  libmdnssd.so  ???
+0xb429d000 - 0xb42a1fff  libsync.so  ???
+0xb42a2000 - 0xb42b9fff  libmtp.so  ???
+0xb42ba000 - 0xb42d4fff  libstagefright_foundation.so  ???
+0xb42d5000 - 0xb42e9fff  libsensorservice.so  ???
+0xb4318000 - 0xb4321fff  libsysutils.so  ???
+0xb43cf000 - 0xb4401fff  libstagefright_omx.so  ???
+0xb4571000 - 0xb460dfff  libcrypto.so  ???
+0xb460e000 - 0xb4633fff  libssl.so  ???
+0xb4634000 - 0xb4639fff  liblgpllibs.so  ???
+0xb463b000 - 0xb476dfff  libnss3.so  ???  (WARNING: No symbols, libnss3.so, 5B79951F5ACAD04AF56CC2DE51FF86150)
+0xb4771000 - 0xb4789fff  libmozsandbox.so  ???
+0xb478a000 - 0xb47ecfff  libc.so  ???  (WARNING: No symbols, libc.so, 8CF1D45D82C65E251FAA982E9699FCA50)
+0xb47f6000 - 0xb4817fff  libm.so  ???
+0xb4818000 - 0xb481efff  libstdc++.so  ???
+0xb481f000 - 0xb4834fff  libcutils.so  ???
+0xb4835000 - 0xb484ffff  libutils.so  ???  (WARNING: No symbols, libutils.so, D4E8D170C7B1C818B7D5731A34035F010)
+0xb4850000 - 0xb4855fff  libsuspend.so  ???
+0xb4856000 - 0xb485afff  libhardware.so  ???
+0xb485c000 - 0xb4864fff  libhardware_legacy.so  ???
+0xb488c000 - 0xb48fbfff  libEGL.so  ???  (WARNING: No symbols, libEGL.so, 16812A746689475A5AC54F075096C5470)
+0xb48ff000 - 0xb490efff  libui.so  ???  (WARNING: No symbols, libui.so, 8925DAC18302CAD90ABE90AD405DBBE40)
+0xb4968000 - 0xb4976fff  liblog.so  ???
+0xb4a06000 - 0xb6ebdfff  libxul.so  ???  (WARNING: No symbols, libxul.so, C77119725B07C58FB3F81221D4868DC00)
+0xb6ef7000 - 0xb6f10fff  libmozglue.so  ???  (WARNING: No symbols, libmozglue.so, BA144DFF01EF2CDDBA313652BC373BE70)
+0xb6f1b000 - 0xb6f3afff  __properties__  ???
+0xb6f40000 - 0xb6f61fff  linker  ???  (WARNING: No symbols, linker, CED7FD369E9C5A970D63DC22A6D576390)
+0xb6f64000 - 0xb6f85fff  b2g  ???  (main)
