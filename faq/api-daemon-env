@@ -12,3 +12,358 @@ set and build
 GONK_DIR=/local/code/quoin-1211/KaiOS ./update-prebuilts.sh
 
 
+diff --git a/daemon/Cargo.toml b/daemon/Cargo.toml
+index 155452f..702396a 100644
+--- a/daemon/Cargo.toml
++++ b/daemon/Cargo.toml
+@@ -44,7 +44,8 @@ serde_derive = "1.0"
+ serde_json = "1.0"
+ toml = "0.4"
+ vergen = { path = "./forks/vergen" }
+-breakpad_sys = { git = "ssh://git@git.kaiostech.com/KaiOS/breakpad-sys.git", optional = true }
++#breakpad_sys = { git = "ssh://git@git.kaiostech.com/KaiOS/breakpad-sys.git", optional = true }
++breakpad_sys = { path = "../breakpad-sys", optional = true }
+
+
+[issues]
+
+some crash on api daemon but no debug backtrace 
+
+
+I/DEBUG   (  217):     #05  pc 001a5f2d  /data/local/service/api-daemon/api-daemon
+I/DEBUG   (  217):     #06  pc 001a5f25  /data/local/service/api-daemon/api-daemon
+I/DEBUG   (  217):     #07  pc 0019c6ed  /data/local/service/api-daemon/api-daemon
+I/DEBUG   (  217):     #08  pc 0019c431  /data/local/service/api-daemon/api-daemon
+I/DEBUG   (  217):     #09  pc 0019ec15  /data/local/service/api-daemon/api-daemon
+I/DEBUG   (  217):     #10  pc 001a57e7  /data/local/service/api-daemon/api-daemon
+I/DEBUG   (  217):     #11  pc 001abb91  /data/local/service/api-daemon/api-daemon
+I/DEBUG   (  217):     #12  pc 001ad0a3  /data/local/service/api-daemon/api-daemon
+I/DEBUG   (  217):     #13  pc 000a781b  /data/local/service/api-daemon/api-daemon
+I/DEBUG   (  217):     #14  pc 000a7755  /data/local/service/api-daemon/api-daemon
+I/DEBUG   (  217):     #15  pc 000b2d2b  /data/local/service/api-daemon/api-daemon
+I/DEBUG   (  217):     #16  pc 000aee43  /data/local/service/api-daemon/api-daemon
+I/DEBUG   (  217):     #17  pc 000b76f3  /data/local/service/api-daemon/api-daemon
+I/DEBUG   (  217):     #18  pc 001a5177  /data/local/service/api-daemon/api-daemon
+I/DEBUG   (  217):     #19  pc 001a5ed5  /data/local/service/api-daemon/api-daemon
+
+
+try to build debug version for check more 
+
+diff --git a/Cargo.toml b/Cargo.toml
+index b1aad30..8a88dee 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -24,4 +24,4 @@ rpath = false
+lto = true
+debug-assertions = false
+codegen-units = 1
+-panic = "abort"
++# panic = "abort"
+
+but can not reproduction on debug verison badly .
+
+run api daemon on issue devices 
+
+
+134|root@it9301:/data/local/service/api-daemon # 
+1 ./api-daemon <
+thread 'lmk monitor' panicked at 'byte index 1 is out of bounds of ``', src/libcore/str/mod.rs:2017:9
+stack backtrace:
+0: <unknown>
+
+12: <unknown>
+13: <unknown>
+14: __thread_entry
+15: pthread_create
+
+error logcat as below 
+
+
+F/libc    (21674): Fatal signal 6 (SIGABRT) at 0x000054aa (code=-6), thread 21675 (lmk monitor)
+
+please note I/telemetry is lmk 
+
+next check the I/telemetry mod and according the log ,find that when parse omni jar package ,occurs some erros 
+
+info!("DHCUI new aaaaaaa"); 
+let prefs = get_prefs(
+&mut omnija,
+&[
+"device.commercial.ref",
+"oem.software.version",
+],
+);
+
+and split by , 
+
+pref("device.commercial.ref","REVO-IT9301-ITEL-OR");pref("ua.model.name","it9301");pref("fota.server.address","mst.fota.kaiostech.com");pref("fota.server.protocol","https");pref("fota.server.port","443");pref("fota.workspace.path","/sdcard/fota");pref("oem.software.version","SanzaXL190816V001");pref("dom.app_cb_configuration",false);pref("cellbroadcast.menuitem.show",false);pref("system.keypound.silent",);pref("customer.fake.ecc.dialing","101,102");pref("dom.microphonetoggle.supported",true);pref("dom.microphonetoggle.hardwareKey",false);pref("dom.ipc.tabs.shutdownTimeoutSecs",1);
+
+pref("system.keypound.silent",); ------------errors 
+
+
+
+master config 
+
+[general]
+host = "127.0.0.1"
+port = 8081
+message_max_time = 10 # In ms.
+verbose_log = false
+log_path = "/data/local"
+remote_services = []             ------------diff
+remote_services_path = ""        ------------diff
+
+[http]
+root_path = "/data/local/service/api-daemon/http_root"
+
+[telemetry]
+send_app_opened_events = true
+token_uri = "https://api.kaiostech.com/v3.0/applications"     ------------diff 
+metrics_uri = "https://api.kaiostech.com/v3.0/apps/metrics"   ------------diff
+
+
+
+[diff patch]
+
+diff --git a/daemon/push.sh b/daemon/push.sh
+index 6f70b0b..9d70e7b 100755
+--- a/daemon/push.sh
++++ b/daemon/push.sh
+@@ -1,6 +1,20 @@
+ #!/bin/bash
+ set -x -e
++adb root
+ adb remount
+-adb push ../target/armv7-linux-androideabi/debug/api-daemon /system/kaios/api-daemon
+-adb shell chmod 777 /system/kaios/api-daemon
+-adb push config-device-dev.toml /system/kaios/config.toml
++
++adb shell stop api-daemon
++echo "Stop api-daemon"
++
++echo "Update the files of api-daemon"
++adb push ../kaios-services-prefs.js /system/b2g/defaults/pref/
++adb shell mkdir -p /data/local/service/api-daemon/http_root
++adb shell rm -r /data/local/service/api-daemon/*
++
++adb push ../target/armv7-linux-androideabi/debug/api-daemon /data/local/service/api-daemon/api-daemon
++adb shell chmod 777 /data/local/service/api-daemon/api-daemon
++adb push config-device-dev.toml /data/local/service/api-daemon/config.toml
++adb push ../prebuilts/http_root /data/local/service/api-daemon/http_root
++
++adb shell start api-daemon
++echo "Start api-daemon"
+
+
+
+
+diff --git a/push.sh b/push.sh
+index 92ad683..04fa77a 100755
+--- a/push.sh
++++ b/push.sh
+@@ -10,7 +10,7 @@ adb push ./kaios-services-prefs.js /system/b2g/defaults/pref/
+ adb shell mkdir -p /data/local/service/api-daemon/http_root
+ adb shell rm -r /data/local/service/api-daemon/*
+ adb push ./prebuilts/armv7-linux-androideabi/api-daemon /data/local/service/api-daemon/api-daemon
+-adb push ./prebuilts/config.toml /data/local/service/api-daemon/config.toml
++adb push ./daemon/config-device-production.toml /data/local/service/api-daemon/config.toml
+ adb push ./prebuilts/http_root /data/local/service/api-daemon/http_root
+ 
+ adb shell start api-daemon
+
+
+
+
+diff --git a/telemetry/src/extractor.rs b/telemetry/src/extractor.rs
+index 345ff2a..81dca5f 100644
+--- a/telemetry/src/extractor.rs
++++ b/telemetry/src/extractor.rs
+@@ -66,12 +66,18 @@ fn get_prefs<R: Read + io::Seek>(
+ ) -> HashMap<String, String> {
+     let mut res = HashMap::new();
+ 
++    info!("DHCUI get_prefs 1111111111111");
++
+     // Load defaults/pref/b2g.js from omni.ja to extract prefs.
+     if let Ok(mut entry) = omnija.by_name("defaults/pref/b2g.js") {
++        info!("DHCUI get_prefs-> 1111111111111");
+         let mut content = String::new();
++        info!("DHCUI get_prefs-> 2222222222");
+         match entry.read_to_string(&mut content) {
+             Ok(_) => {
++                        info!("DHCUI get_prefs-> 3333333");
+                 if let Ok(reader) = PrefFileReader::load_string(&content) {
++                                            info!("DHCUI get_prefs-> 444444");
+                     for pref in prefs {
+                         if let Some(value) = reader.get_string(pref) {
+                             res.insert((*pref).into(), value.clone());
+@@ -87,6 +93,7 @@ fn get_prefs<R: Read + io::Seek>(
+         error!("Failed to find defaults/pref/b2g.js");
+     }
+ 
++    info!("DHCUI get_prefs 2222222222");
+     // Read the build prefs.
+     // Iterate all the prefs file in the /system/b2g/defaults/pref directory since
+     // ODMs are not all using the same file name.
+@@ -111,6 +118,7 @@ fn get_prefs<R: Read + io::Seek>(
+         Err(err) => error!("Unable to read_dir /system/b2g/defaults/pref : {}", err),
+     }
+ 
++    info!("DHCUI get_prefs 3333333333");
+     // The gecko profile should be ready here while get_prefs is called
+     if let Some(mut path) = find_gecko_profile() {
+         path.push("prefs.js");
+@@ -130,8 +138,9 @@ fn get_prefs<R: Read + io::Seek>(
+ 
+ impl DeviceInfo {
+     pub fn new(config: &Config) -> Self {
++        info!("DHCUI begin new 1111111111111"); 
+         let mut info = DeviceInfo::default();
+-
++        info!("DHCUI new 1111111111111"); 
+         let config = config.clone();
+         {
+             info.metrics_key = match option_env!("METRICS_KEY") {
+@@ -140,6 +149,7 @@ impl DeviceInfo {
+             }.to_string();
+             info.token_uri = format!("{}/{}/tokens", config.token_uri, TOKEN_ID);
+             info.metrics_uri = config.metrics_uri;
++            info!("DHCUI new 222222222"); 
+         }
+ 
+         // Check the characteristics and map them to device types.
+@@ -152,7 +162,7 @@ impl DeviceInfo {
+                 _ => 1000,
+             };
+         }
+-
++        info!("DHCUI new 333333333"); 
+         // Get the product model if any.
+         if let Ok(model) = AndroidProperties::get("ro.product.model", "") {
+             info.model = model;
+@@ -162,7 +172,7 @@ impl DeviceInfo {
+         if let Ok(brand) = AndroidProperties::get("ro.product.brand", "") {
+             info.brand = brand;
+         }
+-
++        info!("DHCUI new 4444444444444444"); 
+         // Find the profile directory and load the pref file.
+         // We loop until it's created because we will race with gecko at first run.
+         loop {
+@@ -184,16 +194,19 @@ impl DeviceInfo {
+             info!("Sleeping 10s waiting for Gecko to be ready...");
+             thread::sleep(Duration::from_secs(10));
+         }
+-
++        info!("DHCUI new 555555555555"); 
+         // Open the omni.ja and extract os, os_version and metrics_key
+         if let Ok(omni_file) = File::open("/system/b2g/omni.ja") {
+             match ZipArchive::new(omni_file) {
+                 Err(err) => error!("Failed to read archive at /system/b2g/omni.ja : {}", err),
+                 Ok(mut omnija) => {
++                    info!("DHCUI new 6666666"); 
+                     if let Ok(mut entry) = omnija.by_name("modules/AppConstants.jsm") {
++                        info!("DHCUI new 6666666"); 
+                         let mut content = String::new();
+                         match entry.read_to_string(&mut content) {
+                             Ok(_) => {
++                                info!("DHCUI new 77777777"); 
+                                 if let Some(os_version) = find_param(&content, "MOZ_B2G_VERSION") {
+                                     info.os_version = os_version;
+                                 }
+@@ -201,10 +214,11 @@ impl DeviceInfo {
+                                 if let Some(os) = find_param(&content, "MOZ_B2G_OS_NAME") {
+                                     info.os = os;
+                                 }
+-
++                                info!("DHCUI new 88888888"); 
+                                 if let Some(release_tag) = find_param(&content, "KAI_RELEASE_TAG") {
+                                     info.release_tag = release_tag;
+                                 }
++                                info!("DHCUI new 999999999"); 
+                             }
+                             Err(err) => {
+                                 error!("Error extracting modules/AppConstants.jsm : {}", err)
+@@ -213,7 +227,7 @@ impl DeviceInfo {
+                     } else {
+                         error!("Failed to find modules/AppConstants.jsm");
+                     }
+-
++                    info!("DHCUI new aaaaaaa"); 
+                     let prefs = get_prefs(
+                         &mut omnija,
+                         &[
+@@ -222,9 +236,11 @@ impl DeviceInfo {
+                         ],
+                     );
+                     // Use the prefs to set values on our struct.
++                    info!("DHCUI new bbbbbbbbb"); 
+                     if let Some(version) = prefs.get("oem.software.version") {
+                         info.release_tag = version.to_owned();
+                     }
++                    info!("DHCUI new ccccccccccccc"); 
+                     if let Some(curef) = prefs.get("device.commercial.ref") {
+                         info.reference = curef.to_owned();
+                     }
+@@ -274,9 +290,12 @@ struct PrefFileReader {
+ 
+ impl PrefFileReader {
+     fn read<R: Read>(source: &mut R) -> Result<Self, ()> {
++        info!("PrefFileReader 1111111111111");  
+         let mut reader = BufReader::new(source);
++                info!("PrefFileReader 22222222"); 
+         let mut prefs = HashMap::new();
+ 
++        info!("PrefFileReader 3333333333");  
+         // Read line by line, looking for lines starting by "pref(" or "user_pref("
+         // Consider that the file is well formed in general.
+         loop {
+@@ -291,10 +310,12 @@ impl PrefFileReader {
+                         // EOF
+                         break;
+                     }
+-
++                    info!("PrefFileReader 44444444 first loop");  
+                     line = line.replace("user_pref(", "pref(");
+                     loop {
++                                            info!("PrefFileReader 5555555 sec loop");  
+                         if line.find("pref(").is_some() {
++                                                                        info!("PrefFileReader 666666 sec loop find"); 
+                             if let (Some(start), Some(end)) = (line.find("pref("), line.find(')')) {
+                                 let tuple: Vec<&str> = line[start + 5..end].split(',').collect();
+                                 let name = tuple[0].trim();
+@@ -324,7 +345,7 @@ impl PrefFileReader {
+                 }
+             }
+         }
+-
++        info!("PrefFileReader enddddddd");  
+         Ok(PrefFileReader { prefs })
+     }
+ 
+diff --git a/telemetry/src/lib.rs b/telemetry/src/lib.rs
+index 39dd16b..b4a372f 100644
+--- a/telemetry/src/lib.rs
++++ b/telemetry/src/lib.rs
+@@ -167,8 +167,9 @@ pub fn monitor_lmk(config: &Config) {
+         .name("lmk monitor".into())
+         .spawn(move || {
+             info!("Starting LMK monitor");
+-
++             info!("DHCUI 1111111111111");           
+             let device_info = DeviceInfo::new(&config);
++            info!("DHCUI 22222222222222"); 
+             info!("Device info: {:?}", device_info);
+ 
+             // Start the uploader thread and send it the device information.
+(END)
+
+
+
+
+
+
+
+
+
+
