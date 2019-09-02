@@ -359,6 +359,18 @@ index 39dd16b..b4a372f 100644
 (END)
 
 
+my patch for this issue
+
+-310,6 +328,11 @@ impl PrefFileReader {
+} else if let Ok(num) = value.parse::<i64>() {
+prefs.insert(pref_name, PrefValue::Int(num));
+} else {
++ if value == "" {
++ error!("Error reading pref value: {}", pref_name);
++ line = line[end + 1..].to_string();
++ continue;
++ }
+
 
 
 
