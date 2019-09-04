@@ -372,6 +372,13 @@ prefs.insert(pref_name, PrefValue::Int(num));
 + }
 
 
+how to run test code on api deamon 
+
+https://git.kaiostech.com/KaiOS/sidl/merge_requests/241/diffs
+
+cargo test -- --nocapture
+
+
 
 
 

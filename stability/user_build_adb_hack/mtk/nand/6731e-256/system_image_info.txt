@@ -1,0 +1,12 @@
+fs_type=ubifs
+extfs_sparse_flag=-s
+selinux_fc=out/target/product/kaios31_256/root/file_contexts
+skip_fsck=true
+pagesize=4096
+vid_offset=4096
+lebsize=253952
+system_cnt=1449
+userdata_cnt=621
+blocksize=262144
+userdata_ini=out/target/product/kaios31_256/ubi_usrdata.ini
+system_ini=out/target/product/kaios31_256/ubi_android.ini

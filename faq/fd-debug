@@ -1,0 +1,39 @@
+https://bugzilla.kaiostech.com/show_bug.cgi?id=64272
+
+06-21 05:37:21.254   532  3719 F libc    : FORTIFY: FD_SET: file descriptor >= FD_SETSIZE
+
+Need check B2G fd list also
+
+ $ adb root
+ $ adb shell ls -l proc/B2G_PID/fd
+
+
+lrwx------ root     root              2019-06-21 13:30 1003 -> anon_inode:dmabuf
+lrwx------ root     root              2019-06-21 13:30 135 -> anon_inode:dmabuf
+lrwx------ root     root              2019-06-21 13:30 136 -> anon_inode:dmabuf
+lrwx------ root     root              2019-06-21 13:30 18 1 -> anon_inode:dmabuf
+lrwx------ root     root              2019-06-21 13:30 197 -> anon_inode:dmabuf
+lrwx------ root     root              2019-06-21 13:30 200 -> anon_inode:dmabuf
+lrwx------ root     root              2019-06-21 13:30 201 -> anon_inode:dmabuf
+lrwx------ root     root              2019-06-21 13:30 23 -> anon_inode:dmabuf
+lrwx------ root     root              2019-06-21 13:30 24 -> anon_inode:dmabuf
+
+
+...................
+
+
+lr-x------ root    2019-06-21 13:30 151 -> anon_inode:sync_fence
+lr-x------ root    2019-06-21 13:30 202 -> anon_inode:sync_fence
+lr-x------ root    2019-06-21 13:30 206 -> anon_inode:sync_fence
+lr-x------ root    2019-06-21 13:30 313 -> anon_inode:sync_fence
+lr-x------ root    2019-06-21 13:30 322 -> anon_inode:sync_fence
+lr-x------ root    2019-06-21 13:30 537 -> anon_inode:sync_fence
+lr-x------ root    2019-06-21 13:30 559 -> anon_inode:sync_fence
+lr-x------ root    2019-06-21 13:30 631 -> anon_inode:sync_fence
+lr-x------ root    2019-06-21 13:30 635 -> anon_inode:sync_fence
+lr-x------ root    2019-06-21 13:30 653 -> anon_inode:sync_fence
+lr-x------ root    2019-06-21 13:30 672 -> anon_inode:sync_fence
+
+
+
+
