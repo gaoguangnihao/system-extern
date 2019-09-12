@@ -1,0 +1,448 @@
+From eba861eb8854a47ee6f65af1c8b9f148bfaa39c0 Mon Sep 17 00:00:00 2001
+From: "dahui.cui" <dahui.cui@kaiostech.com>
+Date: Wed, 11 Sep 2019 13:14:55 +0800
+Subject: [PATCH] add debug log for aFrameLoader
+
+---
+ dom/base/nsFrameLoader.cpp             | 45 ++++++++++++++++++++++++--
+ dom/base/nsInProcessTabChildGlobal.cpp |  3 ++
+ dom/ipc/TabParent.cpp                  | 31 ++++++++++++++++--
+ layout/ipc/RenderFrameParent.cpp       | 30 +++++++++++++++--
+ 4 files changed, 102 insertions(+), 7 deletions(-)
+
+diff --git a/dom/base/nsFrameLoader.cpp b/dom/base/nsFrameLoader.cpp
+index 3d7a20cced4c..51b04add2c2a 100644
+--- a/dom/base/nsFrameLoader.cpp
++++ b/dom/base/nsFrameLoader.cpp
+@@ -99,6 +99,7 @@
+ 
+ #include "nsPrincipal.h"
+ 
++
+ #ifdef MOZ_XUL
+ #include "nsXULPopupManager.h"
+ #endif
+@@ -129,8 +130,42 @@ typedef FrameMetrics::ViewID ViewID;
+ #define MAX_DEPTH_CONTENT_FRAMES 10
+ 
+ NS_IMPL_CYCLE_COLLECTION(nsFrameLoader, mDocShell, mMessageManager, mChildMessageManager)
+-NS_IMPL_CYCLE_COLLECTING_ADDREF(nsFrameLoader)
+-NS_IMPL_CYCLE_COLLECTING_RELEASE(nsFrameLoader)
++#if 0
++ NS_IMPL_CYCLE_COLLECTING_ADDREF(nsFrameLoader)
++ NS_IMPL_CYCLE_COLLECTING_RELEASE(nsFrameLoader)
++#else
++#include <android/log.h>
++#define REX_DEBUG(args...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI-debug", ## args)
++MozExternalRefCountType nsFrameLoader::AddRef(void)
++{
++  static_assert(!(mozilla::IsDestructibleFallback<nsFrameLoader>::value), "Reference-counted class " "nsFrameLoader" " should not have a public destructor. " "Make this class's destructor non-public");
++  do { } while (0); ((void)0);
++  nsISupports *base = nsFrameLoader::cycleCollection::Upcast(this);
++  nsrefcnt count = mRefCnt.incr(base); ;
++
++  REX_DEBUG("%p - AddRef(): %d", this, count);
++
++  return count;
++}
++
++MozExternalRefCountType nsFrameLoader::Release(void)
++{
++  do { } while (0);
++  ((void)0);
++  nsISupports *base = nsFrameLoader::cycleCollection::Upcast(this);
++  nsrefcnt count = mRefCnt.decr(base); ;
++
++  REX_DEBUG("%p - Release(): %d", this, count);
++
++  return count;
++}
++
++void nsFrameLoader::DeleteCycleCollectable(void)
++{
++  REX_DEBUG("%p - Delete()", this);
++  delete (this);
++}
++#endif
+ 
+ NS_INTERFACE_MAP_BEGIN_CYCLE_COLLECTION(nsFrameLoader)
+   NS_INTERFACE_MAP_ENTRY(nsIFrameLoader)
+@@ -637,6 +672,7 @@ class MOZ_RAII AutoResetInShow {
+     explicit AutoResetInShow(nsFrameLoader* aFrameLoader MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
+       : mFrameLoader(aFrameLoader)
+     {
++        __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","AutoResetInShow aFrameLoader is :%p  \n",aFrameLoader);
+       MOZ_GUARD_OBJECT_NOTIFIER_INIT;
+     }
+     ~AutoResetInShow() { mFrameLoader->mInShow = false; }
+@@ -1423,7 +1459,7 @@ class nsFrameLoaderDestroyRunnable : public nsRunnable
+ 
+ public:
+   explicit nsFrameLoaderDestroyRunnable(nsFrameLoader* aFrameLoader)
+-   : mFrameLoader(aFrameLoader), mPhase(eDestroyDocShell) {}
++   : mFrameLoader(aFrameLoader), mPhase(eDestroyDocShell) {  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","nsFrameLoaderDestroyRunnable: mFrameLoader is %p \n",mFrameLoader.get());}
+ 
+   NS_IMETHODIMP Run() override;
+ };
+@@ -1515,6 +1551,7 @@ nsFrameLoaderDestroyRunnable::Run()
+   switch (mPhase) {
+   case eDestroyDocShell:
+     mFrameLoader->DestroyDocShell();
++             __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","eDestroyDocShell mFrameLoader is :%p  \n",mFrameLoader.get());
+ 
+     // In the out-of-process case, TabParent will eventually call
+     // DestroyComplete once it receives a __delete__ message from the child. In
+@@ -1548,6 +1585,7 @@ nsFrameLoaderDestroyRunnable::Run()
+      // observers have been processed, we disconnect the message manager and
+      // finish destruction.
+      mFrameLoader->DestroyComplete();
++           __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","eDestroyComplete mFrameLoader is :%p  \n",mFrameLoader.get());
+      break;
+   }
+ 
+@@ -2595,6 +2633,7 @@ public:
+     : nsSameProcessAsyncMessageBase(aCx, aCpows)
+     , mFrameLoader(aFrameLoader)
+   {
++       __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","nsAsyncMessageToChild mFrameLoader is :%p  \n",mFrameLoader.get());
+   }
+ 
+   NS_IMETHOD Run()
+diff --git a/dom/base/nsInProcessTabChildGlobal.cpp b/dom/base/nsInProcessTabChildGlobal.cpp
+index 3bb40acc4236..be0d95c24431 100644
+--- a/dom/base/nsInProcessTabChildGlobal.cpp
++++ b/dom/base/nsInProcessTabChildGlobal.cpp
+@@ -19,6 +19,8 @@
+ #include "mozilla/EventDispatcher.h"
+ #include "mozilla/dom/SameProcessMessageQueue.h"
+ 
++#include "android/log.h"
++
+ using namespace mozilla;
+ using namespace mozilla::dom;
+ using namespace mozilla::dom::ipc;
+@@ -175,6 +177,7 @@ NS_IMPL_RELEASE_INHERITED(nsInProcessTabChildGlobal, DOMEventTargetHelper)
+ void
+ nsInProcessTabChildGlobal::CacheFrameLoader(nsIFrameLoader* aFrameLoader)
+ {
++  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","RenderFrameParent::RenderFrameParent construction:this is %p aFrameLoader is %p mFrameLoader is %p \n",this,aFrameLoader,mFrameLoader.get());
+   mFrameLoader = aFrameLoader;
+ }
+ 
+diff --git a/dom/ipc/TabParent.cpp b/dom/ipc/TabParent.cpp
+index 28d139e5b6e3..0ad7c80d6ce6 100644
+--- a/dom/ipc/TabParent.cpp
++++ b/dom/ipc/TabParent.cpp
+@@ -105,6 +105,8 @@
+ #include "SpatialNavigationService.h"
+ #endif
+ 
++#include "android/log.h"
++
+ using namespace mozilla::dom;
+ using namespace mozilla::ipc;
+ using namespace mozilla::layers;
+@@ -346,6 +348,7 @@ TabParent::RemoveTabParentFromTable(uint64_t aLayersId)
+ void
+ TabParent::CacheFrameLoader(nsFrameLoader* aFrameLoader)
+ {
++    __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::CacheFrameLoader:this is %p aFrameLoader is :%p \n",this,aFrameLoader);
+   mFrameLoader = aFrameLoader;
+ }
+ 
+@@ -455,6 +458,7 @@ bool
+ TabParent::IsVisible() const
+ {
+   RefPtr<nsFrameLoader> frameLoader = GetFrameLoader();
++       __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::IsVisible frameLoader is :%p \n",frameLoader.get());
+   if (!frameLoader) {
+     return false;
+   }
+@@ -568,6 +572,7 @@ TabParent::ActorDestroy(ActorDestroyReason why)
+ {
+   // Even though TabParent::Destroy calls this, we need to do it here too in
+   // case of a crash.
++    __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::ActorDestroy");
+   IMEStateManager::OnTabParentDestroying(this);
+ 
+   // Prevent executing ContentParent::NotifyTabDestroying in
+@@ -587,6 +592,7 @@ TabParent::ActorDestroy(ActorDestroyReason why)
+   }
+ 
+   RefPtr<nsFrameLoader> frameLoader = GetFrameLoader(true);
++       __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::ActorDestroy frameLoader is :%p \n",frameLoader.get());
+   nsCOMPtr<nsIObserverService> os = services::GetObserverService();
+   if (frameLoader) {
+     nsCOMPtr<Element> frameElement(mFrameElement);
+@@ -601,7 +607,7 @@ TabParent::ActorDestroy(ActorDestroyReason why)
+                                            NS_LITERAL_STRING("oop-browser-crashed"),
+                                            true, true);
+     }
+-
++    __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::ActorDestroy set mFrameLoader :%p to null",mFrameLoader.get());
+     mFrameLoader = nullptr;
+   }
+ 
+@@ -775,14 +781,22 @@ TabParent::InitRenderFrame()
+     // child side will create RenderFrame.
+     MOZ_ASSERT(!GetRenderFrame());
+     RefPtr<nsFrameLoader> frameLoader = GetFrameLoader();
++
++    __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::InitRenderFrame frameLoader is :%p \n",frameLoader.get()); 
++   
+     MOZ_ASSERT(frameLoader);
+     if (frameLoader) {
+       bool success;
++          __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::before RenderFrameParent mFrameLoader is :%p \n",mFrameLoader.get());
+       RenderFrameParent* renderFrame = new RenderFrameParent(frameLoader, &success);
++          __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::after RenderFrameParent mFrameLoader is :%p \n",mFrameLoader.get());
+       uint64_t layersId = renderFrame->GetLayersId();
++          __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::after GetLayersId mFrameLoader is :%p \n",mFrameLoader.get());
+       AddTabParentToTable(layersId, this);
++      __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::InitRenderFrame before SendPRenderFrameConstructor mFrameLoader is :%p renderFrame is :%p \n",mFrameLoader.get(),renderFrame); 
+       Unused << SendPRenderFrameConstructor(renderFrame);
+ 
++      __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::InitRenderFrame after SendPRenderFrameConstructor mFrameLoader is :%p \n",mFrameLoader.get()); 
+       TextureFactoryIdentifier textureFactoryIdentifier;
+       renderFrame->GetTextureFactoryIdentifier(&textureFactoryIdentifier);
+       Unused << SendInitRendering(textureFactoryIdentifier, layersId, renderFrame);
+@@ -856,6 +870,7 @@ nsresult
+ TabParent::UpdatePosition()
+ {
+   RefPtr<nsFrameLoader> frameLoader = GetFrameLoader();
++    __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::UpdatePosition frameLoader is :%p this is %p \n",frameLoader.get(),this);
+   if (!frameLoader) {
+     return NS_OK;
+   }
+@@ -2028,6 +2043,7 @@ TabParent::GetChildProcessOffset()
+ 
+   LayoutDeviceIntPoint offset(0, 0);
+   RefPtr<nsFrameLoader> frameLoader = GetFrameLoader();
++     __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::GetChildProcessOffset frameLoader is :%p this is %p \n",frameLoader.get(),this);
+   if (!frameLoader) {
+     return offset;
+   }
+@@ -2204,6 +2220,7 @@ TabParent::GetFrom(nsIContent* aContent)
+     return nullptr;
+   }
+   RefPtr<nsFrameLoader> frameLoader = loaderOwner->GetFrameLoader();
++     __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::GetFrom frameLoader is :%p  \n",frameLoader.get());
+   return GetFrom(frameLoader);
+ }
+ 
+@@ -2447,6 +2464,7 @@ TabParent::ReceiveMessage(const nsString& aMessage,
+                           nsTArray<StructuredCloneData>* aRetVal)
+ {
+   RefPtr<nsFrameLoader> frameLoader = GetFrameLoader(true);
++      __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::ReceiveMessage frameLoader is :%p this is %p \n",frameLoader.get(),this);
+   if (frameLoader && frameLoader->GetFrameMessageManager()) {
+     RefPtr<nsFrameMessageManager> manager =
+       frameLoader->GetFrameMessageManager();
+@@ -2510,6 +2528,7 @@ TabParent::AllocPRenderFrameParent()
+ {
+   MOZ_ASSERT(ManagedPRenderFrameParent().IsEmpty());
+   RefPtr<nsFrameLoader> frameLoader = GetFrameLoader();
++        __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::AllocPRenderFrameParent frameLoader is :%p this is %p \n",frameLoader.get(),this);
+   uint64_t layersId = 0;
+   bool success = false;
+ 
+@@ -2538,7 +2557,7 @@ TabParent::SetRenderFrame(PRenderFrameParent* aRFParent)
+   }
+ 
+   RefPtr<nsFrameLoader> frameLoader = GetFrameLoader();
+-
++       __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::SetRenderFrame frameLoader is :%p this is %p \n",frameLoader.get(),this);
+   if (!frameLoader) {
+     return false;
+   }
+@@ -2599,14 +2618,20 @@ TabParent::RecvAudioChannelActivityNotification(const uint32_t& aAudioChannel,
+ already_AddRefed<nsFrameLoader>
+ TabParent::GetFrameLoader(bool aUseCachedFrameLoaderAfterDestroy) const
+ {
++
++
+   if (mIsDestroyed && !aUseCachedFrameLoaderAfterDestroy) {
++        __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::GetFrameLoader 11");
+     return nullptr;
+   }
+ 
++   
+   if (mFrameLoader) {
+     RefPtr<nsFrameLoader> fl = mFrameLoader;
++     __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::GetFrameLoader 22:%p \n",mFrameLoader.get());
+     return fl.forget();
+   }
++      __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::GetFrameLoader 33:%p \n",mFrameLoader.get());
+   nsCOMPtr<nsIFrameLoaderOwner> frameLoaderOwner = do_QueryInterface(mFrameElement);
+   return frameLoaderOwner ? frameLoaderOwner->GetFrameLoader() : nullptr;
+ }
+@@ -2714,6 +2739,7 @@ bool
+ TabParent::RecvSetSpatialNavigationEnabled(const bool& aEnabled)
+ {
+   RefPtr<nsFrameLoader> frameLoader = GetFrameLoader();
++      __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::RecvSetSpatialNavigationEnabled :%p \n",frameLoader.get());
+   NS_ENSURE_TRUE(frameLoader, false);
+   nsresult rv = frameLoader->SetSpatialNavigationEnabled(aEnabled);
+   // Return successed when the request value(aEnable) is different from the
+@@ -2732,6 +2758,7 @@ bool
+ TabParent::RecvGetSpatialNavigationEnabled(bool* aEnabled)
+ {
+   RefPtr<nsFrameLoader> frameLoader = GetFrameLoader();
++        __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::RecvGetSpatialNavigationEnabled :%p \n",frameLoader.get());
+   NS_ENSURE_TRUE(frameLoader, false);
+   frameLoader->GetSpatialNavigationEnabled(aEnabled);
+ 
+diff --git a/layout/ipc/RenderFrameParent.cpp b/layout/ipc/RenderFrameParent.cpp
+index 15f0d338b2af..07750f758fba 100644
+--- a/layout/ipc/RenderFrameParent.cpp
++++ b/layout/ipc/RenderFrameParent.cpp
+@@ -35,6 +35,8 @@
+ #include "mozilla/layers/CompositorBridgeChild.h"
+ #include "ClientLayerManager.h"
+ #include "FrameLayerBuilder.h"
++#include "android/log.h"
++
+ 
+ using namespace mozilla::dom;
+ using namespace mozilla::gfx;
+@@ -79,6 +81,9 @@ IsTempLayerManager(LayerManager* aManager)
+ already_AddRefed<LayerManager>
+ GetFrom(nsFrameLoader* aFrameLoader)
+ {
++
++  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","GetFrom:aFrameLoader is %p \n",aFrameLoader);
++
+   nsIDocument* doc = aFrameLoader->GetOwnerDoc();
+   if (!doc) {
+     return nullptr;
+@@ -93,22 +98,29 @@ RenderFrameParent::RenderFrameParent(nsFrameLoader* aFrameLoader, bool* aSuccess
+   , mAsyncPanZoomEnabled(false)
+   , mInitted(false)
+ {
++
++  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","RenderFrameParent::RenderFrameParent construction:this is %p mFrameLoader is %p \n",this,mFrameLoader.get());
+   mInitted = Init(aFrameLoader);
+   *aSuccess = mInitted;
+ }
+ 
+ RenderFrameParent::~RenderFrameParent()
+-{}
++{
++  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","RenderFrameParent::RenderFrameParent destruction:this is %p ,mFrameLoader is %p \n",this,mFrameLoader.get());
++}
+ 
+ bool
+ RenderFrameParent::Init(nsFrameLoader* aFrameLoader)
+ {
++
++  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","RenderFrameParent::init 111");
+   if (mInitted || !aFrameLoader) {
+     return false;
+   }
+-
++  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","RenderFrameParent::init 222 aFrameLoader is :%p this is %p \n",aFrameLoader,this);
+   mFrameLoader = aFrameLoader;
+ 
++  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","RenderFrameParent::init 333 mFrameLoader is :%p this is %p \n",mFrameLoader.get(),this);
+   RefPtr<LayerManager> lm = GetFrom(mFrameLoader);
+ 
+   mAsyncPanZoomEnabled = lm && lm->AsyncPanZoomEnabled();
+@@ -139,6 +151,7 @@ RenderFrameParent::IsInitted()
+ void
+ RenderFrameParent::Destroy()
+ {
++  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","RenderFrameParent::Destroy");
+   mFrameLoaderDestroyed = true;
+ }
+ 
+@@ -157,6 +170,7 @@ RenderFrameParent::BuildLayer(nsDisplayListBuilder* aBuilder,
+              mContainer->Manager() == aManager,
+              "retaining manager changed out from under us ... HELP!");
+ 
++
+   if (IsTempLayerManager(aManager) ||
+       (mContainer && mContainer->Manager() != aManager)) {
+     // This can happen if aManager is a "temporary" manager, or if the
+@@ -204,6 +218,8 @@ RenderFrameParent::BuildLayer(nsDisplayListBuilder* aBuilder,
+ void
+ RenderFrameParent::OwnerContentChanged(nsIContent* aContent)
+ {
++
++  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","RenderFrameParent::OwnerContentChanged:%p this is %p \n",mFrameLoader.get(),this);
+   MOZ_ASSERT(!mFrameLoader || mFrameLoader->GetOwnerContent() == aContent,
+              "Don't build new map if owner is same!");
+ 
+@@ -217,6 +233,7 @@ RenderFrameParent::OwnerContentChanged(nsIContent* aContent)
+ void
+ RenderFrameParent::ActorDestroy(ActorDestroyReason why)
+ {
++  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","RenderFrameParent::ActorDestroy before :%p \n",mFrameLoader.get());
+   if (mLayersId != 0) {
+     if (XRE_IsContentProcess()) {
+       ContentChild::GetSingleton()->SendDeallocateLayerTreeId(mLayersId);
+@@ -226,6 +243,7 @@ RenderFrameParent::ActorDestroy(ActorDestroyReason why)
+   }
+ 
+   mFrameLoader = nullptr;
++  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","RenderFrameParent::ActorDestroy after :%p \n",mFrameLoader.get());
+ }
+ 
+ bool
+@@ -291,6 +309,7 @@ RenderFrameParent::HitTest(const nsRect& aRect)
+ void
+ RenderFrameParent::GetTextureFactoryIdentifier(TextureFactoryIdentifier* aTextureFactoryIdentifier)
+ {
++  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","RenderFrameParent::GetTextureFactoryIdentifiermFrameLoader is:%p this is: %p\n", mFrameLoader.get(),this);
+   RefPtr<LayerManager> lm = mFrameLoader ? GetFrom(mFrameLoader) : nullptr;
+   // Perhaps the document containing this frame currently has no presentation?
+   if (lm && lm->AsClientLayerManager()) {
+@@ -298,11 +317,14 @@ RenderFrameParent::GetTextureFactoryIdentifier(TextureFactoryIdentifier* aTextur
+   } else {
+     *aTextureFactoryIdentifier = TextureFactoryIdentifier();
+   }
++
++
+ }
+ 
+ void
+ RenderFrameParent::TakeFocusForClickFromTap()
+ {
++  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","RenderFrameParent::TakeFocusForClickFromTap");
+   nsIFocusManager* fm = nsFocusManager::GetFocusManager();
+   if (!fm) {
+     return;
+@@ -323,6 +345,7 @@ RenderFrameParent::TakeFocusForClickFromTap()
+ bool
+ RenderFrameParent::RecvTakeFocusForClickFromTap()
+ {
++  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","RenderFrameParent::RecvTakeFocusForClickFromTap");
+   TakeFocusForClickFromTap();
+   return true;
+ }
+@@ -337,6 +360,7 @@ nsDisplayRemote::nsDisplayRemote(nsDisplayListBuilder* aBuilder,
+   , mRemoteFrame(aRemoteFrame)
+   , mEventRegionsOverride(EventRegionsOverride::NoOverride)
+ {
++
+   if (aBuilder->IsBuildingLayerEventRegions()) {
+     bool frameIsPointerEventsNone =
+       !aFrame->PassPointerEventsToChildren() &&
+@@ -356,6 +380,7 @@ nsDisplayRemote::BuildLayer(nsDisplayListBuilder* aBuilder,
+                             LayerManager* aManager,
+                             const ContainerLayerParameters& aContainerParameters)
+ {
++
+   int32_t appUnitsPerDevPixel = mFrame->PresContext()->AppUnitsPerDevPixel();
+   nsIntRect visibleRect = GetVisibleRect().ToNearestPixels(appUnitsPerDevPixel);
+   visibleRect += aContainerParameters.mOffset;
+@@ -370,6 +395,7 @@ void
+ nsDisplayRemote::HitTest(nsDisplayListBuilder* aBuilder, const nsRect& aRect,
+                          HitTestState* aState, nsTArray<nsIFrame*> *aOutFrames)
+ {
++  __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","nsDisplayRemote::HitTest");
+   if (mRemoteFrame->HitTest(aRect)) {
+     aOutFrames->AppendElement(mFrame);
+   }
+-- 
+2.17.1
+

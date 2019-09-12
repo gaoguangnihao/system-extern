@@ -1,0 +1,95 @@
+From bdfcddfb8c0627241e4e7c44ff37ce6bb3abf3ad Mon Sep 17 00:00:00 2001
+From: "dahui.cui" <dahui.cui@kaiostech.com>
+Date: Thu, 12 Sep 2019 16:03:39 +0800
+Subject: [PATCH] Bug 70182 - [MTBF][7731e] devices Crash when run MTBF about
+ 10 hrs mozilla::layout::GetFrom. r=rex,chrono
+
+---
+ dom/ipc/TabParent.cpp            |  2 ++
+ layout/ipc/RenderFrameParent.cpp |  4 ++--
+ layout/ipc/RenderFrameParent.h   | 30 +++++++++++++++---------------
+ 3 files changed, 19 insertions(+), 17 deletions(-)
+
+diff --git a/dom/ipc/TabParent.cpp b/dom/ipc/TabParent.cpp
+index 3456276c619d..1c153ca016e3 100644
+--- a/dom/ipc/TabParent.cpp
++++ b/dom/ipc/TabParent.cpp
+@@ -798,9 +798,11 @@ TabParent::InitRenderFrame()
+       Unused << SendPRenderFrameConstructor(renderFrame);
+ 
+       __android_log_print(ANDROID_LOG_INFO, "DHCUI-debug","TabParent::InitRenderFrame after SendPRenderFrameConstructor mFrameLoader is :%p \n",mFrameLoader.get()); 
++      if (renderFrame && !renderFrame->mFrameLoaderDestroyed){
+       TextureFactoryIdentifier textureFactoryIdentifier;
+       renderFrame->GetTextureFactoryIdentifier(&textureFactoryIdentifier);
+       Unused << SendInitRendering(textureFactoryIdentifier, layersId, renderFrame);
++      };
+     }
+   } else {
+     // Otherwise, the child should have constructed the RenderFrame,
+diff --git a/layout/ipc/RenderFrameParent.cpp b/layout/ipc/RenderFrameParent.cpp
+index 07750f758fba..d03934c480db 100644
+--- a/layout/ipc/RenderFrameParent.cpp
++++ b/layout/ipc/RenderFrameParent.cpp
+@@ -92,9 +92,9 @@ GetFrom(nsFrameLoader* aFrameLoader)
+ }
+ 
+ RenderFrameParent::RenderFrameParent(nsFrameLoader* aFrameLoader, bool* aSuccess)
+-  : mLayersId(0)
++  : mFrameLoaderDestroyed(false)
++  , mLayersId(0)
+   , mFrameLoader(aFrameLoader)
+-  , mFrameLoaderDestroyed(false)
+   , mAsyncPanZoomEnabled(false)
+   , mInitted(false)
+ {
+diff --git a/layout/ipc/RenderFrameParent.h b/layout/ipc/RenderFrameParent.h
+index c10d1055b124..66ac5462a45c 100644
+--- a/layout/ipc/RenderFrameParent.h
++++ b/layout/ipc/RenderFrameParent.h
+@@ -85,6 +85,20 @@ public:
+ 
+   void TakeFocusForClickFromTap();
+ 
++  /* True after Destroy() has been called, which is triggered
++  // originally by nsFrameLoader::Destroy().  After this point, we can
++  // no longer safely ask the frame loader to find its nearest layer
++  // manager, because it may have been disconnected from the DOM.
++  // It's still OK to *tell* the frame loader that we've painted after
++  // it's destroyed; it'll just ignore us, and we won't be able to
++  // find an nsIFrame to invalidate.  See ShadowLayersUpdated().
++  // Prefer the extra bit of state to null'ing out mFrameLoader in
++  // Destroy() so that less code needs to be special-cased for after
++  // Destroy().
++  // It's possible for mFrameLoader==null and
++  // mFrameLoaderDestroyed==false.*/
++  bool mFrameLoaderDestroyed;
++
+ protected:
+   void ActorDestroy(ActorDestroyReason why) override;
+ 
+@@ -108,21 +122,7 @@ private:
+   RefPtr<nsFrameLoader> mFrameLoader;
+   RefPtr<ContainerLayer> mContainer;
+ 
+-  // True after Destroy() has been called, which is triggered
+-  // originally by nsFrameLoader::Destroy().  After this point, we can
+-  // no longer safely ask the frame loader to find its nearest layer
+-  // manager, because it may have been disconnected from the DOM.
+-  // It's still OK to *tell* the frame loader that we've painted after
+-  // it's destroyed; it'll just ignore us, and we won't be able to
+-  // find an nsIFrame to invalidate.  See ShadowLayersUpdated().
+-  //
+-  // Prefer the extra bit of state to null'ing out mFrameLoader in
+-  // Destroy() so that less code needs to be special-cased for after
+-  // Destroy().
+-  // 
+-  // It's possible for mFrameLoader==null and
+-  // mFrameLoaderDestroyed==false.
+-  bool mFrameLoaderDestroyed;
++
+ 
+   nsRegion mTouchRegion;
+ 
+-- 
+2.17.1
+

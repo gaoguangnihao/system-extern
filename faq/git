@@ -22,6 +22,7 @@ git remote -v
 6.git add
 7.git commit -m "Bug 68639 - Crash in Abort | __delete__()d actor. r=danny,shawn"
 8.Generator MR and submit
+9.git push dhcui Bug-68639
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~ modify if need ~~~~~~~~~~~~~~~~~~~~~~~
 
