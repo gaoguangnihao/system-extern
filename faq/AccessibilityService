@@ -34,3 +34,973 @@ mozilla::dom::Selection::AddSelectionListener
     aIsNewDocument=aIsNewDocument@entry=false, aFocusChanged=aFocusChanged@entry=true, aWindowRaised=aWindowRaised@entry=false, 
     aAdjustWidgets=aAdjustWidgets@entry=true, aContentLostFocus=0xa70ba970) at /local/code/master/kaios/gecko/dom/base/nsFocusManager.cpp:2057
 
+
+
+from select to iteam 
+
+(gdb) bt
+#0  mozilla::dom::Selection::RemoveSelectionListener (this=0xad00a5b0, aListenerToRemove=0xacee1520)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5988
+#1  0xb45b58f8 in nsTextEditorState::UnbindFromFrame (this=0xadc656d0, aFrame=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/html/nsTextEditorState.cpp:1702
+#2  0xb49eb184 in nsTextControlFrame::DestroyFrom (this=0xad2af418, aDestructRoot=0xad2af030)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/forms/nsTextControlFrame.cpp:134
+#3  0xb49bee76 in nsLineBox::DeleteLineList (aPresContext=aPresContext@entry=0xadc17800, aLines=..., aDestructRoot=aDestructRoot@entry=0xad2af030, 
+    aFrames=aFrames@entry=0xad2af06c) at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsLineBox.cpp:394
+#4  0xb498c158 in nsBlockFrame::DestroyFrom (this=0xad2af030, aDestructRoot=0xad2af030)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsBlockFrame.cpp:324
+#5  0xb4964d0a in nsFrameManager::RemoveFrame (this=this@entry=0xadc34880, aListID=mozilla::layout::kAbsoluteList, aOldFrame=aOldFrame@entry=0xad2af030)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsFrameManager.cpp:506
+#6  0xb49bb0ee in nsPlaceholderFrame::DestroyFrom (this=0xad2af0e8, aDestructRoot=0xad2af0e8)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsPlaceholderFrame.cpp:168
+#7  0xb498e558 in Destroy (this=0xad2af0e8) at ../../../gecko/layout/generic/nsIFrame.h:474
+#8  nsBlockFrame::DoRemoveFrame (this=this@entry=0xad2ae438, aDeletedFrame=aDeletedFrame@entry=0xad2af0e8, aFlags=aFlags@entry=2)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsBlockFrame.cpp:5795
+#9  0xb498e6ac in nsBlockFrame::RemoveFrame (this=0xad2ae438, aListID=<optimized out>, aOldFrame=0xad2af0e8)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsBlockFrame.cpp:5160
+#10 0xb4964cf2 in nsFrameManager::RemoveFrame (this=this@entry=0xadc34880, aListID=mozilla::layout::kPrincipalList, aOldFrame=aOldFrame@entry=0xad2af0e8)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsFrameManager.cpp:508
+#11 0xb4960088 in nsCSSFrameConstructor::ContentRemoved (this=this@entry=0xadc34880, aContainer=0xb02ad4c0, aChild=aChild@entry=0xb02ad790, 
+    aOldNextSibling=0x0, aFlags=aFlags@entry=nsCSSFrameConstructor::REMOVE_FOR_RECONSTRUCTION, aDidReconstruct=aDidReconstruct@entry=0xbec52683, 
+    aDestroyedFramesFor=aDestroyedFramesFor@entry=0x0) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:8195
+#12 0xb49602e4 in nsCSSFrameConstructor::RecreateFramesForContent (this=0xadc34880, aContent=0xb02ad790, aAsyncInsert=aAsyncInsert@entry=false, 
+    aFlags=aFlags@entry=nsCSSFrameConstructor::REMOVE_FOR_RECONSTRUCTION, aDestroyedFramesFor=aDestroyedFramesFor@entry=0x0)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:9384
+#13 0xb4934f20 in mozilla::RestyleManager::ProcessRestyledFrames (this=this@entry=0xb2ea8b70, aChangeList=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:835
+#14 0xb49353ee in mozilla::RestyleManager::ComputeAndProcessStyleChange (this=this@entry=0xb2ea8b70, aFrame=aFrame@entry=0xad2ae438, 
+    aMinChange=aMinChange@entry=(unknown: 0), aRestyleTracker=..., aRestyleHint=aRestyleHint@entry=eRestyle_Self, aRestyleHintData=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:4940
+#15 0xb4935568 in mozilla::RestyleManager::RestyleElement (this=0xb2ea8b70, aElement=aElement@entry=0xb02ad4c0, aPrimaryFrame=aPrimaryFrame@entry=0xad2ae438, 
+    aMinHint=aMinHint@entry=(unknown: 0), aRestyleTracker=..., aRestyleHint=aRestyleHint@entry=eRestyle_Self, aRestyleHintData=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:1068
+#16 0xb493c2ee in mozilla::RestyleTracker::ProcessOneRestyle (this=this@entry=0xb2ea8ba8, aElement=0xb02ad4c0, aRestyleHint=eRestyle_Self, 
+    aChangeHint=(unknown: 0), aRestyleHintData=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleTracker.cpp:95
+---Type <return> to continue, or q <return> to quit---
+#17 0xb49508d6 in mozilla::RestyleTracker::DoProcessRestyles (this=0xb2ea8ba8) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleTracker.cpp:263
+#18 0xb49306e6 in mozilla::RestyleManager::ProcessPendingRestyles (this=0xb2ea8b70) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:1785
+#19 0xb4983cb4 in ProcessPendingRestyles (this=<optimized out>) at ../../dist/include/mozilla/RestyleManagerHandleInlines.h:74
+#20 PresShell::FlushPendingNotifications (this=0xaf9e3000, aFlush=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsPresShell.cpp:4060
+#21 0xb4983dfa in PresShell::FlushPendingNotifications (this=<optimized out>, aType=Flush_Layout)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsPresShell.cpp:3952
+#22 0xb409b01a in nsDocument::FlushPendingNotifications (this=0xb0121000, aType=Flush_Layout)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/base/nsDocument.cpp:8306
+#23 0xb405704a in mozilla::dom::Element::GetPrimaryFrame (this=this@entry=0xaced5740, aType=aType@entry=Flush_Layout)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/base/Element.cpp:2073
+#24 0xb405bbb2 in mozilla::dom::Element::GetBoundingClientRect (this=0xaced5740) at /local/code/mtk6731-256/KaiOS/gecko/dom/base/Element.cpp:925
+#25 0xb44815bc in mozilla::dom::ElementBinding::getBoundingClientRect (cx=0xb19d4de0, obj=..., self=<optimized out>, args=...) at ElementBinding.cpp:2118
+#26 0xb44bbf80 in mozilla::dom::GenericBindingMethod (cx=0xb19d4de0, argc=<optimized out>, vp=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/bindings/BindingUtils.cpp:2781
+#27 0xb519314a in CallJSNative (args=..., native=0xb44bbebd <mozilla::dom::GenericBindingMethod(JSContext*, unsigned int, JS::Value*)>, cx=0xb19d4de0)
+    at ../../../gecko/js/src/jscntxtinlines.h:240
+#28 js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:480
+#29 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#30 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#31 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#32 0xb51930cc in js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#33 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#34 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#35 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#36 0xb51930cc in js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#37 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#38 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#39 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#40 0xb51930cc in js::InternalCallOrConstruct (cx=cx@entry=0xb19d4de0, args=..., construct=construct@entry=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#41 0xb519323a in InternalCall (cx=cx@entry=0xb19d4de0, args=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:525
+#42 0xb5193290 in js::CallFromStack (cx=cx@entry=0xb19d4de0, args=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#43 0xb4f90d36 in js::jit::DoCallFallback (cx=0xb19d4de0, frame=0xbec542f0, stub_=0xad3fc050, argc=0, vp=0xbec542b8, res=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/jit/BaselineIC.cpp:5974
+#44 0xb6e9c544 in ?? ()
+---Type <return> to continue, or q <return> to quit---
+#45 0xb6e9c544 in ?? ()
+Backtrace stopped: previous frame identical to this frame (corrupt stack?)
+(gdb) printf "%s",PrintJSStack()
+0 checkLabelsOverflow() ["app://kaios.whatsapp.net/page.js":1]
+    this = [object Object]
+1 componentDidUpdate([object Object], [object Object], null) ["app://kaios.whatsapp.net/page.js":1]
+    this = [object Object]
+2 $e/<() ["app://kaios.whatsapp.net/page.js":1]
+3 y(e = [function]) ["app://kaios.whatsapp.net/page.js":1]
+4 Xe(e = [object Object], t = false, n = null) ["app://kaios.whatsapp.net/page.js":1]
+5 Ye(undefined) ["app://kaios.whatsapp.net/page.js":1]
+6 ae(e = [function], t = undefined, n = undefined, r = false) ["app://kaios.whatsapp.net/page.js":1]
+7 ne([object MutationRecord], [object MutationObserver]) ["app://kaios.whatsapp.net/page.js":1]
+    this = [object MutationObserver]
+
+
+
+
+#0  mozilla::dom::Selection::AddSelectionListener (this=this@entry=0xace1fd30, aNewListener=aNewListener@entry=0xadc06790, aRv=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5977
+#1  0xb49c95a6 in mozilla::dom::Selection::AddSelectionListener (this=0xace1fd30, aNewListener=0xadc06790)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5967
+#2  0xb45b4e70 in nsTextEditorState::BindToFrame (this=0xadc656d0, aFrame=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/html/nsTextEditorState.cpp:1208
+#3  0xb49eaeb2 in nsTextControlFrame::CreateAnonymousContent (this=0xad2af418, aElements=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/forms/nsTextControlFrame.cpp:326
+#4  0xb4945a1a in nsCSSFrameConstructor::GetAnonymousContent (this=this@entry=0xadc34880, aParent=aParent@entry=0xac98f1b0, 
+    aParentFrame=aParentFrame@entry=0xad2af418, aContent=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:4131
+#5  0xb495b956 in nsCSSFrameConstructor::ProcessChildren (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xac98f1b0, 
+    aStyleContext=aStyleContext@entry=0xad2ae3e0, aFrame=aFrame@entry=0xad2af418, aCanHaveGeneratedContent=true, aCanHaveGeneratedContent@entry=false, 
+    aFrameItems=..., aAllowBlockStyles=aAllowBlockStyles@entry=false, aPendingBinding=0x0, aPossiblyLeafFrame=aPossiblyLeafFrame@entry=0xad2af418)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10432
+#6  0xb495bfea in nsCSSFrameConstructor::ConstructFrameFromItemInternal (this=this@entry=0xadc34880, aItem=..., aState=..., aParentFrame=<optimized out>, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:3965
+#7  0xb495c208 in nsCSSFrameConstructor::ConstructFramesFromItem (this=this@entry=0xadc34880, aState=..., aIter=..., 
+    aParentFrame=aParentFrame@entry=0xad2af030, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:5891
+#8  0xb495c384 in nsCSSFrameConstructor::ConstructFramesFromItemList (this=this@entry=0xadc34880, aState=..., aItems=..., 
+    aParentFrame=aParentFrame@entry=0xad2af030, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10310
+#9  0xb495bae0 in nsCSSFrameConstructor::ProcessChildren (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xb02ad790, 
+    aStyleContext=aStyleContext@entry=0xadcd60d8, aFrame=aFrame@entry=0xad2af030, aCanHaveGeneratedContent=aCanHaveGeneratedContent@entry=true, 
+    aFrameItems=..., aAllowBlockStyles=aAllowBlockStyles@entry=true, aPendingBinding=aPendingBinding@entry=0x0, aPossiblyLeafFrame=0xad2af030, 
+    aPossiblyLeafFrame@entry=0x0) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10511
+#10 0xb495ece4 in nsCSSFrameConstructor::ConstructBlock (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xb02ad790, 
+    aParentFrame=aParentFrame@entry=0xaf98e6b8, aContentParentFrame=aContentParentFrame@entry=0xad2ae438, aStyleContext=aStyleContext@entry=0xadcd60d8, 
+    aNewFrame=aNewFrame@entry=0xbec52274, aFrameItems=..., aPositionedFrameForAbsPosContainer=0xad2af030, aPendingBinding=0x0)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:11522
+#11 0xb495efea in nsCSSFrameConstructor::ConstructNonScrollableBlock (this=0xadc34880, aState=..., aItem=..., aParentFrame=0xad2ae438, aDisplay=0xadcb65d0, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:4795
+#12 0xb495bd7e in nsCSSFrameConstructor::ConstructFrameFromItemInternal (this=this@entry=0xadc34880, aItem=..., aState=..., aParentFrame=0xad2ae438, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:3821
+#13 0xb495c208 in nsCSSFrameConstructor::ConstructFramesFromItem (this=this@entry=0xadc34880, aState=..., aIter=..., 
+    aParentFrame=aParentFrame@entry=0xad2ae438, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:5891
+#14 0xb495c384 in nsCSSFrameConstructor::ConstructFramesFromItemList (this=this@entry=0xadc34880, aState=..., aItems=..., aParentFrame=0xad2ae438, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10310
+#15 0xb495fae6 in nsCSSFrameConstructor::ContentRangeInserted (this=this@entry=0xadc34880, aContainer=0xb02ad4c0, aStartChild=aStartChild@entry=0xb02ad790, 
+---Type <return> to continue, or q <return> to quit---
+    aEndChild=0x0, aFrameState=0xadc8e7f0, aAllowLazyConstruction=aAllowLazyConstruction@entry=false)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:7754
+#16 0xb495fcf8 in nsCSSFrameConstructor::ContentInserted (this=this@entry=0xadc34880, aContainer=<optimized out>, aChild=aChild@entry=0xb02ad790, 
+    aFrameState=<optimized out>, aAllowLazyConstruction=aAllowLazyConstruction@entry=false)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:7331
+#17 0xb496032a in nsCSSFrameConstructor::RecreateFramesForContent (this=0xadc34880, aContent=0xb02ad790, aAsyncInsert=aAsyncInsert@entry=false, 
+    aFlags=aFlags@entry=nsCSSFrameConstructor::REMOVE_FOR_RECONSTRUCTION, aDestroyedFramesFor=aDestroyedFramesFor@entry=0x0)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:9397
+#18 0xb4934f20 in mozilla::RestyleManager::ProcessRestyledFrames (this=this@entry=0xb2ea8b70, aChangeList=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:835
+#19 0xb49353ee in mozilla::RestyleManager::ComputeAndProcessStyleChange (this=this@entry=0xb2ea8b70, aFrame=aFrame@entry=0xad2ae438, 
+    aMinChange=aMinChange@entry=(unknown: 0), aRestyleTracker=..., aRestyleHint=aRestyleHint@entry=eRestyle_Self, aRestyleHintData=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:4940
+#20 0xb4935568 in mozilla::RestyleManager::RestyleElement (this=0xb2ea8b70, aElement=aElement@entry=0xb02ad4c0, aPrimaryFrame=aPrimaryFrame@entry=0xad2ae438, 
+    aMinHint=aMinHint@entry=(unknown: 0), aRestyleTracker=..., aRestyleHint=aRestyleHint@entry=eRestyle_Self, aRestyleHintData=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:1068
+#21 0xb493c2ee in mozilla::RestyleTracker::ProcessOneRestyle (this=this@entry=0xb2ea8ba8, aElement=0xb02ad4c0, aRestyleHint=eRestyle_Self, 
+    aChangeHint=(unknown: 0), aRestyleHintData=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleTracker.cpp:95
+#22 0xb49508d6 in mozilla::RestyleTracker::DoProcessRestyles (this=0xb2ea8ba8) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleTracker.cpp:263
+#23 0xb49306e6 in mozilla::RestyleManager::ProcessPendingRestyles (this=0xb2ea8b70) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:1785
+#24 0xb4983cb4 in ProcessPendingRestyles (this=<optimized out>) at ../../dist/include/mozilla/RestyleManagerHandleInlines.h:74
+#25 PresShell::FlushPendingNotifications (this=0xaf9e3000, aFlush=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsPresShell.cpp:4060
+#26 0xb4983dfa in PresShell::FlushPendingNotifications (this=<optimized out>, aType=Flush_Layout)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsPresShell.cpp:3952
+#27 0xb409b01a in nsDocument::FlushPendingNotifications (this=0xb0121000, aType=Flush_Layout)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/base/nsDocument.cpp:8306
+#28 0xb405704a in mozilla::dom::Element::GetPrimaryFrame (this=this@entry=0xaced5740, aType=aType@entry=Flush_Layout)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/base/Element.cpp:2073
+#29 0xb405bbb2 in mozilla::dom::Element::GetBoundingClientRect (this=0xaced5740) at /local/code/mtk6731-256/KaiOS/gecko/dom/base/Element.cpp:925
+#30 0xb44815bc in mozilla::dom::ElementBinding::getBoundingClientRect (cx=0xb19d4de0, obj=..., self=<optimized out>, args=...) at ElementBinding.cpp:2118
+#31 0xb44bbf80 in mozilla::dom::GenericBindingMethod (cx=0xb19d4de0, argc=<optimized out>, vp=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/bindings/BindingUtils.cpp:2781
+#32 0xb519314a in CallJSNative (args=..., native=0xb44bbebd <mozilla::dom::GenericBindingMethod(JSContext*, unsigned int, JS::Value*)>, cx=0xb19d4de0)
+    at ../../../gecko/js/src/jscntxtinlines.h:240
+#33 js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:480
+#34 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#35 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+---Type <return> to continue, or q <return> to quit---
+#36 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#37 0xb51930cc in js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#38 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#39 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#40 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#41 0xb51930cc in js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#42 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#43 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#44 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#45 0xb51930cc in js::InternalCallOrConstruct (cx=cx@entry=0xb19d4de0, args=..., construct=construct@entry=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#46 0xb519323a in InternalCall (cx=cx@entry=0xb19d4de0, args=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:525
+#47 0xb5193290 in js::CallFromStack (cx=cx@entry=0xb19d4de0, args=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#48 0xb4f90d36 in js::jit::DoCallFallback (cx=0xb19d4de0, frame=0xbec542f0, stub_=0xad3fc050, argc=0, vp=0xbec542b8, res=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/jit/BaselineIC.cpp:5974
+#49 0xb6e9c544 in ?? ()
+#50 0xb6e9c544 in ?? ()
+Backtrace stopped: previous frame identical to this frame (corrupt stack?)
+
+
+Breakpoint 1, mozilla::dom::Selection::AddSelectionListener (this=this@entry=0xafaa6f60, aNewListener=aNewListener@entry=0xadc06790, aRv=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5977
+5977	{
+(gdb) bt
+#0  mozilla::dom::Selection::AddSelectionListener (this=this@entry=0xafaa6f60, aNewListener=aNewListener@entry=0xadc06790, aRv=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5977
+#1  0xb49c95a6 in mozilla::dom::Selection::AddSelectionListener (this=0xafaa6f60, aNewListener=0xadc06790)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5967
+#2  0xb45b4e70 in nsTextEditorState::BindToFrame (this=0xadc656d0, aFrame=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/html/nsTextEditorState.cpp:1208
+#3  0xb49eaeb2 in nsTextControlFrame::CreateAnonymousContent (this=0xad2af418, aElements=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/forms/nsTextControlFrame.cpp:326
+#4  0xb4945a1a in nsCSSFrameConstructor::GetAnonymousContent (this=this@entry=0xadc34880, aParent=aParent@entry=0xac98f1b0, aParentFrame=aParentFrame@entry=
+    0xad2af418, aContent=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:4131
+#5  0xb495b956 in nsCSSFrameConstructor::ProcessChildren (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xac98f1b0, 
+    aStyleContext=aStyleContext@entry=0xadcb66f0, aFrame=aFrame@entry=0xad2af418, aCanHaveGeneratedContent=true, aCanHaveGeneratedContent@entry=false, 
+    aFrameItems=..., aAllowBlockStyles=aAllowBlockStyles@entry=false, aPendingBinding=0x0, aPossiblyLeafFrame=aPossiblyLeafFrame@entry=0xad2af418)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10432
+#6  0xb495bfea in nsCSSFrameConstructor::ConstructFrameFromItemInternal (this=this@entry=0xadc34880, aItem=..., aState=..., aParentFrame=<optimized out>, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:3965
+#7  0xb495c208 in nsCSSFrameConstructor::ConstructFramesFromItem (this=this@entry=0xadc34880, aState=..., aIter=..., 
+    aParentFrame=aParentFrame@entry=0xad2af030, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:5891
+#8  0xb495c384 in nsCSSFrameConstructor::ConstructFramesFromItemList (this=this@entry=0xadc34880, aState=..., aItems=..., 
+    aParentFrame=aParentFrame@entry=0xad2af030, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10310
+#9  0xb495bae0 in nsCSSFrameConstructor::ProcessChildren (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xb02ad790, 
+    aStyleContext=aStyleContext@entry=0xad2b14a0, aFrame=aFrame@entry=0xad2af030, aCanHaveGeneratedContent=aCanHaveGeneratedContent@entry=true, 
+    aFrameItems=..., aAllowBlockStyles=aAllowBlockStyles@entry=true, aPendingBinding=aPendingBinding@entry=0x0, aPossiblyLeafFrame=0xad2af030, 
+    aPossiblyLeafFrame@entry=0x0) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10511
+#10 0xb495ece4 in nsCSSFrameConstructor::ConstructBlock (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xb02ad790, 
+    aParentFrame=aParentFrame@entry=0xad2ae438, aContentParentFrame=aContentParentFrame@entry=0xad2ae438, aStyleContext=aStyleContext@entry=0xad2b14a0, 
+    aNewFrame=aNewFrame@entry=0xbec53224, aFrameItems=..., aPositionedFrameForAbsPosContainer=0xad2af030, aPendingBinding=0x0)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:11522
+#11 0xb495efea in nsCSSFrameConstructor::ConstructNonScrollableBlock (this=0xadc34880, aState=..., aItem=..., aParentFrame=0xad2ae438, aDisplay=0xadcd56f0, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:4795
+#12 0xb495bd7e in nsCSSFrameConstructor::ConstructFrameFromItemInternal (this=this@entry=0xadc34880, aItem=..., aState=..., aParentFrame=0xad2ae438, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:3821
+#13 0xb495c208 in nsCSSFrameConstructor::ConstructFramesFromItem (this=this@entry=0xadc34880, aState=..., aIter=..., 
+    aParentFrame=aParentFrame@entry=0xad2ae438, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:5891
+#14 0xb495c384 in nsCSSFrameConstructor::ConstructFramesFromItemList (this=this@entry=0xadc34880, aState=..., aItems=..., aParentFrame=0xad2ae438, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10310
+#15 0xb495fae6 in nsCSSFrameConstructor::ContentRangeInserted (this=this@entry=0xadc34880, aContainer=0xb02ad4c0, aStartChild=aStartChild@entry=0xb02ad790, 
+---Type <return> to continue, or q <return> to quit---
+    aEndChild=0x0, aFrameState=0xadc8e7f0, aAllowLazyConstruction=aAllowLazyConstruction@entry=false)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:7754
+#16 0xb495fcf8 in nsCSSFrameConstructor::ContentInserted (this=this@entry=0xadc34880, aContainer=<optimized out>, aChild=aChild@entry=0xb02ad790, 
+    aFrameState=<optimized out>, aAllowLazyConstruction=aAllowLazyConstruction@entry=false)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:7331
+#17 0xb496032a in nsCSSFrameConstructor::RecreateFramesForContent (this=0xadc34880, aContent=0xb02ad790, aAsyncInsert=aAsyncInsert@entry=false, 
+    aFlags=aFlags@entry=nsCSSFrameConstructor::REMOVE_FOR_RECONSTRUCTION, aDestroyedFramesFor=aDestroyedFramesFor@entry=0x0)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:9397
+#18 0xb4934f20 in mozilla::RestyleManager::ProcessRestyledFrames (this=this@entry=0xb2ea8b70, aChangeList=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:835
+#19 0xb49353ee in mozilla::RestyleManager::ComputeAndProcessStyleChange (this=this@entry=0xb2ea8b70, aFrame=aFrame@entry=0xad2af030, 
+    aMinChange=aMinChange@entry=(unknown: 0), aRestyleTracker=..., aRestyleHint=aRestyleHint@entry=eRestyle_Self, aRestyleHintData=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:4940
+#20 0xb4935568 in mozilla::RestyleManager::RestyleElement (this=0xb2ea8b70, aElement=aElement@entry=0xb02ad790, aPrimaryFrame=aPrimaryFrame@entry=0xad2af030, 
+    aMinHint=aMinHint@entry=(unknown: 0), aRestyleTracker=..., aRestyleHint=aRestyleHint@entry=eRestyle_Self, aRestyleHintData=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:1068
+#21 0xb493c2ee in mozilla::RestyleTracker::ProcessOneRestyle (this=this@entry=0xb2ea8ba8, aElement=0xb02ad790, aRestyleHint=eRestyle_Self, 
+    aChangeHint=(unknown: 0), aRestyleHintData=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleTracker.cpp:95
+#22 0xb49508d6 in mozilla::RestyleTracker::DoProcessRestyles (this=0xb2ea8ba8) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleTracker.cpp:263
+#23 0xb49306e6 in mozilla::RestyleManager::ProcessPendingRestyles (this=0xb2ea8b70) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:1785
+#24 0xb4983cb4 in ProcessPendingRestyles (this=<optimized out>) at ../../dist/include/mozilla/RestyleManagerHandleInlines.h:74
+#25 PresShell::FlushPendingNotifications (this=0xaf9e3000, aFlush=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsPresShell.cpp:4060
+#26 0xb4983dfa in PresShell::FlushPendingNotifications (this=<optimized out>, aType=Flush_Layout)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsPresShell.cpp:3952
+#27 0xb409b01a in nsDocument::FlushPendingNotifications (this=0xb0121000, aType=Flush_Layout)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/base/nsDocument.cpp:8306
+#28 0xb405704a in mozilla::dom::Element::GetPrimaryFrame (this=this@entry=0xaced5740, aType=aType@entry=Flush_Layout)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/base/Element.cpp:2073
+#29 0xb405bbb2 in mozilla::dom::Element::GetBoundingClientRect (this=0xaced5740) at /local/code/mtk6731-256/KaiOS/gecko/dom/base/Element.cpp:925
+#30 0xb44815bc in mozilla::dom::ElementBinding::getBoundingClientRect (cx=0xb19d4de0, obj=..., self=<optimized out>, args=...) at ElementBinding.cpp:2118
+#31 0xb44bbf80 in mozilla::dom::GenericBindingMethod (cx=0xb19d4de0, argc=<optimized out>, vp=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/bindings/BindingUtils.cpp:2781
+#32 0xb6df2bf4 in ?? ()
+#33 0xb6df2bf4 in ?? ()
+Backtrace stopped: previous frame identical to this frame (corrupt stack?)
+(gdb) printf "%s",PrintJSStack()
+0 checkLabelsOverflow() ["app://kaios.whatsapp.net/page.js":1]
+    this = [object Object]
+1 componentDidUpdate([object Object], [object Object], null) ["app://kaios.whatsapp.net/page.js":1]
+    this = [object Object]
+2 $e/<() ["app://kaios.whatsapp.net/page.js":1]
+3 y(e = ) ["app://kaios.whatsapp.net/page.js":1]
+4 Xe(e = [object Object], t = false, n = null) ["app://kaios.whatsapp.net/page.js":1]
+5 Ye(undefined) ["app://kaios.whatsapp.net/page.js":1]
+6 ae(e = [function], t = undefined, n = undefined, r = false) ["app://kaios.whatsapp.net/page.js":1]
+7 ne([object MutationRecord], [object MutationObserver]) ["app://kaios.whatsapp.net/page.js":1]
+    this = [object MutationObserver]
+(gdb) c
+Continuing.
+
+Breakpoint 1, mozilla::dom::Selection::AddSelectionListener (this=0xafaa6f60, aNewListener=0xad017910)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5961
+5961	{
+(gdb) c
+Continuing.
+
+Breakpoint 1, mozilla::dom::Selection::AddSelectionListener (this=this@entry=0xafaa6f60, aNewListener=aNewListener@entry=0xad017910, aRv=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5977
+5977	{
+(gdb) bt
+#0  mozilla::dom::Selection::AddSelectionListener (this=this@entry=0xafaa6f60, aNewListener=aNewListener@entry=0xad017910, aRv=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5977
+#1  0xb49c95a6 in mozilla::dom::Selection::AddSelectionListener (this=0xafaa6f60, aNewListener=0xad017910)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5967
+#2  0xb45b4e7c in nsTextEditorState::BindToFrame (this=0xadc656d0, aFrame=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/html/nsTextEditorState.cpp:1213
+#3  0xb49eaeb2 in nsTextControlFrame::CreateAnonymousContent (this=0xad2af418, aElements=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/forms/nsTextControlFrame.cpp:326
+#4  0xb4945a1a in nsCSSFrameConstructor::GetAnonymousContent (this=this@entry=0xadc34880, aParent=aParent@entry=0xac98f1b0, 
+    aParentFrame=aParentFrame@entry=0xad2af418, aContent=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:4131
+#5  0xb495b956 in nsCSSFrameConstructor::ProcessChildren (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xac98f1b0, 
+    aStyleContext=aStyleContext@entry=0xadcb66f0, aFrame=aFrame@entry=0xad2af418, aCanHaveGeneratedContent=true, aCanHaveGeneratedContent@entry=false, 
+    aFrameItems=..., aAllowBlockStyles=aAllowBlockStyles@entry=false, aPendingBinding=0x0, aPossiblyLeafFrame=aPossiblyLeafFrame@entry=0xad2af418)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10432
+#6  0xb495bfea in nsCSSFrameConstructor::ConstructFrameFromItemInternal (this=this@entry=0xadc34880, aItem=..., aState=..., aParentFrame=<optimized out>, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:3965
+#7  0xb495c208 in nsCSSFrameConstructor::ConstructFramesFromItem (this=this@entry=0xadc34880, aState=..., aIter=..., 
+    aParentFrame=aParentFrame@entry=0xad2af030, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:5891
+#8  0xb495c384 in nsCSSFrameConstructor::ConstructFramesFromItemList (this=this@entry=0xadc34880, aState=..., aItems=..., 
+    aParentFrame=aParentFrame@entry=0xad2af030, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10310
+#9  0xb495bae0 in nsCSSFrameConstructor::ProcessChildren (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xb02ad790, 
+    aStyleContext=aStyleContext@entry=0xad2b14a0, aFrame=aFrame@entry=0xad2af030, aCanHaveGeneratedContent=aCanHaveGeneratedContent@entry=true, 
+    aFrameItems=..., aAllowBlockStyles=aAllowBlockStyles@entry=true, aPendingBinding=aPendingBinding@entry=0x0, aPossiblyLeafFrame=0xad2af030, 
+    aPossiblyLeafFrame@entry=0x0) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10511
+#10 0xb495ece4 in nsCSSFrameConstructor::ConstructBlock (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xb02ad790, 
+    aParentFrame=aParentFrame@entry=0xad2ae438, aContentParentFrame=aContentParentFrame@entry=0xad2ae438, aStyleContext=aStyleContext@entry=0xad2b14a0, 
+    aNewFrame=aNewFrame@entry=0xbec53224, aFrameItems=..., aPositionedFrameForAbsPosContainer=0xad2af030, aPendingBinding=0x0)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:11522
+#11 0xb495efea in nsCSSFrameConstructor::ConstructNonScrollableBlock (this=0xadc34880, aState=..., aItem=..., aParentFrame=0xad2ae438, aDisplay=0xadcd56f0, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:4795
+#12 0xb495bd7e in nsCSSFrameConstructor::ConstructFrameFromItemInternal (this=this@entry=0xadc34880, aItem=..., aState=..., aParentFrame=0xad2ae438, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:3821
+#13 0xb495c208 in nsCSSFrameConstructor::ConstructFramesFromItem (this=this@entry=0xadc34880, aState=..., aIter=..., 
+    aParentFrame=aParentFrame@entry=0xad2ae438, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:5891
+#14 0xb495c384 in nsCSSFrameConstructor::ConstructFramesFromItemList (this=this@entry=0xadc34880, aState=..., aItems=..., aParentFrame=0xad2ae438, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10310
+#15 0xb495fae6 in nsCSSFrameConstructor::ContentRangeInserted (this=this@entry=0xadc34880, aContainer=0xb02ad4c0, aStartChild=aStartChild@entry=0xb02ad790, 
+---Type <return> to continue, or q <return> to quit---
+    aEndChild=0x0, aFrameState=0xadc8e7f0, aAllowLazyConstruction=aAllowLazyConstruction@entry=false)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:7754
+#16 0xb495fcf8 in nsCSSFrameConstructor::ContentInserted (this=this@entry=0xadc34880, aContainer=<optimized out>, aChild=aChild@entry=0xb02ad790, 
+    aFrameState=<optimized out>, aAllowLazyConstruction=aAllowLazyConstruction@entry=false)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:7331
+#17 0xb496032a in nsCSSFrameConstructor::RecreateFramesForContent (this=0xadc34880, aContent=0xb02ad790, aAsyncInsert=aAsyncInsert@entry=false, 
+    aFlags=aFlags@entry=nsCSSFrameConstructor::REMOVE_FOR_RECONSTRUCTION, aDestroyedFramesFor=aDestroyedFramesFor@entry=0x0)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:9397
+#18 0xb4934f20 in mozilla::RestyleManager::ProcessRestyledFrames (this=this@entry=0xb2ea8b70, aChangeList=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:835
+#19 0xb49353ee in mozilla::RestyleManager::ComputeAndProcessStyleChange (this=this@entry=0xb2ea8b70, aFrame=aFrame@entry=0xad2af030, 
+    aMinChange=aMinChange@entry=(unknown: 0), aRestyleTracker=..., aRestyleHint=aRestyleHint@entry=eRestyle_Self, aRestyleHintData=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:4940
+#20 0xb4935568 in mozilla::RestyleManager::RestyleElement (this=0xb2ea8b70, aElement=aElement@entry=0xb02ad790, aPrimaryFrame=aPrimaryFrame@entry=0xad2af030, 
+    aMinHint=aMinHint@entry=(unknown: 0), aRestyleTracker=..., aRestyleHint=aRestyleHint@entry=eRestyle_Self, aRestyleHintData=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:1068
+#21 0xb493c2ee in mozilla::RestyleTracker::ProcessOneRestyle (this=this@entry=0xb2ea8ba8, aElement=0xb02ad790, aRestyleHint=eRestyle_Self, 
+    aChangeHint=(unknown: 0), aRestyleHintData=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleTracker.cpp:95
+#22 0xb49508d6 in mozilla::RestyleTracker::DoProcessRestyles (this=0xb2ea8ba8) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleTracker.cpp:263
+#23 0xb49306e6 in mozilla::RestyleManager::ProcessPendingRestyles (this=0xb2ea8b70) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:1785
+#24 0xb4983cb4 in ProcessPendingRestyles (this=<optimized out>) at ../../dist/include/mozilla/RestyleManagerHandleInlines.h:74
+#25 PresShell::FlushPendingNotifications (this=0xaf9e3000, aFlush=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsPresShell.cpp:4060
+#26 0xb4983dfa in PresShell::FlushPendingNotifications (this=<optimized out>, aType=Flush_Layout)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsPresShell.cpp:3952
+#27 0xb409b01a in nsDocument::FlushPendingNotifications (this=0xb0121000, aType=Flush_Layout)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/base/nsDocument.cpp:8306
+#28 0xb405704a in mozilla::dom::Element::GetPrimaryFrame (this=this@entry=0xaced5740, aType=aType@entry=Flush_Layout)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/base/Element.cpp:2073
+#29 0xb405bbb2 in mozilla::dom::Element::GetBoundingClientRect (this=0xaced5740) at /local/code/mtk6731-256/KaiOS/gecko/dom/base/Element.cpp:925
+#30 0xb44815bc in mozilla::dom::ElementBinding::getBoundingClientRect (cx=0xb19d4de0, obj=..., self=<optimized out>, args=...) at ElementBinding.cpp:2118
+#31 0xb44bbf80 in mozilla::dom::GenericBindingMethod (cx=0xb19d4de0, argc=<optimized out>, vp=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/bindings/BindingUtils.cpp:2781
+#32 0xb6df2bf4 in ?? ()
+#33 0xb6df2bf4 in ?? ()
+Backtrace stopped: previous frame identical to this frame (corrupt stack?)
+(gdb) printf "%s",PrintJSStack()
+0 checkLabelsOverflow() ["app://kaios.whatsapp.net/page.js":1]
+    this = [object Object]
+1 componentDidUpdate([object Object], [object Object], null) ["app://kaios.whatsapp.net/page.js":1]
+    this = [object Object]
+2 $e/<() ["app://kaios.whatsapp.net/page.js":1]
+3 y(e = ) ["app://kaios.whatsapp.net/page.js":1]
+4 Xe(e = [object Object], t = false, n = null) ["app://kaios.whatsapp.net/page.js":1]
+5 Ye(undefined) ["app://kaios.whatsapp.net/page.js":1]
+6 ae(e = [function], t = undefined, n = undefined, r = false) ["app://kaios.whatsapp.net/page.js":1]
+7 ne([object MutationRecord], [object MutationObserver]) ["app://kaios.whatsapp.net/page.js":1]
+    this = [object MutationObserver]
+
+
+
+
+
+=======================================option
+
+
+
+
+(gdb) bt
+#0  mozilla::dom::Selection::AddSelectionListener (this=this@entry=0xacf486f0, aNewListener=0xac3e8410, aRv=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5977
+#1  0xb4309f4c in mozilla::dom::SelectionBinding::addSelectionListener (cx=0xb19d40f0, obj=..., self=0xacf486f0, args=...) at SelectionBinding.cpp:942
+#2  0xb44bbf80 in mozilla::dom::GenericBindingMethod (cx=0xb19d40f0, argc=<optimized out>, vp=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/bindings/BindingUtils.cpp:2781
+#3  0xb519314a in CallJSNative (args=..., native=0xb44bbebd <mozilla::dom::GenericBindingMethod(JSContext*, unsigned int, JS::Value*)>, cx=0xb19d40f0)
+    at ../../../gecko/js/src/jscntxtinlines.h:240
+#4  js::InternalCallOrConstruct (cx=0xb19d40f0, args=..., construct=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:480
+#5  0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#6  Interpret (cx=0xb19d40f0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#7  0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d40f0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#8  0xb51930cc in js::InternalCallOrConstruct (cx=cx@entry=0xb19d40f0, args=..., construct=construct@entry=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#9  0xb519323a in InternalCall (cx=cx@entry=0xb19d40f0, args=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:525
+#10 0xb5193290 in js::CallFromStack (cx=cx@entry=0xb19d40f0, args=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#11 0xb4f90d36 in js::jit::DoCallFallback (cx=0xb19d40f0, frame=0xbec53908, stub_=0xb02b07b0, argc=1, vp=0xbec538b0, res=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/jit/BaselineIC.cpp:5974
+#12 0xb6e9c544 in ?? ()
+#13 0xb6e9c544 in ?? ()
+Backtrace stopped: previous frame identical to this frame (corrupt stack?)
+(gdb) printf "%s",PrintJSStack()
+0 fa_setFocusedElement(element = [object HTMLInputElement]) ["chrome://global/content/forms.js":512]
+    this = [object Object]
+1 fa_handleFocus(target = [object HTMLInputElement]) ["chrome://global/content/forms.js":965]
+    this = [object Object]
+2 fa_handleEvent(evt = [object FocusEvent]) ["chrome://global/content/forms.js":604]
+    this = [object Object]
+3 focus() ["app://kaios.whatsapp.net/page.js":1]
+    this = [object Object]
+4 focus() ["app://kaios.whatsapp.net/page.js":1]
+    this = [object Object]
+5 focus() ["app://kaios.whatsapp.net/page.js":1]
+    this = [object Object]
+6 r</this.forceFocus(2329609.548293) ["app://kaios.whatsapp.net/page.js":1]
+
+Breakpoint 2, mozilla::dom::Selection::RemoveSelectionListener (this=this@entry=0xacf486f0, aListenerToRemove=0xac3e8410, aRv=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:6004
+6004	{
+(gdb) bt
+#0  mozilla::dom::Selection::RemoveSelectionListener (this=this@entry=0xacf486f0, aListenerToRemove=0xac3e8410, aRv=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:6004
+#1  0xb4309e80 in mozilla::dom::SelectionBinding::removeSelectionListener (cx=0xb19d40f0, obj=..., self=0xacf486f0, args=...) at SelectionBinding.cpp:990
+#2  0xb44bbf80 in mozilla::dom::GenericBindingMethod (cx=0xb19d40f0, argc=<optimized out>, vp=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/bindings/BindingUtils.cpp:2781
+#3  0xb519314a in CallJSNative (args=..., native=0xb44bbebd <mozilla::dom::GenericBindingMethod(JSContext*, unsigned int, JS::Value*)>, cx=0xb19d40f0)
+    at ../../../gecko/js/src/jscntxtinlines.h:240
+#4  js::InternalCallOrConstruct (cx=0xb19d40f0, args=..., construct=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:480
+#5  0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#6  Interpret (cx=0xb19d40f0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#7  0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d40f0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#8  0xb51930cc in js::InternalCallOrConstruct (cx=cx@entry=0xb19d40f0, args=..., construct=construct@entry=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#9  0xb519323a in InternalCall (cx=cx@entry=0xb19d40f0, args=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:525
+#10 0xb51932ac in js::Call (cx=cx@entry=0xb19d40f0, fval=..., fval@entry=..., thisv=..., thisv@entry=..., args=..., rval=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:544
+#11 0xb50b36f2 in JS_CallFunctionValue (cx=0xb19d40f0, obj=obj@entry=..., fval=fval@entry=..., args=..., rval=rval@entry=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/jsapi.cpp:2857
+#12 0xb3e2b244 in nsXPCWrappedJSClass::CallMethod (this=0xafaaceb0, wrapper=wrapper@entry=0xafaab8c0, methodIndex=methodIndex@entry=3, 
+    info_=info_@entry=0xb19567c0, nativeParams=nativeParams@entry=0xbec53f68) at /local/code/mtk6731-256/KaiOS/gecko/js/xpconnect/src/XPCWrappedJSClass.cpp:1237
+#13 0xb3e2b8c4 in nsXPCWrappedJS::CallMethod (this=0xafaab8c0, methodIndex=<optimized out>, info=0xb19567c0, params=0xbec53f68)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/xpconnect/src/XPCWrappedJS.cpp:602
+#14 0xb3ab00ce in PrepareAndDispatch (self=0xafae9f60, methodIndex=<optimized out>, args=<optimized out>)
+    at ../../../../../../gecko/xpcom/reflect/xptcall/md/unix/xptcstubs_arm.cpp:103
+#15 0xb3aaf87c in SharedStub () from /local/code/mtk6731-256/KaiOS/objdir-gecko/toolkit/library/libxul.so
+#16 0xb454756c in mozilla::EventListenerManager::HandleEventSubType (this=this@entry=0xafa74700, aListener=<optimized out>, aListener@entry=0xaf90bc24, 
+    aDOMEvent=0xac2999b0, aCurrentTarget=aCurrentTarget@entry=0xb258b420) at /local/code/mtk6731-256/KaiOS/gecko/dom/events/EventListenerManager.cpp:1108
+#17 0xb45477d6 in mozilla::EventListenerManager::HandleEventInternal (this=0xafa74700, aPresContext=<optimized out>, aEvent=0xbec544f0, 
+    aDOMEvent=aDOMEvent@entry=0xbec54398, aCurrentTarget=aCurrentTarget@entry=0xb258b420, aEventStatus=aEventStatus@entry=0xbec5439c)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/events/EventListenerManager.cpp:1279
+#18 0xb453887a in HandleEvent (aEventStatus=0xbec5439c, aCurrentTarget=0xb258b420, aDOMEvent=0xbec54398, aEvent=<optimized out>, aPresContext=<optimized out>, 
+    this=<optimized out>) at ../../dist/include/mozilla/EventListenerManager.h:350
+#19 mozilla::EventTargetChainItem::HandleEvent (this=<optimized out>, aVisitor=..., aCd=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/events/EventDispatcher.cpp:276
+#20 0xb4538a8a in mozilla::EventTargetChainItem::HandleEventTargetChain (aChain=..., aVisitor=..., aCallback=aCallback@entry=0x0, aCd=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/events/EventDispatcher.cpp:356
+#21 0xb453c8c8 in mozilla::EventDispatcher::Dispatch (aTarget=<optimized out>, aPresContext=<optimized out>, aEvent=aEvent@entry=0xbec544f0, 
+---Type <return> to continue, or q <return> to quit---
+    aDOMEvent=aDOMEvent@entry=0x0, aEventStatus=aEventStatus@entry=0x0, aCallback=aCallback@entry=0x0, aTargets=aTargets@entry=0x0)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/events/EventDispatcher.cpp:710
+#22 0xb40a1cac in FocusBlurEvent::Run (this=0xac9ecbe0) at /local/code/mtk6731-256/KaiOS/gecko/dom/base/nsFocusManager.cpp:2131
+#23 0xb401d992 in nsContentUtils::AddScriptRunner (aRunnable=aRunnable@entry=0xac9ecbe0) at ../../../gecko/dom/base/nsContentUtils.cpp:5058
+#24 0xb40a6b5a in nsFocusManager::SendFocusOrBlurEvent (this=this@entry=0xb01dfb40, aEventMessage=aEventMessage@entry=mozilla::eBlur, 
+    aPresShell=aPresShell@entry=0xaf9e3000, aDocument=<optimized out>, aTarget=0xac98f1b0, aFocusMethod=aFocusMethod@entry=1, 
+    aWindowRaised=aWindowRaised@entry=false, aIsRefocus=aIsRefocus@entry=false, aRelatedTarget=aRelatedTarget@entry=0xac35dc90)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/base/nsFocusManager.cpp:2221
+#25 0xb40adade in nsFocusManager::Blur (this=this@entry=0xb01dfb40, aWindowToClear=<optimized out>, aAncestorWindowToFocus=0x0, 
+    aIsLeavingDocument=aIsLeavingDocument@entry=false, aAdjustWidgets=aAdjustWidgets@entry=true, aContentToFocus=0xac35dc90)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/base/nsFocusManager.cpp:1825
+#26 0xb40ae8c8 in nsFocusManager::SetFocusInner (this=this@entry=0xb01dfb40, aNewContent=<optimized out>, aFlags=aFlags@entry=0, 
+    aFocusChanged=aFocusChanged@entry=true, aAdjustWidget=aAdjustWidget@entry=true) at /local/code/mtk6731-256/KaiOS/gecko/dom/base/nsFocusManager.cpp:1442
+#27 0xb40aed20 in nsFocusManager::SetFocus (this=0xb01dfb40, aElement=0xac35dcd0, aFlags=0)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/base/nsFocusManager.cpp:532
+#28 0xb45a6322 in nsGenericHTMLElement::Focus (this=<optimized out>, aError=...) at /local/code/mtk6731-256/KaiOS/gecko/dom/html/nsGenericHTMLElement.cpp:2666
+#29 0xb449b818 in mozilla::dom::HTMLElementBinding::focus (cx=0xb19d4de0, obj=..., self=<optimized out>, args=...) at HTMLElementBinding.cpp:874
+#30 0xb44bbf80 in mozilla::dom::GenericBindingMethod (cx=0xb19d4de0, argc=<optimized out>, vp=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/bindings/BindingUtils.cpp:2781
+#31 0xb519314a in CallJSNative (args=..., native=0xb44bbebd <mozilla::dom::GenericBindingMethod(JSContext*, unsigned int, JS::Value*)>, cx=0xb19d4de0)
+    at ../../../gecko/js/src/jscntxtinlines.h:240
+#32 js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:480
+#33 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#34 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#35 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#36 0xb51930cc in js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#37 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#38 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#39 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#40 0xb51930cc in js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#41 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#42 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#43 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#44 0xb51930cc in js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+---Type <return> to continue, or q <return> to quit---
+#45 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#46 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#47 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#48 0xb51930cc in js::InternalCallOrConstruct (cx=cx@entry=0xb19d4de0, args=..., construct=construct@entry=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#49 0xb519323a in InternalCall (cx=cx@entry=0xb19d4de0, args=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:525
+#50 0xb51932ac in js::Call (cx=cx@entry=0xb19d4de0, fval=..., fval@entry=..., thisv=..., thisv@entry=..., args=..., rval=rval@entry=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:544
+#51 0xb50b35c0 in JS::Call (cx=0xb19d4de0, thisv=thisv@entry=..., fval=fval@entry=..., args=..., rval=rval@entry=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/jsapi.cpp:2919
+#52 0xb438f554 in mozilla::dom::FrameRequestCallback::Call (this=this@entry=0xace958c0, cx=0xb19d4de0, aThisVal=..., time=2395426.1689889999, 
+    time@entry=1.7929697326491784e-315, aRv=...) at WindowBinding.cpp:426
+#53 0xb4922872 in mozilla::dom::FrameRequestCallback::Call (this=0xace958c0, time=<optimized out>, aRv=..., aExecutionReason=<optimized out>, 
+    aExecutionReason@entry=0x0, aExceptionHandling=aExceptionHandling@entry=mozilla::dom::CallbackObject::eReportExceptions, 
+    aCompartment=aCompartment@entry=0x0) at /local/code/mtk6731-256/KaiOS/objdir-gecko/dist/include/mozilla/dom/WindowBinding.h:279
+#54 0xb49239e4 in Call (aExecutionReason=0x0, time=2395426.1689889999, this=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/objdir-gecko/dist/include/mozilla/dom/WindowBinding.h:294
+#55 nsRefreshDriver::RunFrameRequestCallbacks (this=this@entry=0xb0159ec0, aNowTime=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsRefreshDriver.cpp:965
+#56 0xb49254b4 in nsRefreshDriver::Tick (this=this@entry=0xb0159ec0, aNowEpoch=<optimized out>, aNowTime=..., aNowTime@entry=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsRefreshDriver.cpp:1076
+#57 0xb3fcbe94 in TickDriver (now=..., jsnow=<optimized out>, driver=0xb0159ec0) at ../../dist/include/RefreshDriverTimerImpl.h:221
+#58 mozilla::RefreshDriverTimer::TickRefreshDrivers (aJsNow=<optimized out>, aNow=..., aDrivers=..., this=0xb2ea0ac0)
+    at ../../dist/include/RefreshDriverTimerImpl.h:193
+#59 0xb3fcbf3c in mozilla::RefreshDriverTimer::Tick (this=0xb2ea0ac0, jsnow=<optimized out>, now=...) at ../../dist/include/RefreshDriverTimerImpl.h:212
+#60 0xb3fcc050 in RunRefreshDrivers (aTimeStamp=..., this=0xb2ea0ac0) at ../../dist/include/RefreshDriverTimerImpl.h:534
+#61 mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver::TickRefreshDriver (this=this@entry=0xb0280820, aVsyncTimestamp=...)
+    at ../../dist/include/RefreshDriverTimerImpl.h:454
+#62 0xb3fcc0fa in mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver::NotifyVsync (this=0xb0280820, aVsyncTimestamp=...)
+    at ../../dist/include/RefreshDriverTimerImpl.h:371
+#63 0xb4a3ff44 in mozilla::layout::VsyncChild::RecvNotify (this=<optimized out>, aVsyncTimestamp=...) at ../../../gecko/layout/ipc/VsyncChild.cpp:64
+#64 0xb3d5f8cc in mozilla::layout::PVsyncChild::OnMessageReceived (this=0xafa985e0, msg__=...) at PVsyncChild.cpp:233
+#65 0xb3cc5390 in mozilla::ipc::PBackgroundChild::OnMessageReceived (this=0xafad5400, msg__=...) at PBackgroundChild.cpp:1807
+#66 0xb3ca3cd6 in mozilla::ipc::MessageChannel::DispatchAsyncMessage (this=0xafad5438, aMsg=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/MessageChannel.cpp:1672
+#67 0xb3ca9058 in mozilla::ipc::MessageChannel::DispatchMessage (this=this@entry=0xafad5438, aMsg=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/MessageChannel.cpp:1607
+---Type <return> to continue, or q <return> to quit---
+#68 0xb3ca9e02 in mozilla::ipc::MessageChannel::OnMaybeDequeueOne (this=0xafad5438) at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/MessageChannel.cpp:1571
+#69 0xb4b70e1e in mozilla::tasktracer::TracedTask::Run (this=0xacf60190)
+    at /local/code/mtk6731-256/KaiOS/gecko/tools/profiler/tasktracer/TracedTaskCommon.cpp:145
+#70 0xb3c90e12 in MessageLoop::RunTask (this=0xbec55ef8, task=0xacf601b4) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:349
+#71 0xb3c93364 in MessageLoop::DeferOrRunPendingTask (this=<optimized out>, pending_task=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:357
+#72 0xb3c949ae in MessageLoop::DoWork (this=0xbec55ef8) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:444
+#73 0xb3ca0516 in mozilla::ipc::DoWorkRunnable::Run (this=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/MessagePump.cpp:227
+#74 0xb4b70de2 in mozilla::tasktracer::TracedRunnable::Run (this=0xacf60430)
+    at /local/code/mtk6731-256/KaiOS/gecko/tools/profiler/tasktracer/TracedTaskCommon.cpp:114
+#75 0xb3aaaf46 in nsThread::ProcessNextEvent (this=0xb2e29e80, aMayWait=<optimized out>, aResult=0xbec55df7)
+    at /local/code/mtk6731-256/KaiOS/gecko/xpcom/threads/nsThread.cpp:994
+#76 0xb3abc058 in NS_ProcessNextEvent (aThread=<optimized out>, aThread@entry=0xb2e29e80, aMayWait=aMayWait@entry=false)
+    at /local/code/mtk6731-256/KaiOS/gecko/xpcom/glue/nsThreadUtils.cpp:290
+#77 0xb3ca0d9c in mozilla::ipc::MessagePump::Run (this=0xb2e01cd0, aDelegate=0xbec55ef8) at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/MessagePump.cpp:98
+#78 0xb3c90e52 in RunHandler (this=0xbec55ef8) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:223
+#79 MessageLoop::Run (this=0xbec55ef8) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:203
+#80 0xb484cf76 in nsBaseAppShell::Run (this=0xb2ede6a0) at /local/code/mtk6731-256/KaiOS/gecko/widget/nsBaseAppShell.cpp:156
+#81 0xb4c15546 in XRE_RunAppShell () at ../../../gecko/toolkit/xre/nsEmbedFunctions.cpp:805
+#82 0xb3c90e52 in RunHandler (this=0xbec55ef8) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:223
+#83 MessageLoop::Run (this=this@entry=0xbec55ef8) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:203
+#84 0xb4c15b2e in XRE_InitChildProcess (aArgc=<optimized out>, aArgv=<optimized out>, aGMPLoader=<optimized out>)
+    at ../../../gecko/toolkit/xre/nsEmbedFunctions.cpp:641
+#85 0xb3de4b98 in content_process_main (argc=8, argc@entry=9, argv=argv@entry=0xb2e01a90) at ../../../gecko/ipc/contentproc/plugin-container.cpp:243
+#86 0xb3ca5ec0 in mozilla::ipc::ProcLoaderLoadRunner::DoWork (this=0xb2e41e80) at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/ProcessUtils_linux.cpp:434
+#87 0xb3caa0e0 in ProcLoaderServiceRun (aReservedFds=..., aArgv=<optimized out>, aArgc=1, aFd=<optimized out>, aPeerPid=292)
+    at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/ProcessUtils_linux.cpp:595
+#88 XRE_ProcLoaderServiceRun (aPeerPid=292, aFd=<optimized out>, aArgc=1, aArgv=<optimized out>, aReservedFds=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/ProcessUtils_linux.cpp:629
+#89 0x7f593312 in RunProcesses (aReservedFds=..., argv=0xbec56a94, argc=1) at ../../../gecko/b2g/app/B2GLoader.cpp:220
+#90 main (argc=1, argv=0xbec56a94) at ../../../gecko/b2g/app/B2GLoader.cpp:300
+(gdb) printf "%s",PrintJSStack()
+0 fa_setFocusedElement(element = null) ["chrome://global/content/forms.js":481]
+    this = [object Object]
+1 fa_unhandleFocus() ["chrome://global/content/forms.js":972]
+    this = [object Object]
+2 fa_handleEvent(evt = [object FocusEvent]) ["chrome://global/content/forms.js":625]
+    this = [object Object]
+3 focus() ["app://kaios.whatsapp.net/page.js":1]
+    this = [object Object]
+4 focus() ["app://kaios.whatsapp.net/page.js":1]
+    this = [object Object]
+5 focus() ["app://kaios.whatsapp.net/page.js":1]
+    this = [object Object]
+6 r</this.forceFocus(2395426.168989) ["app://kaios.whatsapp.net/page.js":1]
+
+
+
+
+
+============================more 
+
+
+
+(gdb) bt
+#0  mozilla::dom::Selection::AddSelectionListener (this=this@entry=0xace1f060, aNewListener=aNewListener@entry=0xadc06790, aRv=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5977
+#1  0xb49c95a6 in mozilla::dom::Selection::AddSelectionListener (this=0xace1f060, aNewListener=0xadc06790)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5967
+#2  0xb45b4e70 in nsTextEditorState::BindToFrame (this=0xac29a270, aFrame=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/html/nsTextEditorState.cpp:1208
+#3  0xb49eaeb2 in nsTextControlFrame::CreateAnonymousContent (this=0xad2af418, aElements=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/forms/nsTextControlFrame.cpp:326
+#4  0xb4945a1a in nsCSSFrameConstructor::GetAnonymousContent (this=this@entry=0xadc34880, aParent=aParent@entry=0xac2fad90, 
+    aParentFrame=aParentFrame@entry=0xad2af418, aContent=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:4131
+#5  0xb495b956 in nsCSSFrameConstructor::ProcessChildren (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xac2fad90, 
+    aStyleContext=aStyleContext@entry=0xad2bb208, aFrame=aFrame@entry=0xad2af418, aCanHaveGeneratedContent=true, aCanHaveGeneratedContent@entry=false, 
+    aFrameItems=..., aAllowBlockStyles=aAllowBlockStyles@entry=false, aPendingBinding=0x0, aPossiblyLeafFrame=aPossiblyLeafFrame@entry=0xad2af418)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10432
+#6  0xb495bfea in nsCSSFrameConstructor::ConstructFrameFromItemInternal (this=this@entry=0xadc34880, aItem=..., aState=..., aParentFrame=<optimized out>, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:3965
+#7  0xb495c208 in nsCSSFrameConstructor::ConstructFramesFromItem (this=this@entry=0xadc34880, aState=..., aIter=..., 
+    aParentFrame=aParentFrame@entry=0xad2bb830, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:5891
+#8  0xb495c384 in nsCSSFrameConstructor::ConstructFramesFromItemList (this=this@entry=0xadc34880, aState=..., aItems=..., 
+    aParentFrame=aParentFrame@entry=0xad2bb830, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10310
+#9  0xb495bae0 in nsCSSFrameConstructor::ProcessChildren (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xacc4df60, 
+    aStyleContext=aStyleContext@entry=0xad2aeb28, aFrame=aFrame@entry=0xad2bb830, aCanHaveGeneratedContent=true, aCanHaveGeneratedContent@entry=false, 
+    aFrameItems=..., aAllowBlockStyles=aAllowBlockStyles@entry=false, aPendingBinding=0x0, aPossiblyLeafFrame=aPossiblyLeafFrame@entry=0xad2bb830)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10511
+#10 0xb495bfea in nsCSSFrameConstructor::ConstructFrameFromItemInternal (this=this@entry=0xadc34880, aItem=..., aState=..., aParentFrame=<optimized out>, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:3965
+#11 0xb495c208 in nsCSSFrameConstructor::ConstructFramesFromItem (this=this@entry=0xadc34880, aState=..., aIter=..., 
+    aParentFrame=aParentFrame@entry=0xad2f7f30, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:5891
+#12 0xb495c384 in nsCSSFrameConstructor::ConstructFramesFromItemList (this=this@entry=0xadc34880, aState=..., aItems=..., 
+    aParentFrame=aParentFrame@entry=0xad2f7f30, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10310
+#13 0xb495bae0 in nsCSSFrameConstructor::ProcessChildren (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xacc4dd80, 
+    aStyleContext=aStyleContext@entry=0xad2bea08, aFrame=aFrame@entry=0xad2f7f30, aCanHaveGeneratedContent=aCanHaveGeneratedContent@entry=true, 
+    aFrameItems=..., aAllowBlockStyles=aAllowBlockStyles@entry=true, aPendingBinding=aPendingBinding@entry=0x0, aPossiblyLeafFrame=0xad2f7f30, 
+    aPossiblyLeafFrame@entry=0x0) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10511
+#14 0xb495ece4 in nsCSSFrameConstructor::ConstructBlock (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xacc4dd80, 
+    aParentFrame=aParentFrame@entry=0xad2bb2b8, aContentParentFrame=aContentParentFrame@entry=0xad2bb2b8, aStyleContext=aStyleContext@entry=0xad2bea08, 
+    aNewFrame=aNewFrame@entry=0xbec50bf4, aFrameItems=..., aPositionedFrameForAbsPosContainer=0x0, aPendingBinding=0x0)
+---Type <return> to continue, or q <return> to quit---
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:11522
+#15 0xb495efea in nsCSSFrameConstructor::ConstructNonScrollableBlock (this=0xadc34880, aState=..., aItem=..., aParentFrame=0xad2bb2b8, aDisplay=0xadcd66b8, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:4795
+#16 0xb495bd7e in nsCSSFrameConstructor::ConstructFrameFromItemInternal (this=this@entry=0xadc34880, aItem=..., aState=..., aParentFrame=0xad2bb2b8, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:3821
+#17 0xb495c208 in nsCSSFrameConstructor::ConstructFramesFromItem (this=this@entry=0xadc34880, aState=..., aIter=..., 
+    aParentFrame=aParentFrame@entry=0xad2bb2b8, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:5891
+#18 0xb495c384 in nsCSSFrameConstructor::ConstructFramesFromItemList (this=this@entry=0xadc34880, aState=..., aItems=..., 
+    aParentFrame=aParentFrame@entry=0xad2bb2b8, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10310
+#19 0xb495bae0 in nsCSSFrameConstructor::ProcessChildren (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xac2da1a0, 
+    aStyleContext=aStyleContext@entry=0xad2b0d38, aFrame=aFrame@entry=0xad2bb2b8, aCanHaveGeneratedContent=true, aCanHaveGeneratedContent@entry=false, 
+    aFrameItems=..., aAllowBlockStyles=aAllowBlockStyles@entry=false, aPendingBinding=0x0, aPossiblyLeafFrame=aPossiblyLeafFrame@entry=0xad2bb2b8)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10511
+#20 0xb495bfea in nsCSSFrameConstructor::ConstructFrameFromItemInternal (this=this@entry=0xadc34880, aItem=..., aState=..., aParentFrame=<optimized out>, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:3965
+#21 0xb495c208 in nsCSSFrameConstructor::ConstructFramesFromItem (this=this@entry=0xadc34880, aState=..., aIter=..., 
+    aParentFrame=aParentFrame@entry=0xad2bbeb0, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:5891
+#22 0xb495c384 in nsCSSFrameConstructor::ConstructFramesFromItemList (this=this@entry=0xadc34880, aState=..., aItems=..., 
+    aParentFrame=aParentFrame@entry=0xad2bbeb0, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10310
+#23 0xb495bae0 in nsCSSFrameConstructor::ProcessChildren (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xac2da150, 
+    aStyleContext=aStyleContext@entry=0xadf173e8, aFrame=aFrame@entry=0xad2bbeb0, aCanHaveGeneratedContent=aCanHaveGeneratedContent@entry=true, 
+    aFrameItems=..., aAllowBlockStyles=aAllowBlockStyles@entry=true, aPendingBinding=aPendingBinding@entry=0x0, aPossiblyLeafFrame=0xad2bbeb0, 
+    aPossiblyLeafFrame@entry=0x0) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10511
+#24 0xb495ece4 in nsCSSFrameConstructor::ConstructBlock (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xac2da150, 
+    aParentFrame=aParentFrame@entry=0xadcd6d58, aContentParentFrame=aContentParentFrame@entry=0xadcd6d58, aStyleContext=aStyleContext@entry=0xadf173e8, 
+    aNewFrame=aNewFrame@entry=0xbec512b4, aFrameItems=..., aPositionedFrameForAbsPosContainer=0x0, aPendingBinding=0x0)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:11522
+#25 0xb495ef22 in nsCSSFrameConstructor::ConstructScrollableBlock (this=0xadc34880, aState=..., aItem=..., aParentFrame=0xad2bcc70, aDisplay=0xaf98e418, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:4752
+#26 0xb495bd7e in nsCSSFrameConstructor::ConstructFrameFromItemInternal (this=this@entry=0xadc34880, aItem=..., aState=..., aParentFrame=0xad2bcc70, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:3821
+#27 0xb495c208 in nsCSSFrameConstructor::ConstructFramesFromItem (this=this@entry=0xadc34880, aState=..., aIter=..., 
+    aParentFrame=aParentFrame@entry=0xad2bcc70, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:5891
+#28 0xb495c384 in nsCSSFrameConstructor::ConstructFramesFromItemList (this=this@entry=0xadc34880, aState=..., aItems=..., 
+    aParentFrame=aParentFrame@entry=0xad2bcc70, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10310
+#29 0xb495bae0 in nsCSSFrameConstructor::ProcessChildren (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xac2bde70, 
+    aStyleContext=aStyleContext@entry=0xadcb6d10, aFrame=aFrame@entry=0xad2bcc70, aCanHaveGeneratedContent=true, aCanHaveGeneratedContent@entry=false, 
+---Type <return> to continue, or q <return> to quit---
+    aFrameItems=..., aAllowBlockStyles=aAllowBlockStyles@entry=false, aPendingBinding=0x0, aPossiblyLeafFrame=aPossiblyLeafFrame@entry=0xad2bcc70)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10511
+#30 0xb495bfea in nsCSSFrameConstructor::ConstructFrameFromItemInternal (this=this@entry=0xadc34880, aItem=..., aState=..., aParentFrame=<optimized out>, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:3965
+#31 0xb495c208 in nsCSSFrameConstructor::ConstructFramesFromItem (this=this@entry=0xadc34880, aState=..., aIter=..., 
+    aParentFrame=aParentFrame@entry=0xadcb9400, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:5891
+#32 0xb495c384 in nsCSSFrameConstructor::ConstructFramesFromItemList (this=this@entry=0xadc34880, aState=..., aItems=..., 
+    aParentFrame=aParentFrame@entry=0xadcb9400, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10310
+#33 0xb495bae0 in nsCSSFrameConstructor::ProcessChildren (this=this@entry=0xadc34880, aState=..., aContent=aContent@entry=0xac2bde20, 
+    aStyleContext=aStyleContext@entry=0xaf92a358, aFrame=aFrame@entry=0xadcb9400, aCanHaveGeneratedContent=true, aCanHaveGeneratedContent@entry=false, 
+    aFrameItems=..., aAllowBlockStyles=aAllowBlockStyles@entry=false, aPendingBinding=0x0, aPossiblyLeafFrame=aPossiblyLeafFrame@entry=0xadcb9400)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10511
+#34 0xb495bfea in nsCSSFrameConstructor::ConstructFrameFromItemInternal (this=this@entry=0xadc34880, aItem=..., aState=..., aParentFrame=<optimized out>, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:3965
+#35 0xb495c208 in nsCSSFrameConstructor::ConstructFramesFromItem (this=this@entry=0xadc34880, aState=..., aIter=..., 
+    aParentFrame=aParentFrame@entry=0xadcd6958, aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:5891
+#36 0xb495c384 in nsCSSFrameConstructor::ConstructFramesFromItemList (this=this@entry=0xadc34880, aState=..., aItems=..., aParentFrame=0xadcd6958, 
+    aFrameItems=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:10310
+#37 0xb495fae6 in nsCSSFrameConstructor::ContentRangeInserted (this=this@entry=0xadc34880, aContainer=aContainer@entry=0xadee2c90, 
+    aStartChild=aStartChild@entry=0xac2bde20, aEndChild=0xac241480, aFrameState=aFrameState@entry=0x0, 
+    aAllowLazyConstruction=aAllowLazyConstruction@entry=false) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:7754
+#38 0xb49611b8 in nsCSSFrameConstructor::CreateNeededFrames (this=this@entry=0xadc34880, aContent=0xadee2c90)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:6848
+#39 0xb49611ec in nsCSSFrameConstructor::CreateNeededFrames (this=this@entry=0xadc34880, aContent=0xaf9618d0)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:6860
+#40 0xb49611ec in nsCSSFrameConstructor::CreateNeededFrames (this=this@entry=0xadc34880, aContent=0xaf961830)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:6860
+#41 0xb49611ec in nsCSSFrameConstructor::CreateNeededFrames (this=this@entry=0xadc34880, aContent=aContent@entry=0xadc09f40)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:6860
+#42 0xb496121c in nsCSSFrameConstructor::CreateNeededFrames (this=0xadc34880) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsCSSFrameConstructor.cpp:6875
+#43 0xb49306b8 in mozilla::RestyleManager::ProcessPendingRestyles (this=0xb2ea8b70) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/RestyleManager.cpp:1744
+#44 0xb4983cb4 in ProcessPendingRestyles (this=<optimized out>) at ../../dist/include/mozilla/RestyleManagerHandleInlines.h:74
+#45 PresShell::FlushPendingNotifications (this=0xaf9e3000, aFlush=...) at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsPresShell.cpp:4060
+#46 0xb4983dfa in PresShell::FlushPendingNotifications (this=<optimized out>, aType=Flush_Layout)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsPresShell.cpp:3952
+#47 0xb409b01a in nsDocument::FlushPendingNotifications (this=0xb0121000, aType=Flush_Layout)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/base/nsDocument.cpp:8306
+---Type <return> to continue, or q <return> to quit---
+#48 0xb405704a in mozilla::dom::Element::GetPrimaryFrame (this=this@entry=0xac2da790, aType=aType@entry=Flush_Layout)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/base/Element.cpp:2073
+#49 0xb405705e in mozilla::dom::Element::GetStyledFrame (this=this@entry=0xac2da790) at /local/code/mtk6731-256/KaiOS/gecko/dom/base/Element.cpp:579
+#50 0xb45b0b28 in nsGenericHTMLElement::GetOffsetRect (this=0xac2da790, aRect=...) at /local/code/mtk6731-256/KaiOS/gecko/dom/html/nsGenericHTMLElement.cpp:333
+#51 0xb449b0aa in OffsetHeight (this=<optimized out>) at ../../../gecko/dom/html/nsGenericHTMLElement.h:300
+#52 mozilla::dom::HTMLElementBinding::get_offsetHeight (cx=<optimized out>, obj=..., self=<optimized out>, args=...) at HTMLElementBinding.cpp:1664
+#53 0xb44bbdbe in mozilla::dom::GenericBindingGetter (cx=0xb19d4de0, argc=<optimized out>, vp=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/dom/bindings/BindingUtils.cpp:2715
+#54 0xb519314a in CallJSNative (args=..., native=0xb44bbd05 <mozilla::dom::GenericBindingGetter(JSContext*, unsigned int, JS::Value*)>, cx=0xb19d4de0)
+    at ../../../gecko/js/src/jscntxtinlines.h:240
+#55 js::InternalCallOrConstruct (cx=cx@entry=0xb19d4de0, args=..., construct=construct@entry=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:480
+#56 0xb519323a in InternalCall (cx=cx@entry=0xb19d4de0, args=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:525
+#57 0xb51932ac in js::Call (cx=cx@entry=0xb19d4de0, fval=..., fval@entry=..., thisv=..., thisv@entry=..., args=..., rval=rval@entry=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:544
+#58 0xb5193316 in js::CallGetter (cx=cx@entry=0xb19d4de0, thisv=..., getter=getter@entry=..., rval=rval@entry=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:656
+#59 0xb5193368 in CallGetter (cx=cx@entry=0xb19d4de0, obj=..., obj@entry=..., receiver=..., receiver@entry=..., shape=..., shape@entry=..., vp=vp@entry=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/NativeObject.cpp:1735
+#60 0xb51934c4 in GetExistingProperty<(js::AllowGC)1> (vp=..., shape=..., obj=..., receiver=..., cx=0xb19d4de0)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/NativeObject.cpp:1787
+#61 NativeGetPropertyInline<(js::AllowGC)1> (vp=..., nameLookup=NotNameLookup, id=..., receiver=..., obj=..., cx=0xb19d4de0)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/NativeObject.cpp:2002
+#62 js::NativeGetProperty (cx=0xb19d4de0, obj=obj@entry=..., receiver=..., id=id@entry=..., vp=vp@entry=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/NativeObject.cpp:2036
+#63 0xb507307c in js::GetProperty (cx=<optimized out>, obj=..., receiver=..., id=..., vp=...) at ../../../gecko/js/src/vm/NativeObject.h:1475
+#64 0xb519380c in GetProperty (vp=..., name=0xb0387080, receiver=..., obj=..., cx=0xb19d4de0) at ../../../gecko/js/src/jsobj.h:824
+#65 js::GetProperty (cx=<optimized out>, v=..., name=..., vp=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:4109
+#66 0xb518be10 in GetPropertyOperation (vp=..., lval=..., pc=<optimized out>, script=..., fp=<optimized out>, cx=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:217
+#67 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2548
+#68 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#69 0xb51930cc in js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#70 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#71 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#72 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+---Type <return> to continue, or q <return> to quit---
+#73 0xb51930cc in js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#74 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#75 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#76 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#77 0xb51930cc in js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#78 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#79 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#80 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#81 0xb51930cc in js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#82 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#83 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#84 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#85 0xb51930cc in js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#86 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#87 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#88 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#89 0xb51930cc in js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#90 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#91 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+#92 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+#93 0xb51930cc in js::InternalCallOrConstruct (cx=cx@entry=0xb19d4de0, args=..., construct=construct@entry=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#94 0xb519323a in InternalCall (cx=cx@entry=0xb19d4de0, args=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:525
+#95 0xb51932ac in js::Call (cx=cx@entry=0xb19d4de0, fval=..., fval@entry=..., thisv=..., args=..., rval=rval@entry=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:544
+#96 0xb50d4118 in js::fun_call (cx=0xb19d4de0, argc=2, vp=0xb0283190) at /local/code/mtk6731-256/KaiOS/gecko/js/src/jsfun.cpp:1179
+#97 0xb519314a in CallJSNative (args=..., native=0xb50d4045 <js::fun_call(JSContext*, unsigned int, JS::Value*)>, cx=0xb19d4de0)
+    at ../../../gecko/js/src/jscntxtinlines.h:240
+#98 js::InternalCallOrConstruct (cx=0xb19d4de0, args=..., construct=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:480
+#99 0xb518bd64 in CallFromStack (args=..., cx=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#100 Interpret (cx=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:2831
+
+#101 0xb5192f90 in js::RunScript (cx=cx@entry=0xb19d4de0, state=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:426
+---Type <return> to continue, or q <return> to quit---
+#102 0xb51930cc in js::InternalCallOrConstruct (cx=cx@entry=0xb19d4de0, args=..., construct=construct@entry=js::NO_CONSTRUCT)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:498
+#103 0xb519323a in InternalCall (cx=cx@entry=0xb19d4de0, args=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:525
+#104 0xb5193290 in js::CallFromStack (cx=cx@entry=0xb19d4de0, args=...) at /local/code/mtk6731-256/KaiOS/gecko/js/src/vm/Interpreter.cpp:531
+#105 0xb4f90d36 in js::jit::DoCallFallback (cx=0xb19d4de0, frame=0xbec54018, stub_=0xac9ea498, argc=4, vp=0xbec53f70, res=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/js/src/jit/BaselineIC.cpp:5974
+#106 0xb6e9c544 in ?? ()
+#107 0xb6e9c544 in ?? ()
+Backtrace stopped: previous frame identical to this frame (corrupt stack?)
+
+
+===========WA process 
+==================
+
+(gdb) bt
+#0  mozilla::a11y::EventQueue::CoalesceEvents (this=this@entry=0xad297824) at /local/code/mtk6731-256/KaiOS/gecko/accessible/base/EventQueue.cpp:95
+#1  0xb4b3f8e4 in mozilla::a11y::EventQueue::PushEvent (this=this@entry=0xad297824, aEvent=aEvent@entry=0xaae06dc0)
+    at /local/code/mtk6731-256/KaiOS/gecko/accessible/base/EventQueue.cpp:47
+#2  0xb4b3f936 in QueueEvent (aEvent=0xaae06dc0, this=0xad297820) at /local/code/mtk6731-256/KaiOS/gecko/accessible/base/NotificationController.h:112
+#3  mozilla::a11y::DocAccessible::FireDelayedEvent (this=<optimized out>, aEvent=0xaae06dc0)
+    at /local/code/mtk6731-256/KaiOS/gecko/accessible/generic/DocAccessible-inl.h:55
+#4  0xb4b42070 in mozilla::a11y::FocusManager::DispatchFocusEvent (this=<optimized out>, aDocument=aDocument@entry=0xac35cf00, aTarget=0xabc92440)
+    at /local/code/mtk6731-256/KaiOS/gecko/accessible/base/FocusManager.cpp:224
+#5  0xb4b54dd2 in mozilla::a11y::DocAccessible::UpdateTreeInternal (this=this@entry=0xac35cf00, aChild=<optimized out>, aIsInsert=aIsInsert@entry=true)
+    at /local/code/mtk6731-256/KaiOS/gecko/accessible/generic/DocAccessible.cpp:1969
+#6  0xb4b54ef2 in mozilla::a11y::DocAccessible::ProcessContentInserted (this=0xac35cf00, aContainer=0xad1d7280, aNodes=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/accessible/generic/DocAccessible.cpp:1818
+#7  0xb4b41aaa in mozilla::a11y::NotificationController::WillRefresh (this=0xad297820, aTime=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/accessible/base/NotificationController.cpp:237
+#8  0xb4925482 in nsRefreshDriver::Tick (this=this@entry=0xb0159ec0, aNowEpoch=<optimized out>, aNowTime=..., aNowTime@entry=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsRefreshDriver.cpp:1063
+#9  0xb3fcbe94 in TickDriver (now=..., jsnow=<optimized out>, driver=0xb0159ec0) at ../../dist/include/RefreshDriverTimerImpl.h:221
+#10 mozilla::RefreshDriverTimer::TickRefreshDrivers (aJsNow=<optimized out>, aNow=..., aDrivers=..., this=0xb2ea0ac0)
+    at ../../dist/include/RefreshDriverTimerImpl.h:193
+#11 0xb3fcbf3c in mozilla::RefreshDriverTimer::Tick (this=0xb2ea0ac0, jsnow=<optimized out>, now=...) at ../../dist/include/RefreshDriverTimerImpl.h:212
+#12 0xb3fcc050 in RunRefreshDrivers (aTimeStamp=..., this=0xb2ea0ac0) at ../../dist/include/RefreshDriverTimerImpl.h:534
+#13 mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver::TickRefreshDriver (this=this@entry=0xb0280820, aVsyncTimestamp=...)
+    at ../../dist/include/RefreshDriverTimerImpl.h:454
+#14 0xb3fcc0fa in mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver::NotifyVsync (this=0xb0280820, aVsyncTimestamp=...)
+    at ../../dist/include/RefreshDriverTimerImpl.h:371
+#15 0xb4a3ff44 in mozilla::layout::VsyncChild::RecvNotify (this=<optimized out>, aVsyncTimestamp=...) at ../../../gecko/layout/ipc/VsyncChild.cpp:64
+#16 0xb3d5f8cc in mozilla::layout::PVsyncChild::OnMessageReceived (this=0xafa985e0, msg__=...) at PVsyncChild.cpp:233
+#17 0xb3cc5390 in mozilla::ipc::PBackgroundChild::OnMessageReceived (this=0xafad5400, msg__=...) at PBackgroundChild.cpp:1807
+#18 0xb3ca3cd6 in mozilla::ipc::MessageChannel::DispatchAsyncMessage (this=0xafad5438, aMsg=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/MessageChannel.cpp:1672
+#19 0xb3ca9058 in mozilla::ipc::MessageChannel::DispatchMessage (this=this@entry=0xafad5438, aMsg=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/MessageChannel.cpp:1607
+#20 0xb3ca9e02 in mozilla::ipc::MessageChannel::OnMaybeDequeueOne (this=0xafad5438) at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/MessageChannel.cpp:1571
+#21 0xb4b70e1e in mozilla::tasktracer::TracedTask::Run (this=0xaa89de50)
+    at /local/code/mtk6731-256/KaiOS/gecko/tools/profiler/tasktracer/TracedTaskCommon.cpp:145
+#22 0xb3c90e12 in MessageLoop::RunTask (this=0xbec55ef8, task=0xaa89de74) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:349
+#23 0xb3c93364 in MessageLoop::DeferOrRunPendingTask (this=<optimized out>, pending_task=...)
+---Type <return> to continue, or q <return> to quit---
+    at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:357
+#24 0xb3c949ae in MessageLoop::DoWork (this=0xbec55ef8) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:444
+#25 0xb3ca0516 in mozilla::ipc::DoWorkRunnable::Run (this=<optimized out>) at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/MessagePump.cpp:227
+#26 0xb4b70de2 in mozilla::tasktracer::TracedRunnable::Run (this=0xaa89df10)
+    at /local/code/mtk6731-256/KaiOS/gecko/tools/profiler/tasktracer/TracedTaskCommon.cpp:114
+#27 0xb3aaaf46 in nsThread::ProcessNextEvent (this=0xb2e29e80, aMayWait=<optimized out>, aResult=0xbec55df7)
+    at /local/code/mtk6731-256/KaiOS/gecko/xpcom/threads/nsThread.cpp:994
+#28 0xb3abc058 in NS_ProcessNextEvent (aThread=<optimized out>, aThread@entry=0xb2e29e80, aMayWait=aMayWait@entry=false)
+    at /local/code/mtk6731-256/KaiOS/gecko/xpcom/glue/nsThreadUtils.cpp:290
+#29 0xb3ca0d9c in mozilla::ipc::MessagePump::Run (this=0xb2e01cd0, aDelegate=0xbec55ef8) at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/MessagePump.cpp:98
+#30 0xb3c90e52 in RunHandler (this=0xbec55ef8) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:223
+#31 MessageLoop::Run (this=0xbec55ef8) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:203
+#32 0xb484cf76 in nsBaseAppShell::Run (this=0xb2ede6a0) at /local/code/mtk6731-256/KaiOS/gecko/widget/nsBaseAppShell.cpp:156
+#33 0xb4c15546 in XRE_RunAppShell () at ../../../gecko/toolkit/xre/nsEmbedFunctions.cpp:805
+#34 0xb3c90e52 in RunHandler (this=0xbec55ef8) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:223
+#35 MessageLoop::Run (this=this@entry=0xbec55ef8) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:203
+#36 0xb4c15b2e in XRE_InitChildProcess (aArgc=<optimized out>, aArgv=<optimized out>, aGMPLoader=<optimized out>)
+    at ../../../gecko/toolkit/xre/nsEmbedFunctions.cpp:641
+#37 0xb3de4b98 in content_process_main (argc=8, argc@entry=9, argv=argv@entry=0xb2e01a90) at ../../../gecko/ipc/contentproc/plugin-container.cpp:243
+#38 0xb3ca5ec0 in mozilla::ipc::ProcLoaderLoadRunner::DoWork (this=0xb2e41e80) at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/ProcessUtils_linux.cpp:434
+#39 0xb3caa0e0 in ProcLoaderServiceRun (aReservedFds=..., aArgv=<optimized out>, aArgc=1, aFd=<optimized out>, aPeerPid=292)
+    at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/ProcessUtils_linux.cpp:595
+#40 XRE_ProcLoaderServiceRun (aPeerPid=292, aFd=<optimized out>, aArgc=1, aArgv=<optimized out>, aReservedFds=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/ProcessUtils_linux.cpp:629
+#41 0x7f593312 in RunProcesses (aReservedFds=..., argv=0xbec56a94, argc=1) at ../../../gecko/b2g/app/B2GLoader.cpp:220
+#42 main (argc=1, argv=0xbec56a94) at ../../../gecko/b2g/app/B2GLoader.cpp:300
+
+
+
+#0  mozilla::dom::Selection::AddSelectionListener (this=this@entry=0xab6aa790, aNewListener=aNewListener@entry=0xab6da158, aRv=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5977
+#1  0xb49c95a6 in mozilla::dom::Selection::AddSelectionListener (this=0xab6aa790, aNewListener=aNewListener@entry=0xab6da158)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5967
+#2  0xb4b422b8 in mozilla::a11y::SelectionManager::SetControlSelectionListener (this=this@entry=0xab6da158, aFocusedElm=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/accessible/base/SelectionManager.cpp:93
+#3  0xb4b54de8 in mozilla::a11y::DocAccessible::UpdateTreeInternal (this=this@entry=0xa4266700, aChild=<optimized out>, aIsInsert=aIsInsert@entry=true)
+    at /local/code/mtk6731-256/KaiOS/gecko/accessible/generic/DocAccessible.cpp:1970
+#4  0xb4b54ef2 in mozilla::a11y::DocAccessible::ProcessContentInserted (this=0xa4266700, aContainer=0xa8d84280, aNodes=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/accessible/generic/DocAccessible.cpp:1818
+#5  0xb4b41aaa in mozilla::a11y::NotificationController::WillRefresh (this=0xa8e54160, aTime=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/accessible/base/NotificationController.cpp:237
+#6  0xb4925482 in nsRefreshDriver::Tick (this=this@entry=0xadb78ad0, aNowEpoch=<optimized out>, aNowTime=..., aNowTime@entry=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsRefreshDriver.cpp:1063
+#7  0xb3fcbe94 in TickDriver (now=..., jsnow=<optimized out>, driver=0xadb78ad0) at ../../dist/include/RefreshDriverTimerImpl.h:221
+#8  mozilla::RefreshDriverTimer::TickRefreshDrivers (aJsNow=<optimized out>, aNow=..., aDrivers=..., this=0xb1e8c280)
+    at ../../dist/include/RefreshDriverTimerImpl.h:193
+#9  0xb3fcbf2a in mozilla::RefreshDriverTimer::Tick (this=0xb1e8c280, jsnow=<optimized out>, now=...) at ../../dist/include/RefreshDriverTimerImpl.h:211
+#10 0xb3fcc050 in RunRefreshDrivers (aTimeStamp=..., this=0xb1e8c280) at ../../dist/include/RefreshDriverTimerImpl.h:534
+#11 mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver::TickRefreshDriver (this=<optimized out>, aVsyncTimestamp=...)
+    at ../../dist/include/RefreshDriverTimerImpl.h:454
+#12 0xb3fc4ecc in applyImpl<mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver, void (mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver::*)(mozilla::TimeStamp), StoreCopyPassByValue<mozilla::TimeStamp>, 0u> (args=..., m=<optimized out>, o=<optimized out>) at ../../dist/include/nsThreadUtils.h:671
+#13 apply<mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver, void (mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver::*)(mozilla::TimeStamp)> (m=<optimized out>, o=<optimized out>, this=<optimized out>) at ../../dist/include/nsThreadUtils.h:678
+#14 nsRunnableMethodImpl<void (mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver::*)(mozilla::TimeStamp), true, mozilla::TimeStamp>::Run (
+    this=<optimized out>) at ../../dist/include/nsThreadUtils.h:705
+#15 0xb4b70de2 in mozilla::tasktracer::TracedRunnable::Run (this=0xa9bce4c0)
+    at /local/code/mtk6731-256/KaiOS/gecko/tools/profiler/tasktracer/TracedTaskCommon.cpp:114
+#16 0xb3aaaf46 in nsThread::ProcessNextEvent (this=0xb2e29de0, aMayWait=<optimized out>, aResult=0xbec5566f)
+    at /local/code/mtk6731-256/KaiOS/gecko/xpcom/threads/nsThread.cpp:994
+#17 0xb3abc058 in NS_ProcessNextEvent (aThread=<optimized out>, aThread@entry=0xb2e29de0, aMayWait=aMayWait@entry=false)
+    at /local/code/mtk6731-256/KaiOS/gecko/xpcom/glue/nsThreadUtils.cpp:290
+#18 0xb3ca0d9c in mozilla::ipc::MessagePump::Run (this=0xb19b79a0, aDelegate=0xb19d41a0) at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/MessagePump.cpp:98
+#19 0xb3c90e52 in RunHandler (this=0xb19d41a0) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:223
+#20 MessageLoop::Run (this=0xb19d41a0) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:203
+#21 0xb484cf76 in nsBaseAppShell::Run (this=0xb1e9b2e0) at /local/code/mtk6731-256/KaiOS/gecko/widget/nsBaseAppShell.cpp:156
+---Type <return> to continue, or q <return> to quit---
+#22 0xb4bfa0fa in nsAppStartup::Run (this=0xb1ebfac0) at /local/code/mtk6731-256/KaiOS/gecko/toolkit/components/startup/nsAppStartup.cpp:284
+#23 0xb4c14cf0 in XREMain::XRE_mainRun (this=this@entry=0xbec557f0) at ../../../gecko/toolkit/xre/nsAppRunner.cpp:4347
+#24 0xb4c14fb8 in XREMain::XRE_main (this=this@entry=0xbec557f0, argc=argc@entry=1, argv=argv@entry=0xb2e360c8, 
+    aAppData=aAppData@entry=0x7f5b2d28 <_ZL8sAppData>) at ../../../gecko/toolkit/xre/nsAppRunner.cpp:4451
+#25 0xb4c151ae in XRE_main (argc=1, argv=0xb2e360c8, aAppData=0x7f5b2d28 <_ZL8sAppData>, aFlags=<optimized out>)
+    at ../../../gecko/toolkit/xre/nsAppRunner.cpp:4559
+#26 0x7f5934aa in do_main (argc=argc@entry=1, argv=argv@entry=0xb2e360c8) at ../../../gecko/b2g/app/nsBrowserApp.cpp:171
+#27 0x7f5935a2 in b2g_main (argc=1, argv=<optimized out>) at ../../../gecko/b2g/app/nsBrowserApp.cpp:305
+#28 0x7f593342 in RunProcesses (aReservedFds=..., argv=0xbec56a94, argc=1) at ../../../gecko/b2g/app/B2GLoader.cpp:233
+#29 main (argc=1, argv=0xbec56a94) at ../../../gecko/b2g/app/B2GLoader.cpp:300
+
+
+#0  mozilla::dom::Selection::AddSelectionListener (this=this@entry=0xab6aa7e0, aNewListener=aNewListener@entry=0xab6da158, aRv=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5977
+#1  0xb49c95a6 in mozilla::dom::Selection::AddSelectionListener (this=0xab6aa7e0, aNewListener=aNewListener@entry=0xab6da158)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/generic/nsSelection.cpp:5967
+#2  0xb4b422ca in mozilla::a11y::SelectionManager::SetControlSelectionListener (this=this@entry=0xab6da158, aFocusedElm=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/accessible/base/SelectionManager.cpp:98
+#3  0xb4b54de8 in mozilla::a11y::DocAccessible::UpdateTreeInternal (this=this@entry=0xa4266700, aChild=<optimized out>, aIsInsert=aIsInsert@entry=true)
+    at /local/code/mtk6731-256/KaiOS/gecko/accessible/generic/DocAccessible.cpp:1970
+#4  0xb4b54ef2 in mozilla::a11y::DocAccessible::ProcessContentInserted (this=0xa4266700, aContainer=0xa8d84280, aNodes=<optimized out>)
+    at /local/code/mtk6731-256/KaiOS/gecko/accessible/generic/DocAccessible.cpp:1818
+#5  0xb4b41aaa in mozilla::a11y::NotificationController::WillRefresh (this=0xa8e54160, aTime=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/accessible/base/NotificationController.cpp:237
+#6  0xb4925482 in nsRefreshDriver::Tick (this=this@entry=0xadb78ad0, aNowEpoch=<optimized out>, aNowTime=..., aNowTime@entry=...)
+    at /local/code/mtk6731-256/KaiOS/gecko/layout/base/nsRefreshDriver.cpp:1063
+#7  0xb3fcbe94 in TickDriver (now=..., jsnow=<optimized out>, driver=0xadb78ad0) at ../../dist/include/RefreshDriverTimerImpl.h:221
+#8  mozilla::RefreshDriverTimer::TickRefreshDrivers (aJsNow=<optimized out>, aNow=..., aDrivers=..., this=0xb1e8c280)
+    at ../../dist/include/RefreshDriverTimerImpl.h:193
+#9  0xb3fcbf2a in mozilla::RefreshDriverTimer::Tick (this=0xb1e8c280, jsnow=<optimized out>, now=...) at ../../dist/include/RefreshDriverTimerImpl.h:211
+#10 0xb3fcc050 in RunRefreshDrivers (aTimeStamp=..., this=0xb1e8c280) at ../../dist/include/RefreshDriverTimerImpl.h:534
+#11 mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver::TickRefreshDriver (this=<optimized out>, aVsyncTimestamp=...)
+    at ../../dist/include/RefreshDriverTimerImpl.h:454
+#12 0xb3fc4ecc in applyImpl<mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver, void (mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver::*)(mozilla::TimeStamp), StoreCopyPassByValue<mozilla::TimeStamp>, 0u> (args=..., m=<optimized out>, o=<optimized out>) at ../../dist/include/nsThreadUtils.h:671
+#13 apply<mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver, void (mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver::*)(mozilla::TimeStamp)> (m=<optimized out>, o=<optimized out>, this=<optimized out>) at ../../dist/include/nsThreadUtils.h:678
+#14 nsRunnableMethodImpl<void (mozilla::VsyncRefreshDriverTimer::RefreshDriverVsyncObserver::*)(mozilla::TimeStamp), true, mozilla::TimeStamp>::Run (
+    this=<optimized out>) at ../../dist/include/nsThreadUtils.h:705
+#15 0xb4b70de2 in mozilla::tasktracer::TracedRunnable::Run (this=0xa9bce4c0)
+    at /local/code/mtk6731-256/KaiOS/gecko/tools/profiler/tasktracer/TracedTaskCommon.cpp:114
+#16 0xb3aaaf46 in nsThread::ProcessNextEvent (this=0xb2e29de0, aMayWait=<optimized out>, aResult=0xbec5566f)
+    at /local/code/mtk6731-256/KaiOS/gecko/xpcom/threads/nsThread.cpp:994
+#17 0xb3abc058 in NS_ProcessNextEvent (aThread=<optimized out>, aThread@entry=0xb2e29de0, aMayWait=aMayWait@entry=false)
+    at /local/code/mtk6731-256/KaiOS/gecko/xpcom/glue/nsThreadUtils.cpp:290
+#18 0xb3ca0d9c in mozilla::ipc::MessagePump::Run (this=0xb19b79a0, aDelegate=0xb19d41a0) at /local/code/mtk6731-256/KaiOS/gecko/ipc/glue/MessagePump.cpp:98
+#19 0xb3c90e52 in RunHandler (this=0xb19d41a0) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:223
+#20 MessageLoop::Run (this=0xb19d41a0) at /local/code/mtk6731-256/KaiOS/gecko/ipc/chromium/src/base/message_loop.cc:203
+#21 0xb484cf76 in nsBaseAppShell::Run (this=0xb1e9b2e0) at /local/code/mtk6731-256/KaiOS/gecko/widget/nsBaseAppShell.cpp:156
+---Type <return> to continue, or q <return> to quit---
+#22 0xb4bfa0fa in nsAppStartup::Run (this=0xb1ebfac0) at /local/code/mtk6731-256/KaiOS/gecko/toolkit/components/startup/nsAppStartup.cpp:284
+#23 0xb4c14cf0 in XREMain::XRE_mainRun (this=this@entry=0xbec557f0) at ../../../gecko/toolkit/xre/nsAppRunner.cpp:4347
+#24 0xb4c14fb8 in XREMain::XRE_main (this=this@entry=0xbec557f0, argc=argc@entry=1, argv=argv@entry=0xb2e360c8, 
+    aAppData=aAppData@entry=0x7f5b2d28 <_ZL8sAppData>) at ../../../gecko/toolkit/xre/nsAppRunner.cpp:4451
+#25 0xb4c151ae in XRE_main (argc=1, argv=0xb2e360c8, aAppData=0x7f5b2d28 <_ZL8sAppData>, aFlags=<optimized out>)
+    at ../../../gecko/toolkit/xre/nsAppRunner.cpp:4559
+#26 0x7f5934aa in do_main (argc=argc@entry=1, argv=argv@entry=0xb2e360c8) at ../../../gecko/b2g/app/nsBrowserApp.cpp:171
+#27 0x7f5935a2 in b2g_main (argc=1, argv=<optimized out>) at ../../../gecko/b2g/app/nsBrowserApp.cpp:305
+#28 0x7f593342 in RunProcesses (aReservedFds=..., argv=0xbec56a94, argc=1) at ../../../gecko/b2g/app/B2GLoader.cpp:233
+#29 main (argc=1, argv=0xbec56a94) at ../../../gecko/b2g/app/B2GLoader.cpp:300
