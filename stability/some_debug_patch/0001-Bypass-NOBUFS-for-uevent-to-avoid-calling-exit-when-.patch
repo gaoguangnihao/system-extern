@@ -1,0 +1,29 @@
+From c7877caafbb027f6066c80b4b25e6041970c00f5 Mon Sep 17 00:00:00 2001
+From: Rex Hung <rex.hung@kaiostech.com>
+Date: Tue, 17 Sep 2019 17:30:23 +0800
+Subject: [PATCH 1/2] Bypass NOBUFS for uevent to avoid calling exit() when
+ attached by GDB.
+
+---
+ hal/gonk/UeventPoller.cpp | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/hal/gonk/UeventPoller.cpp b/hal/gonk/UeventPoller.cpp
+index 8391df9..5a62785 100644
+--- a/hal/gonk/UeventPoller.cpp
++++ b/hal/gonk/UeventPoller.cpp
+@@ -185,7 +185,11 @@ NetlinkPoller::OnFileCanReadWithoutBlocking(int fd)
+       if (errno == EAGAIN || errno == EWOULDBLOCK) {
+         return;
+       }
++#if 1  // Retry for GDB case when ENOBUFS is returned.
++      if (errno == EINTR || errno == ENOBUFS) {
++#else
+       if (errno == EINTR) {
++#endif
+         continue;
+       }
+     }
+-- 
+2.7.4
+

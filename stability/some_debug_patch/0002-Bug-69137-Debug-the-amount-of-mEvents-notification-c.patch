@@ -1,0 +1,111 @@
+From 5e1303d081cace9818b9bb845414fa53343f43c9 Mon Sep 17 00:00:00 2001
+From: Rex Hung <rex.hung@kaiostech.com>
+Date: Tue, 17 Sep 2019 17:31:48 +0800
+Subject: [PATCH 2/2] Bug 69137 - Debug the amount of mEvents, notification
+ count, and mObservers.
+
+---
+ accessible/base/EventQueue.cpp             | 13 +++++++++++++
+ accessible/base/NotificationController.cpp |  8 ++++++++
+ layout/base/nsRefreshDriver.cpp            |  7 +++++++
+ 3 files changed, 28 insertions(+)
+
+diff --git a/accessible/base/EventQueue.cpp b/accessible/base/EventQueue.cpp
+index 43da8f7..4dfe256 100644
+--- a/accessible/base/EventQueue.cpp
++++ b/accessible/base/EventQueue.cpp
+@@ -15,6 +15,10 @@
+ #include "Logging.h"
+ #endif
+ 
++#include <android/log.h>
++#define REX_DEBUG(...) __android_log_print(ANDROID_LOG_DEBUG, "REX", __VA_ARGS__)
++#define ENABLE_REX_DEBUG
++
+ using namespace mozilla;
+ using namespace mozilla::a11y;
+ 
+@@ -32,6 +36,9 @@ EventQueue::PushEvent(AccEvent* aEvent)
+   NS_ASSERTION((aEvent->mAccessible && aEvent->mAccessible->IsApplication()) ||
+                aEvent->GetDocAccessible() == mDocument,
+                "Queued event belongs to another document!");
++#ifdef ENABLE_REX_DEBUG  // debug by rex
++  REX_DEBUG("%p - PushEvent(): %p", this, aEvent);
++#endif
+ 
+   if (!mEvents.AppendElement(aEvent))
+     return false;
+@@ -158,6 +165,9 @@ EventQueue::CoalesceEvents()
+       // bug 927159).
+       for (uint32_t index = tail - 1; index < tail; index--) {
+         AccEvent* thisEvent = mEvents[index];
++#ifdef ENABLE_REX_DEBUG  // debug by rex
++        REX_DEBUG("%p - CoalesceEvents(): index=%d, tail=%d, thisEvent=%p", this, index, tail, thisEvent);
++#endif
+         if (thisEvent->mEventRule != AccEvent::eDoNotEmit &&
+             thisEvent->mEventType == tailEvent->mEventType) {
+           AccTextSelChangeEvent* thisTSCEvent = downcast_accEvent(thisEvent);
+@@ -281,6 +291,9 @@ EventQueue::ProcessEventQueue()
+   events.SwapElements(mEvents);
+ 
+   uint32_t eventCount = events.Length();
++#ifdef ENABLE_REX_DEBUG  // debug by rex
++  REX_DEBUG("%p - ProcessEventQueue(): eventCount:%d", this, eventCount);
++#endif
+ #ifdef A11Y_LOG
+   if (eventCount > 0 && logging::IsEnabled(logging::eEvents)) {
+     logging::MsgBegin("EVENTS", "events processing");
+diff --git a/accessible/base/NotificationController.cpp b/accessible/base/NotificationController.cpp
+index 2823171..340f3a7 100644
+--- a/accessible/base/NotificationController.cpp
++++ b/accessible/base/NotificationController.cpp
+@@ -14,6 +14,10 @@
+ #include "mozilla/dom/Element.h"
+ #include "mozilla/Telemetry.h"
+ 
++#include <android/log.h>
++#define REX_DEBUG(...) __android_log_print(ANDROID_LOG_DEBUG, "REX", __VA_ARGS__)
++#define ENABLE_REX_DEBUG
++
+ using namespace mozilla;
+ using namespace mozilla::a11y;
+ 
+@@ -374,6 +378,10 @@ NotificationController::WillRefresh(mozilla::TimeStamp aTime)
+   notifications.SwapElements(mNotifications);
+ 
+   uint32_t notificationCount = notifications.Length();
++#ifdef ENABLE_REX_DEBUG  // debug by rex
++  REX_DEBUG("%p - WillRefresh(): notificationCount:%d", this, notificationCount);
++#endif
++
+   for (uint32_t idx = 0; idx < notificationCount; idx++) {
+     notifications[idx]->Process();
+     if (!mDocument)
+diff --git a/layout/base/nsRefreshDriver.cpp b/layout/base/nsRefreshDriver.cpp
+index bf8d92d..78e6bf4 100644
+--- a/layout/base/nsRefreshDriver.cpp
++++ b/layout/base/nsRefreshDriver.cpp
+@@ -77,6 +77,10 @@ using namespace mozilla::layout;
+ // after 10 minutes, stop firing off inactive timers
+ #define DEFAULT_INACTIVE_TIMER_DISABLE_SECONDS 600
+ 
++#include <android/log.h>
++#define REX_DEBUG(...) __android_log_print(ANDROID_LOG_DEBUG, "REX", __VA_ARGS__)
++#define ENABLE_REX_DEBUG
++
+ namespace mozilla {
+ 
+ // The PBackground protocol connection callback. It will be called when
+@@ -1049,6 +1053,9 @@ nsRefreshDriver::Tick(int64_t aNowEpoch, TimeStamp aNowTime)
+    * the pres context, which will cause our |mPresContext| to become
+    * null.  If this happens, we must stop notifying observers.
+    */
++#ifdef ENABLE_REX_DEBUG  // debug by rex
++  REX_DEBUG("%p - Tick(): mObservers length=%d", this, ArrayLength(mObservers));
++#endif
+   for (uint32_t i = 0; i < ArrayLength(mObservers); ++i) {
+     ObserverArray::EndLimitedIterator etor(mObservers[i]);
+     while (etor.HasMore()) {
+-- 
+2.7.4
+
