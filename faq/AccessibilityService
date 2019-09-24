@@ -1,0 +1,36 @@
+
+
+  #ifdef ACCESSIBILITY
+  #include "nsAccessibilityService.h"
+ 
+    MAKE_CTOR(CreateA11yService, nsIAccessibilityService, NS_GetAccessibilityService)
+  #endif
+
+{ &kNS_ACCESSIBILITY_SERVICE_CID, false, nullptr, CreateA11yService }
+
+
+{ "@mozilla.org/accessibleRetrieval;1", &kNS_ACCESSIBILITY_SERVICE_CID },
+
+
+/gecko/testing/marionette/accessibility.js ===> XPCOMUtils.defineLazyGetter(this, "retrieval",
+     () => Cc["@mozilla.org/accessibleRetrieval;1"].getService(Ci.nsIAccessibleRetrieval));
+
+
+mozilla::dom::Selection::AddSelectionListener
+
+
+(gdb) bt
+#0  mozilla::dom::Selection::AddSelectionListener (this=0xabaae1a0, aNewListener=aNewListener@entry=0xad769118)
+    at /local/code/master/kaios/gecko/layout/generic/nsSelection.cpp:6001
+#1  0xb5d6c03a in mozilla::a11y::SelectionManager::SetControlSelectionListener (this=0xad769118, aFocusedElm=<optimized out>)
+    at /local/code/master/kaios/gecko/accessible/base/SelectionManager.cpp:93
+#2  0xb5d6c0b4 in mozilla::a11y::FocusManager::NotifyOfDOMFocus (this=0xad76910c, aTarget=aTarget@entry=0xa707f2b0)
+    at /local/code/master/kaios/gecko/accessible/base/FocusManager.cpp:132
+#3  0xb52e29da in nsFocusManager::SendFocusOrBlurEvent (this=this@entry=0xb0679e40, aEventMessage=aEventMessage@entry=mozilla::eFocus, 
+    aPresShell=aPresShell@entry=0xad960c00, aDocument=<optimized out>, aTarget=aTarget@entry=0xa707f2b0, aFocusMethod=aFocusMethod@entry=0, 
+    aWindowRaised=aWindowRaised@entry=false, aIsRefocus=aIsRefocus@entry=false, aRelatedTarget=aRelatedTarget@entry=0xa70ba970)
+    at /local/code/master/kaios/gecko/dom/base/nsFocusManager.cpp:2209
+#4  0xb52e9524 in nsFocusManager::Focus (this=this@entry=0xb0679e40, aWindow=<optimized out>, aContent=0xa707f2b0, aFlags=aFlags@entry=0, 
+    aIsNewDocument=aIsNewDocument@entry=false, aFocusChanged=aFocusChanged@entry=true, aWindowRaised=aWindowRaised@entry=false, 
+    aAdjustWidgets=aAdjustWidgets@entry=true, aContentLostFocus=0xa70ba970) at /local/code/master/kaios/gecko/dom/base/nsFocusManager.cpp:2057
+
