@@ -46,3 +46,22 @@ git remote -v
 6. wait review
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+==============how to fix conflict============
+
+git apply check xxx
+
+git am --reject xxx.patch
+
+manual modify accord .rej file 
+
+git add netwerk/dns/DNSRequestChild.cpp
+
+git am --resolved 
+
+check  MR 
+
+modify title 
+
+=============================================
+
