@@ -1,0 +1,13 @@
+1. One bug one case 
+2. Just update useful info to customer bug 
+3. It's better to clone a inner bug to yourself 
+4. Necessery to analsysis the current logs and give some suggestion
+5. Understand the issues and update valid logs to prove the symptom
+6. Must clarify the issues step by step , show the info in comments 
+7. According the priority and LEVEL adjust the fixed time 
+8. Please DON'T use workaround if not found RC
+9. Upload debug patch and logs 
+10. Please study more and analysis the issues 
+11. Creat MR
+
+70182/72201/66441/
