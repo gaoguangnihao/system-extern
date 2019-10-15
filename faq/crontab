@@ -1,0 +1,27 @@
+sudo service cron status
+sudo service cron restart
+
+
+1.check crontal log 
+
+/var/log/cron.log
+sudo vim /etc/rsyslog.d/50-default.conf
+remove # before cron.log
+
+sudo  service rsyslog  restar
+
+
+2.or check /var/log$ cat syslog
+
+
+ * * * * * echo "Hello world!" >> /tmp/cron_log.txt
+ 59 23 * * * sh /local/software/opengrok-0.11.1/bin/auto_index.sh KaiOS >> /tmp/cron_log.txt
+ 02 */1 * * * sh /local/code/master/kaios/tools/auto_log.sh >> /tmp/cron_log-1.txt
+
+
+sudo service cron reload
+
+
+
+
+
