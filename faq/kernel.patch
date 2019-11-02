@@ -1,0 +1,124 @@
+diff --git a/drivers/staging/android/logger.c b/drivers/staging/android/logger.c
+index 47048b5687b8..8fe12d60cfc8 100644
+--- a/drivers/staging/android/logger.c
++++ b/drivers/staging/android/logger.c
+@@ -812,7 +812,7 @@ static int __init logger_init(void)
+ {
+ 	int ret;
+ 
+-	ret = create_log(LOGGER_LOG_MAIN, CONFIG_LOGCAT_SIZE*1024);
++	ret = create_log(LOGGER_LOG_MAIN, 4096*1024);
+ 	if (unlikely(ret))
+ 		goto out;
+ 
+diff --git a/fs/file.c b/fs/file.c
+index 8da9fc46e805..a53c982e5f39 100644
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -22,6 +22,7 @@
+ #include <linux/spinlock.h>
+ #include <linux/rcupdate.h>
+ #include <linux/workqueue.h>
++#include <asm/ptrace.h>
+ 
+ int sysctl_nr_open __read_mostly = 1024*1024;
+ int sysctl_nr_open_min = BITS_PER_LONG;
+@@ -579,6 +580,12 @@ void __fd_install(struct files_struct *files, unsigned int fd,
+ 
+ void fd_install(unsigned int fd, struct file *file)
+ {
++
++	if (fd == 555)
++	{
++          pr_info("dhcui fd_install: pid=%d, file=%p, fd=%d\n", current->pid, file, fd);
++	  dump_stack();
++	}
+ 	__fd_install(current->files, fd, file);
+ }
+ 
+diff --git a/kernel/printk.c b/kernel/printk.c
+index 145d69cc9a1f..0afc38ee27c2 100644
+--- a/kernel/printk.c
++++ b/kernel/printk.c
+@@ -257,7 +257,7 @@ static u32 clear_idx;
+ #else
+ #define LOG_ALIGN __alignof__(struct log)
+ #endif
+-#define __LOG_BUF_LEN (1 << CONFIG_LOG_BUF_SHIFT)
++#define __LOG_BUF_LEN (1 << 22)
+ static char __log_buf[__LOG_BUF_LEN] __aligned(LOG_ALIGN);
+ static char *log_buf = __log_buf;
+ static u32 log_buf_len = __LOG_BUF_LEN;
+diff --git a/net/socket.c b/net/socket.c
+index 6cd5f15bcfee..bcca68a8d1b4 100644
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -105,7 +105,6 @@
+ #include <linux/route.h>
+ #include <linux/sockios.h>
+ #include <linux/atalk.h>
+-
+ static BLOCKING_NOTIFIER_HEAD(sockev_notifier_list);
+ 
+ static int sock_no_open(struct inode *irrelevant, struct file *dontcare);
+@@ -589,6 +588,7 @@ const struct file_operations bad_sock_fops = {
+ 
+ void sock_release(struct socket *sock)
+ {
++        pr_info("dhcui sock_release: pid=%d, file=%p, sock=%p\n", current->pid, sock->file, sock);
+ 	if (sock->ops) {
+ 		struct module *owner = sock->ops->owner;
+ 
+@@ -1339,7 +1339,7 @@ int __sock_create(struct net *net, int family, int type, int protocol,
+ 	if (err)
+ 		goto out_sock_release;
+ 	*res = sock;
+-
++        pr_info("dhcui __sock_create: pid=%d, file=%p, sock=%p\n", current->pid, sock->file, sock);
+ 	return 0;
+ 
+ out_module_busy:
+@@ -1483,6 +1483,7 @@ SYSCALL_DEFINE4(socketpair, int, family, int, type, int, protocol,
+ 	 * Not kernel problem.
+ 	 */
+ 
++pr_info("dhcui socketpair: pid=%d, fd1=%d, fd2=%d, file1=%p, file2=%p, sock1=%p, sock2=%p\n", current->pid, fd1, fd2, newfile1, newfile2, sock1, sock2);
+ 	err = put_user(fd1, &usockvec[0]);
+ 	if (!err)
+ 		err = put_user(fd2, &usockvec[1]);
+@@ -2033,8 +2034,9 @@ static int ___sys_sendmsg(struct socket *sock, struct msghdr __user *msg,
+ 			return -EFAULT;
+ 	} else {
+ 		err = copy_msghdr_from_user(msg_sys, msg);
+-		if (err)
+-			return err;
++		if (err){
++			pr_info("dhcui ___sys_sendmsg1 pid=%d, err=%d, file=%p, sock=%p\n", current->pid, err, sock->file, sock);
++			return err;}
+ 	}
+ 
+ 	if (msg_sys->msg_iovlen > UIO_FASTIOV) {
+@@ -2123,6 +2125,10 @@ out_freectl:
+ out_freeiov:
+ 	if (iov != iovstack)
+ 		kfree(iov);
++        if (err < 0)
++        {
++                pr_info("dhcui ___sys_sendmsg2 pid=%d, err=%d, file=%p, sock=%p\n", current->pid, err, sock->file, sock);
++        }
+ out:
+ 	return err;
+ }
+@@ -2332,7 +2338,11 @@ long __sys_recvmsg(int fd, struct msghdr __user *msg, unsigned flags)
+ 	err = ___sys_recvmsg(sock, msg, &msg_sys, flags, 0);
+ 
+ 	fput_light(sock->file, fput_needed);
+-out:
++out:	
++        if (!sock)
++		pr_info("dhcui __sys_recvmsg: pid=%d, err=%d, fd=%d, sock=null\n", current->pid, err, fd);
++	else
++		pr_info("dhcui __sys_recvmsg: pid=%d, err=%d, fd=%d, file=%p, sock=%p\n", current->pid, err, fd, sock->file, sock);
+ 	return err;
+ }
+ 
