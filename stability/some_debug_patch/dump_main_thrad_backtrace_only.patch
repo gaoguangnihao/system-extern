@@ -1,0 +1,33 @@
+diff --git a/debuggerd/Android.mk b/debuggerd/Android.mk
+index 944e929..8621e9c 100644
+--- a/debuggerd/Android.mk
++++ b/debuggerd/Android.mk
+@@ -3,7 +3,6 @@
+ ifneq ($(filter arm mips x86,$(TARGET_ARCH)),)
+ 
+ LOCAL_PATH:= $(call my-dir)
+-ifneq ($(HAVE_AEE_FEATURE),yes)
+ include $(CLEAR_VARS)
+ 
+ LOCAL_SRC_FILES:= \
+@@ -32,7 +31,6 @@ LOCAL_SHARED_LIBRARIES := \
+ 	libselinux
+ 
+ include $(BUILD_EXECUTABLE)
+-endif # HAVE_AEE_FEATURE
+ 
+ include $(CLEAR_VARS)
+ LOCAL_SRC_FILES := crasher.c
+diff --git a/debuggerd/backtrace.c b/debuggerd/backtrace.c
+index f42f24c..e10e4ab 100644
+--- a/debuggerd/backtrace.c
++++ b/debuggerd/backtrace.c
+@@ -124,6 +124,8 @@ void dump_backtrace(int fd, int amfd, pid_t pid, pid_t tid, bool* detach_failed,
+     dump_process_header(&log, pid);
+     dump_thread(&log, tid, context, true, detach_failed, total_sleep_time_usec);
+ 
++    return;
++
+     char task_path[64];
+     snprintf(task_path, sizeof(task_path), "/proc/%d/task", pid);
+     DIR* d = opendir(task_path);

@@ -1,0 +1,998 @@
+diff --git a/b2g/app/B2GLoader.cpp b/b2g/app/B2GLoader.cpp
+index c41d70e94c73..f64a2f7ec460 100644
+--- a/b2g/app/B2GLoader.cpp
++++ b/b2g/app/B2GLoader.cpp
+@@ -25,6 +25,9 @@
+ #include "nsXPCOMPrivate.h" // for MAXPATHLEN and XPCOM_DLL
+ #include "mozilla/UniquePtr.h"
+ 
++#include <android/log.h>
++#define DHCUI_DEBUG(...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI", __VA_ARGS__)
++
+ #define ASSERT(x) if (!(x)) { MOZ_CRASH(); }
+ 
+ // Functions being loaded by XPCOMGlue
+@@ -199,6 +202,8 @@ RunProcesses(int argc, const char *argv[], FdArray& aReservedFds)
+   int parentSock = ipcSockets[0];
+   int childSock = ipcSockets[1];
+ 
++  DHCUI_DEBUG("RunProcesses socketpair parentSock is %d,childSock is %d",parentSock,childSock);
++
+   r = fcntl(parentSock, F_SETFL, O_NONBLOCK);
+   ASSERT(r != -1);
+   r = fcntl(childSock, F_SETFL, O_NONBLOCK);
+diff --git a/dom/ipc/ContentBridgeParent.cpp b/dom/ipc/ContentBridgeParent.cpp
+index 918455c3d958..68da78fb876f 100644
+--- a/dom/ipc/ContentBridgeParent.cpp
++++ b/dom/ipc/ContentBridgeParent.cpp
+@@ -10,6 +10,9 @@
+ #include "nsXULAppAPI.h"
+ #include "nsIObserverService.h"
+ 
++#include <android/log.h>
++#define DHCUI_DEBUG(...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI ContentChild", __VA_ARGS__)
++
+ using namespace mozilla::ipc;
+ using namespace mozilla::jsipc;
+ 
+@@ -32,6 +35,7 @@ ContentBridgeParent::~ContentBridgeParent()
+ void
+ ContentBridgeParent::ActorDestroy(ActorDestroyReason aWhy)
+ {
++  DHCUI_DEBUG("ContentBridgeParent::ActorDestroy");
+   nsCOMPtr<nsIObserverService> os = mozilla::services::GetObserverService();
+   if (os) {
+     os->RemoveObserver(this, "content-child-shutdown");
+@@ -166,6 +170,7 @@ ContentBridgeParent::DeallocPBrowserParent(PBrowserParent* aParent)
+ void
+ ContentBridgeParent::NotifyTabDestroyed()
+ {
++  DHCUI_DEBUG("ContentBridgeParent::NotifyTabDestroyed");
+   int32_t numLiveTabs = ManagedPBrowserParent().Count();
+   if (numLiveTabs == 1) {
+     MessageLoop::current()->PostTask(
+diff --git a/dom/ipc/ContentChild.cpp b/dom/ipc/ContentChild.cpp
+index e54879ffd59a..d226250802fb 100644
+--- a/dom/ipc/ContentChild.cpp
++++ b/dom/ipc/ContentChild.cpp
+@@ -261,6 +261,11 @@ using namespace mozilla::widget;
+ #ifdef ENABLE_FOTA
+ using namespace mozilla::dom::fota;
+ #endif
++
++#include <android/log.h>
++#define DHCUI_DEBUG(...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI ContentChild", __VA_ARGS__)
++
++
+ namespace mozilla {
+ namespace dom {
+ 
+@@ -2403,6 +2408,7 @@ ContentChild::ActorDestroy(ActorDestroyReason why)
+ {
+   if (AbnormalShutdown == why) {
+     NS_WARNING("shutting down early because of crash!");
++    DHCUI_DEBUG("ContentChild::ActorDestroy AbnormalShutdown shutting down early because of crash!");
+     ProcessChild::QuickExit();
+   }
+ 
+@@ -2411,6 +2417,7 @@ ContentChild::ActorDestroy(ActorDestroyReason why)
+   // going through the full XPCOM shutdown path, because it doesn't
+   // keep persistent state.
+   ProcessChild::QuickExit();
++  DHCUI_DEBUG("ContentChild::ActorDestroy QuickExit!");
+ #else
+   if (sFirstIdleTask) {
+     sFirstIdleTask->Cancel();
+@@ -2431,10 +2438,11 @@ ContentChild::ActorDestroy(ActorDestroyReason why)
+   if (IsNuwaProcess()) {
+     // The Nuwa cannot go through the full XPCOM shutdown path or deadlock
+     // will result.
++    DHCUI_DEBUG("ContentChild::ActorDestroy IsNuwaProcess() QuickExit!");
+     ProcessChild::QuickExit();
+   }
+ #endif
+-
++  DHCUI_DEBUG("ContentChild::ActorDestroy XRE_ShutdownChildProcess!");
+   XRE_ShutdownChildProcess();
+ #endif // NS_FREE_PERMANENT_DATA
+ }
+@@ -2442,6 +2450,7 @@ ContentChild::ActorDestroy(ActorDestroyReason why)
+ void
+ ContentChild::ProcessingError(Result aCode, const char* aReason)
+ {
++DHCUI_DEBUG("ContentChild::ProcessingError code is %d",aCode);
+   switch (aCode) {
+     case MsgDropped:
+       NS_WARNING("MsgDropped in ContentChild");
+diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
+index 4aad07169071..8f63ead220b6 100644
+--- a/dom/ipc/ContentParent.cpp
++++ b/dom/ipc/ContentParent.cpp
+@@ -1750,6 +1750,7 @@ ContentParent::TransformPreallocatedIntoBrowser(ContentParent* aOpener)
+ void
+ ContentParent::ShutDownProcess(ShutDownMethod aMethod)
+ {
++  LOGCP("ShutdownProcess aMethod is %d",aMethod);
+ #ifdef MOZ_NUWA_PROCESS
+   if (aMethod == SEND_SHUTDOWN_MESSAGE && IsNuwaProcess()) {
+     // We shouldn't send shutdown messages to frozen Nuwa processes,
+@@ -1893,6 +1894,7 @@ ContentParent::MarkAsDead()
+ void
+ ContentParent::OnChannelError()
+ {
++  LOGCP("ContentParent::OnChannelError");
+   RefPtr<ContentParent> content(this);
+ #ifdef MOZ_NUWA_PROCESS
+   // Handle app or Nuwa process exit before normal channel error handling.
+@@ -1904,6 +1906,7 @@ ContentParent::OnChannelError()
+ void
+ ContentParent::OnChannelConnected(int32_t pid)
+ {
++  LOGCP("ContentParent::OnChannelConnected pid is %d",pid);
+   SetOtherProcessId(pid);
+ 
+ #if defined(ANDROID) || defined(LINUX)
+@@ -1934,6 +1937,7 @@ ContentParent::OnChannelConnected(int32_t pid)
+ void
+ ContentParent::ProcessingError(Result aCode, const char* aReason)
+ {
++  LOGCP("ContentParent::OnChannelConnected aCode is %d",aCode);
+   if (MsgDropped == aCode) {
+     return;
+   }
+@@ -2055,6 +2059,7 @@ ContentParent::ActorDestroy(ActorDestroyReason why)
+ {
+   // Signal shutdown completion regardless of error state, so we can
+   // finish waiting in the xpcom-shutdown/profile-before-change observer.
++    LOGCP("ContentParent::ActorDestroy why is %d",why);
+   mIPCOpen = false;
+ 
+   if (mHangMonitorActor) {
+diff --git a/ipc/chromium/src/chrome/common/ipc_channel_posix.cc b/ipc/chromium/src/chrome/common/ipc_channel_posix.cc
+index f375f0ece0d3..f1059f2f651b 100644
+--- a/ipc/chromium/src/chrome/common/ipc_channel_posix.cc
++++ b/ipc/chromium/src/chrome/common/ipc_channel_posix.cc
+@@ -33,6 +33,11 @@
+ #include "mozilla/ipc/ProtocolUtils.h"
+ #include "mozilla/UniquePtr.h"
+ 
++#include <android/log.h>
++//#define DHCUI_DEBUG(...) 
++#define DHCUI_DEBUG(...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI", __VA_ARGS__)
++#include <utils/CallStack.h>
++
+ #ifdef MOZ_TASK_TRACER
+ #include "GeckoTaskTracerImpl.h"
+ using namespace mozilla::tasktracer;
+@@ -108,7 +113,6 @@ class PipeMap {
+   void Insert(const std::string& channel_id, int fd) {
+     AutoLock locked(lock_);
+     DCHECK(fd != -1);
+-
+     ChannelToFDMap::const_iterator i = map_.find(channel_id);
+     CHECK(i == map_.end()) << "Creating second IPC server for '"
+                            << channel_id
+@@ -124,7 +128,7 @@ class PipeMap {
+ 
+ // This is the file descriptor number that a client process expects to find its
+ // IPC socket.
+-static const int kClientChannelFd = 3;
++static const int kClientChannelFd = 555;
+ 
+ // Used to map a channel name to the equivalent FD # in the client process.
+ int ChannelNameToClientFD(const std::string& channel_id) {
+@@ -161,8 +165,10 @@ Channel::ChannelImpl::ChannelImpl(const std::wstring& channel_id, Mode mode,
+     : factory_(this) {
+   Init(mode, listener);
+ 
++  DHCUI_DEBUG("Channel::ChannelImpl::ChannelImpl 3333");
+   if (!CreatePipe(channel_id, mode)) {
+     // The pipe may have been closed already.
++    DHCUI_DEBUG("Channel::ChannelImpl::ChannelImpl Unable to create pipe named");
+     CHROMIUM_LOG(WARNING) << "Unable to create pipe named \"" << channel_id <<
+                              "\" in " << (mode == MODE_SERVER ? "server" : "client") <<
+                              " mode error(" << strerror(errno) << ").";
+@@ -175,10 +181,12 @@ Channel::ChannelImpl::ChannelImpl(const std::wstring& channel_id, Mode mode,
+ 
+ Channel::ChannelImpl::ChannelImpl(int fd, Mode mode, Listener* listener)
+     : factory_(this) {
++  DHCUI_DEBUG("Channel::ChannelImpl::ChannelImpl 111 fd is %d,pipe_ is %d",fd,pipe_);
+   Init(mode, listener);
+   pipe_ = fd;
+   waiting_connect_ = (MODE_SERVER == mode);
+ 
++  DHCUI_DEBUG("Channel::ChannelImpl::ChannelImpl 222 fd is %d,pipe_ is %d",fd,pipe_);
+   EnqueueHelloMessage();
+ }
+ 
+@@ -205,11 +213,13 @@ bool Channel::ChannelImpl::CreatePipe(const std::wstring& channel_id,
+                                       Mode mode) {
+   DCHECK(server_listen_pipe_ == -1 && pipe_ == -1);
+ 
++  DHCUI_DEBUG("Channel::ChannelImpl::CreatePipe mode is %d",mode);
+   // socketpair()
+   pipe_name_ = WideToASCII(channel_id);
+   if (mode == MODE_SERVER) {
+     int pipe_fds[2];
+     if (socketpair(AF_UNIX, SOCK_STREAM, 0, pipe_fds) != 0) {
++      DHCUI_DEBUG("Channel::ChannelImpl::CreatePipe fail");
+       return false;
+     }
+     // Set both ends to be non-blocking.
+@@ -217,6 +227,7 @@ bool Channel::ChannelImpl::CreatePipe(const std::wstring& channel_id,
+ 	fcntl(pipe_fds[1], F_SETFL, O_NONBLOCK) == -1) {
+       HANDLE_EINTR(close(pipe_fds[0]));
+       HANDLE_EINTR(close(pipe_fds[1]));
++      DHCUI_DEBUG("Channel::ChannelImpl::CreatePipe set non-blocking fail");
+       return false;
+     }
+ 
+@@ -224,17 +235,27 @@ bool Channel::ChannelImpl::CreatePipe(const std::wstring& channel_id,
+ 	!SetCloseOnExec(pipe_fds[1])) {
+       HANDLE_EINTR(close(pipe_fds[0]));
+       HANDLE_EINTR(close(pipe_fds[1]));
++      DHCUI_DEBUG("Channel::ChannelImpl::CreatePipe SetCloseOnExec fail");
+       return false;
+     }
+ 
+     pipe_ = pipe_fds[0];
+     client_pipe_ = pipe_fds[1];
+ 
++    DHCUI_DEBUG("Channel::ChannelImpl::CreatePipe 11 pipe_ is %d,client_pipe_ is %d",pipe_,client_pipe_);
++
+     if (pipe_name_.length()) {
+       Singleton<PipeMap>()->Insert(pipe_name_, client_pipe_);
+     }
+   } else {
+     pipe_ = ChannelNameToClientFD(pipe_name_);
++    if (pipe_ == 555)
++    {
++	  android::CallStack stack;
++	  stack.update( );
++	  stack.log("DHCUI");
++    }
++    DHCUI_DEBUG("Channel::ChannelImpl::CreatePipe 22 pipe_ is %d",pipe_);
+     DCHECK(pipe_ > 0);
+     waiting_connect_ = false;
+   }
+@@ -271,6 +292,7 @@ void Channel::ChannelImpl::ClearAndShrinkInputOverflowBuf()
+ 
+ bool Channel::ChannelImpl::Connect() {
+   if (pipe_ == -1) {
++    DHCUI_DEBUG("Channel::ChannelImpl::Connect() with pipe_ is -1");
+     return false;
+   }
+ 
+@@ -282,6 +304,7 @@ bool Channel::ChannelImpl::Connect() {
+       this);
+   waiting_connect_ = false;
+ 
++ DHCUI_DEBUG("Channel::ChannelImpl::Connect() waiting_connect_ is %d,pipe_ is %d",waiting_connect_,pipe_);
+   if (!waiting_connect_)
+     return ProcessOutgoingMessages();
+   return true;
+@@ -301,24 +324,29 @@ bool Channel::ChannelImpl::ProcessIncomingMessages() {
+     msg.msg_controllen = sizeof(input_cmsg_buf_);
+ 
+     if (bytes_read == 0) {
+-      if (pipe_ == -1)
+-        return false;
+-
++      if (pipe_ == -1){
++	DHCUI_DEBUG("ProcessIncomingMessages pipe_ is -1 ????");
++	return false;
++	}
+       // Read from pipe.
+       // recvmsg() returns 0 if the connection has closed or EAGAIN if no data
+       // is waiting on the pipe.
+       bytes_read = HANDLE_EINTR(recvmsg(pipe_, &msg, MSG_DONTWAIT));
++     	 DHCUI_DEBUG("ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is %d,bytes_read is %d,closed_ is %d this is %p",pipe_,bytes_read,closed_,this);
+ 
+       if (bytes_read < 0) {
+         if (errno == EAGAIN) {
+           return true;
+         } else {
++	  DHCUI_DEBUG("ProcessIncomingMessages pipe error is %d,pipe is %d",errno,pipe_);
+           CHROMIUM_LOG(ERROR) << "pipe error (" << pipe_ << "): " << strerror(errno);
+           return false;
+         }
+       } else if (bytes_read == 0) {
+         // The pipe has closed...
++	DHCUI_DEBUG("ProcessIncomingMessages >> pipe Close pipe is %d,errno is %d,closed_ is %d,this is %p",pipe_,errno,closed_,this);
+         Close();
++	DHCUI_DEBUG("ProcessIncomingMessages << pipe Close pipe is %d,errno is %d,closed_ is %d,this is %p",pipe_,errno,closed_,this);
+         return false;
+       }
+     }
+@@ -361,6 +389,7 @@ bool Channel::ChannelImpl::ProcessIncomingMessages() {
+           num_wire_fds = payload_len / 4;
+ 
+           if (msg.msg_flags & MSG_CTRUNC) {
++	  DHCUI_DEBUG("ProcessIncomingMessages SCM_RIGHTS message was truncated cmsg_len is %d,fd is %d",cmsg->cmsg_len,pipe_);
+             CHROMIUM_LOG(ERROR) << "SCM_RIGHTS message was truncated"
+                                 << " cmsg_len:" << cmsg->cmsg_len
+                                 << " fd:" << pipe_;
+@@ -385,6 +414,7 @@ bool Channel::ChannelImpl::ProcessIncomingMessages() {
+       if (input_overflow_buf_.size() >
+          static_cast<size_t>(kMaximumMessageSize - bytes_read)) {
+         ClearAndShrinkInputOverflowBuf();
++	DHCUI_DEBUG("ProcessIncomingMessages IPC message is too big");
+         CHROMIUM_LOG(ERROR) << "IPC message is too big";
+         return false;
+       }
+@@ -470,6 +500,7 @@ bool Channel::ChannelImpl::ProcessIncomingMessages() {
+           }
+ 
+           if (error) {
++	    DHCUI_DEBUG("ProcessIncomingMessages error is %s",error);
+             CHROMIUM_LOG(WARNING) << error
+                                   << " channel:" << this
+                                   << " message-type:" << m.type()
+@@ -499,6 +530,7 @@ bool Channel::ChannelImpl::ProcessIncomingMessages() {
+               &fds[fds_i], m.header()->num_fds);
+           fds_i += m.header()->num_fds;
+         }
++
+ #ifdef IPC_MESSAGE_DEBUG_EXTRA
+       DLOG(INFO) << "received message on channel @" << this <<
+         " with type " << m.type();
+@@ -539,6 +571,7 @@ bool Channel::ChannelImpl::ProcessIncomingMessages() {
+     // to fill our descriptor table.
+     if (input_overflow_buf_.empty() && !input_overflow_fds_.empty()) {
+       // We close these descriptors in Close()
++      DHCUI_DEBUG("ProcessIncomingMessages data buffer is empty return false");
+       return false;
+     }
+ 
+@@ -554,10 +587,16 @@ bool Channel::ChannelImpl::ProcessOutgoingMessages() {
+   is_blocked_on_write_ = false;
+ 
+   if (output_queue_.empty())
++  {
++    DHCUI_DEBUG("ProcessOutgoingMessages, output_queue_.empty");
+     return true;
++  }
+ 
+   if (pipe_ == -1)
++  {
++    DHCUI_DEBUG("ProcessOutgoingMessages, pipe_ is -1");
+     return false;
++  }
+ 
+   // Write out all the messages we can till the write blocks or there are no
+   // more outgoing messages.
+@@ -577,6 +616,7 @@ bool Channel::ChannelImpl::ProcessOutgoingMessages() {
+       const unsigned num_fds = msg->file_descriptor_set()->size();
+ 
+       if (num_fds > FileDescriptorSet::MAX_DESCRIPTORS_PER_MESSAGE) {
++        DHCUI_DEBUG("ProcessOutgoingMessages, too many file descriptors");
+         CHROMIUM_LOG(FATAL) << "Too many file descriptors!";
+         // This should not be reached.
+         return false;
+@@ -607,7 +647,9 @@ bool Channel::ChannelImpl::ProcessOutgoingMessages() {
+     msgh.msg_iov = &iov;
+     msgh.msg_iovlen = 1;
+ 
++
+     ssize_t bytes_written = HANDLE_EINTR(sendmsg(pipe_, &msgh, MSG_DONTWAIT));
++    DHCUI_DEBUG("ProcessOutgoingMessages xxxxxxxxxx pipe_ is %d,bytes_written is %d",pipe_,bytes_written);
+ #if !defined(OS_MACOSX)
+     // On OSX CommitAll gets called later, once we get the RECEIVED_FDS_MESSAGE_TYPE
+     // message.
+@@ -645,6 +687,7 @@ bool Channel::ChannelImpl::ProcessOutgoingMessages() {
+         break;
+ #endif
+       default:
++        DHCUI_DEBUG("ProcessOutgoingMessages,default pipe error is %d",errno);
+         CHROMIUM_LOG(ERROR) << "pipe error: " << strerror(errno);
+         return false;
+       }
+@@ -657,6 +700,8 @@ bool Channel::ChannelImpl::ProcessOutgoingMessages() {
+       }
+ 
+       // Tell libevent to call us back once things are unblocked.
++
++
+       is_blocked_on_write_ = true;
+       MessageLoopForIO::current()->WatchFileDescriptor(
+           pipe_,
+@@ -674,6 +719,7 @@ bool Channel::ChannelImpl::ProcessOutgoingMessages() {
+                                                   msg->file_descriptor_set()));
+ #endif
+ 
++      DHCUI_DEBUG("ProcessOutgoingMessages sending message on channel @ %p,with type %d",this,msg->type());
+       // Message sent OK!
+ #ifdef IPC_MESSAGE_DEBUG_EXTRA
+       DLOG(INFO) << "sent message @" << msg << " on channel @" << this <<
+@@ -687,6 +733,10 @@ bool Channel::ChannelImpl::ProcessOutgoingMessages() {
+ }
+ 
+ bool Channel::ChannelImpl::Send(Message* message) {
++
++
++DHCUI_DEBUG("Channel::ChannelImpl::Send sending message on channel@ %p",this);
++
+ #ifdef IPC_MESSAGE_DEBUG_EXTRA
+   DLOG(INFO) << "sending message @" << message << " on channel @" << this
+              << " with type " << message->type()
+@@ -699,6 +749,7 @@ bool Channel::ChannelImpl::Send(Message* message) {
+   // the channel is destructed.  We might as well delete message now, instead
+   // of waiting for the channel to be destructed.
+   if (closed_) {
++    DHCUI_DEBUG("Channel::ChannelImpl::Send closed return false");
+     if (mozilla::ipc::LoggingEnabled()) {
+       fprintf(stderr, "Can't send message %s, because this channel is closed.\n",
+               message->name());
+@@ -711,7 +762,10 @@ bool Channel::ChannelImpl::Send(Message* message) {
+   if (!waiting_connect_) {
+     if (!is_blocked_on_write_) {
+       if (!ProcessOutgoingMessages())
++       {
++	DHCUI_DEBUG("Channel::ChannelImpl::Send closed 1 return false");
+         return false;
++       }
+     }
+   }
+ 
+@@ -721,11 +775,15 @@ bool Channel::ChannelImpl::Send(Message* message) {
+ void Channel::ChannelImpl::GetClientFileDescriptorMapping(int *src_fd,
+                                                           int *dest_fd) const {
+   DCHECK(mode_ == MODE_SERVER);
++
++DHCUI_DEBUG("Channel::ChannelImpl::GetClientFileDescriptorMapping client_pipe_ is %d,kClientChannelFd is %d",client_pipe_,kClientChannelFd);
+   *src_fd = client_pipe_;
+   *dest_fd = kClientChannelFd;
+ }
+ 
+ void Channel::ChannelImpl::CloseClientFileDescriptor() {
++
++  DHCUI_DEBUG("Channel::ChannelImpl::CloseClientFileDescriptor");
+   if (client_pipe_ != -1) {
+     Singleton<PipeMap>()->Remove(pipe_name_);
+     HANDLE_EINTR(close(client_pipe_));
+@@ -738,6 +796,7 @@ void Channel::ChannelImpl::OnFileCanReadWithoutBlocking(int fd) {
+   if (!waiting_connect_ && fd == pipe_) {
+     if (!ProcessIncomingMessages()) {
+       Close();
++      DHCUI_DEBUG("Channel::ChannelImpl::OnFileCanReadWithoutBlocking RRRRRRRR ,fd is %d,pipe_ is %d,waiting_connect_ is %d,this is %p",fd,pipe_,waiting_connect_,this);
+       listener_->OnChannelError();
+       // The OnChannelError() call may delete this, so we need to exit now.
+       return;
+@@ -778,6 +837,7 @@ void Channel::ChannelImpl::OutputQueuePop()
+ void Channel::ChannelImpl::OnFileCanWriteWithoutBlocking(int fd) {
+   if (!ProcessOutgoingMessages()) {
+     Close();
++    DHCUI_DEBUG("Channel::ChannelImpl::OnFileCanReadWithoutBlocking WWWWWWWWWW ,fd is %d,pipe_ is %d,waiting_connect_ is %d",fd,pipe_,waiting_connect_);
+     listener_->OnChannelError();
+   }
+ }
+@@ -787,6 +847,16 @@ void Channel::ChannelImpl::Close() {
+   // idempotent.
+ 
+   // Unregister libevent for the listening socket and close it.
++
++  DHCUI_DEBUG("Channel::ChannelImpl::Close pipe is %d,this is %p",pipe_,this);
++
++    if (pipe_ == 555)
++    {
++	  android::CallStack stack;
++	  stack.update( );
++	  stack.log("DHCUI");
++    }
++
+   server_listen_connection_watcher_.StopWatchingFileDescriptor();
+ 
+   if (server_listen_pipe_ != -1) {
+diff --git a/ipc/chromium/src/chrome/common/ipc_channel_posix.h b/ipc/chromium/src/chrome/common/ipc_channel_posix.h
+index 7e442b81037f..5ceef1dee4da 100644
+--- a/ipc/chromium/src/chrome/common/ipc_channel_posix.h
++++ b/ipc/chromium/src/chrome/common/ipc_channel_posix.h
+@@ -13,7 +13,7 @@
+ #include <string>
+ #include <vector>
+ #include <list>
+-
++#include "mozilla/Atomics.h"
+ #include "base/buffer.h"
+ #include "base/message_loop.h"
+ #include "chrome/common/file_descriptor_set_posix.h"
+diff --git a/ipc/glue/MessageChannel.cpp b/ipc/glue/MessageChannel.cpp
+index 56ff9082d298..f1c4f6ce8ec2 100644
+--- a/ipc/glue/MessageChannel.cpp
++++ b/ipc/glue/MessageChannel.cpp
+@@ -39,6 +39,11 @@ static LazyLogModule sLogModule("ipc");
+ #define IPC_LOG(...) MOZ_LOG(sLogModule, LogLevel::Debug, (__VA_ARGS__))
+ #endif
+ 
++#include <android/log.h>
++#include "mozilla/layout/PVsync.h"
++#include "mozilla/dom/PBrowser.h"
++#define DHCUI_DEBUG(...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI", __VA_ARGS__)
++
+ /*
+  * IPC design:
+  *
+@@ -409,6 +414,11 @@ public:
+         MOZ_RELEASE_ASSERT(aMessage.seqno() == mSeqno);
+         MOZ_RELEASE_ASSERT(aMessage.transaction_id() == mTransaction);
+         MOZ_RELEASE_ASSERT(!mReply);
++    #if 1
++    if((aMessage.type() == mozilla::layout::PVsync::Msg_Notify__ID) || (aMessage.type() == mozilla::dom::PBrowser::Msg_RealKeyEvent__ID)){
++    DHCUI_DEBUG("MessageChannel::ReceivedReply");
++    }
++    #endif
+         IPC_LOG("Reply received on worker thread: seqno=%d", mSeqno);
+         mReply = new IPC::Message(aMessage);
+         MOZ_RELEASE_ASSERT(IsComplete());
+@@ -417,6 +427,11 @@ public:
+     void HandleReply(const IPC::Message& aMessage) {
+         AutoEnterTransaction *cur = mChan->mTransactionStack;
+         MOZ_RELEASE_ASSERT(cur == this);
++    #if 1
++    if((aMessage.type() == mozilla::layout::PVsync::Msg_Notify__ID) || (aMessage.type() == mozilla::dom::PBrowser::Msg_RealKeyEvent__ID)){
++    DHCUI_DEBUG("MessageChannel::HandleReply");
++    }
++    #endif
+         while (cur) {
+             MOZ_RELEASE_ASSERT(cur->mActive);
+             if (aMessage.seqno() == cur->mSeqno) {
+@@ -784,6 +799,11 @@ MessageChannel::Send(Message* aMsg)
+         ReportConnectionError("MessageChannel", msg);
+         return false;
+     }
++    #if 1
++    if((msg->type() == mozilla::layout::PVsync::Msg_Notify__ID) || (msg->type() == mozilla::dom::PBrowser::Msg_RealKeyEvent__ID)){
++    DHCUI_DEBUG("MessageChannel::Send");
++    }
++    #endif
+     mLink->SendMessage(msg.forget());
+     return true;
+ }
+@@ -819,11 +839,13 @@ MessageChannel::MaybeInterceptSpecialIOMessage(const Message& aMsg)
+                 printf("NOTE: %s process received `Goodbye', closing down\n",
+                        (mSide == ChildSide) ? "child" : "parent");
+             }
++            DHCUI_DEBUG("MessageChannel::MaybeInterceptSpecialIOMessage 1");
+             return true;
+         } else if (CANCEL_MESSAGE_TYPE == aMsg.type()) {
+             IPC_LOG("Cancel from message");
+             CancelTransaction(aMsg.transaction_id());
+             NotifyWorkerThread();
++            DHCUI_DEBUG("MessageChannel::MaybeInterceptSpecialIOMessage 2");
+             return true;
+         }
+     }
+@@ -836,6 +858,11 @@ MessageChannel::ShouldDeferMessage(const Message& aMsg)
+     // Never defer messages that have the highest priority, even async
+     // ones. This is safe because only the child can send these messages, so
+     // they can never nest.
++    #if 1
++    if((aMsg.type() == mozilla::layout::PVsync::Msg_Notify__ID) || (aMsg.type() == mozilla::dom::PBrowser::Msg_RealKeyEvent__ID)){
++    DHCUI_DEBUG("MessageChannel::Send");
++    }
++    #endif
+     if (aMsg.priority() == IPC::Message::PRIORITY_URGENT)
+         return false;
+ 
+@@ -887,7 +914,11 @@ MessageChannel::OnMessageReceivedFromLink(Message&& aMsg)
+ {
+     AssertLinkThread();
+     mMonitor->AssertCurrentThreadOwns();
+-
++#if 1
++    if((aMsg.type() == mozilla::layout::PVsync::Msg_Notify__ID) || (aMsg.type() == mozilla::dom::PBrowser::Msg_RealKeyEvent__ID)){
++    DHCUI_DEBUG("MessageChannel::OnMessageReceivedFromLink 1");
++    }
++#endif
+     if (MaybeInterceptSpecialIOMessage(aMsg))
+         return;
+ 
+@@ -896,9 +927,19 @@ MessageChannel::OnMessageReceivedFromLink(Message&& aMsg)
+     if (aMsg.is_sync() && aMsg.is_reply()) {
+         IPC_LOG("Received reply seqno=%d xid=%d", aMsg.seqno(), aMsg.transaction_id());
+ 
++        #if 1
++        if((aMsg.type() == mozilla::layout::PVsync::Msg_Notify__ID) || (aMsg.type() == mozilla::dom::PBrowser::Msg_RealKeyEvent__ID)){
++        DHCUI_DEBUG("MessageChannel::OnMessageReceivedFromLink Received reply seqno=%d xid=%d",aMsg.seqno(), aMsg.transaction_id());
++        }
++        #endif
+         if (aMsg.seqno() == mTimedOutMessageSeqno) {
+             // Drop the message, but allow future sync messages to be sent.
+             IPC_LOG("Received reply to timedout message; igoring; xid=%d", mTimedOutMessageSeqno);
++        #if 1
++        if((aMsg.type() == mozilla::layout::PVsync::Msg_Notify__ID) || (aMsg.type() == mozilla::dom::PBrowser::Msg_RealKeyEvent__ID)){
++        DHCUI_DEBUG("MessageChannel::OnMessageReceivedFromLink Received reply to timedout message");
++        }
++        #endif
+             EndTimeout();
+             return;
+         }
+@@ -954,6 +995,12 @@ MessageChannel::OnMessageReceivedFromLink(Message&& aMsg)
+     // guarantee that every Send call processes everything it's supposed to
+     // before returning.
+     bool shouldPostTask = !shouldWakeUp || wakeUpSyncSend;
++    #if 1
++    if((aMsg.type() == mozilla::layout::PVsync::Msg_Notify__ID) || (aMsg.type() == mozilla::dom::PBrowser::Msg_RealKeyEvent__ID)){
++    DHCUI_DEBUG("Receive on link thread; seqno=%d, xid=%d, shouldWakeUp=%d",
++             aMsg.seqno(), aMsg.transaction_id(), shouldWakeUp);
++    }
++    #endif
+ 
+     IPC_LOG("Receive on link thread; seqno=%d, xid=%d, shouldWakeUp=%d",
+             aMsg.seqno(), aMsg.transaction_id(), shouldWakeUp);
+@@ -983,6 +1030,17 @@ MessageChannel::OnMessageReceivedFromLink(Message&& aMsg)
+ #ifdef MOZ_TASK_TRACER
+     aMsg.TaskTracerDispatch();
+ #endif
++
++#if 1
++    if((aMsg.type() == mozilla::layout::PVsync::Msg_Notify__ID) || (aMsg.type() == mozilla::dom::PBrowser::Msg_RealKeyEvent__ID)){
++    if (shouldPostTask && ! compress){
++            DHCUI_DEBUG("MessageChannel::OnMessageReceivedFromLink 2");
++    }else{
++            DHCUI_DEBUG("MessageChannel::OnMessageReceivedFromLink shouldPostTask : %d, compress:%d",shouldPostTask,compress);
++    }
++    
++    }
++#endif
+     mPending.push_back(Move(aMsg));
+ 
+     if (shouldWakeUp) {
+@@ -1503,6 +1561,7 @@ MessageChannel::DequeueOne(Message *recvd)
+     mMonitor->AssertCurrentThreadOwns();
+ 
+     if (!Connected()) {
++        DHCUI_DEBUG("MessageChannel::DequeueOne report ConnectionError");
+         ReportConnectionError("OnMaybeDequeueOne");
+         return false;
+     }
+@@ -1538,11 +1597,15 @@ MessageChannel::DequeueOne(Message *recvd)
+                 return true;
+             }
+         }
++        DHCUI_DEBUG("MessageChannel::DequeueOne return false");
+         return false;
+     }
+ 
+     if (mPending.empty())
++    {
++        DHCUI_DEBUG("MessageChannel::DequeueOne mPending.empty()");
+         return false;
++    }
+ 
+     *recvd = Move(mPending.front());
+     mPending.pop_front();
+@@ -1564,10 +1627,16 @@ MessageChannel::OnMaybeDequeueOne()
+     if (IsOnCxxStack() && recvd.is_interrupt() && recvd.is_reply()) {
+         // We probably just received a reply in a nested loop for an
+         // Interrupt call sent before entering that loop.
++        DHCUI_DEBUG("MessageChannel::DequeueOne return false nested loop");
+         mOutOfTurnReplies[recvd.seqno()] = Move(recvd);
+         return false;
+     }
+ 
++#if 1
++    if((recvd.type() == mozilla::layout::PVsync::Msg_Notify__ID) || (recvd.type() == mozilla::dom::PBrowser::Msg_RealKeyEvent__ID)){
++    DHCUI_DEBUG("MessageChannel::OnMaybeDequeueOne");
++    }
++#endif
+     DispatchMessage(recvd);
+ 
+     return true;
+@@ -1584,6 +1653,12 @@ MessageChannel::DispatchMessage(const Message &aMsg)
+ 
+     IPC_LOG("DispatchMessage: seqno=%d, xid=%d", aMsg.seqno(), aMsg.transaction_id());
+ 
++    #if 1
++    if((aMsg.type() == mozilla::layout::PVsync::Msg_Notify__ID) || (aMsg.type() == mozilla::dom::PBrowser::Msg_RealKeyEvent__ID)){
++    DHCUI_DEBUG("MessageChannel::DispatchMessage seqno=%d, xid=%d", aMsg.seqno(), aMsg.transaction_id());
++    }
++    #endif
++
+     {
+         AutoEnterTransaction transaction(this, aMsg);
+ 
+@@ -1617,6 +1692,7 @@ MessageChannel::DispatchMessage(const Message &aMsg)
+     }
+ 
+     if (reply && ChannelConnected == mChannelState) {
++        DHCUI_DEBUG("MessageChannel::DispatchMessage Sending reply seqno=%d, xid=%d",aMsg.seqno(), aMsg.transaction_id());
+         IPC_LOG("Sending reply seqno=%d, xid=%d", aMsg.seqno(), aMsg.transaction_id());
+         mLink->SendMessage(reply.forget());
+     }
+@@ -2151,6 +2227,7 @@ MessageChannel::SynchronouslyClose()
+ {
+     AssertWorkerThread();
+     mMonitor->AssertCurrentThreadOwns();
++    DHCUI_DEBUG("MessageChannel::SynchronouslyClose");
+     mLink->SendClose();
+     while (ChannelClosed != mChannelState)
+         mMonitor->Wait();
+diff --git a/ipc/glue/MessageLink.cpp b/ipc/glue/MessageLink.cpp
+index edf0eaf7c325..f6dc3e22dec1 100644
+--- a/ipc/glue/MessageLink.cpp
++++ b/ipc/glue/MessageLink.cpp
+@@ -28,6 +28,12 @@ extern "C" char* PrintJSStack();
+ #include "nsISupportsImpl.h"
+ #include "nsXULAppAPI.h"
+ 
++#include "mozilla/layout/PVsync.h"
++#include "mozilla/dom/PBrowser.h"
++
++#include <android/log.h>
++#define DHCUI_DEBUG(...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI", __VA_ARGS__)
++
+ using namespace mozilla;
+ using namespace std;
+ 
+@@ -222,6 +228,11 @@ ProcessLink::SendMessage(Message *msg)
+         MOZ_CRASH();
+     }
+ #endif
++#endif
++#if 1
++    if((msg->type() == mozilla::layout::PVsync::Msg_Notify__ID) || (msg->type() == mozilla::dom::PBrowser::Msg_RealKeyEvent__ID)){
++    DHCUI_DEBUG("ProcessLink::SendMessage");
++    }
+ #endif
+ 
+     mIOLoop->PostTask(
+@@ -232,6 +243,7 @@ ProcessLink::SendMessage(Message *msg)
+ void
+ ProcessLink::SendClose()
+ {
++    DHCUI_DEBUG("ProcessLink::SendClose");
+     mChan->AssertWorkerThread();
+     mChan->mMonitor->AssertCurrentThreadOwns();
+ 
+@@ -300,7 +312,7 @@ ThreadLink::SendClose()
+ {
+     mChan->AssertWorkerThread();
+     mChan->mMonitor->AssertCurrentThreadOwns();
+-
++    DHCUI_DEBUG("mChannelState ThreadLink::SendClose");
+     mChan->mChannelState = ChannelClosed;
+ 
+     // In a ProcessLink, we would close our half the channel.  This
+@@ -316,6 +328,7 @@ bool
+ ThreadLink::Unsound_IsClosed() const
+ {
+     MonitorAutoLock lock(*mChan->mMonitor);
++    DHCUI_DEBUG("mChannelState ThreadLink::Unsound_IsClosed");
+     return mChan->mChannelState == ChannelClosed;
+ }
+ 
+@@ -336,6 +349,13 @@ ProcessLink::OnMessageReceived(Message&& msg)
+     AssertIOThread();
+     NS_ASSERTION(mChan->mChannelState != ChannelError, "Shouldn't get here!");
+     MonitorAutoLock lock(*mChan->mMonitor);
++
++    #if 1
++    if((msg.type() == mozilla::layout::PVsync::Msg_Notify__ID) || (msg.type() == mozilla::dom::PBrowser::Msg_RealKeyEvent__ID)){
++    DHCUI_DEBUG("ProcessLink::OnMessageReceived");
++    }
++    #endif
++
+     mChan->OnMessageReceivedFromLink(Move(msg));
+ }
+ 
+@@ -364,6 +384,7 @@ ProcessLink::OnChannelOpened()
+         }
+ #endif  // DEBUG
+ 
++        DHCUI_DEBUG("mChannelState ProcessLink::OnChannelOpened");
+         mChan->mChannelState = ChannelOpening;
+         lock.Notify();
+     }
+@@ -378,7 +399,7 @@ ProcessLink::OnTakeConnectedChannel()
+     queue<Message> pending;
+     {
+         MonitorAutoLock lock(*mChan->mMonitor);
+-
++        DHCUI_DEBUG("mChannelState ProcessLink::OnTakeConnectedChannel");
+         mChan->mChannelState = ChannelConnected;
+ 
+         mExistingListener = mTransport->set_listener(this);
+@@ -407,6 +428,7 @@ ProcessLink::OnChannelConnected(int32_t peer_pid)
+         // Only update channel state if its still thinks its opening.  Do not
+         // force it into connected if it has errored out, started closing, etc.
+         if (mChan->mChannelState == ChannelOpening) {
++            DHCUI_DEBUG("mChannelState ProcessLink::OnChannelConnected");
+           mChan->mChannelState = ChannelConnected;
+           mChan->mMonitor->Notify();
+           notifyChannel = true;
+@@ -432,6 +454,8 @@ ProcessLink::OnChannelConnectError()
+ 
+     MonitorAutoLock lock(*mChan->mMonitor);
+ 
++     DHCUI_DEBUG("mChannelState ProcessLink::OnChannelConnectError");
++
+     mChan->OnChannelErrorFromLink();
+ }
+ 
+@@ -444,6 +468,8 @@ ProcessLink::OnChannelError()
+ 
+     MOZ_ALWAYS_TRUE(this == mTransport->set_listener(mExistingListener));
+ 
++     DHCUI_DEBUG("mChannelState ProcessLink::OnChannelError");
++
+     mChan->OnChannelErrorFromLink();
+ }
+ 
+@@ -462,7 +488,7 @@ ProcessLink::OnCloseChannel()
+     // OnChannelError may have reset the listener already.
+     MOZ_ASSERT(previousListener == this ||
+                previousListener == mExistingListener);
+-
++    DHCUI_DEBUG("mChannelState ProcessLink::OnCloseChannel");
+     mChan->mChannelState = ChannelClosed;
+     mChan->mMonitor->Notify();
+ }
+diff --git a/ipc/glue/ProcessChild.cpp b/ipc/glue/ProcessChild.cpp
+index 4a1f256adc8d..3094fc644923 100644
+--- a/ipc/glue/ProcessChild.cpp
++++ b/ipc/glue/ProcessChild.cpp
+@@ -18,9 +18,11 @@
+ 
+ #ifdef MOZ_WIDGET_GONK
+ #include "android/log.h"
+-#define LOGPC(...) __android_log_print(ANDROID_LOG_INFO, "ProcessChild", ## __VA_ARGS__)
++#define LOGPC(...) __android_log_print(ANDROID_LOG_INFO, "DHCUI", ## __VA_ARGS__)
+ #endif
+ 
++#include <utils/CallStack.h>
++
+ namespace mozilla {
+ namespace ipc {
+ 
+@@ -51,6 +53,9 @@ ProcessChild::QuickExit()
+   TerminateProcess(GetCurrentProcess(), 0);
+ #else
+ #ifdef MOZ_WIDGET_GONK
++  android::CallStack stack;
++  stack.update( );
++  stack.log("DHCUI");
+   LOGPC("ProcessChild::QuickExit content process");
+ #endif
+   _exit(0);
+diff --git a/ipc/glue/ProtocolUtils.h b/ipc/glue/ProtocolUtils.h
+index 5c4645b80fb9..7348473410f2 100644
+--- a/ipc/glue/ProtocolUtils.h
++++ b/ipc/glue/ProtocolUtils.h
+@@ -275,6 +275,7 @@ private:
+ inline bool
+ LoggingEnabled()
+ {
++return true;
+ #if defined(DEBUG)
+     return !!PR_GetEnv("MOZ_IPC_MESSAGE_LOG");
+ #else
+@@ -285,6 +286,8 @@ LoggingEnabled()
+ inline bool
+ LoggingEnabledFor(const char *aTopLevelProtocol)
+ {
++
++return true;
+ #if defined(DEBUG)
+     const char *filter = PR_GetEnv("MOZ_IPC_MESSAGE_LOG");
+     if (!filter) {
+diff --git a/ipc/glue/Transport_posix.cpp b/ipc/glue/Transport_posix.cpp
+index bd131a5e52ff..af800c8d9257 100644
+--- a/ipc/glue/Transport_posix.cpp
++++ b/ipc/glue/Transport_posix.cpp
+@@ -16,6 +16,9 @@
+ #include "mozilla/ipc/Transport.h"
+ #include "mozilla/ipc/FileDescriptor.h"
+ #include "ProtocolUtils.h"
++#include <android/log.h>
++#define DHCUI_DEBUG(...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI", __VA_ARGS__)
++
+ 
+ using namespace std;
+ 
+@@ -41,8 +44,12 @@ CreateTransport(base::ProcessId aProcIdOne,
+ 
+   // The Transport closes these fds when it goes out of scope, so we
+   // dup them here
++  DHCUI_DEBUG("CreateTransport fd1 is %d,fd2 is %d",fd1,fd2);
++
+   fd1 = dup(fd1);
+   fd2 = dup(fd2);
++
++  DHCUI_DEBUG("CreateTransport fd1 is %d,fd2 is %d",fd1,fd2);
+   if (fd1 < 0 || fd2 < 0) {
+     HANDLE_EINTR(close(fd1));
+     HANDLE_EINTR(close(fd2));
+diff --git a/mozglue/build/Nuwa.cpp b/mozglue/build/Nuwa.cpp
+index 600a931a7591..922d60d0be5e 100644
+--- a/mozglue/build/Nuwa.cpp
++++ b/mozglue/build/Nuwa.cpp
+@@ -28,6 +28,8 @@
+ #include "mozilla/TaggedAnonymousMemory.h"
+ #include "Nuwa.h"
+ 
++#include <android/log.h>
++#define DHCUI_DEBUG(...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI", __VA_ARGS__)
+ 
+ /* Support for telling Valgrind about the stack pointer changes that
+    Nuwa makes.  Without this, Valgrind is unusable in Nuwa child
+@@ -1382,6 +1384,8 @@ __wrap_socketpair(int domain, int type, int protocol, int sv[2])
+   signalFd.type = type;
+   signalFd.protocol = protocol;
+ 
++  DHCUI_DEBUG("__wrap_socketpair socketpair sv[0] is %d,sv[1] is %d",sv[0],sv[1]);
++
+   sSignalFds.push_back(signalFd);
+   pthread_mutex_unlock(&sSignalFdLock);
+ 
+@@ -1442,6 +1446,7 @@ ReplaceSignalFds()
+       break;
+     case FdPairInfo::kSocketpair:
+       rc = REAL(socketpair)(it->domain, it->type, it->protocol, fds);
++      DHCUI_DEBUG("ReplaceSignalFds socketpair fds[0] is %d,fds[1] is %d",fds[0],fds[1]);
+       break;
+     default:
+       continue;
+@@ -1743,6 +1748,7 @@ PrepareProtoSockets(NuwaProtoFdInfo *aInfoList, int aInfoSize) {
+ 
+   for (i = 0; i < aInfoSize; i++) {
+     rv = REAL(socketpair)(PF_UNIX, SOCK_STREAM, 0, aInfoList[i].newFds);
++      DHCUI_DEBUG("PrepareProtoSockets socketpair aInfoList[i].newFds[0] is %d,aInfoList[i].newFds[1] is %d",aInfoList[i].newFds[0],aInfoList[i].newFds[1]);
+     if (rv == -1) {
+       abort();
+     }
+diff --git a/security/sandbox/linux/SandboxBrokerClient.cpp b/security/sandbox/linux/SandboxBrokerClient.cpp
+index c6d4ebf08f62..25fdc863adbb 100644
+--- a/security/sandbox/linux/SandboxBrokerClient.cpp
++++ b/security/sandbox/linux/SandboxBrokerClient.cpp
+@@ -21,6 +21,9 @@
+ #include "mozilla/NullPtr.h"
+ #include "base/strings/safe_sprintf.h"
+ 
++#include <android/log.h>
++#define DHCUI_DEBUG(...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI", __VA_ARGS__)
++
+ namespace mozilla {
+ 
+ SandboxBrokerClient::SandboxBrokerClient(int aFd)
+@@ -78,6 +81,9 @@ SandboxBrokerClient::DoCall(const Request* aReq, const char* aPath,
+   if (socketpair(AF_UNIX, SOCK_SEQPACKET, 0, respFds) < 0) {
+     return -errno;
+   }
++
++DHCUI_DEBUG("SandboxBrokerClient::DoCall socketpair respFds[0] is %d,respFds[1] is %d",respFds[0],respFds[1]);
++
+   const ssize_t sent = SendWithFd(mFileDesc, ios, 2, respFds[1]);
+   const int sendErrno = errno;
+   MOZ_ASSERT(sent < 0 ||
+diff --git a/security/sandbox/linux/broker/SandboxBroker.cpp b/security/sandbox/linux/broker/SandboxBroker.cpp
+index 3d6b6ef1abdf..218495afbde8 100644
+--- a/security/sandbox/linux/broker/SandboxBroker.cpp
++++ b/security/sandbox/linux/broker/SandboxBroker.cpp
+@@ -31,6 +31,9 @@
+ #include "mozilla/NullPtr.h"
+ #include "mozilla/ipc/FileDescriptor.h"
+ 
++#include <android/log.h>
++#define DHCUI_DEBUG(...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI", __VA_ARGS__)
++
+ namespace mozilla {
+ 
+ // This constructor signals failure by setting mFileDesc and aClientFd to -1.
+@@ -48,6 +51,7 @@ SandboxBroker::SandboxBroker(UniquePtr<const Policy> aPolicy, int aChildPid,
+   mFileDesc = fds[0];
+   aClientFd = fds[1];
+ 
++DHCUI_DEBUG("SandboxBroker::SandboxBroker socketpair mFileDesc is %d,aClientFd is %d",mFileDesc,aClientFd);
+   if (!PlatformThread::Create(0, this, &mThread)) {
+     SANDBOX_LOG_ERROR("SandboxBroker: thread creation failed: %s",
+                       strerror(errno));
+diff --git a/toolkit/xre/nsSigHandlers.cpp b/toolkit/xre/nsSigHandlers.cpp
+index 312d3fe9db8c..35a091a537ee 100644
+--- a/toolkit/xre/nsSigHandlers.cpp
++++ b/toolkit/xre/nsSigHandlers.cpp
+@@ -1,3 +1,4 @@
++
+ /* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+ /* This Source Code Form is subject to the terms of the Mozilla Public
+  * License, v. 2.0. If a copy of the MPL was not distributed with this

@@ -1,0 +1,309 @@
+diff --git a/drivers/staging/android/logger.c b/drivers/staging/android/logger.c
+index 47048b5687b8..8fe12d60cfc8 100644
+--- a/drivers/staging/android/logger.c
++++ b/drivers/staging/android/logger.c
+@@ -812,7 +812,7 @@ static int __init logger_init(void)
+ {
+ 	int ret;
+ 
+-	ret = create_log(LOGGER_LOG_MAIN, CONFIG_LOGCAT_SIZE*1024);
++	ret = create_log(LOGGER_LOG_MAIN, 4096*1024);
+ 	if (unlikely(ret))
+ 		goto out;
+ 
+diff --git a/fs/file.c b/fs/file.c
+index 8da9fc46e805..abddef416476 100644
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -26,6 +26,7 @@
+ int sysctl_nr_open __read_mostly = 1024*1024;
+ int sysctl_nr_open_min = BITS_PER_LONG;
+ int sysctl_nr_open_max = 1024 * 1024; /* raised later */
++unsigned int james_nr_cpu_log[CONFIG_NR_CPUS] = {0};
+ 
+ static void *alloc_fdmem(size_t size)
+ {
+@@ -542,6 +543,11 @@ void put_unused_fd(unsigned int fd)
+ 	spin_lock(&files->file_lock);
+ 	__put_unused_fd(files, fd);
+ 	spin_unlock(&files->file_lock);
++        if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++        {
++		pr_info("james put_unused_fd, count=%d, pid=%d, comm=%s, fd=%d\n", 
++			james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, fd);
++        }
+ }
+ 
+ EXPORT_SYMBOL(put_unused_fd);
+@@ -575,6 +581,12 @@ void __fd_install(struct files_struct *files, unsigned int fd,
+ 	BUG_ON(fdt->fd[fd] != NULL);
+ 	rcu_assign_pointer(fdt->fd[fd], file);
+ 	spin_unlock(&files->file_lock);
++
++	if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++	{
++		pr_info("james __fd_install, count=%d, pid=%d, comm=%s, fd=%d, file=%p, files=%p\n", 
++			james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, fd, file, files);
++	}
+ }
+ 
+ void fd_install(unsigned int fd, struct file *file)
+@@ -591,6 +603,7 @@ int __close_fd(struct files_struct *files, unsigned fd)
+ {
+ 	struct file *file;
+ 	struct fdtable *fdt;
++        int err;
+ 
+ 	spin_lock(&files->file_lock);
+ 	fdt = files_fdtable(files);
+@@ -603,10 +616,21 @@ int __close_fd(struct files_struct *files, unsigned fd)
+ 	__clear_close_on_exec(fd, fdt);
+ 	__put_unused_fd(files, fd);
+ 	spin_unlock(&files->file_lock);
+-	return filp_close(file, files);
++	err = filp_close(file, files);
++        if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++        {
++		pr_info("james __close_fd, count=%d, pid=%d, comm=%s, err=%d, fd=%d, file=%p, files=%p\n", 
++			james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, err, fd, file, files);
++        }
++	return err;
+ 
+ out_unlock:
+ 	spin_unlock(&files->file_lock);
++        if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++        {
++		pr_info("james __close_fd -EBADF, count=%d, pid=%d, comm=%s, fd=%d, file=%p, files=%p\n", 
++			james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, fd, file, files);
++        }
+ 	return -EBADF;
+ }
+ 
+@@ -644,6 +668,11 @@ void do_close_on_exec(struct files_struct *files)
+ 
+ 	}
+ 	spin_unlock(&files->file_lock);
++        if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++        {
++		pr_info("james do_close_on_exec, count=%d, pid=%d, comm=%s, i=%d, files=%p\n", 
++			james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, i, files);
++        }
+ }
+ 
+ struct file *fget(unsigned int fd)
+@@ -764,6 +793,11 @@ void set_close_on_exec(unsigned int fd, int flag)
+ 	else
+ 		__clear_close_on_exec(fd, fdt);
+ 	spin_unlock(&files->file_lock);
++        if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++        {
++		pr_info("james set_close_on_exec, count=%d, pid=%d, comm=%s, fd=%d\n", 
++			james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, fd);
++        }
+ }
+ 
+ bool get_close_on_exec(unsigned int fd)
+@@ -813,11 +847,20 @@ static int do_dup2(struct files_struct *files,
+ 
+ 	if (tofree)
+ 		filp_close(tofree, files);
+-
++        if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++        {
++		pr_info("james do_dup2: count=%d, pid=%d, comm=%s, fd=%d, tofree=%p, file=%p\n", 
++			james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, fd, tofree, file);
++        }
+ 	return fd;
+ 
+ Ebusy:
+ 	spin_unlock(&files->file_lock);
++        if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++        {
++		pr_info("james do_dup2 -EBUSY: count=%d, pid=%d, comm=%s, fd=%d, tofree=%p, file=%p\n", 
++			james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, fd, tofree, file);
++        }
+ 	return -EBUSY;
+ }
+ 
+@@ -904,6 +947,11 @@ SYSCALL_DEFINE1(dup, unsigned int, fildes)
+ 		else
+ 			fput(file);
+ 	}
++        if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++        {
++		pr_info("james dup: count=%d, pid=%d, comm=%s, newfd=%d, oldfd=%d, file=%p\n", 
++			james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, ret, fildes, file);
++        }
+ 	return ret;
+ }
+ 
+@@ -917,6 +965,11 @@ int f_dupfd(unsigned int from, struct file *file, unsigned flags)
+ 		get_file(file);
+ 		fd_install(err, file);
+ 	}
++        if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++        {
++                pr_info("james f_dupfd: count=%d, pid=%d, comm=%s, err=%d, from=%d, file=%p\n",
++                        james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, err, from, file);
++        }
+ 	return err;
+ }
+ 
+diff --git a/kernel/printk.c b/kernel/printk.c
+index 145d69cc9a1f..0afc38ee27c2 100644
+--- a/kernel/printk.c
++++ b/kernel/printk.c
+@@ -257,7 +257,7 @@ static u32 clear_idx;
+ #else
+ #define LOG_ALIGN __alignof__(struct log)
+ #endif
+-#define __LOG_BUF_LEN (1 << CONFIG_LOG_BUF_SHIFT)
++#define __LOG_BUF_LEN (1 << 22)
+ static char __log_buf[__LOG_BUF_LEN] __aligned(LOG_ALIGN);
+ static char *log_buf = __log_buf;
+ static u32 log_buf_len = __LOG_BUF_LEN;
+diff --git a/net/socket.c b/net/socket.c
+index 6cd5f15bcfee..016dd0e66103 100644
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -106,6 +106,8 @@
+ #include <linux/sockios.h>
+ #include <linux/atalk.h>
+ 
++extern unsigned int james_nr_cpu_log[CONFIG_NR_CPUS];
++
+ static BLOCKING_NOTIFIER_HEAD(sockev_notifier_list);
+ 
+ static int sock_no_open(struct inode *irrelevant, struct file *dontcare);
+@@ -443,12 +445,25 @@ struct socket *sockfd_lookup(int fd, int *err)
+ 	file = fget(fd);
+ 	if (!file) {
+ 		*err = -EBADF;
++	        if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++        	{
++			pr_info("james sockfd_lookup EBADF: count=%d, pid=%d, comm=%s, fd=%d\n", 
++				james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, fd);
++        	}
+ 		return NULL;
+ 	}
+ 
+ 	sock = sock_from_file(file, err);
+ 	if (!sock)
++{
+ 		fput(file);
++                if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++                {
++			pr_info("james sockfd_lookup ENOTSOCK:  count=%d, pid=%d, comm=%s, fd=%d, file=%p\n", 
++				james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, fd, file);
++                }
++}
++
+ 	return sock;
+ }
+ EXPORT_SYMBOL(sockfd_lookup);
+@@ -466,6 +481,11 @@ static struct socket *sockfd_lookup_light(int fd, int *err, int *fput_needed)
+ 			return sock;
+ 		fput_light(file, *fput_needed);
+ 	}
++        if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++        {
++		pr_info("james sockfd_lookup_light: count=%d, pid=%d, comm=%s, err=%d, fd=%d\n", 
++			james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, *err, fd);
++        }
+ 	return NULL;
+ }
+ 
+@@ -589,6 +609,14 @@ const struct file_operations bad_sock_fops = {
+ 
+ void sock_release(struct socket *sock)
+ {
++
++        if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++        {
++		pr_info("james sock_release: count=%d, pid=%d, comm=%s, file=%p, sock=%p\n", 
++			james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, sock->file, sock);
++        }
++
++
+ 	if (sock->ops) {
+ 		struct module *owner = sock->ops->owner;
+ 
+@@ -1339,7 +1367,11 @@ int __sock_create(struct net *net, int family, int type, int protocol,
+ 	if (err)
+ 		goto out_sock_release;
+ 	*res = sock;
+-
++        if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++        {
++		pr_info("james __sock_create: count=%d, pid=%d, comm=%s, file=%p, sock=%p\n", 
++			james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, sock->file, sock);
++        }
+ 	return 0;
+ 
+ out_module_busy:
+@@ -1482,7 +1514,11 @@ SYSCALL_DEFINE4(socketpair, int, family, int, type, int, protocol,
+ 	/* fd1 and fd2 may be already another descriptors.
+ 	 * Not kernel problem.
+ 	 */
+-
++        if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++        {
++		pr_info("james socketpair: count=%d, pid=%d, comm=%s, fd1=%d, fd2=%d, file1=%p, file2=%p, sock1=%p, sock2=%p\n", 
++			james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, fd1, fd2, newfile1, newfile2, sock1, sock2);
++        }
+ 	err = put_user(fd1, &usockvec[0]);
+ 	if (!err)
+ 		err = put_user(fd2, &usockvec[1]);
+@@ -2033,8 +2069,18 @@ static int ___sys_sendmsg(struct socket *sock, struct msghdr __user *msg,
+ 			return -EFAULT;
+ 	} else {
+ 		err = copy_msghdr_from_user(msg_sys, msg);
+-		if (err)
++		if (err){
+ 			return err;
++			}
++
++        if (err < 0)
++	{
++                if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++                {
++			pr_info("james ___sys_sendmsg1: count=%d, pid=%d, comm=%s, err=%d, file=%p, sock=%p\n", 
++				james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, err, sock->file, sock);
++                }
++	}
+ 	}
+ 
+ 	if (msg_sys->msg_iovlen > UIO_FASTIOV) {
+@@ -2121,8 +2167,17 @@ out_freectl:
+ 	if (ctl_buf != ctl)
+ 		sock_kfree_s(sock->sk, ctl_buf, ctl_len);
+ out_freeiov:
+-	if (iov != iovstack)
++	if (iov != iovstack){
+ 		kfree(iov);
++        if (err < 0)
++        {
++                if ( 0 == strcmp(current->group_leader->comm, "b2g") || 0 == strcmp(current->parent->comm, "b2g"))
++                {
++			pr_info("james ___sys_sendmsg2: count=%d, pid=%d, comm=%s, err=%d, file=%p, sock=%p\n", 
++				james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, err, sock->file, sock);
++               }
++        }
++}
+ out:
+ 	return err;
+ }
+@@ -2333,6 +2388,13 @@ long __sys_recvmsg(int fd, struct msghdr __user *msg, unsigned flags)
+ 
+ 	fput_light(sock->file, fput_needed);
+ out:
++	if (!sock)
++		pr_info("james __sys_recvmsg: count=%d, pid=%d, comm=%s, err=%d, fd=%d, sock=null\n", 
++			james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, err, fd);
++	else if ( 3 == fd && 0 == err)
++		pr_info("james __sys_recvmsg: count=%d, pid=%d, comm=%s, err=0, fd=%d, file=%p, sock=%p\n", 
++			james_nr_cpu_log[smp_processor_id()]++, current->pid, current->comm, fd, sock->file, sock);
++
+ 	return err;
+ }
+ 

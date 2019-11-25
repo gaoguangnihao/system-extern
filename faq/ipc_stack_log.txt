@@ -1,0 +1,960 @@
+dhcui@linux-3:/local/code/master/kaios/gecko$ adb logcat |grep -i "socketpair"
+01-02 04:42:38.219   568   568 D DHCUI   : PrepareProtoSockets socketpair aInfoList[i].newFds[0] is 31,aInfoList[i].newFds[1] is 32
+01-02 04:42:38.219   568   568 D DHCUI   : PrepareProtoSockets socketpair aInfoList[i].newFds[0] is 33,aInfoList[i].newFds[1] is 34
+01-02 04:42:38.219   568   568 D DHCUI   : PrepareProtoSockets socketpair aInfoList[i].newFds[0] is 35,aInfoList[i].newFds[1] is 36
+01-02 04:42:38.219   568   568 D DHCUI   : PrepareProtoSockets socketpair aInfoList[i].newFds[0] is 37,aInfoList[i].newFds[1] is 38
+01-02 04:42:38.219   568   568 D DHCUI   : PrepareProtoSockets socketpair aInfoList[i].newFds[0] is 39,aInfoList[i].newFds[1] is 40
+01-02 04:42:38.219   568   568 D DHCUI   : PrepareProtoSockets socketpair aInfoList[i].newFds[0] is 41,aInfoList[i].newFds[1] is 42
+01-02 04:42:38.239  2922  2922 D DHCUI   : ReplaceSignalFds socketpair fds[0] is 43,fds[1] is 44
+01-02 04:42:38.239  2922  2922 D DHCUI   : ReplaceSignalFds socketpair fds[0] is 43,fds[1] is 44
+
+
+
+
+
+
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #00 pc 005dd553  /system/b2g/libxul.so (_ZN3IPC7Channel11ChannelImplC2EiNS0_4ModeEPNS0_8ListenerE+186)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #01 pc 005dd5b1  /system/b2g/libxul.so (_ZN3IPC7ChannelC2EiNS0_4ModeEPNS0_8ListenerE+36)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #02 pc 005eec71  /system/b2g/libxul.so (_ZN7mozilla3ipc14OpenDescriptorERKNS0_14FileDescriptorEN3IPC7Channel4ModeE+20)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #03 pc 005ecd0d  /system/b2g/libxul.so (_ZN12_GLOBAL__N_110ParentImpl13CloneToplevelERK8nsTArrayIN7mozilla3ipc17ProtocolFdMappingEEiPNS3_20ProtocolCloneContextE+44)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #04 pc 005e9221  /system/b2g/libxul.so (_ZN7mozilla3ipc17IToplevelProtocol20CloneOpenedToplevelsEPS1_RK8nsTArrayINS0_17ProtocolFdMappingEEiPNS0_20ProtocolCloneContextE+68)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #05 pc 010e574d  /system/b2g/libxul.so (_ZN7mozilla3dom13ContentParentC2EPS1_RK18nsAString_internaliO8nsTArrayINS_3ipc17ProtocolFdMappingEEb+388)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #06 pc 010e60e3  /system/b2g/libxul.so (_ZN7mozilla3dom13ContentParent19OnNewProcessCreatedEjONS_9UniquePtrI8nsTArrayINS_3ipc17ProtocolFdMappingEENS_13DefaultDeleteIS6_EEEEb+62)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #07 pc 010daf81  /system/b2g/libxul.so (_ZN20nsRunnableMethodImplIMN7mozilla3dom13ContentParentEFvjONS0_9UniquePtrI8nsTArrayINS0_3ipc17ProtocolFdMappingEENS0_13DefaultDeleteIS7_EEEEbELb0EJjSB_bEE3RunEv+38)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #08 pc 014cc4dd  /system/b2g/libxul.so (_ZN7mozilla10tasktracer14TracedRunnable3RunEv+26)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #09 pc 003ee3a1  /system/b2g/libxul.so (_ZN8nsThread16ProcessNextEventEbPb+560)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #10 pc 004004ab  /system/b2g/libxul.so (_Z19NS_ProcessNextEventP9nsIThreadb+22)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #11 pc 005e4b29  /system/b2g/libxul.so (_ZN7mozilla3ipc11MessagePump3RunEPN4base11MessagePump8DelegateE+148)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #12 pc 005d5913  /system/b2g/libxul.so (_ZN11MessageLoop3RunEv+14)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #13 pc 011a7869  /system/b2g/libxul.so (_ZN14nsBaseAppShell3RunEv+28)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #14 pc 0155a4fd  /system/b2g/libxul.so (_ZN12nsAppStartup3RunEv+48)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #15 pc 015752bf  /system/b2g/libxul.so (_ZN7XREMain11XRE_mainRunEv+1806)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #16 pc 01575585  /system/b2g/libxul.so (_ZN7XREMain8XRE_mainEiPPcPK12nsXREAppData+444)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #17 pc 0157577b  /system/b2g/libxul.so (XRE_main+78)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #18 pc 00006421  /system/b2g/b2g (_ZL7do_mainiPPc+276)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #19 pc 00006519  /system/b2g/b2g (_Z8b2g_mainiPPKc+160)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #20 pc 000062b7  /system/b2g/b2g (main+326)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #21 pc 00016655  /system/lib/libc.so (__libc_init+44)
+01-01 08:03:24.929  7246  7246 D DHCUI-xxxxxxxxxx: #22 pc 00005db0  /system/b2g/b2g (_start+96)
+
+
+
+01-01 08:35:03.149  7246  7372 I GeckoIPC: [time: 27303157283][7246->7253] [PNuwaParent] Sending  PNuwa::Msg_Fork
+01-01 08:35:03.149  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 126,bytes_written is 64
+01-01 08:35:03.149  7253  7621 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 27,bytes_read is 64,closed_ is 0 this is 0xb05fd000
+01-01 08:35:03.149  7253  7621 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 27,bytes_read is -1,closed_ is 0 this is 0xb05fd000
+01-01 08:35:03.149  7253  7253 I GeckoIPC: [time: 27303157948][7253<-7246] [PNuwaChild] Received  PNuwa::Msg_Fork
+01-01 08:35:03.179  8594  8594 D DHCUI   : Channel::ChannelImpl::ResetFileDescriptor xxxxxxxxxx fd is 555
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #00 pc 005dd243  /system/b2g/libxul.so (_ZN3IPC7Channel11ChannelImpl19ResetFileDescriptorEi+38)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #01 pc 010d6f6b  /system/b2g/libxul.so (_ZN7mozilla3domL15ResetTransportsEPv+22)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #02 pc 00008111  /system/b2g/libmozglue.so (NuwaSpawn+696)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #03 pc 010dae39  /system/b2g/libxul.so (_ZN7mozilla3dom12_GLOBAL__N_113CallNuwaSpawn3RunEv+4)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #04 pc 014cc4fd  /system/b2g/libxul.so (_ZN7mozilla10tasktracer14TracedRunnable3RunEv+26)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #05 pc 003ee3a1  /system/b2g/libxul.so (_ZN8nsThread16ProcessNextEventEbPb+560)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #06 pc 004004ab  /system/b2g/libxul.so (_Z19NS_ProcessNextEventP9nsIThreadb+22)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #07 pc 005e4b41  /system/b2g/libxul.so (_ZN7mozilla3ipc11MessagePump3RunEPN4base11MessagePump8DelegateE+148)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #08 pc 005d5913  /system/b2g/libxul.so (_ZN11MessageLoop3RunEv+14)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #09 pc 011a7881  /system/b2g/libxul.so (_ZN14nsBaseAppShell3RunEv+28)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #10 pc 01575b35  /system/b2g/libxul.so (XRE_RunAppShell+32)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #11 pc 005d5913  /system/b2g/libxul.so (_ZN11MessageLoop3RunEv+14)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #12 pc 01576121  /system/b2g/libxul.so (XRE_InitChildProcess+752)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #13 pc 007498d3  /system/b2g/libxul.so (_Z20content_process_mainiPPc+102)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #14 pc 005ea851  /system/b2g/libxul.so (_ZN7mozilla3ipc20ProcLoaderLoadRunner6DoWorkEv+112)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #15 pc 005eeaad  /system/b2g/libxul.so (XRE_ProcLoaderServiceRun+392)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #16 pc 00006289  /system/b2g/b2g (main+280)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #17 pc 00016655  /system/lib/libc.so (__libc_init+44)
+01-01 18:32:17.559  8594  8594 D DHCUI-xxxxxxxxxx: #18 pc 00005db0  /system/b2g/b2g (_start+96)
+01-01 08:35:03.179  8594  8594 D DHCUI   : Channel::ChannelImpl::ResetFileDescriptor xxxxxxxxxx fd is 12
+01-01 08:35:03.179  8594  8594 D DHCUI   : Channel::ChannelImpl::ResetFileDescriptor xxxxxxxxxx fd is 13
+01-01 08:35:03.179  8594  8594 D DHCUI   : Channel::ChannelImpl::ResetFileDescriptor xxxxxxxxxx fd is 14
+01-01 08:35:03.179  8594  8594 D DHCUI   : Channel::ChannelImpl::ResetFileDescriptor xxxxxxxxxx fd is 19
+01-01 08:35:03.179  8594  8594 D DHCUI   : Channel::ChannelImpl::ResetFileDescriptor xxxxxxxxxx fd is 27
+
+
+01-01 08:35:03.179  7253  7253 I GeckoIPC: [time: 27303193757][7253->7246] [PNuwaChild] Sending  PNuwa::Msg_AddNewProcess
+01-01 08:35:03.179  7253  7621 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 27,bytes_written is 176
+01-01 08:35:03.179  7246  7265 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 126,bytes_read is 176,closed_ is 0 this is 0xa8ce8000
+01-01 08:35:03.179  7246  7265 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 126,bytes_read is -1,closed_ is 0 this is 0xa8ce8000
+01-01 08:35:03.179  7246  7372 I GeckoIPC: [time: 27303194668][7246<-7253] [PNuwaParent] Received  PNuwa::Msg_AddNewProcess
+01-01 08:35:03.179  7246  7372 I GeckoIPC: [time: 27303194817][7246->7253] [PNuwaParent] Sending reply  PNuwa::Reply_AddNewProcess
+01-01 08:35:03.179  7246  7372 D DHCUI   : MessageChannel::DispatchMessage Sending reply seqno=-6, xid=-6
+01-01 08:35:03.179  7246  7265 D DHCUI   : Channel::ChannelImpl::ChannelImpl xxxxxxxxxx 111 fd is 144,pipe_ is 0,mode is 0
+01-01 08:35:03.179  7246  7265 D DHCUI   : Channel::ChannelImpl::ChannelImpl xxxxxxxxxx 222 fd is 144,pipe_ is 144,mode is 0
+
+01-01 08:35:03.219  8594  8594 I GeckoIPC: [time: 27303232842][8594->7246] [PContentChild] Sending  PContent::Msg_AsyncMessage
+01-01 08:35:03.219  8594  8595 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 555,bytes_written is 68
+01-01 08:35:03.219  8594  8595 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 555,bytes_written is 456
+01-01 08:35:03.219  8594  8594 I GeckoIPC: [time: 27303234325][8594->7246] [PContentChild] Sending  PContent::Msg_SyncMessage
+01-01 08:35:03.219  8594  8595 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 555,bytes_written is 164
+
+
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #00 pc 005dd553  /system/b2g/libxul.so (_ZN3IPC7Channel11ChannelImplC2EiNS0_4ModeEPNS0_8ListenerE+186)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #01 pc 005dd5b1  /system/b2g/libxul.so (_ZN3IPC7ChannelC2EiNS0_4ModeEPNS0_8ListenerE+36)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #02 pc 005eec71  /system/b2g/libxul.so (_ZN7mozilla3ipc14OpenDescriptorERKNS0_14FileDescriptorEN3IPC7Channel4ModeE+20)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #03 pc 005dc731  /system/b2g/libxul.so (_ZN16ChildProcessHost13CreateChannelERN7mozilla3ipc14FileDescriptorE+18)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #04 pc 005e2113  /system/b2g/libxul.so (_ZN7mozilla3ipc24GeckoExistingProcessHost17InitializeChannelEv+8)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #05 pc 005e2795  /system/b2g/libxul.so (_ZN7mozilla3ipc21GeckoChildProcessHost21RunPerformAsyncLaunchENSt3__16vectorINS2_12basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEENS7_IS9_EEEEN4base19ProcessArchitectureE+16)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #06 pc 005e272d  /system/b2g/libxul.so (_ZN14RunnableMethodIN7mozilla3ipc21GeckoChildProcessHostEMS2_FbNSt3__16vectorINS3_12basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEENS8_ISA_EEEEN4base19ProcessArchitectureEENS0_5TupleIJSC_SE_EEEE3RunEv+58)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #07 pc 014cc519  /system/b2g/libxul.so (_ZN7mozilla10tasktracer10TracedTask3RunEv+26)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #08 pc 005d5879  /system/b2g/libxul.so (_ZN11MessageLoop7RunTaskEP4Task+18)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #09 pc 005d86db  /system/b2g/libxul.so (_ZN11MessageLoop21DeferOrRunPendingTaskERKNS_11PendingTaskE+26)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #10 pc 005d8765  /system/b2g/libxul.so (_ZN11MessageLoop6DoWorkEv+120)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #11 pc 005d4cc9  /system/b2g/libxul.so (_ZN4base19MessagePumpLibevent3RunEPNS_11MessagePump8DelegateE+28)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #12 pc 005d5913  /system/b2g/libxul.so (_ZN11MessageLoop3RunEv+14)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #13 pc 005da2fb  /system/b2g/libxul.so (_ZN4base6Thread10ThreadMainEv+138)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #14 pc 005d8f8d  /system/b2g/libxul.so (_ZL10ThreadFuncPv+6)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #15 pc 000415cb  /system/lib/libc.so (_ZL15__pthread_startPv+30)
+01-01 08:35:03.359  7246  7265 D DHCUI-xxxxxxxxxx: #16 pc 00019265  /system/lib/libc.so (__start_thread+6)
+01-01 08:35:03.359  7246  7265 D DHCUI   : Channel::ChannelImpl::Connect() waiting_connect_ is 0,pipe_ is 144
+01-01 08:35:03.359  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 144,bytes_written is 68
+01-01 08:35:03.359  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 126,bytes_written is 64
+01-01 08:35:03.359  7246  7265 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 144,bytes_read is 688,closed_ is 0 this is 0xa8d23000
+01-01 08:35:03.359  7246  7265 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 144,bytes_read is -1,closed_ is 0 this is 0xa8d23000
+01-01 08:35:03.359  7253  7621 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 27,bytes_read is 64,closed_ is 0 this is 0xb05fd000
+01-01 08:35:03.359  7253  7621 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 27,bytes_read is -1,closed_ is 0 this is 0xb05fd000
+01-01 08:35:03.359  7253  7253 I GeckoIPC: [time: 27303376608][7253<-7246] [PNuwaChild] Received reply  ???
+01-01 08:35:03.359  7246  7246 D DHCUI   : Channel::ChannelImpl::ChannelImpl xxxxxxxxxx 111 fd is 151,pipe_ is 0,mode is 0
+01-01 08:35:03.359  7246  7246 D DHCUI   : Channel::ChannelImpl::ChannelImpl xxxxxxxxxx 222 fd is 151,pipe_ is 151,mode is 0
+01-01 08:35:03.379  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 68,closed_ is 0 this is 0xb2389000
+01-01 08:35:03.379  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is -1,closed_ is 0 this is 0xb2389000
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #00 pc 005dd553  /system/b2g/libxul.so (_ZN3IPC7Channel11ChannelImplC2EiNS0_4ModeEPNS0_8ListenerE+186)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #01 pc 005dd5b1  /system/b2g/libxul.so (_ZN3IPC7ChannelC2EiNS0_4ModeEPNS0_8ListenerE+36)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #02 pc 005eec71  /system/b2g/libxul.so (_ZN7mozilla3ipc14OpenDescriptorERKNS0_14FileDescriptorEN3IPC7Channel4ModeE+20)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #03 pc 009029db  /system/b2g/libxul.so (_ZN7mozilla6layers34CrossProcessCompositorBridgeParent13CloneToplevelERK8nsTArrayINS_3ipc17ProtocolFdMappingEEiPNS3_20ProtocolCloneContextE+38)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #04 pc 005e9221  /system/b2g/libxul.so (_ZN7mozilla3ipc17IToplevelProtocol20CloneOpenedToplevelsEPS1_RK8nsTArrayINS0_17ProtocolFdMappingEEiPNS0_20ProtocolCloneContextE+68)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #05 pc 010e574d  /system/b2g/libxul.so (_ZN7mozilla3dom13ContentParentC2EPS1_RK18nsAString_internaliO8nsTArrayINS_3ipc17ProtocolFdMappingEEb+388)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #06 pc 010e60e3  /system/b2g/libxul.so (_ZN7mozilla3dom13ContentParent19OnNewProcessCreatedEjONS_9UniquePtrI8nsTArrayINS_3ipc17ProtocolFdMappingEENS_13DefaultDeleteIS6_EEEEb+62)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #07 pc 010daf81  /system/b2g/libxul.so (_ZN20nsRunnableMethodImplIMN7mozilla3dom13ContentParentEFvjONS0_9UniquePtrI8nsTArrayINS0_3ipc17ProtocolFdMappingEENS0_13DefaultDeleteIS7_EEEEbELb0EJjSB_bEE3RunEv+38)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #08 pc 014cc4dd  /system/b2g/libxul.so (_ZN7mozilla10tasktracer14TracedRunnable3RunEv+26)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #09 pc 003ee3a1  /system/b2g/libxul.so (_ZN8nsThread16ProcessNextEventEbPb+560)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #10 pc 004004ab  /system/b2g/libxul.so (_Z19NS_ProcessNextEventP9nsIThreadb+22)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #11 pc 005e4b75  /system/b2g/libxul.so (_ZN7mozilla3ipc11MessagePump3RunEPN4base11MessagePump8DelegateE+224)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #12 pc 005d5913  /system/b2g/libxul.so (_ZN11MessageLoop3RunEv+14)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #13 pc 011a7869  /system/b2g/libxul.so (_ZN14nsBaseAppShell3RunEv+28)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #14 pc 0155a4fd  /system/b2g/libxul.so (_ZN12nsAppStartup3RunEv+48)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #15 pc 015752bf  /system/b2g/libxul.so (_ZN7XREMain11XRE_mainRunEv+1806)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #16 pc 01575585  /system/b2g/libxul.so (_ZN7XREMain8XRE_mainEiPPcPK12nsXREAppData+444)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #17 pc 0157577b  /system/b2g/libxul.so (XRE_main+78)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #18 pc 00006421  /system/b2g/b2g (_ZL7do_mainiPPc+276)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #19 pc 00006519  /system/b2g/b2g (_Z8b2g_mainiPPKc+160)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #20 pc 000062b7  /system/b2g/b2g (main+326)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #21 pc 00016655  /system/lib/libc.so (__libc_init+44)
+01-01 08:35:03.589  7246  7246 D DHCUI-xxxxxxxxxx: #22 pc 00005db0  /system/b2g/b2g (_start+96)
+01-01 08:35:03.589  7246  7246 D DHCUI   : Channel::ChannelImpl::ChannelImpl xxxxxxxxxx 111 fd is 200,pipe_ is 0,mode is 0
+01-01 08:35:03.589  7246  7246 D DHCUI   : Channel::ChannelImpl::ChannelImpl xxxxxxxxxx 222 fd is 200,pipe_ is 200,mode is 0
+01-01 08:35:03.599  7246  7265 D DHCUI   : mChannelState ProcessLink::OnChannelOpened
+01-01 08:35:03.599  7246  7265 D DHCUI   : Channel::ChannelImpl::Connect() waiting_connect_ is 0,pipe_ is 151
+01-01 08:35:03.599  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 151,bytes_written is 68
+01-01 08:35:03.599  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 12,bytes_read is 68,closed_ is 0 this is 0xb23b8000
+01-01 08:35:03.599  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 12,bytes_read is -1,closed_ is 0 this is 0xb23b8000
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #00 pc 005dd553  /system/b2g/libxul.so (_ZN3IPC7Channel11ChannelImplC2EiNS0_4ModeEPNS0_8ListenerE+186)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #01 pc 005dd5b1  /system/b2g/libxul.so (_ZN3IPC7ChannelC2EiNS0_4ModeEPNS0_8ListenerE+36)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #02 pc 005eec71  /system/b2g/libxul.so (_ZN7mozilla3ipc14OpenDescriptorERKNS0_14FileDescriptorEN3IPC7Channel4ModeE+20)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #03 pc 00915cdf  /system/b2g/libxul.so (_ZN7mozilla6layers17ImageBridgeParent13CloneToplevelERK8nsTArrayINS_3ipc17ProtocolFdMappingEEiPNS3_20ProtocolCloneContextE+38)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #04 pc 005e9221  /system/b2g/libxul.so (_ZN7mozilla3ipc17IToplevelProtocol20CloneOpenedToplevelsEPS1_RK8nsTArrayINS0_17ProtocolFdMappingEEiPNS0_20ProtocolCloneContextE+68)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #05 pc 010e574d  /system/b2g/libxul.so (_ZN7mozilla3dom13ContentParentC2EPS1_RK18nsAString_internaliO8nsTArrayINS_3ipc17ProtocolFdMappingEEb+388)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #06 pc 010e60e3  /system/b2g/libxul.so (_ZN7mozilla3dom13ContentParent19OnNewProcessCreatedEjONS_9UniquePtrI8nsTArrayINS_3ipc17ProtocolFdMappingEENS_13DefaultDeleteIS6_EEEEb+62)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #07 pc 010daf81  /system/b2g/libxul.so (_ZN20nsRunnableMethodImplIMN7mozilla3dom13ContentParentEFvjONS0_9UniquePtrI8nsTArrayINS0_3ipc17ProtocolFdMappingEENS0_13DefaultDeleteIS7_EEEEbELb0EJjSB_bEE3RunEv+38)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #08 pc 014cc4dd  /system/b2g/libxul.so (_ZN7mozilla10tasktracer14TracedRunnable3RunEv+26)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #09 pc 003ee3a1  /system/b2g/libxul.so (_ZN8nsThread16ProcessNextEventEbPb+560)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #10 pc 004004ab  /system/b2g/libxul.so (_Z19NS_ProcessNextEventP9nsIThreadb+22)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #11 pc 005e4b75  /system/b2g/libxul.so (_ZN7mozilla3ipc11MessagePump3RunEPN4base11MessagePump8DelegateE+224)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #12 pc 005d5913  /system/b2g/libxul.so (_ZN11MessageLoop3RunEv+14)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #13 pc 011a7869  /system/b2g/libxul.so (_ZN14nsBaseAppShell3RunEv+28)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #14 pc 0155a4fd  /system/b2g/libxul.so (_ZN12nsAppStartup3RunEv+48)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #15 pc 015752bf  /system/b2g/libxul.so (_ZN7XREMain11XRE_mainRunEv+1806)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #16 pc 01575585  /system/b2g/libxul.so (_ZN7XREMain8XRE_mainEiPPcPK12nsXREAppData+444)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #17 pc 0157577b  /system/b2g/libxul.so (XRE_main+78)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #18 pc 00006421  /system/b2g/b2g (_ZL7do_mainiPPc+276)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #19 pc 00006519  /system/b2g/b2g (_Z8b2g_mainiPPKc+160)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #20 pc 000062b7  /system/b2g/b2g (main+326)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #21 pc 00016655  /system/lib/libc.so (__libc_init+44)
+01-01 08:35:03.819  7246  7246 D DHCUI-xxxxxxxxxx: #22 pc 00005db0  /system/b2g/b2g (_start+96)
+01-01 08:35:03.819  7246  7246 D DHCUI   : Channel::ChannelImpl::ChannelImpl xxxxxxxxxx 111 fd is 209,pipe_ is 0,mode is 0
+01-01 08:35:03.819  7246  7246 D DHCUI   : Channel::ChannelImpl::ChannelImpl xxxxxxxxxx 222 fd is 209,pipe_ is 209,mode is 0
+01-01 08:35:03.819  7246  7265 D DHCUI   : mChannelState ProcessLink::OnChannelOpened
+01-01 08:35:03.819  7246  7265 D DHCUI   : Channel::ChannelImpl::Connect() waiting_connect_ is 0,pipe_ is 200
+01-01 08:35:03.819  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 200,bytes_written is 68
+01-01 08:35:03.819  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 13,bytes_read is 68,closed_ is 0 this is 0xafd01000
+01-01 08:35:03.819  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 13,bytes_read is -1,closed_ is 0 this is 0xafd01000
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #00 pc 005dd553  /system/b2g/libxul.so (_ZN3IPC7Channel11ChannelImplC2EiNS0_4ModeEPNS0_8ListenerE+186)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #01 pc 005dd5b1  /system/b2g/libxul.so (_ZN3IPC7ChannelC2EiNS0_4ModeEPNS0_8ListenerE+36)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #02 pc 005eec71  /system/b2g/libxul.so (_ZN7mozilla3ipc14OpenDescriptorERKNS0_14FileDescriptorEN3IPC7Channel4ModeE+20)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #03 pc 00954053  /system/b2g/libxul.so (_ZN7mozilla3gfx15VRManagerParent13CloneToplevelERK8nsTArrayINS_3ipc17ProtocolFdMappingEEiPNS3_20ProtocolCloneContextE+38)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #04 pc 005e9221  /system/b2g/libxul.so (_ZN7mozilla3ipc17IToplevelProtocol20CloneOpenedToplevelsEPS1_RK8nsTArrayINS0_17ProtocolFdMappingEEiPNS0_20ProtocolCloneContextE+68)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #05 pc 010e574d  /system/b2g/libxul.so (_ZN7mozilla3dom13ContentParentC2EPS1_RK18nsAString_internaliO8nsTArrayINS_3ipc17ProtocolFdMappingEEb+388)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #06 pc 010e60e3  /system/b2g/libxul.so (_ZN7mozilla3dom13ContentParent19OnNewProcessCreatedEjONS_9UniquePtrI8nsTArrayINS_3ipc17ProtocolFdMappingEENS_13DefaultDeleteIS6_EEEEb+62)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #07 pc 010daf81  /system/b2g/libxul.so (_ZN20nsRunnableMethodImplIMN7mozilla3dom13ContentParentEFvjONS0_9UniquePtrI8nsTArrayINS0_3ipc17ProtocolFdMappingEENS0_13DefaultDeleteIS7_EEEEbELb0EJjSB_bEE3RunEv+38)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #08 pc 014cc4dd  /system/b2g/libxul.so (_ZN7mozilla10tasktracer14TracedRunnable3RunEv+26)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #09 pc 003ee3a1  /system/b2g/libxul.so (_ZN8nsThread16ProcessNextEventEbPb+560)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #10 pc 004004ab  /system/b2g/libxul.so (_Z19NS_ProcessNextEventP9nsIThreadb+22)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #11 pc 005e4b75  /system/b2g/libxul.so (_ZN7mozilla3ipc11MessagePump3RunEPN4base11MessagePump8DelegateE+224)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #12 pc 005d5913  /system/b2g/libxul.so (_ZN11MessageLoop3RunEv+14)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #13 pc 011a7869  /system/b2g/libxul.so (_ZN14nsBaseAppShell3RunEv+28)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #14 pc 0155a4fd  /system/b2g/libxul.so (_ZN12nsAppStartup3RunEv+48)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #15 pc 015752bf  /system/b2g/libxul.so (_ZN7XREMain11XRE_mainRunEv+1806)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #16 pc 01575585  /system/b2g/libxul.so (_ZN7XREMain8XRE_mainEiPPcPK12nsXREAppData+444)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #17 pc 0157577b  /system/b2g/libxul.so (XRE_main+78)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #18 pc 00006421  /system/b2g/b2g (_ZL7do_mainiPPc+276)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #19 pc 00006519  /system/b2g/b2g (_Z8b2g_mainiPPKc+160)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #20 pc 000062b7  /system/b2g/b2g (main+326)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #21 pc 00016655  /system/lib/libc.so (__libc_init+44)
+01-01 08:35:04.049  7246  7246 D DHCUI-xxxxxxxxxx: #22 pc 00005db0  /system/b2g/b2g (_start+96)
+01-01 08:35:04.049  7246  7246 D DHCUI   : Channel::ChannelImpl::ChannelImpl xxxxxxxxxx 111 fd is 248,pipe_ is 0,mode is 0
+01-01 08:35:04.049  7246  7246 D DHCUI   : Channel::ChannelImpl::ChannelImpl xxxxxxxxxx 222 fd is 248,pipe_ is 248,mode is 0
+01-01 08:35:04.049  7246  7265 D DHCUI   : mChannelState ProcessLink::OnChannelOpened
+01-01 08:35:04.049  7246  7265 D DHCUI   : Channel::ChannelImpl::Connect() waiting_connect_ is 0,pipe_ is 209
+01-01 08:35:04.049  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 209,bytes_written is 68
+01-01 08:35:04.049  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 14,bytes_read is 68,closed_ is 0 this is 0xafd0f000
+01-01 08:35:04.049  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 14,bytes_read is -1,closed_ is 0 this is 0xafd0f000
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #00 pc 005dd553  /system/b2g/libxul.so (_ZN3IPC7Channel11ChannelImplC2EiNS0_4ModeEPNS0_8ListenerE+186)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #01 pc 005dd5b1  /system/b2g/libxul.so (_ZN3IPC7ChannelC2EiNS0_4ModeEPNS0_8ListenerE+36)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #02 pc 005eec71  /system/b2g/libxul.so (_ZN7mozilla3ipc14OpenDescriptorERKNS0_14FileDescriptorEN3IPC7Channel4ModeE+20)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #03 pc 00912b27  /system/b2g/libxul.so (_ZN7mozilla6layers25SharedBufferManagerParent13CloneToplevelERK8nsTArrayINS_3ipc17ProtocolFdMappingEEiPNS3_20ProtocolCloneContextE+38)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #04 pc 005e9221  /system/b2g/libxul.so (_ZN7mozilla3ipc17IToplevelProtocol20CloneOpenedToplevelsEPS1_RK8nsTArrayINS0_17ProtocolFdMappingEEiPNS0_20ProtocolCloneContextE+68)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #05 pc 010e574d  /system/b2g/libxul.so (_ZN7mozilla3dom13ContentParentC2EPS1_RK18nsAString_internaliO8nsTArrayINS_3ipc17ProtocolFdMappingEEb+388)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #06 pc 010e60e3  /system/b2g/libxul.so (_ZN7mozilla3dom13ContentParent19OnNewProcessCreatedEjONS_9UniquePtrI8nsTArrayINS_3ipc17ProtocolFdMappingEENS_13DefaultDeleteIS6_EEEEb+62)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #07 pc 010daf81  /system/b2g/libxul.so (_ZN20nsRunnableMethodImplIMN7mozilla3dom13ContentParentEFvjONS0_9UniquePtrI8nsTArrayINS0_3ipc17ProtocolFdMappingEENS0_13DefaultDeleteIS7_EEEEbELb0EJjSB_bEE3RunEv+38)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #08 pc 014cc4dd  /system/b2g/libxul.so (_ZN7mozilla10tasktracer14TracedRunnable3RunEv+26)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #09 pc 003ee3a1  /system/b2g/libxul.so (_ZN8nsThread16ProcessNextEventEbPb+560)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #10 pc 004004ab  /system/b2g/libxul.so (_Z19NS_ProcessNextEventP9nsIThreadb+22)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #11 pc 005e4b75  /system/b2g/libxul.so (_ZN7mozilla3ipc11MessagePump3RunEPN4base11MessagePump8DelegateE+224)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #12 pc 005d5913  /system/b2g/libxul.so (_ZN11MessageLoop3RunEv+14)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #13 pc 011a7869  /system/b2g/libxul.so (_ZN14nsBaseAppShell3RunEv+28)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #14 pc 0155a4fd  /system/b2g/libxul.so (_ZN12nsAppStartup3RunEv+48)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #15 pc 015752bf  /system/b2g/libxul.so (_ZN7XREMain11XRE_mainRunEv+1806)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #16 pc 01575585  /system/b2g/libxul.so (_ZN7XREMain8XRE_mainEiPPcPK12nsXREAppData+444)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #17 pc 0157577b  /system/b2g/libxul.so (XRE_main+78)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #18 pc 00006421  /system/b2g/b2g (_ZL7do_mainiPPc+276)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #19 pc 00006519  /system/b2g/b2g (_Z8b2g_mainiPPKc+160)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #20 pc 000062b7  /system/b2g/b2g (main+326)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #21 pc 00016655  /system/lib/libc.so (__libc_init+44)
+01-01 08:35:04.279  7246  7246 D DHCUI-xxxxxxxxxx: #22 pc 00005db0  /system/b2g/b2g (_start+96)
+01-01 08:35:04.279  7246  7246 D DHCUI   : Channel::ChannelImpl::ChannelImpl xxxxxxxxxx 111 fd is 251,pipe_ is 0,mode is 0
+01-01 08:35:04.279  7246  7246 D DHCUI   : Channel::ChannelImpl::ChannelImpl xxxxxxxxxx 222 fd is 251,pipe_ is 251,mode is 0
+01-01 08:35:04.279  7246  7265 D DHCUI   : mChannelState ProcessLink::OnChannelOpened
+01-01 08:35:04.279  7246  7265 D DHCUI   : Channel::ChannelImpl::Connect() waiting_connect_ is 0,pipe_ is 248
+01-01 08:35:04.279  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 248,bytes_written is 68
+01-01 08:35:04.279  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 19,bytes_read is 68,closed_ is 0 this is 0xafd12000
+01-01 08:35:04.279  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 19,bytes_read is -1,closed_ is 0 this is 0xafd12000
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #00 pc 005dd553  /system/b2g/libxul.so (_ZN3IPC7Channel11ChannelImplC2EiNS0_4ModeEPNS0_8ListenerE+186)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #01 pc 005dd5b1  /system/b2g/libxul.so (_ZN3IPC7ChannelC2EiNS0_4ModeEPNS0_8ListenerE+36)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #02 pc 005eec71  /system/b2g/libxul.so (_ZN7mozilla3ipc14OpenDescriptorERKNS0_14FileDescriptorEN3IPC7Channel4ModeE+20)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #03 pc 005ecd0d  /system/b2g/libxul.so (_ZN12_GLOBAL__N_110ParentImpl13CloneToplevelERK8nsTArrayIN7mozilla3ipc17ProtocolFdMappingEEiPNS3_20ProtocolCloneContextE+44)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #04 pc 005e9221  /system/b2g/libxul.so (_ZN7mozilla3ipc17IToplevelProtocol20CloneOpenedToplevelsEPS1_RK8nsTArrayINS0_17ProtocolFdMappingEEiPNS0_20ProtocolCloneContextE+68)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #05 pc 010e574d  /system/b2g/libxul.so (_ZN7mozilla3dom13ContentParentC2EPS1_RK18nsAString_internaliO8nsTArrayINS_3ipc17ProtocolFdMappingEEb+388)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #06 pc 010e60e3  /system/b2g/libxul.so (_ZN7mozilla3dom13ContentParent19OnNewProcessCreatedEjONS_9UniquePtrI8nsTArrayINS_3ipc17ProtocolFdMappingEENS_13DefaultDeleteIS6_EEEEb+62)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #07 pc 010daf81  /system/b2g/libxul.so (_ZN20nsRunnableMethodImplIMN7mozilla3dom13ContentParentEFvjONS0_9UniquePtrI8nsTArrayINS0_3ipc17ProtocolFdMappingEENS0_13DefaultDeleteIS7_EEEEbELb0EJjSB_bEE3RunEv+38)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #08 pc 014cc4dd  /system/b2g/libxul.so (_ZN7mozilla10tasktracer14TracedRunnable3RunEv+26)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #09 pc 003ee3a1  /system/b2g/libxul.so (_ZN8nsThread16ProcessNextEventEbPb+560)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #10 pc 004004ab  /system/b2g/libxul.so (_Z19NS_ProcessNextEventP9nsIThreadb+22)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #11 pc 005e4b75  /system/b2g/libxul.so (_ZN7mozilla3ipc11MessagePump3RunEPN4base11MessagePump8DelegateE+224)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #12 pc 005d5913  /system/b2g/libxul.so (_ZN11MessageLoop3RunEv+14)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #13 pc 011a7869  /system/b2g/libxul.so (_ZN14nsBaseAppShell3RunEv+28)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #14 pc 0155a4fd  /system/b2g/libxul.so (_ZN12nsAppStartup3RunEv+48)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #15 pc 015752bf  /system/b2g/libxul.so (_ZN7XREMain11XRE_mainRunEv+1806)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #16 pc 01575585  /system/b2g/libxul.so (_ZN7XREMain8XRE_mainEiPPcPK12nsXREAppData+444)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #17 pc 0157577b  /system/b2g/libxul.so (XRE_main+78)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #18 pc 00006421  /system/b2g/b2g (_ZL7do_mainiPPc+276)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #19 pc 00006519  /system/b2g/b2g (_Z8b2g_mainiPPKc+160)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #20 pc 000062b7  /system/b2g/b2g (main+326)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #21 pc 00016655  /system/lib/libc.so (__libc_init+44)
+01-01 08:35:04.499  7246  7246 D DHCUI-xxxxxxxxxx: #22 pc 00005db0  /system/b2g/b2g (_start+96)
+01-01 08:35:04.499  7246  7265 D DHCUI   : mChannelState ProcessLink::OnChannelOpened
+01-01 08:35:04.499  7246  7265 D DHCUI   : Channel::ChannelImpl::Connect() waiting_connect_ is 0,pipe_ is 251
+01-01 08:35:04.499  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 251,bytes_written is 68
+01-01 08:35:04.499  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 27,bytes_read is 68,closed_ is 0 this is 0xb05fd000
+01-01 08:35:04.499  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 27,bytes_read is -1,closed_ is 0 this is 0xb05fd000
+01-01 08:35:04.499  7246  7265 D DHCUI   : mChannelState ProcessLink::OnTakeConnectedChannel
+01-01 08:35:04.499  7246  7246 I GeckoIPC: [time: 27304510582][7246->8594] [PContentParent] Sending  PContent::Msg_AppInfo
+01-01 08:35:04.499  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 144,bytes_written is 212
+01-01 08:35:04.499  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 212,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.499  7246  7246 I GeckoIPC: [time: 27304510950][7246->8594] [PContentParent] Sending  PContent::Msg_NotifyProcessPriorityChanged
+01-01 08:35:04.499  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is -1,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.499  7246  7246 I GeckoIPC: [time: 27304511102][7246->8594] [PContentParent] Sending  PContent::Msg_AppInit
+01-01 08:35:04.499  7246  7246 I GeckoIPC: [time: 27304511186][7246->8594] [PContentParent] Sending  PContent::Msg_LoadAndRegisterSheet
+01-01 08:35:04.499  7246  7246 I GeckoIPC: [time: 27304511249][7246->8594] [PContentParent] Sending  PContent::Msg_LoadAndRegisterSheet
+01-01 08:35:04.499  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 144,bytes_written is 72
+01-01 08:35:04.499  7246  7246 I GeckoIPC: [time: 27304511309][7246->8594] [PContentParent] Sending  PContent::Msg_LoadAndRegisterSheet
+01-01 08:35:04.499  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 144,bytes_written is 64
+01-01 08:35:04.499  7246  7246 I GeckoIPC: [time: 27304511419][7246->8594] [PContentParent] Sending  PContent::Msg_SetProcessSandbox
+01-01 08:35:04.499  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 144,bytes_written is 308
+01-01 08:35:04.499  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 144,bytes_written is 332
+01-01 08:35:04.499  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 144,bytes_written is 332
+01-01 08:35:04.499  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 144,bytes_written is 68
+01-01 08:35:04.499  7246  7246 I GeckoIPC: [time: 27304511685][7246->8594] [PContentParent] Sending  PContent::Msg_SetOffline
+01-01 08:35:04.499  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 1176,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.499  7246  7246 I GeckoIPC: [time: 27304511761][7246->8594] [PContentParent] Sending  PContent::Msg_SetConnectivity
+01-01 08:35:04.499  7246  7246 I GeckoIPC: [time: 27304511952][7246->7246] [PTextureChild] Sending  PTexture::Msg_Destroy
+01-01 08:35:04.499  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is -1,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.499  7246  7404 I GeckoIPC: [time: 27304512085][7246<-7246] [PTextureParent] Received  PTexture::Msg_Destroy
+01-01 08:35:04.499  7246  7404 I GeckoIPC: [time: 27304512292][7246->7246] [PTextureParent] Sending  PTexture::Msg___delete__
+01-01 08:35:04.499  7246  7406 I GeckoIPC: [time: 27304512580][7246->-1] [PSharedBufferManagerParent] Sending  PSharedBufferManager::Msg_DropGrallocBuffer
+01-01 08:35:04.499  7246  7405 I GeckoIPC: [time: 27304512711][7246<-7246] [PSharedBufferManagerChild] Received  PSharedBufferManager::Msg_DropGrallocBuffer
+01-01 08:35:04.499  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 144,bytes_written is 68
+01-01 08:35:04.499  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 144,bytes_written is 68
+01-01 08:35:04.499  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 136,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.499  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is -1,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.509  7246  7246 I GeckoIPC: [time: 27304521273][7246<-8594] [PContentParent] Received  PContent::Msg_AsyncMessage
+01-01 08:35:04.509  7246  7372 I GeckoIPC: [time: 27304521277][7246->8594] [PNuwaParent] Sending  PNuwa::Msg___delete__
+01-01 08:35:04.509  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 251,bytes_written is 68
+01-01 08:35:04.509  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 27,bytes_read is 68,closed_ is 0 this is 0xb05fd000
+01-01 08:35:04.509  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 27,bytes_read is -1,closed_ is 0 this is 0xb05fd000
+01-01 08:35:04.509  7246  7246 I GeckoIPC: [time: 27304523093][7246<-8594] [PContentParent] Received  PContent::Msg_SyncMessage
+01-01 08:35:04.529  7246  7246 I GeckoIPC: [time: 27304540095][7246<-7246] [PTextureChild] Received  PTexture::Msg___delete__
+01-01 08:35:04.549  7246  7246 I GeckoIPC: [time: 27304560532][7246->8594] [PContentParent] Sending reply  PContent::Reply_SyncMessage
+01-01 08:35:04.549  7246  7246 D DHCUI   : MessageChannel::DispatchMessage Sending reply seqno=-13, xid=-13
+01-01 08:35:04.549  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 144,bytes_written is 161920
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 4096,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 2176,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is -1,closed_ is 0 this is 0xb2389000
+01-01 08:35:04.549  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 144,bytes_written is 161920
+
+
+APP 里操作了一个按键动作 
+
+01-01 08:43:50.139  7246  7246 I GeckoIPC: [time: 27830152466][7246->7246] [PBackgroundIDBDatabaseChild] Sending  PBackgroundIDBDatabase::Msg_PBackgroundIDBTransactionConstructor
+01-01 08:43:50.139  7246  7372 I GeckoIPC: [time: 27830153376][7246<-7246] [PBackgroundIDBDatabaseParent] Received  PBackgroundIDBDatabase::Msg_PBackgroundIDBTransactionConstructor
+01-01 08:43:50.139  7246  7246 I GeckoIPC: [time: 27830154323][7246->7246] [PBackgroundIDBTransactionChild] Sending  PBackgroundIDBTransaction::Msg_PBackgroundIDBRequestConstructor
+01-01 08:43:50.139  7246  7372 I GeckoIPC: [time: 27830154565][7246<-7246] [PBackgroundIDBTransactionParent] Received  PBackgroundIDBTransaction::Msg_PBackgroundIDBRequestConstructor
+01-01 08:43:50.139  7246  7372 I GeckoIPC: [time: 27830155342][7246->7246] [PBackgroundIDBRequestParent] Sending  PBackgroundIDBRequest::Msg___delete__
+01-01 08:43:50.139  7246  7246 I GeckoIPC: [time: 27830156223][7246->7246] [PBackgroundIDBDatabaseChild] Sending  PBackgroundIDBDatabase::Msg_PBackgroundIDBTransactionConstructor
+01-01 08:43:50.139  7246  7372 I GeckoIPC: [time: 27830156558][7246<-7246] [PBackgroundIDBDatabaseParent] Received  PBackgroundIDBDatabase::Msg_PBackgroundIDBTransactionConstructor
+01-01 08:43:50.139  7246  7246 I GeckoIPC: [time: 27830157272][7246->7246] [PBackgroundIDBTransactionChild] Sending  PBackgroundIDBTransaction::Msg_PBackgroundIDBRequestConstructor
+01-01 08:43:50.139  7246  7372 I GeckoIPC: [time: 27830157604][7246<-7246] [PBackgroundIDBTransactionParent] Received  PBackgroundIDBTransaction::Msg_PBackgroundIDBRequestConstructor
+01-01 08:43:50.139  7246  7246 I GeckoIPC: [time: 27830158483][7246->7246] [PBackgroundIDBDatabaseChild] Sending  PBackgroundIDBDatabase::Msg_PBackgroundIDBTransactionConstructor
+01-01 08:43:50.149  7246  7372 I GeckoIPC: [time: 27830159138][7246<-7246] [PBackgroundIDBDatabaseParent] Received  PBackgroundIDBDatabase::Msg_PBackgroundIDBTransactionConstructor
+01-01 08:43:50.149  7246  7246 I GeckoIPC: [time: 27830162138][7246->7246] [PBackgroundIDBTransactionChild] Sending  PBackgroundIDBTransaction::Msg_PBackgroundIDBRequestConstructor
+01-01 08:43:50.149  7246  7372 I GeckoIPC: [time: 27830162815][7246<-7246] [PBackgroundIDBTransactionParent] Received  PBackgroundIDBTransaction::Msg_PBackgroundIDBRequestConstructor
+01-01 08:43:50.149  7246  7246 I GeckoIPC: [time: 27830163929][7246->7246] [PBackgroundIDBDatabaseChild] Sending  PBackgroundIDBDatabase::Msg_PBackgroundIDBTransactionConstructor
+01-01 08:43:50.149  7246  7372 I GeckoIPC: [time: 27830164321][7246<-7246] [PBackgroundIDBDatabaseParent] Received  PBackgroundIDBDatabase::Msg_PBackgroundIDBTransactionConstructor
+01-01 08:43:50.149  7246  7246 I GeckoIPC: [time: 27830164452][7246->7246] [PBackgroundIDBTransactionChild] Sending  PBackgroundIDBTransaction::Msg_PBackgroundIDBRequestConstructor
+01-01 08:43:50.149  7246  7372 I GeckoIPC: [time: 27830164909][7246<-7246] [PBackgroundIDBTransactionParent] Received  PBackgroundIDBTransaction::Msg_PBackgroundIDBRequestConstructor
+01-01 08:43:50.149  7246  7246 I GeckoIPC: [time: 27830165381][7246->7246] [PBackgroundIDBDatabaseChild] Sending  PBackgroundIDBDatabase::Msg_PBackgroundIDBTransactionConstructor
+01-01 08:43:50.149  7246  7372 I GeckoIPC: [time: 27830165707][7246<-7246] [PBackgroundIDBDatabaseParent] Received  PBackgroundIDBDatabase::Msg_PBackgroundIDBTransactionConstructor
+01-01 08:43:50.149  7246  7246 I GeckoIPC: [time: 27830166018][7246->7246] [PBackgroundIDBTransactionChild] Sending  PBackgroundIDBTransaction::Msg_PBackgroundIDBRequestConstructor
+01-01 08:43:50.149  7246  7372 I GeckoIPC: [time: 27830166392][7246<-7246] [PBackgroundIDBTransactionParent] Received  PBackgroundIDBTransaction::Msg_PBackgroundIDBRequestConstructor
+01-01 08:43:50.149  7246  7246 I GeckoIPC: [time: 27830167306][7246<-7246] [PBackgroundIDBRequestChild] Received  PBackgroundIDBRequest::Msg___delete__
+01-01 08:43:50.149  7246  7246 I GeckoIPC: [time: 27830168030][7246->7246] [PBackgroundIDBTransactionChild] Sending  PBackgroundIDBTransaction::Msg_Commit
+01-01 08:43:50.149  7246  7372 I GeckoIPC: [time: 27830168392][7246<-7246] [PBackgroundIDBTransactionParent] Received  PBackgroundIDBTransaction::Msg_Commit
+01-01 08:43:50.159  7246  7372 I GeckoIPC: [time: 27830169345][7246->7246] [PBackgroundIDBTransactionParent] Sending  PBackgroundIDBTransaction::Msg_Complete
+01-01 08:43:50.159  7246  7246 I GeckoIPC: [time: 27830170275][7246<-7246] [PBackgroundIDBTransactionChild] Received  PBackgroundIDBTransaction::Msg_Complete
+01-01 08:43:50.159  7246  7372 I GeckoIPC: [time: 27830170968][7246->7246] [PBackgroundIDBRequestParent] Sending  PBackgroundIDBRequest::Msg___delete__
+01-01 08:43:50.159  7246  7246 I GeckoIPC: [time: 27830171932][7246<-7246] [PBackgroundIDBRequestChild] Received  PBackgroundIDBRequest::Msg___delete__
+01-01 08:43:50.159  7246  7246 I GeckoIPC: [time: 27830172514][7246->7246] [PBackgroundIDBTransactionChild] Sending  PBackgroundIDBTransaction::Msg_Commit
+01-01 08:43:50.159  7246  7372 I GeckoIPC: [time: 27830173000][7246<-7246] [PBackgroundIDBTransactionParent] Received  PBackgroundIDBTransaction::Msg_Commit
+01-01 08:43:50.159  7246  7372 I GeckoIPC: [time: 27830174260][7246->7246] [PBackgroundIDBTransactionParent] Sending  PBackgroundIDBTransaction::Msg_Complete
+01-01 08:43:50.159  7246  7246 I GeckoIPC: [time: 27830174940][7246<-7246] [PBackgroundIDBTransactionChild] Received  PBackgroundIDBTransaction::Msg_Complete
+01-01 08:43:50.159  7246  7372 I GeckoIPC: [time: 27830175779][7246->7246] [PBackgroundIDBRequestParent] Sending  PBackgroundIDBRequest::Msg___delete__
+01-01 08:43:50.159  7246  7246 I GeckoIPC: [time: 27830177243][7246<-7246] [PBackgroundIDBRequestChild] Received  PBackgroundIDBRequest::Msg___delete__
+01-01 08:43:50.159  7246  7246 I GeckoIPC: [time: 27830177880][7246->7246] [PBackgroundIDBTransactionChild] Sending  PBackgroundIDBTransaction::Msg_Commit
+01-01 08:43:50.159  7246  7372 I GeckoIPC: [time: 27830178479][7246<-7246] [PBackgroundIDBTransactionParent] Received  PBackgroundIDBTransaction::Msg_Commit
+01-01 08:43:50.169  7246  7372 I GeckoIPC: [time: 27830179487][7246->7246] [PBackgroundIDBTransactionParent] Sending  PBackgroundIDBTransaction::Msg_Complete
+01-01 08:43:50.169  7246  7372 I GeckoIPC: [time: 27830180423][7246->7246] [PBackgroundIDBRequestParent] Sending  PBackgroundIDBRequest::Msg___delete__
+01-01 08:43:50.169  7246  7246 I GeckoIPC: [time: 27830180793][7246<-7246] [PBackgroundIDBTransactionChild] Received  PBackgroundIDBTransaction::Msg_Complete
+01-01 08:43:50.169  7246  7246 I GeckoIPC: [time: 27830181621][7246<-7246] [PBackgroundIDBRequestChild] Received  PBackgroundIDBRequest::Msg___delete__
+01-01 08:43:50.169  7246  7246 I GeckoIPC: [time: 27830184089][7246->7246] [PBackgroundIDBTransactionChild] Sending  PBackgroundIDBTransaction::Msg_Commit
+01-01 08:43:50.169  7246  7372 I GeckoIPC: [time: 27830184693][7246<-7246] [PBackgroundIDBTransactionParent] Received  PBackgroundIDBTransaction::Msg_Commit
+01-01 08:43:50.169  7246  7372 I GeckoIPC: [time: 27830185408][7246->7246] [PBackgroundIDBTransactionParent] Sending  PBackgroundIDBTransaction::Msg_Complete
+01-01 08:43:50.169  7246  7372 I GeckoIPC: [time: 27830185943][7246->7246] [PBackgroundIDBRequestParent] Sending  PBackgroundIDBRequest::Msg___delete__
+01-01 08:43:50.179  7246  7246 I GeckoIPC: [time: 27830189872][7246<-7246] [PBackgroundIDBTransactionChild] Received  PBackgroundIDBTransaction::Msg_Complete
+01-01 08:43:50.179  7246  7246 I GeckoIPC: [time: 27830190165][7246<-7246] [PBackgroundIDBRequestChild] Received  PBackgroundIDBRequest::Msg___delete__
+01-01 08:43:50.179  7246  7246 I GeckoIPC: [time: 27830190948][7246->7246] [PBackgroundIDBTransactionChild] Sending  PBackgroundIDBTransaction::Msg_Commit
+01-01 08:43:50.179  7246  7372 I GeckoIPC: [time: 27830191145][7246<-7246] [PBackgroundIDBTransactionParent] Received  PBackgroundIDBTransaction::Msg_Commit
+01-01 08:43:50.179  7246  7372 I GeckoIPC: [time: 27830191564][7246->7246] [PBackgroundIDBTransactionParent] Sending  PBackgroundIDBTransaction::Msg_Complete
+01-01 08:43:50.179  7246  7246 I GeckoIPC: [time: 27830193185][7246<-7246] [PBackgroundIDBTransactionChild] Received  PBackgroundIDBTransaction::Msg_Complete
+01-01 08:43:50.179  7246  7246 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-01 08:43:50.179  7246  7246 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-01 08:43:50.179  7246  7246 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-01 08:43:50.179  7246  7246 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-01 08:43:50.249  7366  7366 E sdcard  : missing packages.list; retrying
+01-01 08:43:51.729  7246  7246 I GeckoIPC: [time: 27831739778][7246->8243] [PContentParent] Sending  PContent::Msg_NotifyIdleObserver
+01-01 08:43:51.729  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 157,bytes_written is 108
+01-01 08:43:51.729  8243  8244 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 108,closed_ is 0 this is 0xb2389000
+01-01 08:43:51.729  8243  8243 I GeckoIPC: [time: 27831740645][8243<-7246] [PContentChild] Received  PContent::Msg_NotifyIdleObserver
+01-01 08:43:51.729  8243  8244 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is -1,closed_ is 0 this is 0xb2389000
+01-01 08:43:51.829  7246  7246 I Gecko   : [BrowserElement] event type: keydown, key: ArrowRight, target: [object HTMLIFrameElement], src: app://gallery.gaiamobile.org/index.html, id: browser5, class: browser
+01-01 08:43:51.829  7246  7246 I GeckoIPC: [time: 27831843928][7246->8594] [PBrowserParent] Sending  PBrowser::Msg_RealKeyEvent
+01-01 08:43:51.829  7246  7246 D DHCUI   : MessageChannel::Send
+01-01 08:43:51.829  7246  7246 D DHCUI   : ProcessLink::SendMessage
+01-01 08:43:51.829  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 144,bytes_written is 216
+01-01 08:43:51.829  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 216,closed_ is 0 this is 0xb2389000
+01-01 08:43:51.829  8594  8595 D DHCUI   : ProcessLink::OnMessageReceived
+01-01 08:43:51.829  8594  8595 D DHCUI   : MessageChannel::OnMessageReceivedFromLink 1
+01-01 08:43:51.829  8594  8595 D DHCUI   : Receive on link thread; seqno=0, xid=-1, shouldWakeUp=0
+01-01 08:43:51.829  8594  8595 D DHCUI   : MessageChannel::OnMessageReceivedFromLink 2
+01-01 08:43:51.829  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is -1,closed_ is 0 this is 0xb2389000
+01-01 08:43:51.829  7246  7246 I GeckoIPC: [time: 27831844621][7246->8594] [PBrowserParent] Sending  PBrowser::Msg_RealKeyEvent
+01-01 08:43:51.829  7246  7246 D DHCUI   : MessageChannel::Send
+01-01 08:43:51.829  7246  7246 D DHCUI   : ProcessLink::SendMessage
+01-01 08:43:51.829  8594  8594 D DHCUI   : MessageChannel::OnMaybeDequeueOne
+01-01 08:43:51.829  8594  8594 D DHCUI   : MessageChannel::DispatchMessage seqno=0, xid=-1
+01-01 08:43:51.829  8594  8594 I GeckoIPC: [time: 27831844784][8594<-7246] [PBrowserChild] Received  PBrowser::Msg_RealKeyEvent
+01-01 08:43:51.829  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 144,bytes_written is 216
+01-01 08:43:51.829  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 216,closed_ is 0 this is 0xb2389000
+01-01 08:43:51.829  8594  8595 D DHCUI   : ProcessLink::OnMessageReceived
+01-01 08:43:51.829  8594  8595 D DHCUI   : MessageChannel::OnMessageReceivedFromLink 1
+01-01 08:43:51.829  8594  8595 D DHCUI   : Receive on link thread; seqno=0, xid=-1, shouldWakeUp=0
+01-01 08:43:51.829  8594  8595 D DHCUI   : MessageChannel::OnMessageReceivedFromLink 2
+01-01 08:43:51.829  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is -1,closed_ is 0 this is 0xb2389000
+01-01 08:43:51.849  8594  8594 I Gecko   : [BrowserElement] event type: keydown, key: ArrowRight, target: [object HTMLDivElement], class: thumbnail focus
+01-01 08:43:51.849  8594  8594 I GeckoIPC: [time: 27831859270][8594->7246] [PBrowserChild] Sending  PBrowser::Msg_DispatchAfterKeyboardEvent
+01-01 08:43:51.849  8594  8594 D DHCUI   : MessageChannel::OnMaybeDequeueOne
+01-01 08:43:51.849  8594  8594 D DHCUI   : MessageChannel::DispatchMessage seqno=0, xid=-1
+01-01 08:43:51.849  8594  8594 I GeckoIPC: [time: 27831859573][8594<-7246] [PBrowserChild] Received  PBrowser::Msg_RealKeyEvent
+01-01 08:43:51.849  8594  8594 I GeckoIPC: [time: 27831859948][8594->7246] [PVsyncChild] Sending  PVsync::Msg_Observe
+01-01 08:43:51.849  8594  8594 I GeckoIPC: [time: 27831860082][8594->7246] [PBrowserChild] Sending  PBrowser::Msg_ReplyKeyEvent
+01-01 08:43:51.849  8594  8594 I GeckoIPC: [time: 27831860157][8594->7246] [PBrowserChild] Sending  PBrowser::Msg_DispatchAfterKeyboardEvent
+01-01 08:43:51.849  8594  8595 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 555,bytes_written is 212
+01-01 08:43:51.849  7246  7265 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 144,bytes_read is 212,closed_ is 0 this is 0xa8d23000
+01-01 08:43:51.849  8594  8595 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 27,bytes_written is 64
+01-01 08:43:51.849  8594  8595 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 555,bytes_written is 212
+01-01 08:43:51.849  7246  7246 I GeckoIPC: [time: 27831860788][7246<-8594] [PBrowserParent] Received  PBrowser::Msg_DispatchAfterKeyboardEvent
+01-01 08:43:51.849  7246  7265 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 144,bytes_read is 424,closed_ is 0 this is 0xa8d23000
+01-01 08:43:51.849  7246  7265 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 144,bytes_read is -1,closed_ is 0 this is 0xa8d23000
+01-01 08:43:51.849  7246  7265 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 251,bytes_read is 64,closed_ is 0 this is 0xa9089000
+01-01 08:43:51.849  7246  7265 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 251,bytes_read is -1,closed_ is 0 this is 0xa9089000
+01-01 08:43:51.849  7246  7372 I GeckoIPC: [time: 27831861182][7246<-8594] [PVsyncParent] Received  PVsync::Msg_Observe
+01-01 08:43:51.849  7246  7246 I GeckoIPC: [time: 27831862104][7246<-8594] [PBrowserParent] Received  PBrowser::Msg_ReplyKeyEvent
+01-01 08:43:51.849  7246  7246 I GeckoIPC: [time: 27831862365][7246<-8594] [PBrowserParent] Received  PBrowser::Msg_DispatchAfterKeyboardEvent
+01-01 08:43:51.849  8594  8595 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 555,bytes_written is 212
+01-01 08:43:51.849  7246  7372 I GeckoIPC: [time: 27831864807][7246->8594] [PVsyncParent] Sending  PVsync::Msg_Notify
+01-01 08:43:51.849  7246  7372 D DHCUI   : MessageChannel::Send
+01-01 08:43:51.849  7246  7372 D DHCUI   : ProcessLink::SendMessage
+01-01 08:43:51.849  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 251,bytes_written is 72
+01-01 08:43:51.849  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 27,bytes_read is 72,closed_ is 0 this is 0xb05fd000
+01-01 08:43:51.849  8594  8595 D DHCUI   : ProcessLink::OnMessageReceived
+01-01 08:43:51.849  8594  8595 D DHCUI   : MessageChannel::OnMessageReceivedFromLink 1
+01-01 08:43:51.849  8594  8595 D DHCUI   : Receive on link thread; seqno=0, xid=-1, shouldWakeUp=0
+01-01 08:43:51.849  8594  8595 D DHCUI   : MessageChannel::OnMessageReceivedFromLink 2
+01-01 08:43:51.849  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 27,bytes_read is -1,closed_ is 0 this is 0xb05fd000
+01-01 08:43:51.849  8594  8594 D DHCUI   : MessageChannel::OnMaybeDequeueOne
+01-01 08:43:51.849  8594  8594 D DHCUI   : MessageChannel::DispatchMessage seqno=0, xid=-1
+01-01 08:43:51.849  8594  8594 I GeckoIPC: [time: 27831865693][8594<-7246] [PVsyncChild] Received  PVsync::Msg_Notify
+01-01 08:43:51.889  7246  7372 I GeckoIPC: [time: 27831902324][7246->8594] [PVsyncParent] Sending  PVsync::Msg_Notify
+01-01 08:43:51.889  7246  7372 D DHCUI   : MessageChannel::Send
+01-01 08:43:51.889  7246  7372 D DHCUI   : ProcessLink::SendMessage
+01-01 08:43:51.889  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 251,bytes_written is 72
+01-01 08:43:51.889  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 27,bytes_read is 72,closed_ is 0 this is 0xb05fd000
+01-01 08:43:51.889  8594  8595 D DHCUI   : ProcessLink::OnMessageReceived
+01-01 08:43:51.889  8594  8595 D DHCUI   : MessageChannel::OnMessageReceivedFromLink 1
+01-01 08:43:51.889  8594  8595 D DHCUI   : Receive on link thread; seqno=0, xid=-1, shouldWakeUp=0
+01-01 08:43:51.889  8594  8595 D DHCUI   : MessageChannel::OnMessageReceivedFromLink 2
+01-01 08:43:51.889  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 27,bytes_read is -1,closed_ is 0 this is 0xb05fd000
+01-01 08:43:51.889  8594  8594 D DHCUI   : MessageChannel::OnMaybeDequeueOne
+01-01 08:43:51.889  8594  8594 D DHCUI   : MessageChannel::DispatchMessage seqno=0, xid=-1
+01-01 08:43:51.889  8594  8594 I GeckoIPC: [time: 27831902946][8594<-7246] [PVsyncChild] Received  PVsync::Msg_Notify
+01-01 08:43:51.889  8594  8594 I GeckoIPC: [time: 27831903024][8594->7246] [PVsyncChild] Sending  PVsync::Msg_Unobserve
+01-01 08:43:51.889  8594  8595 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 27,bytes_written is 64
+01-01 08:43:51.889  7246  7265 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 251,bytes_read is 64,closed_ is 0 this is 0xa9089000
+01-01 08:43:51.889  7246  7265 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 251,bytes_read is -1,closed_ is 0 this is 0xa9089000
+01-01 08:43:51.889  7246  7372 I GeckoIPC: [time: 27831903506][7246<-8594] [PVsyncParent] Received  PVsync::Msg_Unobserve
+01-01 08:43:51.929  7246  7246 I Gecko   : [BrowserElement] event type: keyup, key: ArrowRight, target: [object HTMLIFrameElement], src: app://gallery.gaiamobile.org/index.html, id: browser5, class: browser
+01-01 08:43:51.939  7246  7246 I GeckoIPC: [time: 27831949419][7246->8594] [PBrowserParent] Sending  PBrowser::Msg_RealKeyEvent
+01-01 08:43:51.939  7246  7246 D DHCUI   : MessageChannel::Send
+01-01 08:43:51.939  7246  7246 D DHCUI   : ProcessLink::SendMessage
+01-01 08:43:51.939  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 144,bytes_written is 216
+01-01 08:43:51.939  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 216,closed_ is 0 this is 0xb2389000
+01-01 08:43:51.939  8594  8595 D DHCUI   : ProcessLink::OnMessageReceived
+01-01 08:43:51.939  8594  8595 D DHCUI   : MessageChannel::OnMessageReceivedFromLink 1
+01-01 08:43:51.939  8594  8595 D DHCUI   : Receive on link thread; seqno=0, xid=-1, shouldWakeUp=0
+01-01 08:43:51.939  8594  8595 D DHCUI   : MessageChannel::OnMessageReceivedFromLink 2
+01-01 08:43:51.939  8594  8595 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is -1,closed_ is 0 this is 0xb2389000
+01-01 08:43:51.939  8594  8594 D DHCUI   : MessageChannel::OnMaybeDequeueOne
+01-01 08:43:51.939  8594  8594 D DHCUI   : MessageChannel::DispatchMessage seqno=0, xid=-1
+01-01 08:43:51.939  8594  8594 I GeckoIPC: [time: 27831952527][8594<-7246] [PBrowserChild] Received  PBrowser::Msg_RealKeyEvent
+01-01 08:43:51.939  8594  8594 I Gecko   : [BrowserElement] event type: keyup, key: ArrowRight, target: [object HTMLDivElement], class: thumbnail focus
+01-01 08:43:51.939  8594  8594 I GeckoIPC: [time: 27831957087][8594->7246] [PBrowserChild] Sending  PBrowser::Msg_DispatchAfterKeyboardEvent
+01-01 08:43:51.939  8594  8595 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 555,bytes_written is 212
+01-01 08:43:51.939  7246  7265 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 144,bytes_read is 212,closed_ is 0 this is 0xa8d23000
+01-01 08:43:51.939  7246  7265 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 144,bytes_read is -1,closed_ is 0 this is 0xa8d23000
+01-01 08:43:51.939  7246  7246 I GeckoIPC: [time: 27831958159][7246<-8594] [PBrowserParent] Received  PBrowser::Msg_DispatchAfterKeyboardEvent
+01-01 08:43:52.939  7246  7246 I GeckoIPC: [time: 27832949350][7246->8243] [PContentParent] Sending  PContent::Msg_NotifyIdleObserver
+01-01 08:43:52.939  7246  7265 D DHCUI   : ProcessOutgoingMessages xxxxxxxxxx pipe_ is 157,bytes_written is 104
+01-01 08:43:52.939  8243  8244 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is 104,closed_ is 0 this is 0xb2389000
+01-01 08:43:52.939  8243  8243 I GeckoIPC: [time: 27832949997][8243<-7246] [PContentChild] Received  PContent::Msg_NotifyIdleObserver
+01-01 08:43:52.939  8243  8244 D DHCUI   : ProcessIncomingMessages xxxxxxxxxx bytes_read pipe_ is 555,bytes_read is -1,closed_ is 0 this is 0xb2389000
+01-01 08:43:53.249  7366  7366 E sdcard  : missing packages.list; retrying
+01-01 08:43:53.959  7246  7246 I GeckoIPC: [time: 27833969986][7246->7246] [PBackgroundIDBTransactionChild] Sending  PBackgroundIDBTransaction::Msg_DeleteMe
+01-01 08:43:53.959  7246  7246 I GeckoIPC: [time: 27833970165][7246->7246] [PBackgroundIDBTransactionChild] Sending  PBackgroundIDBTransaction::Msg_DeleteMe
+01-01 08:43:53.959  7246  7372 I GeckoIPC: [time: 27833970518][7246<-7246] [PBackgroundIDBTransactionParent] Received  PBackgroundIDBTransaction::Msg_DeleteMe
+01-01 08:43:53.959  7246  7372 I GeckoIPC: [time: 27833970589][7246->7246] [PBackgroundIDBTransactionParent] Sending  PBackgroundIDBTransaction::Msg___delete__
+01-01 08:43:53.959  7246  7372 I GeckoIPC: [time: 27833970716][7246<-7246] [PBackgroundIDBTransactionParent] Received  PBackgroundIDBTransaction::Msg_DeleteMe
+01-01 08:43:53.959  7246  7372 I GeckoIPC: [time: 27833970762][7246->7246] [PBackgroundIDBTransactionParent] Sending  PBackgroundIDBTransaction::Msg___delete__
+01-01 08:43:53.959  7246  7246 I GeckoIPC: [time: 27833971164][7246<-7246] [PBackgroundIDBTransactionChild] Received  PBackgroundIDBTransaction::Msg___delete__
+01-01 08:43:53.959  7246  7246 I GeckoIPC: [time: 27833971267][7246<-7246] [PBackgroundIDBTransactionChild] Received  PBackgroundIDBTransaction::Msg___delete__
+
+
+
+b2g              0 root      7246  1     302224 105852 SyS_epoll_ b452ca00 S /system/b2g/b2g
+Binder_1         0 root      7254  7246  302224 105852 binder_thr b452cb2c S Binder_1
+Binder_2         0 root      7256  7246  302224 105852 binder_thr b452cb2c S Binder_2
+hwcUeventThread  0 root      7259  7246  302224 105852 poll_sched b452cbc8 S hwcUeventThread
+hwcVsyncThread   0 root      7260  7246  302224 105852 poll_sched b452cbc8 S hwcVsyncThread
+Gecko_IOThread   0 root      7265  7246  302224 105852 SyS_epoll_ b452ca00 S Gecko_IOThread
+Link Monitor     0 root      7274  7246  302224 105852 poll_sched b452cbc8 S Link Monitor
+Socket Thread    0 root      7275  7246  302224 105852 poll_sched b452cbc8 S Socket Thread
+JS Helper        0 root      7276  7246  302224 105852 futex_wait b45008e4 S JS Helper
+JS Helper        0 root      7277  7246  302224 105852 futex_wait b45008e4 S JS Helper
+JS Helper        0 root      7278  7246  302224 105852 futex_wait b45008e4 S JS Helper
+JS Helper        0 root      7279  7246  302224 105852 futex_wait b45008e4 S JS Helper
+OomLogger        0 root      7280  7246  302224 105852 futex_wait b45008e4 S OomLogger
+Hang Monitor     0 root      7281  7246  302224 105852 futex_wait b45008e4 S Hang Monitor
+MemoryPressure   0 root      7282  7246  302224 105852 poll_sched b452cbc8 S MemoryPressure
+Cache2 I/O       0 root      7283  7246  302224 105852 futex_wait b45008e4 S Cache2 I/O
+Timer            0 root      7284  7246  302224 105852 futex_wait b45008e4 S Timer
+b2g              0 root      7286  7246  302224 105852 futex_wait b45008e4 S b2g
+Cert Verify      0 root      7287  7246  302224 105852 futex_wait b45008e4 S Cert Verify
+b2g              0 root      7288  7246  302224 105852 futex_wait b45008e4 S b2g
+NetworkUtils     0 root      7289  7246  302224 105852 futex_wait b45008e4 S NetworkUtils
+b2g              0 root      7290  7246  302224 105852 unix_strea b452d9dc S b2g
+b2g              0 root      7291  7246  302224 105852 unix_strea b452d9dc S b2g
+b2g              0 root      7292  7246  302224 105852 futex_wait b45008e4 S b2g
+b2g              0 root      7294  7246  302224 105852 unix_strea b452d9dc S b2g
+b2g              0 root      7295  7246  302224 105852 unix_strea b452d9dc S b2g
+AudioTrack       0 root      7296  7246  302224 105852 futex_wait b45008e4 S AudioTrack
+CneWorker        0 root      7297  7246  302224 105852 futex_wait b45008e4 S CneWorker
+CneWorker        0 root      7298  7246  302224 105852 poll_sched b452cbf0 S CneWorker
+b2g              0 root      7305  7246  302224 105852 futex_wait b45008e4 S b2g
+b2g              0 root      7306  7246  302224 105852 futex_wait b45008e4 S b2g
+b2g              0 root      7307  7246  302224 105852 futex_wait b45008e4 S b2g
+b2g              0 root      7308  7246  302224 105852 futex_wait b45008e4 S b2g
+b2g              0 root      7311  7246  302224 105852 futex_wait b45008e4 S b2g
+Loc_hal_worker   0 root      7312  7246  302224 105852 futex_wait b45008e4 S Loc_hal_worker
+b2g              0 root      7314  7246  302224 105852  pipe_wait b452d9dc S b2g
+Loc_hal_worker   0 root      7315  7246  302224 105852 poll_sched b452cbc8 S Loc_hal_worker
+Loc_hal_worker   0 root      7316  7246  302224 105852 diagchar_r b452d9dc S Loc_hal_worker
+b2g              0 root      7318  7246  302224 105852 unix_strea b452da6c S b2g
+b2g              0 root      7319  7246  302224 105852 futex_wait b45008e4 S b2g
+ulp_msg          0 root      7322  7246  302224 105852 futex_wait b45008e4 S ulp_msg
+ulp_monitor      0 root      7323  7246  302224 105852 futex_wait b45008e4 S ulp_monitor
+Loc_hal_worker   0 root      7327  7246  302224 105852 poll_sched b452cbc8 S Loc_hal_worker
+Loc_hal_worker   0 root      7331  7246  302224 105852 futex_wait b45008e4 S Loc_hal_worker
+Loc_hal_worker   0 root      7338  7246  302224 105852 poll_sched b452cbc8 S Loc_hal_worker
+Loc_hal_worker   0 root      7353  7246  302224 105852 poll_sched b452cbc8 S Loc_hal_worker
+Loc_hal_worker   0 root      7357  7246  302224 105852 futex_wait b45008e4 S Loc_hal_worker
+Loc_hal_worker   0 root      7358  7246  302224 105852 poll_sched b452cbc8 S Loc_hal_worker
+Loc_hal_worker   0 root      7359  7246  302224 105852 poll_sched b452cbc8 S Loc_hal_worker
+Loc_hal_worker   0 root      7361  7246  302224 105852 poll_sched b452cbc8 S Loc_hal_worker
+LocTimerPollTas  0 root      7363  7246  302224 105852 SyS_epoll_ b452ca00 S LocTimerPollTas
+LocTimerMsgTask  0 root      7364  7246  302224 105852 futex_wait b45008e4 S LocTimerMsgTask
+IPDL Background  0 root      7372  7246  302224 105852 futex_wait b45008e4 S IPDL Background
+Pico Worker      0 root      7374  7246  302224 105852 futex_wait b45008e4 S Pico Worker
+Compositor       0 root      7404  7246  302224 105852 futex_wait b45008e4 S Compositor
+BufferMgrChild   0 root      7405  7246  302224 105852 futex_wait b45008e4 S BufferMgrChild
+BufMgrParent#72  0 root      7406  7246  302224 105852 futex_wait b45008e4 S BufMgrParent#72
+ImageBridgeChil  0 root      7407  7246  302224 105852 futex_wait b45008e4 S ImageBridgeChil
+ImgDecoder #1    0 root      7411  7246  302224 105852 futex_wait b45008e4 S ImgDecoder #1
+ImageIO          0 root      7412  7246  302224 105852 futex_wait b45008e4 S ImageIO
+InputReader      0 root      7414  7246  302224 105852 SyS_epoll_ b452ca00 S InputReader
+b2g              0 root      7416  7246  302224 105852 poll_sched b452cbc8 S b2g
+GonkSensors      0 root      7417  7246  302224 105852 futex_wait b45008e4 S GonkSensors
+HTML5 Parser     0 root      7447  7246  302224 105852 futex_wait b45008e4 S HTML5 Parser
+GMPThread        0 root      7484  7246  302224 105852 futex_wait b45008e4 S GMPThread
+b2g              0 root      7500  7246  302224 105852 poll_sched b452cbc8 S b2g
+BufMgrParent#72  0 root      7660  7246  302224 105852 futex_wait b45008e4 S BufMgrParent#72
+Cache I/O        0 root      7729  7246  302224 105852 futex_wait b45008e4 S Cache I/O
+IndexedDB #3     0 root      7735  7246  302224 105852 futex_wait b45008e4 S IndexedDB #3
+localStorage DB  0 root      7827  7246  302224 105852 futex_wait b45008e4 S localStorage DB
+URL Classifier   0 root      7870  7246  302224 105852 futex_wait b45008e4 S URL Classifier
+GL updater       0 root      7900  7246  302224 105852 futex_wait b45008e4 S GL updater
+BufMgrParent#79  0 root      7928  7246  302224 105852 futex_wait b45008e4 S BufMgrParent#79
+mozStorage #1    0 root      7931  7246  302224 105852 futex_wait b45008e4 S mozStorage #1
+Proxy R~olution  0 root      7933  7246  302224 105852 futex_wait b45008e4 S Proxy R~olution
+b2g              0 root      7934  7246  302224 105852 unix_strea b452d9dc S b2g
+BufMgrParent#79  0 root      7999  7246  302224 105852 futex_wait b45008e4 S BufMgrParent#79
+b2g              0 root      8001  7246  302224 105852 alarm_ioct b452cb2c S b2g
+BufMgrParent#82  0 root      8226  7246  302224 105852 futex_wait b45008e4 S BufMgrParent#82
+BufMgrParent#82  0 root      8260  7246  302224 105852 futex_wait b45008e4 S BufMgrParent#82
+b2g              0 root      8287  7246  302224 105852 pm_get_wak b452d9dc S b2g
+BufMgrParent#84  0 root      8432  7246  302224 105852 futex_wait b45008e4 S BufMgrParent#84
+BufMgrParent#85  0 root      8611  7246  302224 105852 futex_wait b45008e4 S BufMgrParent#85
+BufMgrParent#87  0 root      8786  7246  302224 105852 futex_wait b45008e4 S BufMgrParent#87
+(Nuwa)           0 root      7253  7246  121020 24944 SyS_epoll_ b452ca00 S /system/b2g/b2g
+Chrome_ChildThr  0 root      7621  7253  121020 24944 SyS_epoll_ b452ca00 S Chrome_ChildThr
+JS Helper        0 root      7804  7253  121020 24944 futex_wait b45008e4 S JS Helper
+JS Helper        0 root      7805  7253  121020 24944 futex_wait b45008e4 S JS Helper
+JS Helper        0 root      7806  7253  121020 24944 futex_wait b45008e4 S JS Helper
+JS Helper        0 root      7807  7253  121020 24944 futex_wait b45008e4 S JS Helper
+Socket Thread    0 root      7808  7253  121020 24944 poll_sched b452cbc8 S Socket Thread
+Hang Monitor     0 root      7809  7253  121020 24944 futex_wait b45008e4 S Hang Monitor
+MemoryPressure   0 root      7816  7253  121020 24944 poll_sched b452cbc8 S MemoryPressure
+Timer            0 root      7861  7253  121020 24944 futex_wait b45008e4 S Timer
+ImgDecoder #1    0 root      7863  7253  121020 24944 futex_wait b45008e4 S ImgDecoder #1
+ImageIO          0 root      7864  7253  121020 24944 futex_wait b45008e4 S ImageIO
+ImageBridgeChil  0 root      7865  7253  121020 24944 futex_wait b45008e4 S ImageBridgeChil
+BufferMgrChild   0 root      7868  7253  121020 24944 futex_wait b45008e4 S BufferMgrChild
+GMPThread        0 root      7871  7253  121020 24944 futex_wait b45008e4 S GMPThread
+Launcher         2 u0_a7907  7907  7253  200336 45580 SyS_epoll_ b452ca00 S /system/b2g/b2g
+Chrome_ChildThr  2 u0_a7907  7908  7907  200336 45580 SyS_epoll_ b452ca00 S Chrome_ChildThr
+JS Helper        2 u0_a7907  7909  7907  200336 45580 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a7907  7910  7907  200336 45580 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a7907  7911  7907  200336 45580 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a7907  7912  7907  200336 45580 futex_wait b45008e4 S JS Helper
+Socket Thread    2 u0_a7907  7913  7907  200336 45580 poll_sched b452cbc8 S Socket Thread
+Hang Monitor     2 u0_a7907  7914  7907  200336 45580 futex_wait b45008e4 S Hang Monitor
+MemoryPressure   2 u0_a7907  7915  7907  200336 45580 poll_sched b452cbc8 S MemoryPressure
+Timer            2 u0_a7907  7916  7907  200336 45580 futex_wait b45008e4 S Timer
+ImgDecoder #1    2 u0_a7907  7917  7907  200336 45580 futex_wait b45008e4 S ImgDecoder #1
+ImageIO          2 u0_a7907  7918  7907  200336 45580 futex_wait b45008e4 S ImageIO
+ImageBridgeChil  2 u0_a7907  7919  7907  200336 45580 futex_wait b45008e4 S ImageBridgeChil
+BufferMgrChild   2 u0_a7907  7920  7907  200336 45580 futex_wait b45008e4 S BufferMgrChild
+GMPThread        2 u0_a7907  7921  7907  200336 45580 futex_wait b45008e4 S GMPThread
+Binder_1         2 u0_a7907  7922  7907  200336 45580 binder_thr b452cb2c S Binder_1
+Binder_2         2 u0_a7907  7923  7907  200336 45580 binder_thr b452cb2c S Binder_2
+Proxy R~olution  2 u0_a7907  7932  7907  200336 45580 futex_wait b45008e4 S Proxy R~olution
+HTML5 Parser     2 u0_a7907  7940  7907  200336 45580 futex_wait b45008e4 S HTML5 Parser
+Built-in Keyboa  2 u0_a7981  7981  7253  155212 31824 SyS_epoll_ b452ca00 S /system/b2g/b2g
+Chrome_ChildThr  2 u0_a7981  7982  7981  155212 31824 SyS_epoll_ b452ca00 S Chrome_ChildThr
+JS Helper        2 u0_a7981  7983  7981  155212 31824 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a7981  7984  7981  155212 31824 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a7981  7985  7981  155212 31824 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a7981  7986  7981  155212 31824 futex_wait b45008e4 S JS Helper
+Socket Thread    2 u0_a7981  7987  7981  155212 31824 poll_sched b452cbc8 S Socket Thread
+Hang Monitor     2 u0_a7981  7988  7981  155212 31824 futex_wait b45008e4 S Hang Monitor
+MemoryPressure   2 u0_a7981  7989  7981  155212 31824 poll_sched b452cbc8 S MemoryPressure
+Timer            2 u0_a7981  7990  7981  155212 31824 futex_wait b45008e4 S Timer
+ImgDecoder #1    2 u0_a7981  7991  7981  155212 31824 futex_wait b45008e4 S ImgDecoder #1
+ImageIO          2 u0_a7981  7992  7981  155212 31824 futex_wait b45008e4 S ImageIO
+ImageBridgeChil  2 u0_a7981  7993  7981  155212 31824 futex_wait b45008e4 S ImageBridgeChil
+BufferMgrChild   2 u0_a7981  7994  7981  155212 31824 futex_wait b45008e4 S BufferMgrChild
+GMPThread        2 u0_a7981  7995  7981  155212 31824 futex_wait b45008e4 S GMPThread
+Binder_1         2 u0_a7981  7996  7981  155212 31824 binder_thr b452cb2c S Binder_1
+Binder_2         2 u0_a7981  7997  7981  155212 31824 binder_thr b452cb2c S Binder_2
+Proxy R~olution  2 u0_a7981  8013  7981  155212 31824 futex_wait b45008e4 S Proxy R~olution
+HTML5 Parser     2 u0_a7981  8197  7981  155212 31824 futex_wait b45008e4 S HTML5 Parser
+Call Log         2 u0_a8209  8209  7253  160832 38728 SyS_epoll_ b452ca00 S /system/b2g/b2g
+Chrome_ChildThr  2 u0_a8209  8210  8209  160832 38728 SyS_epoll_ b452ca00 S Chrome_ChildThr
+JS Helper        2 u0_a8209  8211  8209  160832 38728 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a8209  8212  8209  160832 38728 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a8209  8213  8209  160832 38728 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a8209  8214  8209  160832 38728 futex_wait b45008e4 S JS Helper
+Socket Thread    2 u0_a8209  8215  8209  160832 38728 poll_sched b452cbc8 S Socket Thread
+Hang Monitor     2 u0_a8209  8216  8209  160832 38728 futex_wait b45008e4 S Hang Monitor
+MemoryPressure   2 u0_a8209  8217  8209  160832 38728 poll_sched b452cbc8 S MemoryPressure
+Timer            2 u0_a8209  8218  8209  160832 38728 futex_wait b45008e4 S Timer
+ImgDecoder #1    2 u0_a8209  8219  8209  160832 38728 futex_wait b45008e4 S ImgDecoder #1
+ImageIO          2 u0_a8209  8220  8209  160832 38728 futex_wait b45008e4 S ImageIO
+ImageBridgeChil  2 u0_a8209  8221  8209  160832 38728 futex_wait b45008e4 S ImageBridgeChil
+BufferMgrChild   2 u0_a8209  8222  8209  160832 38728 futex_wait b45008e4 S BufferMgrChild
+GMPThread        2 u0_a8209  8223  8209  160832 38728 futex_wait b45008e4 S GMPThread
+Binder_1         2 u0_a8209  8224  8209  160832 38728 binder_thr b452cb2c S Binder_1
+Binder_2         2 u0_a8209  8225  8209  160832 38728 binder_thr b452cb2c S Binder_2
+Proxy R~olution  2 u0_a8209  8231  8209  160832 38728 futex_wait b45008e4 S Proxy R~olution
+HTML5 Parser     2 u0_a8209  8235  8209  160832 38728 futex_wait b45008e4 S HTML5 Parser
+Settings         2 u0_a8243  8243  7253  164928 40712 SyS_epoll_ b452ca00 S /system/b2g/b2g
+Chrome_ChildThr  2 u0_a8243  8244  8243  164928 40712 SyS_epoll_ b452ca00 S Chrome_ChildThr
+JS Helper        2 u0_a8243  8245  8243  164928 40712 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a8243  8246  8243  164928 40712 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a8243  8247  8243  164928 40712 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a8243  8248  8243  164928 40712 futex_wait b45008e4 S JS Helper
+Socket Thread    2 u0_a8243  8249  8243  164928 40712 poll_sched b452cbc8 S Socket Thread
+Hang Monitor     2 u0_a8243  8250  8243  164928 40712 futex_wait b45008e4 S Hang Monitor
+MemoryPressure   2 u0_a8243  8251  8243  164928 40712 poll_sched b452cbc8 S MemoryPressure
+Timer            2 u0_a8243  8252  8243  164928 40712 futex_wait b45008e4 S Timer
+ImgDecoder #1    2 u0_a8243  8253  8243  164928 40712 futex_wait b45008e4 S ImgDecoder #1
+ImageIO          2 u0_a8243  8254  8243  164928 40712 futex_wait b45008e4 S ImageIO
+ImageBridgeChil  2 u0_a8243  8255  8243  164928 40712 futex_wait b45008e4 S ImageBridgeChil
+BufferMgrChild   2 u0_a8243  8256  8243  164928 40712 futex_wait b45008e4 S BufferMgrChild
+GMPThread        2 u0_a8243  8257  8243  164928 40712 futex_wait b45008e4 S GMPThread
+Binder_1         2 u0_a8243  8258  8243  164928 40712 binder_thr b452cb2c S Binder_1
+Binder_2         2 u0_a8243  8259  8243  164928 40712 binder_thr b452cb2c S Binder_2
+Proxy R~olution  2 u0_a8243  8261  8243  164928 40712 futex_wait b45008e4 S Proxy R~olution
+HTML5 Parser     2 u0_a8243  8389  8243  164928 40712 futex_wait b45008e4 S HTML5 Parser
+FM Radio         2 u0_a8413  8413  7253  152128 32340 SyS_epoll_ b452ca00 S /system/b2g/b2g
+Chrome_ChildThr  2 u0_a8413  8414  8413  152128 32340 SyS_epoll_ b452ca00 S Chrome_ChildThr
+JS Helper        2 u0_a8413  8415  8413  152128 32340 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a8413  8416  8413  152128 32340 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a8413  8417  8413  152128 32340 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a8413  8418  8413  152128 32340 futex_wait b45008e4 S JS Helper
+Socket Thread    2 u0_a8413  8419  8413  152128 32340 poll_sched b452cbc8 S Socket Thread
+Hang Monitor     2 u0_a8413  8420  8413  152128 32340 futex_wait b45008e4 S Hang Monitor
+MemoryPressure   2 u0_a8413  8421  8413  152128 32340 poll_sched b452cbc8 S MemoryPressure
+Timer            2 u0_a8413  8422  8413  152128 32340 futex_wait b45008e4 S Timer
+ImgDecoder #1    2 u0_a8413  8423  8413  152128 32340 futex_wait b45008e4 S ImgDecoder #1
+ImageIO          2 u0_a8413  8424  8413  152128 32340 futex_wait b45008e4 S ImageIO
+ImageBridgeChil  2 u0_a8413  8425  8413  152128 32340 futex_wait b45008e4 S ImageBridgeChil
+BufferMgrChild   2 u0_a8413  8426  8413  152128 32340 futex_wait b45008e4 S BufferMgrChild
+GMPThread        2 u0_a8413  8427  8413  152128 32340 futex_wait b45008e4 S GMPThread
+Binder_1         2 u0_a8413  8428  8413  152128 32340 binder_thr b452cb2c S Binder_1
+Binder_2         2 u0_a8413  8429  8413  152128 32340 binder_thr b452cb2c S Binder_2
+Proxy R~olution  2 u0_a8413  8441  8413  152128 32340 futex_wait b45008e4 S Proxy R~olution
+HTML5 Parser     2 u0_a8413  8582  8413  152128 32340 futex_wait b45008e4 S HTML5 Parser
+Gallery          2 u0_a8594  8594  7253  152664 33044 SyS_epoll_ b452ca00 S /system/b2g/b2g
+Chrome_ChildThr  2 u0_a8594  8595  8594  152664 33044 SyS_epoll_ b452ca00 S Chrome_ChildThr
+JS Helper        2 u0_a8594  8596  8594  152664 33044 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a8594  8597  8594  152664 33044 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a8594  8598  8594  152664 33044 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a8594  8599  8594  152664 33044 futex_wait b45008e4 S JS Helper
+Socket Thread    2 u0_a8594  8600  8594  152664 33044 poll_sched b452cbc8 S Socket Thread
+Hang Monitor     2 u0_a8594  8601  8594  152664 33044 futex_wait b45008e4 S Hang Monitor
+MemoryPressure   2 u0_a8594  8602  8594  152664 33044 poll_sched b452cbc8 S MemoryPressure
+Timer            2 u0_a8594  8603  8594  152664 33044 futex_wait b45008e4 S Timer
+ImgDecoder #1    2 u0_a8594  8604  8594  152664 33044 futex_wait b45008e4 S ImgDecoder #1
+ImageIO          2 u0_a8594  8605  8594  152664 33044 futex_wait b45008e4 S ImageIO
+ImageBridgeChil  2 u0_a8594  8606  8594  152664 33044 futex_wait b45008e4 S ImageBridgeChil
+BufferMgrChild   2 u0_a8594  8607  8594  152664 33044 futex_wait b45008e4 S BufferMgrChild
+GMPThread        2 u0_a8594  8608  8594  152664 33044 futex_wait b45008e4 S GMPThread
+Binder_1         2 u0_a8594  8609  8594  152664 33044 binder_thr b452cb2c S Binder_1
+Binder_2         2 u0_a8594  8610  8594  152664 33044 binder_thr b452cb2c S Binder_2
+Proxy R~olution  2 u0_a8594  8612  8594  152664 33044 futex_wait b45008e4 S Proxy R~olution
+HTML5 Parser     2 u0_a8594  8748  8594  152664 33044 futex_wait b45008e4 S HTML5 Parser
+(Preallocated a  2 u0_a8768  8768  7253  146748 24636 SyS_epoll_ b452ca00 S /system/b2g/b2g
+Chrome_ChildThr  2 u0_a8768  8769  8768  146748 24636 SyS_epoll_ b452ca00 S Chrome_ChildThr
+JS Helper        2 u0_a8768  8770  8768  146748 24636 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a8768  8771  8768  146748 24636 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a8768  8772  8768  146748 24636 futex_wait b45008e4 S JS Helper
+JS Helper        2 u0_a8768  8773  8768  146748 24636 futex_wait b45008e4 S JS Helper
+Socket Thread    2 u0_a8768  8774  8768  146748 24636 poll_sched b452cbc8 S Socket Thread
+Hang Monitor     2 u0_a8768  8775  8768  146748 24636 futex_wait b45008e4 S Hang Monitor
+MemoryPressure   2 u0_a8768  8776  8768  146748 24636 poll_sched b452cbc8 S MemoryPressure
+Timer            2 u0_a8768  8777  8768  146748 24636 futex_wait b45008e4 S Timer
+ImgDecoder #1    2 u0_a8768  8778  8768  146748 24636 futex_wait b45008e4 S ImgDecoder #1
+ImageIO          2 u0_a8768  8779  8768  146748 24636 futex_wait b45008e4 S ImageIO
+ImageBridgeChil  2 u0_a8768  8780  8768  146748 24636 futex_wait b45008e4 S ImageBridgeChil
+BufferMgrChild   2 u0_a8768  8781  8768  146748 24636 futex_wait b45008e4 S BufferMgrChild
+GMPThread        2 u0_a8768  8782  8768  146748 24636 futex_wait b45008e4 S GMPThread
+Binder_1         2 u0_a8768  8783  8768  146748 24636 binder_thr b452cb2c S Binder_1
+Binder_2         2 u0_a8768  8784  8768  146748 24636 binder_thr b452cb2c S Binder_2
+Proxy R~olution  2 u0_a8768  8787  8768  146748 24636 futex_wait b45008e4 S Proxy R~olution
+
+
+
+
+new GeckoExistingProcessHost will be creat mExistingFileDescriptor
+aFileDescriptor init by FindFdProtocolFdMapping(aFds, GetProtocolId()) < --  mProtocolId
+
+(gdb) p mExistingFileDescriptor
+$5 = {mHandle = 223, mHandleCreatedByOtherProcess = true}
+
+mozilla::ipc::GeckoExistingProcessHost::InitializeChannel()
+
+Breakpoint 1, IPC::Channel::ChannelImpl::ChannelImpl (this=this@entry=0xa705d000, fd=fd@entry=171, mode=mode@entry=IPC::Channel::MODE_SERVER, 
+    listener=listener@entry=0x0) at /local/code/master/kaios/gecko/ipc/chromium/src/chrome/common/ipc_channel_posix.cc:182
+182	Channel::ChannelImpl::ChannelImpl(int fd, Mode mode, Listener* listener)
+(gdb) bt
+#0  IPC::Channel::ChannelImpl::ChannelImpl (this=this@entry=0xa705d000, fd=fd@entry=171, mode=mode@entry=IPC::Channel::MODE_SERVER, listener=listener@entry=0x0)
+    at /local/code/master/kaios/gecko/ipc/chromium/src/chrome/common/ipc_channel_posix.cc:182
+#1  0xb4ebf340 in IPC::Channel::Channel (this=0xa7419680, fd=171, mode=IPC::Channel::MODE_SERVER, listener=0x0)
+    at /local/code/master/kaios/gecko/ipc/chromium/src/chrome/common/ipc_channel_posix.cc:889
+#2  0xb4ed0680 in mozilla::ipc::OpenDescriptor (aFd=..., aMode=aMode@entry=IPC::Channel::MODE_SERVER)
+    at /local/code/master/kaios/gecko/ipc/glue/Transport_posix.cpp:73
+#3  0xb4ebe63e in ChildProcessHost::CreateChannel (this=this@entry=0xa7b115c0, aFileDescriptor=...)
+    at /local/code/master/kaios/gecko/ipc/chromium/src/chrome/common/child_process_host.cc:93
+#4  0xb4ec3ea2 in mozilla::ipc::GeckoExistingProcessHost::InitializeChannel (this=0xa7b115c0) at ../../../gecko/ipc/glue/GeckoChildProcessHost.cpp:1251
+#5  0xb4ec451e in mozilla::ipc::GeckoChildProcessHost::RunPerformAsyncLaunch (this=0xa7b115c0, aExtraOpts=..., aArch=base::PROCESS_ARCH_ARM)
+    at ../../../gecko/ipc/glue/GeckoChildProcessHost.cpp:570
+#6  0xb4ec44b6 in CallMethod<0u, 1u, mozilla::ipc::GeckoChildProcessHost, bool (mozilla::ipc::GeckoChildProcessHost::*)(std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > >, base::ProcessArchitecture), std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >, base::ProcessArchitecture> (arg=..., method=<optimized out>, obj=<optimized out>) at ../../../gecko/ipc/chromium/src/base/task.h:28
+#7  DispatchTupleToMethod<mozilla::ipc::GeckoChildProcessHost, bool (mozilla::ipc::GeckoChildProcessHost::*)(std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > >, base::ProcessArchitecture), std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >, base::ProcessArchitecture> (arg=..., method=<optimized out>, obj=<optimized out>) at ../../../gecko/ipc/chromium/src/base/task.h:46
+#8  RunnableMethod<mozilla::ipc::GeckoChildProcessHost, bool (mozilla::ipc::GeckoChildProcessHost::*)(std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >, base::ProcessArchitecture), mozilla::Tuple<std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >, base::ProcessArchitecture> >::Run (this=<optimized out>)
+    at ../../../gecko/ipc/chromium/src/base/task.h:295
+#9  0xb5d8e182 in mozilla::tasktracer::TracedTask::Run (this=0xa53acdc0) at /local/code/master/kaios/gecko/tools/profiler/tasktracer/TracedTaskCommon.cpp:145
+#10 0xb4eb78e2 in MessageLoop::RunTask (this=0xb2e1e85c, task=0xa53acde4) at /local/code/master/kaios/gecko/ipc/chromium/src/base/message_loop.cc:349
+#11 0xb4eba746 in MessageLoop::DeferOrRunPendingTask (this=<optimized out>, pending_task=...)
+    at /local/code/master/kaios/gecko/ipc/chromium/src/base/message_loop.cc:357
+#12 0xb4eba7d0 in MessageLoop::DoWork (this=0xb2e1e85c) at /local/code/master/kaios/gecko/ipc/chromium/src/base/message_loop.cc:444
+#13 0xb4eb6d16 in base::MessagePumpLibevent::Run (this=0xb23ae430, delegate=0xb2e1e85c)
+    at /local/code/master/kaios/gecko/ipc/chromium/src/base/message_pump_libevent.cc:349
+#14 0xb4eb797e in RunHandler (this=0xb2e1e85c) at /local/code/master/kaios/gecko/ipc/chromium/src/base/message_loop.cc:223
+#15 MessageLoop::Run (this=this@entry=0xb2e1e85c) at /local/code/master/kaios/gecko/ipc/chromium/src/base/message_loop.cc:203
+#16 0xb4ebc366 in base::Thread::ThreadMain (this=0xb23ae3d0) at /local/code/master/kaios/gecko/ipc/chromium/src/base/thread.cc:174
+#17 0xb4ebaff6 in ThreadFunc (closure=<optimized out>) at /local/code/master/kaios/gecko/ipc/chromium/src/base/platform_thread_posix.cc:36
+#18 0xb46025cc in __pthread_start (arg=0xb2e1e930, arg@entry=<error reading variable: value has been optimized out>)
+    at bionic/libc/bionic/pthread_create.cpp:199
+---Type <return> to continue, or q <return> to quit---
+#19 0xb45da266 in __start_thread (fn=<optimized out>, arg=<optimized out>) at bionic/libc/bionic/clone.cpp:41
+#20 0x00000000 in ?? ()
+(gdb) c
+Continuing.
+[Switching to Thread 299.299]
+
+Breakpoint 1, IPC::Channel::ChannelImpl::ChannelImpl (this=this@entry=0xa70cb000, fd=fd@entry=173, mode=mode@entry=IPC::Channel::MODE_SERVER, 
+    listener=listener@entry=0x0) at /local/code/master/kaios/gecko/ipc/chromium/src/chrome/common/ipc_channel_posix.cc:182
+182	Channel::ChannelImpl::ChannelImpl(int fd, Mode mode, Listener* listener)
+(gdb) c
+Continuing.
+
+Breakpoint 1, IPC::Channel::ChannelImpl::ChannelImpl (this=this@entry=0xa718a000, fd=fd@entry=174, mode=mode@entry=IPC::Channel::MODE_SERVER, 
+    listener=listener@entry=0x0) at /local/code/master/kaios/gecko/ipc/chromium/src/chrome/common/ipc_channel_posix.cc:182
+182	Channel::ChannelImpl::ChannelImpl(int fd, Mode mode, Listener* listener)
+(gdb) c
+Continuing.
+
+Breakpoint 1, IPC::Channel::ChannelImpl::ChannelImpl (this=this@entry=0xa730f000, fd=fd@entry=182, mode=mode@entry=IPC::Channel::MODE_SERVER, 
+    listener=listener@entry=0x0) at /local/code/master/kaios/gecko/ipc/chromium/src/chrome/common/ipc_channel_posix.cc:182
+182	Channel::ChannelImpl::ChannelImpl(int fd, Mode mode, Listener* listener)
+(gdb) bt
+#0  IPC::Channel::ChannelImpl::ChannelImpl (this=this@entry=0xa730f000, fd=fd@entry=182, mode=mode@entry=IPC::Channel::MODE_SERVER, listener=listener@entry=0x0)
+    at /local/code/master/kaios/gecko/ipc/chromium/src/chrome/common/ipc_channel_posix.cc:182
+#1  0xb4ebf340 in IPC::Channel::Channel (this=0xa741ec00, fd=182, mode=IPC::Channel::MODE_SERVER, listener=0x0)
+    at /local/code/master/kaios/gecko/ipc/chromium/src/chrome/common/ipc_channel_posix.cc:889
+#2  0xb4ed0680 in mozilla::ipc::OpenDescriptor (aFd=..., aMode=aMode@entry=IPC::Channel::MODE_SERVER)
+    at /local/code/master/kaios/gecko/ipc/glue/Transport_posix.cpp:73
+#3  0xb5215b56 in mozilla::gfx::VRManagerParent::CloneToplevel (this=0xad7f1c10, aFds=..., aPeerProcess=3095, aCtx=0xbebe14bc)
+    at /local/code/master/kaios/gecko/gfx/vr/ipc/VRManagerParent.cpp:130
+#4  0xb4ecae12 in mozilla::ipc::IToplevelProtocol::CloneOpenedToplevels (this=0xaa68900c, aTemplate=<optimized out>, aFds=..., 
+    aPeerProcess=aPeerProcess@entry=3095, aCtx=aCtx@entry=0xbebe14bc) at /local/code/master/kaios/gecko/ipc/glue/ProtocolUtils.cpp:154
+#5  0xb59a73b4 in mozilla::dom::ContentParent::ContentParent(mozilla::dom::ContentParent*, nsAString_internal const&, int, nsTArray<mozilla::ipc::ProtocolFdMapping>&&, bool) (this=this@entry=0xaa689000, aTemplate=aTemplate@entry=0xac61e000, aAppManifestURL=..., aPid=aPid@entry=3095, 
+    aFds=<unknown type in /local/code/master/kaios/objdir-gecko/toolkit/library/libxul.so, CU 0x11882a07, DIE 0x11a0d7c4>, aIsBlocking=aIsBlocking@entry=false)
+    at /local/code/master/kaios/gecko/dom/ipc/ContentParent.cpp:2500
+#6  0xb59a7d66 in mozilla::dom::ContentParent::OnNewProcessCreated(unsigned int, mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping>, mozilla::DefaultDelete<nsTArray<mozilla::ipc::ProtocolFdMapping> > >&&, bool) (this=0xac61e000, aPid=3095, aFds=<optimized out>, aBlocking=<optimized out>)
+    at /local/code/master/kaios/gecko/dom/ipc/ContentParent.cpp:3119
+#7  0xb599c9d6 in applyImpl<mozilla::dom::ContentParent, void (mozilla::dom::ContentParent::*)(unsigned int, mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping> >&&, bool), StoreCopyPassByValue<unsigned int>, StoreCopyPassByRRef<mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping>, mozilla::DefaultDelete<nsTArray<mozilla::ipc::ProtocolFdMapping> > > >, StoreCopyPassByValue<bool>, 0u, 1u, 2u> (args=..., m=<optimized out>, o=<optimized out>)
+    at /local/code/master/kaios/objdir-gecko/dist/include/nsThreadUtils.h:671
+#8  apply<mozilla::dom::ContentParent, void (mozilla::dom::ContentParent::*)(unsigned int, mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping> >&&, bool)> (m=<optimized out>, o=<optimized out>, this=<optimized out>) at /local/code/master/kaios/objdir-gecko/dist/include/nsThreadUtils.h:678
+#9  nsRunnableMethodImpl<void (mozilla::dom::ContentParent::*)(unsigned int, mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping>, mozilla::DefaultDelete<nsTArray<mozilla::ipc::ProtocolFdMapping> > >&&, bool), false, unsigned int, mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping>, mozilla::DefaultDelete<nsTArray<mozilla::ipc::ProtocolFdMapping> > >&&, bool>::Run() (this=<optimized out>) at /local/code/master/kaios/objdir-gecko/dist/include/nsThreadUtils.h:705
+#10 0xb5d8e146 in mozilla::tasktracer::TracedRunnable::Run (this=0xa5482c40)
+    at /local/code/master/kaios/gecko/tools/profiler/tasktracer/TracedTaskCommon.cpp:114
+#11 0xb4cd0382 in nsThread::ProcessNextEvent (this=0xb23870c0, aMayWait=<optimized out>, aResult=0xbebe15f7)
+    at /local/code/master/kaios/gecko/xpcom/threads/nsThread.cpp:994
+#12 0xb4ce248c in NS_ProcessNextEvent (aThread=<optimized out>, aThread@entry=0xb23870c0, aMayWait=aMayWait@entry=true)
+    at /local/code/master/kaios/gecko/xpcom/glue/nsThreadUtils.cpp:290
+#13 0xb4ec6950 in mozilla::ipc::MessagePump::Run (this=0xb23ae190, aDelegate=0xb3823320) at /local/code/master/kaios/gecko/ipc/glue/MessagePump.cpp:130
+#14 0xb4eb797e in RunHandler (this=0xb3823320) at /local/code/master/kaios/gecko/ipc/chromium/src/base/message_loop.cc:223
+#15 MessageLoop::Run (this=0xb3823320) at /local/code/master/kaios/gecko/ipc/chromium/src/base/message_loop.cc:203
+#16 0xb5a694f2 in nsBaseAppShell::Run (this=0xaf5e9f40) at /local/code/master/kaios/gecko/widget/nsBaseAppShell.cpp:156
+#17 0xb5e1c166 in nsAppStartup::Run (this=0xb0609730) at /local/code/master/kaios/gecko/toolkit/components/startup/nsAppStartup.cpp:284
+---Type <return> to continue, or q <return> to quit---
+#18 0xb5e36f28 in XREMain::XRE_mainRun (this=this@entry=0xbebe1778) at ../../../gecko/toolkit/xre/nsAppRunner.cpp:4347
+#19 0xb5e371f0 in XREMain::XRE_main (this=this@entry=0xbebe1778, argc=argc@entry=1, argv=argv@entry=0xb380a110, 
+    aAppData=aAppData@entry=0xb6feac70 <_ZL8sAppData>) at ../../../gecko/toolkit/xre/nsAppRunner.cpp:4451
+#20 0xb5e373e6 in XRE_main (argc=1, argv=0xb380a110, aAppData=0xb6feac70 <_ZL8sAppData>, aFlags=<optimized out>)
+    at ../../../gecko/toolkit/xre/nsAppRunner.cpp:4559
+#21 0xb6fcc422 in do_main (argc=argc@entry=1, argv=argv@entry=0xb380a110) at ../../../gecko/b2g/app/nsBrowserApp.cpp:171
+#22 0xb6fcc51c in b2g_main (argc=1, argv=<optimized out>) at ../../../gecko/b2g/app/nsBrowserApp.cpp:305
+#23 0xb6fcc2ba in RunProcesses (aReservedFds=..., argv=0xbebe2a14, argc=1) at ../../../gecko/b2g/app/B2GLoader.cpp:233
+#24 main (argc=1, argv=0xbebe2a14) at ../../../gecko/b2g/app/B2GLoader.cpp:300
+(gdb) c
+Continuing.
+
+Breakpoint 1, IPC::Channel::ChannelImpl::ChannelImpl (this=this@entry=0xa7322000, fd=fd@entry=216, mode=mode@entry=IPC::Channel::MODE_SERVER, 
+    listener=listener@entry=0x0) at /local/code/master/kaios/gecko/ipc/chromium/src/chrome/common/ipc_channel_posix.cc:182
+182	Channel::ChannelImpl::ChannelImpl(int fd, Mode mode, Listener* listener)
+(gdb) bt
+#0  IPC::Channel::ChannelImpl::ChannelImpl (this=this@entry=0xa7322000, fd=fd@entry=216, mode=mode@entry=IPC::Channel::MODE_SERVER, listener=listener@entry=0x0)
+    at /local/code/master/kaios/gecko/ipc/chromium/src/chrome/common/ipc_channel_posix.cc:182
+#1  0xb4ebf340 in IPC::Channel::Channel (this=0xa741ef30, fd=216, mode=IPC::Channel::MODE_SERVER, listener=0x0)
+    at /local/code/master/kaios/gecko/ipc/chromium/src/chrome/common/ipc_channel_posix.cc:889
+#2  0xb4ed0680 in mozilla::ipc::OpenDescriptor (aFd=..., aMode=aMode@entry=IPC::Channel::MODE_SERVER)
+    at /local/code/master/kaios/gecko/ipc/glue/Transport_posix.cpp:73
+#3  0xb51d45fa in mozilla::layers::SharedBufferManagerParent::CloneToplevel (this=0xb38c2600, aFds=..., aPeerProcess=3095, aCtx=0xbebe14bc)
+    at /local/code/master/kaios/gecko/gfx/layers/ipc/SharedBufferManagerParent.cpp:405
+#4  0xb4ecae12 in mozilla::ipc::IToplevelProtocol::CloneOpenedToplevels (this=0xaa68900c, aTemplate=<optimized out>, aFds=..., 
+    aPeerProcess=aPeerProcess@entry=3095, aCtx=aCtx@entry=0xbebe14bc) at /local/code/master/kaios/gecko/ipc/glue/ProtocolUtils.cpp:154
+#5  0xb59a73b4 in mozilla::dom::ContentParent::ContentParent(mozilla::dom::ContentParent*, nsAString_internal const&, int, nsTArray<mozilla::ipc::ProtocolFdMapping>&&, bool) (this=this@entry=0xaa689000, aTemplate=aTemplate@entry=0xac61e000, aAppManifestURL=..., aPid=aPid@entry=3095, 
+    aFds=<unknown type in /local/code/master/kaios/objdir-gecko/toolkit/library/libxul.so, CU 0x11882a07, DIE 0x11a0d7c4>, aIsBlocking=aIsBlocking@entry=false)
+    at /local/code/master/kaios/gecko/dom/ipc/ContentParent.cpp:2500
+#6  0xb59a7d66 in mozilla::dom::ContentParent::OnNewProcessCreated(unsigned int, mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping>, mozilla::DefaultDelete<nsTArray<mozilla::ipc::ProtocolFdMapping> > >&&, bool) (this=0xac61e000, aPid=3095, aFds=<optimized out>, aBlocking=<optimized out>)
+    at /local/code/master/kaios/gecko/dom/ipc/ContentParent.cpp:3119
+#7  0xb599c9d6 in applyImpl<mozilla::dom::ContentParent, void (mozilla::dom::ContentParent::*)(unsigned int, mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping> >&&, bool), StoreCopyPassByValue<unsigned int>, StoreCopyPassByRRef<mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping>, mozilla::DefaultDelete<nsTArray<mozilla::ipc::ProtocolFdMapping> > > >, StoreCopyPassByValue<bool>, 0u, 1u, 2u> (args=..., m=<optimized out>, o=<optimized out>)
+    at /local/code/master/kaios/objdir-gecko/dist/include/nsThreadUtils.h:671
+#8  apply<mozilla::dom::ContentParent, void (mozilla::dom::ContentParent::*)(unsigned int, mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping> >&&, bool)> (m=<optimized out>, o=<optimized out>, this=<optimized out>) at /local/code/master/kaios/objdir-gecko/dist/include/nsThreadUtils.h:678
+#9  nsRunnableMethodImpl<void (mozilla::dom::ContentParent::*)(unsigned int, mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping>, mozilla::DefaultDelete<nsTArray<mozilla::ipc::ProtocolFdMapping> > >&&, bool), false, unsigned int, mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping>, mozilla::DefaultDelete<nsTArray<mozilla::ipc::ProtocolFdMapping> > >&&, bool>::Run() (this=<optimized out>) at /local/code/master/kaios/objdir-gecko/dist/include/nsThreadUtils.h:705
+#10 0xb5d8e146 in mozilla::tasktracer::TracedRunnable::Run (this=0xa5482c40)
+    at /local/code/master/kaios/gecko/tools/profiler/tasktracer/TracedTaskCommon.cpp:114
+#11 0xb4cd0382 in nsThread::ProcessNextEvent (this=0xb23870c0, aMayWait=<optimized out>, aResult=0xbebe15f7)
+    at /local/code/master/kaios/gecko/xpcom/threads/nsThread.cpp:994
+#12 0xb4ce248c in NS_ProcessNextEvent (aThread=<optimized out>, aThread@entry=0xb23870c0, aMayWait=aMayWait@entry=true)
+    at /local/code/master/kaios/gecko/xpcom/glue/nsThreadUtils.cpp:290
+#13 0xb4ec6950 in mozilla::ipc::MessagePump::Run (this=0xb23ae190, aDelegate=0xb3823320) at /local/code/master/kaios/gecko/ipc/glue/MessagePump.cpp:130
+#14 0xb4eb797e in RunHandler (this=0xb3823320) at /local/code/master/kaios/gecko/ipc/chromium/src/base/message_loop.cc:223
+#15 MessageLoop::Run (this=0xb3823320) at /local/code/master/kaios/gecko/ipc/chromium/src/base/message_loop.cc:203
+#16 0xb5a694f2 in nsBaseAppShell::Run (this=0xaf5e9f40) at /local/code/master/kaios/gecko/widget/nsBaseAppShell.cpp:156
+#17 0xb5e1c166 in nsAppStartup::Run (this=0xb0609730) at /local/code/master/kaios/gecko/toolkit/components/startup/nsAppStartup.cpp:284
+---Type <return> to continue, or q <return> to quit---
+#18 0xb5e36f28 in XREMain::XRE_mainRun (this=this@entry=0xbebe1778) at ../../../gecko/toolkit/xre/nsAppRunner.cpp:4347
+#19 0xb5e371f0 in XREMain::XRE_main (this=this@entry=0xbebe1778, argc=argc@entry=1, argv=argv@entry=0xb380a110, 
+    aAppData=aAppData@entry=0xb6feac70 <_ZL8sAppData>) at ../../../gecko/toolkit/xre/nsAppRunner.cpp:4451
+#20 0xb5e373e6 in XRE_main (argc=1, argv=0xb380a110, aAppData=0xb6feac70 <_ZL8sAppData>, aFlags=<optimized out>)
+    at ../../../gecko/toolkit/xre/nsAppRunner.cpp:4559
+#21 0xb6fcc422 in do_main (argc=argc@entry=1, argv=argv@entry=0xb380a110) at ../../../gecko/b2g/app/nsBrowserApp.cpp:171
+#22 0xb6fcc51c in b2g_main (argc=1, argv=<optimized out>) at ../../../gecko/b2g/app/nsBrowserApp.cpp:305
+#23 0xb6fcc2ba in RunProcesses (aReservedFds=..., argv=0xbebe2a14, argc=1) at ../../../gecko/b2g/app/B2GLoader.cpp:233
+#24 main (argc=1, argv=0xbebe2a14) at ../../../gecko/b2g/app/B2GLoader.cpp:300
+(gdb) c
+Continuing.
+
+Breakpoint 1, IPC::Channel::ChannelImpl::ChannelImpl (this=this@entry=0xa732e000, fd=fd@entry=218, mode=mode@entry=IPC::Channel::MODE_SERVER, 
+    listener=listener@entry=0x0) at /local/code/master/kaios/gecko/ipc/chromium/src/chrome/common/ipc_channel_posix.cc:182
+182	Channel::ChannelImpl::ChannelImpl(int fd, Mode mode, Listener* listener)
+(gdb) bt
+#0  IPC::Channel::ChannelImpl::ChannelImpl (this=this@entry=0xa732e000, fd=fd@entry=218, mode=mode@entry=IPC::Channel::MODE_SERVER, listener=listener@entry=0x0)
+    at /local/code/master/kaios/gecko/ipc/chromium/src/chrome/common/ipc_channel_posix.cc:182
+#1  0xb4ebf340 in IPC::Channel::Channel (this=0xa7422600, fd=218, mode=IPC::Channel::MODE_SERVER, listener=0x0)
+    at /local/code/master/kaios/gecko/ipc/chromium/src/chrome/common/ipc_channel_posix.cc:889
+#2  0xb4ed0680 in mozilla::ipc::OpenDescriptor (aFd=..., aMode=aMode@entry=IPC::Channel::MODE_SERVER)
+    at /local/code/master/kaios/gecko/ipc/glue/Transport_posix.cpp:73
+#3  0xb4ece7ec in (anonymous namespace)::ParentImpl::CloneToplevel (this=0xad987800, aFds=..., aPeerProcess=3095, aCtx=0xbebe14bc)
+    at /local/code/master/kaios/gecko/ipc/glue/BackgroundImpl.cpp:1340
+#4  0xb4ecae12 in mozilla::ipc::IToplevelProtocol::CloneOpenedToplevels (this=0xaa68900c, aTemplate=<optimized out>, aFds=..., 
+    aPeerProcess=aPeerProcess@entry=3095, aCtx=aCtx@entry=0xbebe14bc) at /local/code/master/kaios/gecko/ipc/glue/ProtocolUtils.cpp:154
+#5  0xb59a73b4 in mozilla::dom::ContentParent::ContentParent(mozilla::dom::ContentParent*, nsAString_internal const&, int, nsTArray<mozilla::ipc::ProtocolFdMapping>&&, bool) (this=this@entry=0xaa689000, aTemplate=aTemplate@entry=0xac61e000, aAppManifestURL=..., aPid=aPid@entry=3095, 
+    aFds=<unknown type in /local/code/master/kaios/objdir-gecko/toolkit/library/libxul.so, CU 0x11882a07, DIE 0x11a0d7c4>, aIsBlocking=aIsBlocking@entry=false)
+    at /local/code/master/kaios/gecko/dom/ipc/ContentParent.cpp:2500
+#6  0xb59a7d66 in mozilla::dom::ContentParent::OnNewProcessCreated(unsigned int, mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping>, mozilla::DefaultDelete<nsTArray<mozilla::ipc::ProtocolFdMapping> > >&&, bool) (this=0xac61e000, aPid=3095, aFds=<optimized out>, aBlocking=<optimized out>)
+    at /local/code/master/kaios/gecko/dom/ipc/ContentParent.cpp:3119
+#7  0xb599c9d6 in applyImpl<mozilla::dom::ContentParent, void (mozilla::dom::ContentParent::*)(unsigned int, mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping> >&&, bool), StoreCopyPassByValue<unsigned int>, StoreCopyPassByRRef<mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping>, mozilla::DefaultDelete<nsTArray<mozilla::ipc::ProtocolFdMapping> > > >, StoreCopyPassByValue<bool>, 0u, 1u, 2u> (args=..., m=<optimized out>, o=<optimized out>)
+    at /local/code/master/kaios/objdir-gecko/dist/include/nsThreadUtils.h:671
+#8  apply<mozilla::dom::ContentParent, void (mozilla::dom::ContentParent::*)(unsigned int, mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping> >&&, bool)> (m=<optimized out>, o=<optimized out>, this=<optimized out>) at /local/code/master/kaios/objdir-gecko/dist/include/nsThreadUtils.h:678
+#9  nsRunnableMethodImpl<void (mozilla::dom::ContentParent::*)(unsigned int, mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping>, mozilla::DefaultDelete<nsTArray<mozilla::ipc::ProtocolFdMapping> > >&&, bool), false, unsigned int, mozilla::UniquePtr<nsTArray<mozilla::ipc::ProtocolFdMapping>, mozilla::DefaultDelete<nsTArray<mozilla::ipc::ProtocolFdMapping> > >&&, bool>::Run() (this=<optimized out>) at /local/code/master/kaios/objdir-gecko/dist/include/nsThreadUtils.h:705
+#10 0xb5d8e146 in mozilla::tasktracer::TracedRunnable::Run (this=0xa5482c40)
+    at /local/code/master/kaios/gecko/tools/profiler/tasktracer/TracedTaskCommon.cpp:114
+#11 0xb4cd0382 in nsThread::ProcessNextEvent (this=0xb23870c0, aMayWait=<optimized out>, aResult=0xbebe15f7)
+    at /local/code/master/kaios/gecko/xpcom/threads/nsThread.cpp:994
+#12 0xb4ce248c in NS_ProcessNextEvent (aThread=<optimized out>, aThread@entry=0xb23870c0, aMayWait=aMayWait@entry=true)
+    at /local/code/master/kaios/gecko/xpcom/glue/nsThreadUtils.cpp:290
+#13 0xb4ec6950 in mozilla::ipc::MessagePump::Run (this=0xb23ae190, aDelegate=0xb3823320) at /local/code/master/kaios/gecko/ipc/glue/MessagePump.cpp:130
+#14 0xb4eb797e in RunHandler (this=0xb3823320) at /local/code/master/kaios/gecko/ipc/chromium/src/base/message_loop.cc:223
+#15 MessageLoop::Run (this=0xb3823320) at /local/code/master/kaios/gecko/ipc/chromium/src/base/message_loop.cc:203
+#16 0xb5a694f2 in nsBaseAppShell::Run (this=0xaf5e9f40) at /local/code/master/kaios/gecko/widget/nsBaseAppShell.cpp:156
+#17 0xb5e1c166 in nsAppStartup::Run (this=0xb0609730) at /local/code/master/kaios/gecko/toolkit/components/startup/nsAppStartup.cpp:284
+---Type <return> to continue, or q <return> to quit---
+#18 0xb5e36f28 in XREMain::XRE_mainRun (this=this@entry=0xbebe1778) at ../../../gecko/toolkit/xre/nsAppRunner.cpp:4347
+#19 0xb5e371f0 in XREMain::XRE_main (this=this@entry=0xbebe1778, argc=argc@entry=1, argv=argv@entry=0xb380a110, 
+    aAppData=aAppData@entry=0xb6feac70 <_ZL8sAppData>) at ../../../gecko/toolkit/xre/nsAppRunner.cpp:4451
+#20 0xb5e373e6 in XRE_main (argc=1, argv=0xb380a110, aAppData=0xb6feac70 <_ZL8sAppData>, aFlags=<optimized out>)
+    at ../../../gecko/toolkit/xre/nsAppRunner.cpp:4559
+#21 0xb6fcc422 in do_main (argc=argc@entry=1, argv=argv@entry=0xb380a110) at ../../../gecko/b2g/app/nsBrowserApp.cpp:171
+#22 0xb6fcc51c in b2g_main (argc=1, argv=<optimized out>) at ../../../gecko/b2g/app/nsBrowserApp.cpp:305
+#23 0xb6fcc2ba in RunProcesses (aReservedFds=..., argv=0xbebe2a14, argc=1) at ../../../gecko/b2g/app/B2GLoader.cpp:233
+#24 main (argc=1, argv=0xbebe2a14) at ../../../gecko/b2g/app/B2GLoader.cpp:300
+
+

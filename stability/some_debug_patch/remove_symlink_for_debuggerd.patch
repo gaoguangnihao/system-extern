@@ -1,0 +1,15 @@
+diff --git a/binary/Android.mk b/binary/Android.mk
+index 1e28d3f..5d44acb 100644
+--- a/binary/Android.mk
++++ b/binary/Android.mk
+@@ -69,8 +69,8 @@ LOCAL_MODULE_TAGS := optional
+ 
+ include $(BUILD_MULTI_PREBUILT)
+ 
+-SYMLINKS := $(TARGET_OUT)/bin/debuggerd
+-$(SYMLINKS): DEBUGGERD_BINARY := aee_aed
++#SYMLINKS := $(TARGET_OUT)/bin/debuggerd
++#$(SYMLINKS): DEBUGGERD_BINARY := aee_aed
+ $(SYMLINKS): $(LOCAL_INSTALLED_MODULE) $(LOCAL_PATH)/Android.mk
+ 	@echo "Symlink: $@ -> $(DEBUGGERD_BINARY)"
+ 	@mkdir -p $(dir $@)

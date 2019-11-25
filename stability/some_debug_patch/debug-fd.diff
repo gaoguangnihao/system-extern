@@ -1,0 +1,142 @@
+diff --git a/ipc/chromium/src/chrome/common/ipc_channel_posix.cc b/ipc/chromium/src/chrome/common/ipc_channel_posix.cc
+index f375f0ece..23f0117b8 100644
+--- a/ipc/chromium/src/chrome/common/ipc_channel_posix.cc
++++ b/ipc/chromium/src/chrome/common/ipc_channel_posix.cc
+@@ -38,6 +38,8 @@
+ using namespace mozilla::tasktracer;
+ #endif
+ 
++#include "ipc/Nuwa.h"
++
+ namespace IPC {
+ 
+ // IPC channels on Windows use named pipes (CreateNamedPipe()) with
+@@ -177,6 +179,7 @@ Channel::ChannelImpl::ChannelImpl(int fd, Mode mode, Listener* listener)
+     : factory_(this) {
+   Init(mode, listener);
+   pipe_ = fd;
++  UseFD(pipe_);
+   waiting_connect_ = (MODE_SERVER == mode);
+ 
+   EnqueueHelloMessage();
+@@ -228,6 +231,7 @@ bool Channel::ChannelImpl::CreatePipe(const std::wstring& channel_id,
+     }
+ 
+     pipe_ = pipe_fds[0];
++    UseFD(pipe_);
+     client_pipe_ = pipe_fds[1];
+ 
+     if (pipe_name_.length()) {
+@@ -235,6 +239,7 @@ bool Channel::ChannelImpl::CreatePipe(const std::wstring& channel_id,
+     }
+   } else {
+     pipe_ = ChannelNameToClientFD(pipe_name_);
++    UseFD(pipe_);
+     DCHECK(pipe_ > 0);
+     waiting_connect_ = false;
+   }
+@@ -798,6 +803,7 @@ void Channel::ChannelImpl::Close() {
+   read_watcher_.StopWatchingFileDescriptor();
+   write_watcher_.StopWatchingFileDescriptor();
+   if (pipe_ != -1) {
++    UnuseFD(pipe_);
+     HANDLE_EINTR(close(pipe_));
+     pipe_ = -1;
+   }
+diff --git a/mozglue/build/Nuwa.cpp b/mozglue/build/Nuwa.cpp
+index 600a931a7..427e74fa0 100644
+--- a/mozglue/build/Nuwa.cpp
++++ b/mozglue/build/Nuwa.cpp
+@@ -28,6 +28,9 @@
+ #include "mozilla/TaggedAnonymousMemory.h"
+ #include "Nuwa.h"
+ 
++extern "C" {
++int channel_fd_map[2048];
++}
+ 
+ /* Support for telling Valgrind about the stack pointer changes that
+    Nuwa makes.  Without this, Valgrind is unusable in Nuwa child
+@@ -1491,6 +1494,23 @@ __wrap_epoll_ctl(int aEpollFd, int aOp, int aFd, struct epoll_event *aEvent) {
+ // XXX: thinker: Maybe, we should also track dup, dup2, and other functions.
+ extern "C" MFBT_API int
+ __wrap_close(int aFd) {
++  if (aFd >= 0 && !sIsNuwaProcess && channel_fd_map[aFd]) {
++    __android_log_print(ANDROID_LOG_FATAL, "Nuwa",
++                        "Fatal error: Close a Fd(%d) that is used by an IPC chanenl. pid=%d tid=%d",
++                        aFd, getpid(), gettid());
++    int domain = -1;
++    if (getsockopt(aFd, SOL_SOCKET, SO_DOMAIN, &domain, sizeof(domain))) {
++      __android_log_print(ANDROID_LOG_FATAL, "Nuwa", "it is not a socket at all (errno=%d)",
++                          errno);
++      abort();
++    }
++    if (domain != AF_UNIX) {
++      __android_log_print(ANDROID_LOG_FATAL, "Nuwa",
++                          "it is not a UNIX domain socket (domain=%d)",
++                          domain);
++    }
++    abort();
++  }
+   int rv = REAL(close)(aFd);
+   if (!sIsNuwaProcess || rv == -1) {
+     return rv;
+@@ -2103,4 +2123,44 @@ NuwaAssertNotFrozen(unsigned int aThread, const char* aThreadName) {
+ }
+ #endif
+ 
++MFBT_API void
++UseFD(int aFd) {
++  int domain = -1;
++  if (getsockopt(aFd, SOL_SOCKET, SO_DOMAIN, &domain, sizeof(domain))) {
++    __android_log_print(ANDROID_LOG_FATAL, "Nuwa",
++                        "Fatal error: an ipc channel use a Fd(%d) that is invalid (err=%d). pid=%d tid=%d",
++                        aFd, errno, getpid(), gettid());
++    abort();
++  }
++  if (domain != AF_UNIX) {
++    __android_log_print(ANDROID_LOG_FATAL, "Nuwa",
++                        "Fatal error: an ipc channel use a Fd(%d) that is not an AF_UNIX (%d) socket. pid=%d tid=%d",
++                        aFd, domain, getpid(), gettid());
++    abort();
++  }
++  do {
++    if (aFd >= 0) channel_fd_map[aFd] = 1;
++  } while (0);
++}
++
++MFBT_API void
++UnuseFD(int aFd) {
++  int domain = -1;
++  if (getsockopt(aFd, SOL_SOCKET, SO_DOMAIN, &domain, sizeof(domain))) {
++    __android_log_print(ANDROID_LOG_FATAL, "Nuwa",
++                        "Fatal error: an ipc channel unuse a Fd(%d) that is invalid (err=%d). pid=%d tid=%d",
++                        aFd, errno, getpid(), gettid());
++    abort();
++  }
++  if (domain != AF_UNIX) {
++    __android_log_print(ANDROID_LOG_FATAL, "Nuwa",
++                        "Fatal error: an ipc channel unuse a Fd(%d) that is not an AF_UNIX (%d) socket. pid=%d tid=%d",
++                        aFd, domain, getpid(), gettid());
++    abort();
++  }
++  do {
++    if (aFd >= 0) channel_fd_map[aFd] = 0;
++  } while (0);
++}
++
+ }      // extern "C"
+diff --git a/mozglue/build/Nuwa.h b/mozglue/build/Nuwa.h
+index 13d71ebfe..20a795887 100644
+--- a/mozglue/build/Nuwa.h
++++ b/mozglue/build/Nuwa.h
+@@ -196,6 +196,9 @@ MFBT_API void NuwaAssertNotFrozen(unsigned int aThread,
+ #else
+ #define NuwaAssertNotFrozen(aThread, aThreadName) do {} while(0);
+ #endif
++
++MFBT_API void UseFD(int);
++MFBT_API void UnuseFD(int);
+ };
+ 
+ #endif /* __NUWA_H_ */

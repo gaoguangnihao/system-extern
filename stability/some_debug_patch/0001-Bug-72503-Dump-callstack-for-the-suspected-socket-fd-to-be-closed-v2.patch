@@ -1,0 +1,211 @@
+From ec25ef64246abcf5e2498387da9239adbde5cd5e Mon Sep 17 00:00:00 2001
+From: Rex Hung <rex.hung@kaiostech.com>
+Date: Fri, 8 Nov 2019 10:25:35 +0800
+Subject: [PATCH] Bug 72503 - Dump callstack for the suspected socket fd to be
+ closed
+
+---
+ config/system-headers                              |  1 +
+ .../src/chrome/common/ipc_channel_posix.cc         | 15 ++++
+ mozglue/build/Nuwa.cpp                             | 98 ++++++++++++++++++++++
+ mozglue/build/Nuwa.h                               |  2 +
+ mozglue/build/moz.build                            |  4 +
+ 5 files changed, 120 insertions(+)
+
+diff --git a/config/system-headers b/config/system-headers
+index 92a8940..5c1d0b0 100644
+--- a/config/system-headers
++++ b/config/system-headers
+@@ -1365,3 +1365,4 @@ curl/curl.h
+ libxml/parser.h
+ libxml/xpath.h
+ openssl/sha.h
++corkscrew/backtrace.h
+diff --git a/ipc/chromium/src/chrome/common/ipc_channel_posix.cc b/ipc/chromium/src/chrome/common/ipc_channel_posix.cc
+index 86a74e5..0cecdf8 100644
+--- a/ipc/chromium/src/chrome/common/ipc_channel_posix.cc
++++ b/ipc/chromium/src/chrome/common/ipc_channel_posix.cc
+@@ -38,6 +38,14 @@
+ using namespace mozilla::tasktracer;
+ #endif
+ 
++#define REX
++#ifdef REX
++#include "mozilla/dom/PNuwa.h"
++#include "ipc/Nuwa.h"
++#include <android/log.h>
++#define REX_DEBUG(...) __android_log_print(ANDROID_LOG_DEBUG, "REX", __VA_ARGS__)
++#endif
++
+ namespace IPC {
+ 
+ // IPC channels on Windows use named pipes (CreateNamedPipe()) with
+@@ -512,6 +520,13 @@ bool Channel::ChannelImpl::ProcessIncomingMessages() {
+           CloseDescriptors(m.fd_cookie());
+ #endif
+         } else {
++#ifdef REX
++          if (m.type() == mozilla::dom::PNuwa::Msg_AddNewProcess__ID) {
++            if (wire_fds != NULL) {
++              AddFdToCheck(*wire_fds);
++            }
++          }
++#endif
+           listener_->OnMessageReceived(mozilla::Move(m));
+         }
+         p = message_tail;
+diff --git a/mozglue/build/Nuwa.cpp b/mozglue/build/Nuwa.cpp
+index 600a931..0033a03 100644
+--- a/mozglue/build/Nuwa.cpp
++++ b/mozglue/build/Nuwa.cpp
+@@ -80,6 +80,18 @@
+ # define POST_SETJMP_RESTORE(_who) /* */
+ #endif
+ 
++#define REX
++#ifdef REX
++#include <dlfcn.h>
++#include <corkscrew/backtrace.h>
++#include <android/log.h>
++#define REX_DEBUG(...) __android_log_print(ANDROID_LOG_DEBUG, "REX", __VA_ARGS__)
++extern "C" {
++int number_fds = 3;
++int closing_fds[3] = {0};
++int current_fd = 0;
++}
++#endif
+ 
+ using namespace mozilla;
+ 
+@@ -1488,9 +1500,86 @@ __wrap_epoll_ctl(int aEpollFd, int aOp, int aFd, struct epoll_event *aEvent) {
+   return rv;
+ }
+ 
++extern "C" void show_stack(int tid) {
++#if 1
++  void *handle = dlopen("libcorkscrew.so", RTLD_NOW | RTLD_LOCAL);
++  if (handle) {
++    ssize_t (*unwind_thread)(pid_t tid, backtrace_frame_t* backtrace, size_t ignore_depth, size_t max_depth);
++    unwind_thread = (ssize_t (*)(pid_t, backtrace_frame_t*, size_t, size_t))dlsym(handle, "unwind_backtrace_thread");
++
++    if (unwind_thread != NULL) {
++      backtrace_frame_t stack[12];
++      ssize_t count = unwind_thread(tid, stack, 2, 12);
++      REX_DEBUG("tid=%d, count=%d", tid, count);
++
++      void (*get_backtrace)(const backtrace_frame_t* backtrace, size_t frames, backtrace_symbol_t* backtrace_symbols);
++      get_backtrace = (void (*)(const backtrace_frame_t*, size_t, backtrace_symbol_t*))dlsym(handle, "get_backtrace_symbols");
++
++      void (*format_backtrace)(unsigned frameNumber, const backtrace_frame_t* frame, const backtrace_symbol_t* symbol, char* buffer, size_t bufferSize);
++      format_backtrace = (void (*)(unsigned, const backtrace_frame_t*, const backtrace_symbol_t*, char*, size_t))dlsym(handle, "format_backtrace_line");
++
++      void (*free_backtrace)(backtrace_symbol_t* backtrace_symbols, size_t frames);
++      free_backtrace = (void (*)(backtrace_symbol_t*, size_t))dlsym(handle, "free_backtrace_symbols");
++
++      if (get_backtrace == NULL || format_backtrace == NULL || free_backtrace == NULL) {
++        REX_DEBUG("get/format/free backtrace failure!!!");
++        return;
++      }
++
++      backtrace_symbol_t symbols[count];
++      get_backtrace(stack, count, symbols);
++      for (ssize_t i=0; i<count; i++) {
++        char line[MAX_BACKTRACE_LINE_LENGTH];
++        format_backtrace(i, &stack[i], &symbols[i], line, 800);
++        REX_DEBUG("%s", line);
++      }
++      free_backtrace(symbols, count);
++    } else {
++      REX_DEBUG("unwind_backtrace_thread not found!!!");
++    }
++  } else {
++    REX_DEBUG("dlopen failure!!!");
++  }
++#else
++  if (tid >= 0) {
++    ssize_t count;
++    backtrace_frame_t stack[12];
++
++    count = unwind_backtrace_thread(tid, stack, 2, 12);
++    if (count > 0) {
++      backtrace_symbol_t symbols[count];
++
++      get_backtrace_symbols(stack, count, symbols);
++      for (ssize_t i=0; i<count; i++) {
++        char line[MAX_BACKTRACE_LINE_LENGTH];
++        format_backtrace_line(i, &stack[i], &symbols[i], line, 800);
++        REX_DEBUG("%s", line);
++      }
++      free_backtrace_symbols(symbols, count);
++    } else {
++      REX_DEBUG("No callstack for tid=%d", tid);
++    }
++  } else {
++    REX_DEBUG("Invalid tid: %d", tid);
++  }
++#endif
++}
++
+ // XXX: thinker: Maybe, we should also track dup, dup2, and other functions.
+ extern "C" MFBT_API int
+ __wrap_close(int aFd) {
++#ifdef REX
++  if (!sIsNuwaProcess && current_fd) {
++    for (int i=0; i<number_fds; i++) {
++      if (aFd == closing_fds[i]) {
++        REX_DEBUG("Close %d", aFd);
++        show_stack(gettid());
++        closing_fds[i] = -1;
++        break;
++      }
++    }
++  }
++#endif
+   int rv = REAL(close)(aFd);
+   if (!sIsNuwaProcess || rv == -1) {
+     return rv;
+@@ -2103,4 +2192,13 @@ NuwaAssertNotFrozen(unsigned int aThread, const char* aThreadName) {
+ }
+ #endif
+ 
++MFBT_API void
++AddFdToCheck(int fd)
++{
++  if (!sIsNuwaProcess) {
++    closing_fds[current_fd%number_fds] = fd;
++    current_fd++;
++    REX_DEBUG("%d for check", fd);
++  }
++}
+ }      // extern "C"
+diff --git a/mozglue/build/Nuwa.h b/mozglue/build/Nuwa.h
+index 13d71eb..9543979 100644
+--- a/mozglue/build/Nuwa.h
++++ b/mozglue/build/Nuwa.h
+@@ -196,6 +196,8 @@ MFBT_API void NuwaAssertNotFrozen(unsigned int aThread,
+ #else
+ #define NuwaAssertNotFrozen(aThread, aThreadName) do {} while(0);
+ #endif
++
++MFBT_API void AddFdToCheck(int);
+ };
+ 
+ #endif /* __NUWA_H_ */
+diff --git a/mozglue/build/moz.build b/mozglue/build/moz.build
+index e289aa5..9c391c2 100644
+--- a/mozglue/build/moz.build
++++ b/mozglue/build/moz.build
+@@ -99,6 +99,10 @@ USE_LIBS += [
+     'mfbt',
+ ]
+ 
++#OS_LIBS += [
++#    'corkscrew',
++#]
++
+ DEFINES['IMPL_MFBT'] = True
+ 
+ LDFLAGS += CONFIG['MOZ_GLUE_WRAP_LDFLAGS']
+-- 
+2.7.4
+
