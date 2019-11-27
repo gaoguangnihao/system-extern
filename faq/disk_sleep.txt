@@ -1,0 +1,51 @@
+1. https://bugzilla.kaiostech.com/show_bug.cgi?id=74958
+
+2. adb shell b2g-ps show b2g is D status 
+
+3. cd proc/$PID /proc/227 # cat status syscall schedstat stack
+
+4. echo w >/proc/sysrq-trigger and get DMESG 
+
+5. get a stack about kernel 
+        <6>[  111.858127] c0 b2g             D c067b1cc     0   227      1 0x00000000
+	<4>[  111.858146] c1 Function entered at [<c067b1cc>] from [<c067b47c>]
+	<4>[  111.858160] c1 Function entered at [<c067b47c>] from [<c01103b8>]
+	<4>[  111.858171] c1 Function entered at [<c01103b8>] from [<c01105c8>]
+	<4>[  111.858182] c1 Function entered at [<c01105c8>] from [<c00f0794>]
+	<4>[  111.858193] c1 Function entered at [<c00f0794>] from [<c0114a30>]
+	<4>[  111.858205] c1 Function entered at [<c0114a30>] from [<c000f5c0>]
+
+6. parser the stack use vmlinux symbols 
+
+        c067b1cc == > __schedule
+	c067b47c == > schedule:
+	c01103b8 == > wb_wait_for_completion:
+	c01105c8 == > sync_inodes_sb
+	c00f0794 == > iterate_supers: 
+	c0114a30 == > sys_sync:
+	c000f5c0 == > ret_fast_syscall:
+7. use strace to track b2g ,you will be get a last system call 
+
+8. sync () from fota side ,but it not a root cause //fs/sync.c
+
+9.   if (0 == testResult) {
+    LOG("sync");
+     sync();
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    LOG("sync done!");
+  }
+10. match to the call stack form kernel 
+
+11. find the slog is the killer ! 
+
+12. disabel slog 
+cp system/etc/slog.conf.user system/etc/slog.conf
+
+13. qualcomm use init.qcom.rc to creat data/fota 
+    #Create directory for FOTA
+    mkdir /data/fota 0771
+    chown system system /data/fota
+
+14. fixed https://bugzilla.kaiostech.com/show_bug.cgi?id=76605 (this is a workaround)
+
+
