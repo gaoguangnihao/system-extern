@@ -1,0 +1,10 @@
+adb root
+adb remount
+adb pull /data/local/storage/permanent/chrome/idb ./
+adb pull /data/local/storage/permanent/
+
+
+$ sqlite3 2588645841ssegtnti.sqlite
+$ PARGMA integrity_check;
+OK
+$ .exit

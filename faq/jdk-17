@@ -1,0 +1,38 @@
+dhcui@linux-3:~/baidunetdiskdownload/openjdk7$ sudo apt-get update
+Get:1 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]                                              
+Hit:3 http://archive.canonical.com/ubuntu bionic InRelease                                                               
+Get:2 http://ppa.launchpad.net/openjdk-r/ppa/ubuntu bionic InRelease [15.4 kB]                                       
+Err:2 http://ppa.launchpad.net/openjdk-r/ppa/ubuntu bionic InRelease
+  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY EB9B1D8886F44E2A
+Get:4 http://ppa.launchpad.net/webupd8team/java/ubuntu bionic InRelease [15.4 kB]
+Err:4 http://ppa.launchpad.net/webupd8team/java/ubuntu bionic InRelease  
+  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY C2518248EEA14886
+0% [Waiting for headers]^C                                                                                                                                      
+dhcui@linux-3:~/baidunetdiskdownload/openjdk7$ sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com EB9B1D8886F44E2A
+Executing: /tmp/apt-key-gpghome.ME0n67YnPB/gpg.1.sh --recv-keys --keyserver keyserver.ubuntu.com EB9B1D8886F44E2A
+gpg: key EB9B1D8886F44E2A: public key "Launchpad OpenJDK builds (all archs)" imported
+gpg: Total number processed: 1
+gpg:               imported: 1
+dhcui@linux-3:~/baidunetdiskdownload/openjdk7$ sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com C2518248EEA14886
+Executing: /tmp/apt-key-gpghome.cBoNtOCfXh/gpg.1.sh --recv-keys --keyserver keyserver.ubuntu.com C2518248EEA14886
+gpg: key C2518248EEA14886: 15 signatures not checked due to missing keys
+gpg: key C2518248EEA14886: public key "Launchpad VLC" imported
+gpg: Total number processed: 1
+gpg:               imported: 1
+
+
+sudo apt install debian-archive-keyring
+
+sudo add-apt-repository 'deb http://httpredir.debian.org/debian experimental main'
+sudo add-apt-repository 'deb http://httpredir.debian.org/debian sid main'
+
+
+
+Create file/etc/apt/preferences.d/debianwith the below contents. You'll need superuser privileges, so use one ofsudo vim,sudo nano,gksudo gedit, etc.
+
+Package:*Pin:release o=Debian,n=experimentalPin-Priority:-1Package:*Pin:release o=Debian,n=sidPin-Priority:-1Package:openjdk-7-jdkPin:release o=Debian,n=experimentalPin-Priority:500Package:openjdk-7-jrePin:release o=Debian,n=experimentalPin-Priority:500Package:openjdk-7-jre-headlessPin:release o=Debian,n=experimentalPin-Priority:500Package:libjpeg62-turboPin:release o=Debian,n=sidPin-Priority:500
+
+sudo apt update
+
+sudo apt install openjdk-7-jdk
+

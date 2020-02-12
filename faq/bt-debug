@@ -1,0 +1,674 @@
+1. share file with bluetooth from audio app
+
+01-15 04:51:10.697   726   726 I GeckoDump: XXX FIXME : Got a mozContentEvent: activity-choice
+01-15 04:51:10.747   726   726 I Gecko   : [BrowserElement] event type: keydown, key: Enter, target: [object HTMLDivElement], class: menu-item p-pri
+01-15 04:51:10.757   726   726 I Gecko   : XXX FIXME : Dispatch a open-app: undefined
+01-15 04:51:10.797  1974  1974 W Bluetooth Manager: [JavaScript Warning: "Use of nsIFile in content process is deprecated." {file: "jar:file:///system/b2g/omni.ja!/components/DirectoryProvider.js" line: 89}]
+
+
+2. try select one devices to share or search for devices
+
+01-15 04:53:39.637   726   726 I Gecko   : [BrowserElement] event type: keydown, key: ArrowDown, target: [object HTMLIFrameElement], src: app://bluetooth.gaiamobile.org/transfer.html, id: browser5, class: browser
+01-15 04:53:39.657  1974  1974 I FocusManager: << focus() called >>
+01-15 04:53:39.657  1974  1974 I FocusManager:    trying to set focus on, tag: LI, id: , class: bluetooth-device bluetooth-type-phone focus
+01-15 04:53:39.667  1974  1974 I FocusManager:    current focused element, tag: LI, id: search-for-devices, class: 
+01-15 04:53:39.667  1974  1974 I FocusManager: <- blur on, tag: LI, id: search-for-devices, class: 
+01-15 04:53:39.667  1974  1974 I FocusManager: -> focus is now on, tag: LI, id: , class: bluetooth-device bluetooth-type-phone focus
+01-15 04:53:39.677  1974  1974 I FocusManager: << focus() called >>
+01-15 04:53:39.677  1974  1974 I FocusManager:    trying to set focus on, tag: FORM, id: softkeyPanel, class: skbar none-paddings visible focused
+01-15 04:53:39.677  1974  1974 I FocusManager: Warning: element is not focusable.
+01-15 04:53:39.687  1974  1974 I Gecko   : [BrowserElement] event type: keydown, key: ArrowDown, target: [object HTMLLIElement], id: search-for-devices
+01-15 04:53:39.727   726   726 I Gecko   : [BrowserElement] event type: keyup, key: ArrowDown, target: [object HTMLIFrameElement], src: app://bluetooth.gaiamobile.org/transfer.html, id: browser5, class: browser
+01-15 04:53:39.727  1974  1974 I Gecko   : [BrowserElement] event type: keyup, key: ArrowDown, target: [object HTMLLIElement], class: bluetooth-device bluetooth-type-phone focus
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+01-15 04:55:48.477   726   726 I Gecko   : [BrowserElement] event type: keydown, key: Enter, target: [object HTMLIFrameElement], src: app://bluetooth.gaiamobile.org/transfer.html, id: browser5, class: browser
+01-15 04:55:48.477  1974  1974 I FocusManager: << focus() called >>
+01-15 04:55:48.487  1974  1974 I FocusManager:    trying to set focus on, tag: LI, id: , class: bluetooth-device bluetooth-type-phone focus
+01-15 04:55:48.487  1974  1974 I FocusManager: Warning: element is already focused.
+
+
+apps/bluetooth/js/modules/bluetooth/bluetooth_context.js
+
+
+
+child process 01-15 04:55:48.487  1974  1974 D DHCUI   : BluetoothServiceChildProcess::SendFile this is 0xad9f7340
+
+#0  mozilla::dom::bluetooth::BluetoothServiceChildProcess::SendFile (this=0xb05b3e80, aDeviceAddress=..., aBlobParent=0x0, aBlobChild=0xadfe2be0, 
+    aRunnable=0xade30730) at /local/code/master/kaios/gecko/dom/bluetooth/ipc/BluetoothServiceChildProcess.cpp:307
+#1  0xb5349794 in mozilla::dom::bluetooth::BluetoothAdapter::SendFile (this=this@entry=0xadfac6a0, aDeviceAddress=..., aBlob=..., aRv=...)
+    at /local/code/master/kaios/gecko/dom/bluetooth/common/webapi/BluetoothAdapter.cpp:1874
+#2  0xb539383e in mozilla::dom::BluetoothAdapterBinding::sendFile (cx=0xb23c2f50, obj=..., self=0xadfac6a0, args=...)
+    at /local/code/master/kaios/objdir-gecko/dom/bindings/BluetoothAdapterBinding.cpp:3072
+#3  0xb56f25bc in mozilla::dom::GenericBindingMethod (cx=0xb23c2f50, argc=<optimized out>, vp=<optimized out>)
+    at /local/code/master/kaios/gecko/dom/bindings/BindingUtils.cpp:2781
+#4  0xb63c8318 in CallJSNative (args=..., native=0xb56f24f9 <mozilla::dom::GenericBindingMethod(JSContext*, unsigned int, JS::Value*)>, cx=0xb23c2f50)
+    at ../../../gecko/js/src/jscntxtinlines.h:240
+
+1762  mSocket->Connect(aDeviceAddress, aServiceUuid,
+1763                   BluetoothSocketType::RFCOMM, aChannel,
+1764                   false, true);
+
+
+
+
+
+01-15 04:31:20.787 31525 31525 I GeckoBluetooth: SendFile: 
+01-15 04:31:20.787 31525 31525 D DHCUI   : BluetoothSocket::Close this is 0xa66fe730
+01-15 04:31:21.107 31525 31525 D DHCUI   : #00 pc 00a583c9  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth15BluetoothSocket5CloseEv+44)
+01-15 04:31:21.107 31525 31525 D DHCUI   : #01 pc 00a51469  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth19BluetoothOppManager15ConnectInternalERKNS1_16BluetoothAddressE+60)
+
+01-15 04:31:21.107 31525 31525 D DHCUI   : BluetoothSocket::OnDisconnect this is 0xa66fe730
+01-15 04:31:21.427 31525 31525 D DHCUI   : #00 pc 00a58f97  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth15BluetoothSocket12OnDisconnectEv+42)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #01 pc 00a583db  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth15BluetoothSocket5CloseEv+62)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #02 pc 00a51469  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth19BluetoothOppManager15ConnectInternalERKNS1_16BluetoothAddressE+60)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #03 pc 00a51545  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth19BluetoothOppManager16ProcessNextBatchEv+88)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #04 pc 00a51571  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth19BluetoothOppManager8SendFileERKNS1_16BluetoothAddressEPNS0_4BlobE+16)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #05 pc 00a5159f  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth19BluetoothOppManager8SendFileERKNS1_16BluetoothAddressEPNS0_10BlobParentE+38)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #06 pc 00a54f91  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth25BluetoothServiceBluedroid8SendFileERKNS1_16BluetoothAddressEPNS0_10BlobParentEPNS0_9BlobChildEPNS1_22BluetoothReplyRunnableE+36)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #07 pc 00a70b43  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth22BluetoothRequestParent9DoRequestERKNS1_15SendFileRequestE+18)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #08 pc 006ca265  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth16PBluetoothParent17OnMessageReceivedERKN3IPC7MessageE+664)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #09 pc 0070d427  /system/b2g/libxul.so (_ZN7mozilla3dom14PContentParent17OnMessageReceivedERKN3IPC7MessageE+42)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #10 pc 005e76b5  /system/b2g/libxul.so (_ZN7mozilla3ipc14MessageChannel20DispatchAsyncMessageERKN3IPC7MessageE+96)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #11 pc 005ecc45  /system/b2g/libxul.so (_ZN7mozilla3ipc14MessageChannel15DispatchMessageERKN3IPC7MessageE+264)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #12 pc 005ed613  /system/b2g/libxul.so (_ZN7mozilla3ipc14MessageChannel17OnMaybeDequeueOneEv+90)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #13 pc 014abc19  /system/b2g/libxul.so (_ZN7mozilla10tasktracer10TracedTask3RunEv+26)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #14 pc 005d5859  /system/b2g/libxul.so (_ZN11MessageLoop7RunTaskEP4Task+18)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #15 pc 005d86bb  /system/b2g/libxul.so (_ZN11MessageLoop21DeferOrRunPendingTaskERKNS_11PendingTaskE+26)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #16 pc 005d8745  /system/b2g/libxul.so (_ZN11MessageLoop6DoWorkEv+120)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #17 pc 005e3e21  /system/b2g/libxul.so (_ZN7mozilla3ipc14DoWorkRunnable3RunEv+28)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #18 pc 014abbdd  /system/b2g/libxul.so (_ZN7mozilla10tasktracer14TracedRunnable3RunEv+26)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #19 pc 003ee381  /system/b2g/libxul.so (_ZN8nsThread16ProcessNextEventEbPb+560)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #20 pc 0040048b  /system/b2g/libxul.so (_Z19NS_ProcessNextEventP9nsIThreadb+22)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #21 pc 005e4661  /system/b2g/libxul.so (_ZN7mozilla3ipc11MessagePump3RunEPN4base11MessagePump8DelegateE+148)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #22 pc 005d58f3  /system/b2g/libxul.so (_ZN11MessageLoop3RunEv+14)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #23 pc 01186f89  /system/b2g/libxul.so (_ZN14nsBaseAppShell3RunEv+28)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #24 pc 01539bfd  /system/b2g/libxul.so (_ZN12nsAppStartup3RunEv+48)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #25 pc 015549bf  /system/b2g/libxul.so (_ZN7XREMain11XRE_mainRunEv+1806)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #26 pc 01554c85  /system/b2g/libxul.so (_ZN7XREMain8XRE_mainEiPPcPK12nsXREAppData+444)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #27 pc 01554e7b  /system/b2g/libxul.so (XRE_main+78)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #28 pc 00006421  /system/b2g/b2g (_ZL7do_mainiPPc+276)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #29 pc 00006519  /system/b2g/b2g (_Z8b2g_mainiPPKc+160)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #30 pc 000062b7  /system/b2g/b2g (main+326)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #31 pc 00016655  /system/lib/libc.so (__libc_init+44)
+01-15 04:31:21.427 31525 31525 D DHCUI   : #32 pc 00005db0  /system/b2g/b2g (_start+96)
+
+
+
+01-15 04:31:21.427 31525 31525 D DHCUI   : BluetoothSocket::Cleanup this is 0xa66fe730,mSocketInterface is 0xaa6d5db8
+01-15 04:31:21.427 31525 31525 D DHCUI   : BluetoothSocket::~~BluetoothSocket this is 0xa66fe730
+
+
+
+01-15 04:31:21.427 31525 31525 D DHCUI   : BluetoothOppManager::ConnectInternal
+DHCUI-DEBUG new a msocket after close last one 01-15 04:31:21.427 31525 31525 D DHCUI   : BluetoothSocket::BluetoothSocket this is 0xa7364c70
+01-15 04:31:21.747 31525 31525 D DHCUI   : #00 pc 00a58add  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth15BluetoothSocketC2EPNS1_23BluetoothSocketObserverE+80)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #01 pc 00a514b3  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth19BluetoothOppManager15ConnectInternalERKNS1_16BluetoothAddressE+134)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #02 pc 00a51545  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth19BluetoothOppManager16ProcessNextBatchEv+88)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #03 pc 00a51571  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth19BluetoothOppManager8SendFileERKNS1_16BluetoothAddressEPNS0_4BlobE+16)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #04 pc 00a5159f  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth19BluetoothOppManager8SendFileERKNS1_16BluetoothAddressEPNS0_10BlobParentE+38)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #05 pc 00a54f91  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth25BluetoothServiceBluedroid8SendFileERKNS1_16BluetoothAddressEPNS0_10BlobParentEPNS0_9BlobChildEPNS1_22BluetoothReplyRunnableE+36)
+DHCUI-DEBUG IPC 01-15 04:31:21.747 31525 31525 D DHCUI   : #06 pc 00a70b43  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth22BluetoothRequestParent9DoRequestERKNS1_15SendFileRequestE+18)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #07 pc 006ca265  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth16PBluetoothParent17OnMessageReceivedERKN3IPC7MessageE+664)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #08 pc 0070d427  /system/b2g/libxul.so (_ZN7mozilla3dom14PContentParent17OnMessageReceivedERKN3IPC7MessageE+42)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #09 pc 005e76b5  /system/b2g/libxul.so (_ZN7mozilla3ipc14MessageChannel20DispatchAsyncMessageERKN3IPC7MessageE+96)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #10 pc 005ecc45  /system/b2g/libxul.so (_ZN7mozilla3ipc14MessageChannel15DispatchMessageERKN3IPC7MessageE+264)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #11 pc 005ed613  /system/b2g/libxul.so (_ZN7mozilla3ipc14MessageChannel17OnMaybeDequeueOneEv+90)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #12 pc 014abc19  /system/b2g/libxul.so (_ZN7mozilla10tasktracer10TracedTask3RunEv+26)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #13 pc 005d5859  /system/b2g/libxul.so (_ZN11MessageLoop7RunTaskEP4Task+18)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #14 pc 005d86bb  /system/b2g/libxul.so (_ZN11MessageLoop21DeferOrRunPendingTaskERKNS_11PendingTaskE+26)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #15 pc 005d8745  /system/b2g/libxul.so (_ZN11MessageLoop6DoWorkEv+120)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #16 pc 005e3e21  /system/b2g/libxul.so (_ZN7mozilla3ipc14DoWorkRunnable3RunEv+28)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #17 pc 014abbdd  /system/b2g/libxul.so (_ZN7mozilla10tasktracer14TracedRunnable3RunEv+26)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #18 pc 003ee381  /system/b2g/libxul.so (_ZN8nsThread16ProcessNextEventEbPb+560)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #19 pc 0040048b  /system/b2g/libxul.so (_Z19NS_ProcessNextEventP9nsIThreadb+22)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #20 pc 005e4661  /system/b2g/libxul.so (_ZN7mozilla3ipc11MessagePump3RunEPN4base11MessagePump8DelegateE+148)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #21 pc 005d58f3  /system/b2g/libxul.so (_ZN11MessageLoop3RunEv+14)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #22 pc 01186f89  /system/b2g/libxul.so (_ZN14nsBaseAppShell3RunEv+28)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #23 pc 01539bfd  /system/b2g/libxul.so (_ZN12nsAppStartup3RunEv+48)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #24 pc 015549bf  /system/b2g/libxul.so (_ZN7XREMain11XRE_mainRunEv+1806)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #25 pc 01554c85  /system/b2g/libxul.so (_ZN7XREMain8XRE_mainEiPPcPK12nsXREAppData+444)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #26 pc 01554e7b  /system/b2g/libxul.so (XRE_main+78)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #27 pc 00006421  /system/b2g/b2g (_ZL7do_mainiPPc+276)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #28 pc 00006519  /system/b2g/b2g (_Z8b2g_mainiPPKc+160)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #29 pc 000062b7  /system/b2g/b2g (main+326)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #30 pc 00016655  /system/lib/libc.so (__libc_init+44)
+01-15 04:31:21.747 31525 31525 D DHCUI   : #31 pc 00005db0  /system/b2g/b2g (_start+96)
+
+
+01-15 04:31:21.757 31525 31525 I Gecko   : [BrowserElement] event type: keyup, key: Enter, target: [object HTMLIFrameElement], src: app://bluetooth.gaiamobile.org/transfer.html, id: browser4, class: browser
+01-15 04:31:21.757 32614 32614 I Gecko   : [BrowserElement] event type: keyup, key: Enter, target: [object HTMLLIElement], class: bluetooth-device bluetooth-type-phone focus
+01-15 04:31:21.757 31525 31525 I WakeLock: Acquire cpu wakelock
+01-15 04:31:21.767 31525 31525 I Gecko   : [BrowserElement] event type: keyup, key: MicrophoneToggle, target: [object HTMLIFrameElement], src: app://bluetooth.gaiamobile.org/transfer.html, id: browser4, class: browser
+01-15 04:31:21.777 32614 32614 I Gecko   : [BrowserElement] event type: keyup, key: MicrophoneToggle, target: [object HTMLLIElement], class: bluetooth-device bluetooth-type-phone focus
+01-15 04:31:21.847 31525 31525 D DHCUI   : BluetoothSocketInterface::Accept failed: 5
+01-15 04:31:21.877 31525 31525 I FocusManager: << blur() called or ClearFocus called >>
+01-15 04:31:21.877 31525 31525 I FocusManager: <- blur on, tag: IFRAME, id: browser4, class: browser
+01-15 04:31:21.877 32614 32614 I FocusManager: <- blur on, tag: LI, id: , class: bluetooth-device bluetooth-type-phone focus
+01-15 04:31:21.887 31525 31525 I WakeLock: Release cpu wakelock
+01-15 04:31:21.887 31525 31525 I GeckoConsole: Content JS LOG: [System Bluetooth Transfer]: push sending files request in queue, queued length = 1 
+01-15 04:31:21.887 31525 31525 I GeckoConsole:     at bt_debug (app://system.gaiamobile.org/js/bluetooth_transfer.js:98:5)
+01-15 04:31:22.157   317   369 I (Preallocated app): PAC file installed from data: URI
+01-15 04:31:22.257 31525 31525 I FocusManager: << focus() called >>
+01-15 04:31:22.257 31525 31525 I FocusManager:    trying to set focus on, tag: IFRAME, id: browser2, class: browser
+01-15 04:31:22.267 31525 31525 I FocusManager:    current focused element, NULL, tag: , id: , class: 
+01-15 04:31:22.267 31525 31525 I FocusManager: <- blur on, NULL, tag: , id: , class: 
+01-15 04:31:22.267 31525 31525 I FocusManager: -> focus is now on, tag: IFRAME, id: browser2, class: browser
+01-15 04:31:22.277 32524 32524 I FocusManager: * WindowRaised *
+01-15 04:31:22.277 32524 32524 I FocusManager: -> focus is now on, tag: LI, id: , class: thumbnail focusable focus
+01-15 04:31:22.387 32614 32614 I Gecko   : -*- SettingsManager: Received: inner-window-destroyed for valid innerWindowID=12884901891, cleanup.
+01-15 04:31:22.397 32614 32614 E Bluetooth Manager: [JavaScript Error: "NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIMessageSender.sendAsyncMessage]" {file: "chrome://global/content/BrowserElementChildPreload.js" line: 79}]
+01-15 04:31:22.397 31525 31525 I ContentParent: ShutdownProcess method: SEND_SHUTDOWN_MESSAGE
+01-15 04:31:22.397 32614 32614 I ProcessChild: ProcessChild::QuickExit content process
+01-15 04:31:22.417 31525 31525 I ContentParent: ShutdownProcess method: CLOSE_CHANNEL
+01-15 04:31:23.297 31525 31525 I ContentParent: ForceKillTimerCallback force kill content process.
+01-15 04:31:23.297 31525 31525 I ContentParent: KillHard
+01-15 04:31:23.297 31525 31546 I Gecko   : [Parent 31525] WARNING: waitpid failed pid:32614 errno:10: file /local/code/master/kaios/gecko/ipc/chromium/src/base/process_util_posix.cc, line 272
+01-15 04:31:23.547 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:31:23.797 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:31:23.797 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:23.797 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:31:23.797 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:23.837 31943 32049 I bt_bta_dm: bta_dm_find_services search UUID = 0000
+01-15 04:31:23.837 31943 32049 W bt_l2cap: L2CA_ErtmConnectReq()  PSM: 0x0001  BDA: 9427904ae769  p_ertm_info: 0x00000000 allowed:0x0 preferred:0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+01-15 04:31:26.547 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:31:26.767 31943 32049 W bt_btm  : btm_acl_role_changed: BDA: 94-27-90-4a-e7-69
+01-15 04:31:26.767 31943 32049 W bt_btm  : btm_acl_role_changed: New role: 0
+01-15 04:31:26.777 31943 32049 W bt_btm  : btm_acl_created hci_handle=6 link_role=1  transport=1
+01-15 04:31:26.777 31943 32049 W bt_btm  : btm_acl_created hci_handle=6 link_role=0  transport=1
+01-15 04:31:26.777 31943 32049 W bt_l2cap: L2CAP - st: CLOSED evt: 0
+01-15 04:31:26.777 31943 32049 W bt_l2cap: L2CAP - st: ORIG_W4_SEC_COMP evt: 7
+01-15 04:31:26.777 31943 32049 W bt_btif : bta_dm_acl_change info: 0x10
+01-15 04:31:26.777 31943 32049 W bt_l2cap: L2CA_SetDesireRole() new:x0, disallow_switch:0
+01-15 04:31:26.777 31943 32012 D bt_btif_dm: remote version info [94:27:90:4a:e7:69]: 0, 0, 0
+01-15 04:31:26.797 31943 32049 W bt_btm  : btm_read_remote_version_complete: BDA: 94-27-90-4a-e7-69
+01-15 04:31:26.797 31943 32049 W bt_btm  : btm_read_remote_version_complete lmp_version 7 manufacturer 29 lmp_subversion 2003
+01-15 04:31:26.807 31943 32049 W bt_l2cap: L2CAP - st: W4_L2CAP_CON_RSP evt: 19
+01-15 04:31:26.817 31943 32049 W bt_l2cap: L2CAP - st: W4_L2CAP_CON_RSP evt: 11
+01-15 04:31:26.817 31943 32049 W bt_l2cap: L2CAP - st: CONFIG evt: 24
+01-15 04:31:26.817 31943 32049 W bt_l2cap: L2CAP - st: CONFIG evt: 14
+01-15 04:31:26.817 31943 32049 W bt_l2cap: L2CAP - st: CONFIG evt: 25
+01-15 04:31:26.817 31943 32049 W bt_l2cap: L2CAP-Upper layer Config_Rsp,Local CID: 0x0043,Remote CID: 0x0048,PSM:1,our MTU present:1,our MTU:672
+01-15 04:31:26.827 31943 32049 W bt_l2cap: L2CAP - st: CONFIG evt: 15
+01-15 04:31:26.827 31943 32049 W bt_l2cap: L2CAP-peer_Config_Rsp,Local CID: 0x0043,Remote CID: 0x0048,PSM: 1,peer MTU present: 0,peer MTU: 672
+01-15 04:31:26.827 31943 32049 W bt_sdp  : process_service_search_attr_rsp
+01-15 04:31:26.827 31943 32049 W bt_l2cap: L2CA_DisconnectReq()  CID: 0x0043
+01-15 04:31:26.837 31943 32049 W bt_l2cap: L2CAP - st: W4_L2CAP_DISC_RSP evt: 18
+01-15 04:31:26.837 31943 32012 E bt_btif_dm: ### ASSERT : system/bt/main/../btif/src/btif_dm.c line 1761 unhandled remote service record event (4) ###
+01-15 04:31:26.837 31525 31525 D DHCUI   : BluetoothSocket::Connect 1 this is 0xa7364c70
+01-15 04:31:26.837 31525 31525 D DHCUI   : BluetoothSocket::Connect 2 this is 0xa7364c70
+01-15 04:31:26.837 31525 31525 D DHCUI   : BluetoothSocket::LoadSocketInterface this is 0xa7364c70,mSocketInterface is 0x0
+01-15 04:31:26.837 31943 32049 W bt_l2cap: L2CA_ErtmConnectReq()  PSM: 0x0001  BDA: 9427904ae769  p_ertm_info: 0x00000000 allowed:0x0 preferred:0
+01-15 04:31:26.837 31943 32049 W bt_l2cap: L2CAP - st: CLOSED evt: 21
+01-15 04:31:26.837 31943 32049 W bt_l2cap: L2CAP - st: CLOSED evt: 7
+01-15 04:31:26.867 31943 32049 W bt_l2cap: L2CAP - st: W4_L2CAP_CON_RSP evt: 11
+01-15 04:31:26.867 31943 32049 W bt_l2cap: L2CAP - st: CONFIG evt: 24
+01-15 04:31:26.867 31943 32049 W bt_l2cap: L2CAP - st: CONFIG evt: 14
+01-15 04:31:26.867 31943 32049 W bt_l2cap: L2CAP - st: CONFIG evt: 25
+01-15 04:31:26.867 31943 32049 W bt_l2cap: L2CAP-Upper layer Config_Rsp,Local CID: 0x0044,Remote CID: 0x004d,PSM:1,our MTU present:1,our MTU:672
+01-15 04:31:26.867 31943 32049 W bt_l2cap: L2CAP - st: CONFIG evt: 15
+01-15 04:31:26.867 31943 32049 W bt_l2cap: L2CAP-peer_Config_Rsp,Local CID: 0x0044,Remote CID: 0x004d,PSM: 1,peer MTU present: 0,peer MTU: 672
+01-15 04:31:26.877 31943 32049 W bt_sdp  : process_service_search_attr_rsp
+01-15 04:31:26.877 31943 32049 W bt_l2cap: L2CA_DisconnectReq()  CID: 0x0044
+01-15 04:31:26.887 31943 32049 W bt_l2cap: L2CAP - st: W4_L2CAP_DISC_RSP evt: 18
+01-15 04:31:26.887 31943 32049 W bt_l2cap: L2CA_ErtmConnectReq()  PSM: 0x0003  BDA: 9427904ae769  p_ertm_info: 0x00000000 allowed:0x0 preferred:0
+01-15 04:31:26.887 31943 32049 W bt_l2cap: L2CAP - st: CLOSED evt: 21
+01-15 04:31:26.947 31943 32049 W bt_l2cap: L2CAP - st: ORIG_W4_SEC_COMP evt: 7
+01-15 04:31:27.017 31943 32049 W bt_l2cap: L2CAP - st: W4_L2CAP_CON_RSP evt: 11
+01-15 04:31:27.017 31943 32049 W bt_l2cap: L2CAP - st: CONFIG evt: 24
+01-15 04:31:27.027 31943 32049 W bt_l2cap: L2CAP - st: CONFIG evt: 14
+01-15 04:31:27.027 31943 32049 W bt_l2cap: L2CAP - st: CONFIG evt: 25
+01-15 04:31:27.027 31943 32049 W bt_l2cap: L2CAP-Upper layer Config_Rsp,Local CID: 0x0045,Remote CID: 0x004e,PSM:3,our MTU present:1,our MTU:1691
+01-15 04:31:27.027 31943 32049 W bt_l2cap: L2CAP - st: CONFIG evt: 15
+01-15 04:31:27.027 31943 32049 W bt_l2cap: L2CAP-peer_Config_Rsp,Local CID: 0x0045,Remote CID: 0x004e,PSM: 3,peer MTU present: 0,peer MTU: 1691
+01-15 04:31:27.117 31943 32049 W bt_l2cap: L2CA_SetDesireRole() new:x0, disallow_switch:0
+01-15 04:31:27.117 31943 32049 W bt_btif : new conn_srvc id:26, app_id:1
+01-15 04:31:27.117 31943 32049 W bt_btif : new conn_srvc id:26, app_id:1 count:1
+01-15 04:31:27.117 31943 32049 W bt_btif : bta_dm_pm_ssr conn_srvc id:26, app_id:1
+01-15 04:31:27.117 31943 32049 W bt_btif : bta_dm_pm_ssr: 2, lat:1200
+01-15 04:31:27.117 31525 31525 D DHCUI   : ConnectSocketResultHandler::Connect this is 0xa7521270
+01-15 04:31:27.117 31525 31546 D DHCUI   : DroidSocketImpl::Connect
+01-15 04:31:27.117 31525 31546 D DHCUI   : DroidSocketImpl::OnFileCanWriteWithoutBlocking
+01-15 04:31:27.117 31525 31546 D DHCUI   : DroidSocketImpl::OnSocketCanConnectWithoutBlocking
+01-15 04:31:27.117 31525 31546 D DHCUI   : DroidSocketImpl::OnFileCanReadWithoutBlocking
+01-15 04:31:27.117 31525 31546 D DHCUI   : DroidSocketImpl::OnSocketCanReceiveWithoutBlocking
+01-15 04:31:27.117 31525 31525 D DHCUI   : BluetoothSocket::OnConnectSuccess this is 0xa7364c70
+01-15 04:31:27.117 31525 31525 I GeckoBluetooth: OnSocketConnectSuccess: [client]
+01-15 04:31:27.117 31525 31525 I GeckoBluetooth: StartFileTransfer: broadcast system message: [bluetooth-opp-transfer-start]
+01-15 04:31:27.137 31525 31525 I WakeLock: Acquire cpu wakelock
+01-15 04:31:27.137 31525 31525 D DHCUI   : BluetoothSocket::SendSocketData this is 0xa7364c70
+01-15 04:31:27.137 31525 31546 D DHCUI   : DroidSocketImpl::OnFileCanWriteWithoutBlocking
+01-15 04:31:27.137 31525 31546 D DHCUI   : DroidSocketImpl::OnSocketCanSendWithoutBlocking
+01-15 04:31:27.137 31525 31525 D DHCUI   : BluetoothSocket::ReceiveSocketData this is 0xa7364c70
+01-15 04:31:27.137 31525 31525 I GeckoBluetooth: ClientDataHandler: Receive invalid OBEX response code 0x0
+01-15 04:31:27.217 31525 31546 D DHCUI   : DroidSocketImpl::OnFileCanReadWithoutBlocking
+01-15 04:31:27.217 31525 31546 D DHCUI   : DroidSocketImpl::OnSocketCanReceiveWithoutBlocking
+01-15 04:31:27.407 31525 31525 D DHCUI   : BluetoothSocket::ReceiveSocketData this is 0xa7364c70
+01-15 04:31:27.407 31525 31525 I Gecko:DumpUtils: nsVolumeMountLock created for 'sdcard'
+01-15 04:31:27.407 31525 31525 I Gecko:DumpUtils: nsVolume: sdcard state Mounted @ '/data/usbmsc_mnt' gen 1 locked 1 fake 1 media 1 sharing 0 formatting 0 unmounting 0 removable 0 hotswappable 0
+01-15 04:31:27.407 31525 31525 I WakeLock: Acquire volume-sdcard-1 wakelock
+01-15 04:31:27.407 31525 31525 I Gecko:DumpUtils: nsVolumeMountLock acquired for 'sdcard' gen 1
+01-15 04:31:27.407 31525 31525 D DHCUI   : BluetoothSocket::SendSocketData this is 0xa7364c70
+01-15 04:31:27.407 31525 31546 I AutoMounter: Failed to get property, ro.kaios.usb.state_node, use default value.
+01-15 04:31:27.407 31525 31546 I AutoMounter: Failed to get property, ro.kaios.usb.functions_node, use default value.
+01-15 04:31:27.407 31525 31546 I AutoMounter: Failed to get property, ro.kaios.usb.state_node, use default value.
+01-15 04:31:27.407 31525 31546 I AutoMounter: Failed to get property, ro.kaios.ums.directory_node, use default value.
+01-15 04:31:27.407 31525 31546 I AutoMounter: Failed to get property, ro.kaios.mtp.directory_node, use default value.
+01-15 04:31:27.407 31525 31546 I AutoMounter: UpdateState: ums:A0C0E0 mtp:A1C0E0 mode:0 usb:1 tryToShare:0 state:IDLE
+01-15 04:31:27.407 31525 31546 I AutoMounter: UpdateState: Volume sdcard is Mounted and inserted @ /data/usbmsc_mnt gen 1 locked 1 sharing x
+01-15 04:31:27.407 31525 31546 D DHCUI   : DroidSocketImpl::OnFileCanWriteWithoutBlocking
+01-15 04:31:27.407 31525 31546 D DHCUI   : DroidSocketImpl::OnSocketCanSendWithoutBlocking
+01-15 04:31:27.417 31525 31525 I WakeLock: Release cpu wakelock
+01-15 04:31:27.417 31525 31525 I FocusManager: << focus() called >>
+01-15 04:31:27.417 31525 31525 I FocusManager:    trying to set focus on, tag: HTML:IFRAME, id: systemapp, class: 
+01-15 04:31:27.417 31525 31525 I FocusManager: Warning: element is already focused.
+01-15 04:31:28.847 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:31:28.847 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:28.847 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:31:28.847 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:29.477   441   441 D VM_BMS  : wake_lock acquired
+01-15 04:31:29.477   441   441 D VM_BMS  : New BMS data - Size=56
+01-15 04:31:29.477   441   441 D VM_BMS  : Start process_bms_data
+01-15 04:31:29.477   441   441 D VM_BMS  : For batt_temp=317 fcc_mah=2015
+01-15 04:31:29.477   441   441 D VM_BMS  : For ocv=4199053 batt_temp=317 soc=100
+01-15 04:31:29.477   441   441 D VM_BMS  : fifo_count=5 acc_count=0
+01-15 04:31:29.477   441   441 D VM_BMS  : INIT: ocv=4199053 last_ocv=4199053 batt_temp=317 soc=100
+01-15 04:31:29.477   441   441 D VM_BMS  : For soc=100 batt_temp=317 slope=12000
+01-15 04:31:29.477   441   441 D VM_BMS  : For soc=100 batt_temp=317 rbatt_sf=91
+01-15 04:31:29.477   441   441 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=143, sf=91 batt_temp=317
+01-15 04:31:29.477   441   441 D VM_BMS  : For ocv=4199030 batt_temp=317 soc=100
+01-15 04:31:29.477   441   441 D VM_BMS  : FIFO=0 fifo_avg=4.196097 rbatt=0.193000 slope=1.200000 ibatt=0.015257 ocv=4.199030 soc=100 fcc_ah=2.015000 sample_count=128 sample_interval=70 seq_num=1632
+01-15 04:31:29.477   441   441 D VM_BMS  : For soc=100 batt_temp=317 slope=12000
+01-15 04:31:29.477   441   441 D VM_BMS  : For soc=100 batt_temp=317 rbatt_sf=91
+01-15 04:31:29.477   441   441 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=143, sf=91 batt_temp=317
+01-15 04:31:29.477   441   441 D VM_BMS  : For ocv=4199007 batt_temp=317 soc=100
+01-15 04:31:29.477   441   441 D VM_BMS  : FIFO=1 fifo_avg=4.196110 rbatt=0.193000 slope=1.200000 ibatt=0.015072 ocv=4.199008 soc=100 fcc_ah=2.015000 sample_count=128 sample_interval=70 seq_num=1632
+01-15 04:31:29.477   441   441 D VM_BMS  : For soc=100 batt_temp=317 slope=12000
+01-15 04:31:29.477   441   441 D VM_BMS  : For soc=100 batt_temp=317 rbatt_sf=91
+01-15 04:31:29.477   441   441 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=143, sf=91 batt_temp=317
+01-15 04:31:29.477   441   441 D VM_BMS  : For ocv=4198975 batt_temp=317 soc=100
+01-15 04:31:29.477   441   441 D VM_BMS  : FIFO=2 fifo_avg=4.194912 rbatt=0.193000 slope=1.200000 ibatt=0.021137 ocv=4.198976 soc=100 fcc_ah=2.015000 sample_count=128 sample_interval=70 seq_num=1632
+01-15 04:31:29.477   441   441 D VM_BMS  : For soc=100 batt_temp=317 slope=12000
+01-15 04:31:29.477   441   441 D VM_BMS  : For soc=100 batt_temp=317 rbatt_sf=91
+01-15 04:31:29.477   441   441 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=143, sf=91 batt_temp=317
+01-15 04:31:29.477   441   441 D VM_BMS  : For ocv=4198921 batt_temp=317 soc=100
+01-15 04:31:29.477   441   441 D VM_BMS  : FIFO=3 fifo_avg=4.191958 rbatt=0.193000 slope=1.200000 ibatt=0.036219 ocv=4.198921 soc=100 fcc_ah=2.015000 sample_count=128 sample_interval=70 seq_num=1632
+01-15 04:31:29.477   441   441 D VM_BMS  : For soc=100 batt_temp=317 slope=12000
+01-15 04:31:29.477   441   441 D VM_BMS  : For soc=100 batt_temp=317 rbatt_sf=91
+01-15 04:31:29.477   441   441 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=143, sf=91 batt_temp=317
+01-15 04:31:29.477   441   441 D VM_BMS  : For ocv=4198840 batt_temp=317 soc=100
+01-15 04:31:29.477   441   441 D VM_BMS  : FIFO=4 fifo_avg=4.188406 rbatt=0.193000 slope=1.200000 ibatt=0.054275 ocv=4.198841 soc=100 fcc_ah=2.015000 sample_count=128 sample_interval=70 seq_num=1632
+01-15 04:31:29.477   441   441 I VM_BMS  : power_supply_update: ocv_uv=4198840 ibatt=54274 soc=100 seq_num=1632
+01-15 04:31:29.477   441   441 D VM_BMS  : End process_bms_data
+01-15 04:31:29.477   441   441 D VM_BMS  : wake_lock released
+01-15 04:31:29.547 31649 31649 E sdcard  : missing packages.list; retrying
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+01-15 04:31:32.137 31943 32049 D bt_btm_pm: btm_pm_snd_md_req switching from ACTIVE to SNIFF.
+01-15 04:31:32.147 31943 32049 D bt_btm_pm: btm_pm_proc_mode_change switched from UNKNOWN to SNIFF.
+01-15 04:31:32.547 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:31:33.897 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:31:33.897 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:33.897 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:31:33.897 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:35.547 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:31:38.547 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:31:38.957 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:31:38.957 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:38.957 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:31:38.957 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:41.547 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:31:44.007 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:31:44.007 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:44.017 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:31:44.017 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:44.547 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:31:47.547 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:31:49.067 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:31:49.067 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:49.077 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:31:49.077 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:50.547 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:31:53.547 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:31:54.117 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:31:54.117 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:54.117 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:31:54.117 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:56.547 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:31:59.157 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:31:59.157 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:59.157 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:31:59.157 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:31:59.547 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:32:02.547 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:32:04.207 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:32:04.207 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:32:04.207 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:32:04.207 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:32:05.557 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:32:08.557 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:32:09.247 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:32:09.247 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:32:09.247 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:32:09.247 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:32:11.557 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:32:14.287 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:32:14.287 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:32:14.287 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:32:14.287 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:32:14.557 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:32:17.557 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:32:17.617   441   441 D VM_BMS  : wake_lock acquired
+01-15 04:32:17.617   441   441 D VM_BMS  : New BMS data - Size=56
+01-15 04:32:17.617   441   441 D VM_BMS  : Start process_bms_data
+01-15 04:32:17.617   441   441 D VM_BMS  : For batt_temp=316 fcc_mah=2015
+01-15 04:32:17.617   441   441 D VM_BMS  : For ocv=4198840 batt_temp=316 soc=100
+01-15 04:32:17.617   441   441 D VM_BMS  : fifo_count=5 acc_count=0
+01-15 04:32:17.617   441   441 D VM_BMS  : INIT: ocv=4198840 last_ocv=4198840 batt_temp=316 soc=100
+01-15 04:32:17.617   441   441 D VM_BMS  : For soc=100 batt_temp=316 slope=12000
+01-15 04:32:17.617   441   441 D VM_BMS  : For soc=100 batt_temp=316 rbatt_sf=91
+01-15 04:32:17.617   441   441 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=143, sf=91 batt_temp=316
+01-15 04:32:17.617   441   441 D VM_BMS  : For ocv=4198801 batt_temp=316 soc=100
+01-15 04:32:17.617   441   441 D VM_BMS  : FIFO=0 fifo_avg=4.193808 rbatt=0.193000 slope=1.200000 ibatt=0.025973 ocv=4.198802 soc=100 fcc_ah=2.015000 sample_count=128 sample_interval=70 seq_num=1633
+01-15 04:32:17.617   441   441 D VM_BMS  : For soc=100 batt_temp=316 slope=12000
+01-15 04:32:17.617   441   441 D VM_BMS  : For soc=100 batt_temp=316 rbatt_sf=91
+01-15 04:32:17.617   441   441 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=143, sf=91 batt_temp=316
+01-15 04:32:17.617   441   441 D VM_BMS  : For ocv=4198778 batt_temp=316 soc=100
+01-15 04:32:17.617   441   441 D VM_BMS  : FIFO=1 fifo_avg=4.195875 rbatt=0.193000 slope=1.200000 ibatt=0.015102 ocv=4.198779 soc=100 fcc_ah=2.015000 sample_count=128 sample_interval=70 seq_num=1633
+01-15 04:32:17.617   441   441 D VM_BMS  : For soc=100 batt_temp=316 slope=12000
+01-15 04:32:17.617   441   441 D VM_BMS  : For soc=100 batt_temp=316 rbatt_sf=91
+01-15 04:32:17.617   441   441 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=143, sf=91 batt_temp=316
+01-15 04:32:17.617   441   441 D VM_BMS  : For ocv=4198758 batt_temp=316 soc=100
+01-15 04:32:17.617   441   441 D VM_BMS  : FIFO=2 fifo_avg=4.196193 rbatt=0.193000 slope=1.200000 ibatt=0.013342 ocv=4.198759 soc=100 fcc_ah=2.015000 sample_count=128 sample_interval=70 seq_num=1633
+01-15 04:32:17.617   441   441 D VM_BMS  : For soc=100 batt_temp=316 slope=12000
+01-15 04:32:17.627   441   441 D VM_BMS  : For soc=100 batt_temp=316 rbatt_sf=91
+01-15 04:32:17.627   441   441 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=143, sf=91 batt_temp=316
+01-15 04:32:17.627   441   441 D VM_BMS  : For ocv=4198736 batt_temp=316 soc=100
+01-15 04:32:17.627   441   441 D VM_BMS  : FIFO=3 fifo_avg=4.195888 rbatt=0.193000 slope=1.200000 ibatt=0.014814 ocv=4.198736 soc=100 fcc_ah=2.015000 sample_count=128 sample_interval=70 seq_num=1633
+01-15 04:32:17.627   441   441 D VM_BMS  : For soc=100 batt_temp=316 slope=12000
+01-15 04:32:17.627   441   441 D VM_BMS  : For soc=100 batt_temp=316 rbatt_sf=91
+01-15 04:32:17.627   441   441 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=143, sf=91 batt_temp=316
+01-15 04:32:17.627   441   441 D VM_BMS  : For ocv=4198714 batt_temp=316 soc=100
+01-15 04:32:17.627   441   441 D VM_BMS  : FIFO=4 fifo_avg=4.195896 rbatt=0.193000 slope=1.200000 ibatt=0.014659 ocv=4.198714 soc=100 fcc_ah=2.015000 sample_count=128 sample_interval=70 seq_num=1633
+01-15 04:32:17.627   441   441 I VM_BMS  : power_supply_update: ocv_uv=4198714 ibatt=14658 soc=100 seq_num=1633
+01-15 04:32:17.627   441   441 D VM_BMS  : End process_bms_data
+01-15 04:32:17.627   441   441 D VM_BMS  : wake_lock released
+01-15 04:32:19.337 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:32:19.337 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:32:19.337 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:32:19.337 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:32:20.557 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:32:23.557 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:32:24.377 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:32:24.377 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:32:24.377 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:32:24.377 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:32:26.557 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:32:27.377 31525 31525 I GeckoBluetooth: StopSendingFile: 
+01-15 04:32:27.377 31525 31525 D DHCUI   : BluetoothSocket::SendSocketData this is 0xa7364c70
+01-15 04:32:27.377 31525 31546 D DHCUI   : DroidSocketImpl::OnFileCanWriteWithoutBlocking
+01-15 04:32:27.377 31525 31546 D DHCUI   : DroidSocketImpl::OnSocketCanSendWithoutBlocking
+01-15 04:32:27.377 31943 32049 D bt_btm_pm: btm_pm_snd_md_req switching from SNIFF to ACTIVE.
+01-15 04:32:27.377 31525 31525 D DHCUI   : BluetoothSocket::Close this is 0xa7364c70
+01-15 04:32:27.737 31525 31525 D DHCUI   : #00 pc 00a583c9  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth15BluetoothSocket5CloseEv+44)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #01 pc 00a50199  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth19BluetoothOppManager15StopSendingFileEv+20)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #02 pc 00a5563b  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth25BluetoothServiceBluedroid15StopSendingFileERKNS1_16BluetoothAddressEPNS1_22BluetoothReplyRunnableE+42)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #03 pc 00a618ad  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth16BluetoothAdapter15StopSendingFileERK18nsAString_internalRNS_11ErrorResultE+156)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #04 pc 00aab76d  /system/b2g/libxul.so (_ZN7mozilla3dom23BluetoothAdapterBindingL15stopSendingFileEP9JSContextN2JS6HandleIP8JSObjectEEPNS0_9bluetooth16BluetoothAdapterERK19JSJitMethodCallArgs+64)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #05 pc 00e0a5f3  /system/b2g/libxul.so (_ZN7mozilla3dom20GenericBindingMethodEP9JSContextjPN2JS5ValueE+194)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #06 pc 01ae0337  /system/b2g/libxul.so (_ZN2js23InternalCallOrConstructEP9JSContextRKN2JS8CallArgsENS_14MaybeConstructE+282)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #07 pc 01ad8e47  /system/b2g/libxul.so (_ZL9InterpretP9JSContextRN2js8RunStateE+1622)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #08 pc 01ae017d  /system/b2g/libxul.so (_ZN2js9RunScriptEP9JSContextRNS_8RunStateE+220)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #09 pc 01ae02b9  /system/b2g/libxul.so (_ZN2js23InternalCallOrConstructEP9JSContextRKN2JS8CallArgsENS_14MaybeConstructE+156)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #10 pc 01ae0499  /system/b2g/libxul.so (_ZN2js4CallEP9JSContextN2JS6HandleINS2_5ValueEEES5_RKNS_13AnyInvokeArgsENS2_13MutableHandleIS4_EE+24)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #11 pc 019fcfcb  /system/b2g/libxul.so (_ZN2JS4CallEP9JSContextNS_6HandleINS_5ValueEEES4_RKNS_16HandleValueArrayENS_13MutableHandleIS3_EE+178)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #12 pc 00ddbf83  /system/b2g/libxul.so (_ZN7mozilla3dom8Function4CallEP9JSContextN2JS6HandleINS4_5ValueEEERK8nsTArrayIS6_ENS4_13MutableHandleIS6_EERNS_11ErrorResultE+454)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #13 pc 009821c1  /system/b2g/libxul.so (_ZN14nsGlobalWindow17RunTimeoutHandlerEP9nsTimeoutP16nsIScriptContext+416)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #14 pc 00982887  /system/b2g/libxul.so (_ZN14nsGlobalWindow10RunTimeoutEP9nsTimeout+382)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #15 pc 00982a43  /system/b2g/libxul.so (_ZN14nsGlobalWindow13TimerCallbackEP8nsITimerPv+20)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #16 pc 003f22a1  /system/b2g/libxul.so (_ZN11nsTimerImpl4FireEv+712)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #17 pc 003ede49  /system/b2g/libxul.so (_ZN12nsTimerEvent3RunEv+160)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #18 pc 014abbdd  /system/b2g/libxul.so (_ZN7mozilla10tasktracer14TracedRunnable3RunEv+26)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #19 pc 003ee381  /system/b2g/libxul.so (_ZN8nsThread16ProcessNextEventEbPb+560)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #20 pc 0040048b  /system/b2g/libxul.so (_Z19NS_ProcessNextEventP9nsIThreadb+22)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #21 pc 005e46ad  /system/b2g/libxul.so (_ZN7mozilla3ipc11MessagePump3RunEPN4base11MessagePump8DelegateE+224)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #22 pc 005d58f3  /system/b2g/libxul.so (_ZN11MessageLoop3RunEv+14)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #23 pc 01186f89  /system/b2g/libxul.so (_ZN14nsBaseAppShell3RunEv+28)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #24 pc 01539bfd  /system/b2g/libxul.so (_ZN12nsAppStartup3RunEv+48)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #25 pc 015549bf  /system/b2g/libxul.so (_ZN7XREMain11XRE_mainRunEv+1806)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #26 pc 01554c85  /system/b2g/libxul.so (_ZN7XREMain8XRE_mainEiPPcPK12nsXREAppData+444)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #27 pc 01554e7b  /system/b2g/libxul.so (XRE_main+78)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #28 pc 00006421  /system/b2g/b2g (_ZL7do_mainiPPc+276)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #29 pc 00006519  /system/b2g/b2g (_Z8b2g_mainiPPKc+160)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #30 pc 000062b7  /system/b2g/b2g (main+326)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #31 pc 00016655  /system/lib/libc.so (__libc_init+44)
+01-15 04:32:27.737 31525 31525 D DHCUI   : #32 pc 00005db0  /system/b2g/b2g (_start+96)
+01-15 04:32:27.737 31525 31525 D DHCUI   : BluetoothSocket::OnDisconnect this is 0xa7364c70
+01-15 04:32:27.837 31943 32049 D bt_btm_pm: btm_pm_proc_mode_change switched from UNKNOWN to ACTIVE.
+01-15 04:32:27.957 31525 31546 D DHCUI   : DroidSocketImpl::OnFileCanReadWithoutBlocking
+01-15 04:32:27.957 31525 31546 D DHCUI   : DroidSocketImpl::OnSocketCanReceiveWithoutBlocking
+01-15 04:32:28.097 31525 31525 D DHCUI   : #00 pc 00a58f97  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth15BluetoothSocket12OnDisconnectEv+42)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #01 pc 00a583db  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth15BluetoothSocket5CloseEv+62)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #02 pc 00a50199  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth19BluetoothOppManager15StopSendingFileEv+20)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #03 pc 00a5563b  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth25BluetoothServiceBluedroid15StopSendingFileERKNS1_16BluetoothAddressEPNS1_22BluetoothReplyRunnableE+42)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #04 pc 00a618ad  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth16BluetoothAdapter15StopSendingFileERK18nsAString_internalRNS_11ErrorResultE+156)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #05 pc 00aab76d  /system/b2g/libxul.so (_ZN7mozilla3dom23BluetoothAdapterBindingL15stopSendingFileEP9JSContextN2JS6HandleIP8JSObjectEEPNS0_9bluetooth16BluetoothAdapterERK19JSJitMethodCallArgs+64)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #06 pc 00e0a5f3  /system/b2g/libxul.so (_ZN7mozilla3dom20GenericBindingMethodEP9JSContextjPN2JS5ValueE+194)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #07 pc 01ae0337  /system/b2g/libxul.so (_ZN2js23InternalCallOrConstructEP9JSContextRKN2JS8CallArgsENS_14MaybeConstructE+282)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #08 pc 01ad8e47  /system/b2g/libxul.so (_ZL9InterpretP9JSContextRN2js8RunStateE+1622)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #09 pc 01ae017d  /system/b2g/libxul.so (_ZN2js9RunScriptEP9JSContextRNS_8RunStateE+220)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #10 pc 01ae02b9  /system/b2g/libxul.so (_ZN2js23InternalCallOrConstructEP9JSContextRKN2JS8CallArgsENS_14MaybeConstructE+156)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #11 pc 01ae0499  /system/b2g/libxul.so (_ZN2js4CallEP9JSContextN2JS6HandleINS2_5ValueEEES5_RKNS_13AnyInvokeArgsENS2_13MutableHandleIS4_EE+24)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #12 pc 019fcfcb  /system/b2g/libxul.so (_ZN2JS4CallEP9JSContextNS_6HandleINS_5ValueEEES4_RKNS_16HandleValueArrayENS_13MutableHandleIS3_EE+178)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #13 pc 00ddbf83  /system/b2g/libxul.so (_ZN7mozilla3dom8Function4CallEP9JSContextN2JS6HandleINS4_5ValueEEERK8nsTArrayIS6_ENS4_13MutableHandleIS6_EERNS_11ErrorResultE+454)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #14 pc 009821c1  /system/b2g/libxul.so (_ZN14nsGlobalWindow17RunTimeoutHandlerEP9nsTimeoutP16nsIScriptContext+416)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #15 pc 00982887  /system/b2g/libxul.so (_ZN14nsGlobalWindow10RunTimeoutEP9nsTimeout+382)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #16 pc 00982a43  /system/b2g/libxul.so (_ZN14nsGlobalWindow13TimerCallbackEP8nsITimerPv+20)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #17 pc 003f22a1  /system/b2g/libxul.so (_ZN11nsTimerImpl4FireEv+712)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #18 pc 003ede49  /system/b2g/libxul.so (_ZN12nsTimerEvent3RunEv+160)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #19 pc 014abbdd  /system/b2g/libxul.so (_ZN7mozilla10tasktracer14TracedRunnable3RunEv+26)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #20 pc 003ee381  /system/b2g/libxul.so (_ZN8nsThread16ProcessNextEventEbPb+560)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #21 pc 0040048b  /system/b2g/libxul.so (_Z19NS_ProcessNextEventP9nsIThreadb+22)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #22 pc 005e46ad  /system/b2g/libxul.so (_ZN7mozilla3ipc11MessagePump3RunEPN4base11MessagePump8DelegateE+224)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #23 pc 005d58f3  /system/b2g/libxul.so (_ZN11MessageLoop3RunEv+14)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #24 pc 01186f89  /system/b2g/libxul.so (_ZN14nsBaseAppShell3RunEv+28)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #25 pc 01539bfd  /system/b2g/libxul.so (_ZN12nsAppStartup3RunEv+48)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #26 pc 015549bf  /system/b2g/libxul.so (_ZN7XREMain11XRE_mainRunEv+1806)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #27 pc 01554c85  /system/b2g/libxul.so (_ZN7XREMain8XRE_mainEiPPcPK12nsXREAppData+444)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #28 pc 01554e7b  /system/b2g/libxul.so (XRE_main+78)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #29 pc 00006421  /system/b2g/b2g (_ZL7do_mainiPPc+276)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #30 pc 00006519  /system/b2g/b2g (_Z8b2g_mainiPPKc+160)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #31 pc 000062b7  /system/b2g/b2g (main+326)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #32 pc 00016655  /system/lib/libc.so (__libc_init+44)
+01-15 04:32:28.097 31525 31525 D DHCUI   : #33 pc 00005db0  /system/b2g/b2g (_start+96)
+01-15 04:32:28.097 31525 31525 D DHCUI   : BluetoothSocket::Cleanup this is 0xa7364c70,mSocketInterface is 0xaa6d5db8
+01-15 04:32:28.097 31525 31525 I GeckoBluetooth: OnSocketDisconnect: [client]
+01-15 04:32:28.097 31525 31525 I GeckoBluetooth: FileTransferComplete: broadcast system message: [bluetooth-opp-transfer-complete]
+01-15 04:32:28.097 31943 32049 W bt_l2cap: L2CA_SetDesireRole() new:x0, disallow_switch:0
+01-15 04:32:28.107 31525 31525 I WakeLock: Acquire cpu wakelock
+01-15 04:32:28.127 31943 32049 W bt_rfcomm: rfc_port_closed
+01-15 04:32:28.137 31943 32049 W bt_btif : bta_jv_rfc_port_to_cb(port_handle:0x9):jv handle:0x0 not FOUND
+01-15 04:32:28.137 31943 32049 E bt_btif : bta_jv_port_mgmt_cl_cback, p_cb:0x0, p_cb->p_cback:0x0, p_pcb
+01-15 04:32:28.137 31943 32049 W bt_rfcomm: port_rfc_closed RFCOMM connection in state 3 closed: Closed (res: 19)
+01-15 04:32:28.137 31943 32049 W bt_l2cap: L2CA_DisconnectReq()  CID: 0x0045
+01-15 04:32:28.137 31943 32049 W bt_l2cap: L2CAP - st: W4_L2CAP_DISC_RSP evt: 18
+01-15 04:32:28.247 31525 31525 I WakeLock: Acquire cpu wakelock
+01-15 04:32:28.367 31525 31525 I GeckoConsole: Content JS LOG: [System Bluetooth Transfer]: remove the finished sending task from queue, queue length = 0 
+01-15 04:32:28.367 31525 31525 I GeckoConsole:     at bt_debug (app://system.gaiamobile.org/js/bluetooth_transfer.js:98:5)
+01-15 04:32:28.377 31525 31525 I Gecko:DumpUtils: nsVolumeMountLock released for 'sdcard'
+01-15 04:32:28.377 31525 31525 D DHCUI   : BluetoothSocket::~~BluetoothSocket this is 0xa7364c70
+01-15 04:32:28.377 31525 31525 I GeckoBluetooth: ProcessNextBatch: REMOVE. 0 remaining
+01-15 04:32:28.377 31525 31525 D DHCUI   : BluetoothSocket::BluetoothSocket this is 0xa57b1220
+01-15 04:32:28.777 31525 31525 D DHCUI   : #00 pc 00a58add  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth15BluetoothSocketC2EPNS1_23BluetoothSocketObserverE+80)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #01 pc 00a51605  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth19BluetoothOppManager6ListenEv+72)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #02 pc 00a58fb7  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth15BluetoothSocket12OnDisconnectEv+74)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #03 pc 00a583db  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth15BluetoothSocket5CloseEv+62)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #04 pc 00a50199  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth19BluetoothOppManager15StopSendingFileEv+20)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #05 pc 00a5563b  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth25BluetoothServiceBluedroid15StopSendingFileERKNS1_16BluetoothAddressEPNS1_22BluetoothReplyRunnableE+42)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #06 pc 00a618ad  /system/b2g/libxul.so (_ZN7mozilla3dom9bluetooth16BluetoothAdapter15StopSendingFileERK18nsAString_internalRNS_11ErrorResultE+156)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #07 pc 00aab76d  /system/b2g/libxul.so (_ZN7mozilla3dom23BluetoothAdapterBindingL15stopSendingFileEP9JSContextN2JS6HandleIP8JSObjectEEPNS0_9bluetooth16BluetoothAdapterERK19JSJitMethodCallArgs+64)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #08 pc 00e0a5f3  /system/b2g/libxul.so (_ZN7mozilla3dom20GenericBindingMethodEP9JSContextjPN2JS5ValueE+194)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #09 pc 01ae0337  /system/b2g/libxul.so (_ZN2js23InternalCallOrConstructEP9JSContextRKN2JS8CallArgsENS_14MaybeConstructE+282)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #10 pc 01ad8e47  /system/b2g/libxul.so (_ZL9InterpretP9JSContextRN2js8RunStateE+1622)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #11 pc 01ae017d  /system/b2g/libxul.so (_ZN2js9RunScriptEP9JSContextRNS_8RunStateE+220)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #12 pc 01ae02b9  /system/b2g/libxul.so (_ZN2js23InternalCallOrConstructEP9JSContextRKN2JS8CallArgsENS_14MaybeConstructE+156)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #13 pc 01ae0499  /system/b2g/libxul.so (_ZN2js4CallEP9JSContextN2JS6HandleINS2_5ValueEEES5_RKNS_13AnyInvokeArgsENS2_13MutableHandleIS4_EE+24)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #14 pc 019fcfcb  /system/b2g/libxul.so (_ZN2JS4CallEP9JSContextNS_6HandleINS_5ValueEEES4_RKNS_16HandleValueArrayENS_13MutableHandleIS3_EE+178)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #15 pc 00ddbf83  /system/b2g/libxul.so (_ZN7mozilla3dom8Function4CallEP9JSContextN2JS6HandleINS4_5ValueEEERK8nsTArrayIS6_ENS4_13MutableHandleIS6_EERNS_11ErrorResultE+454)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #16 pc 009821c1  /system/b2g/libxul.so (_ZN14nsGlobalWindow17RunTimeoutHandlerEP9nsTimeoutP16nsIScriptContext+416)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #17 pc 00982887  /system/b2g/libxul.so (_ZN14nsGlobalWindow10RunTimeoutEP9nsTimeout+382)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #18 pc 00982a43  /system/b2g/libxul.so (_ZN14nsGlobalWindow13TimerCallbackEP8nsITimerPv+20)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #19 pc 003f22a1  /system/b2g/libxul.so (_ZN11nsTimerImpl4FireEv+712)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #20 pc 003ede49  /system/b2g/libxul.so (_ZN12nsTimerEvent3RunEv+160)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #21 pc 014abbdd  /system/b2g/libxul.so (_ZN7mozilla10tasktracer14TracedRunnable3RunEv+26)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #22 pc 003ee381  /system/b2g/libxul.so (_ZN8nsThread16ProcessNextEventEbPb+560)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #23 pc 0040048b  /system/b2g/libxul.so (_Z19NS_ProcessNextEventP9nsIThreadb+22)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #24 pc 005e46ad  /system/b2g/libxul.so (_ZN7mozilla3ipc11MessagePump3RunEPN4base11MessagePump8DelegateE+224)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #25 pc 005d58f3  /system/b2g/libxul.so (_ZN11MessageLoop3RunEv+14)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #26 pc 01186f89  /system/b2g/libxul.so (_ZN14nsBaseAppShell3RunEv+28)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #27 pc 01539bfd  /system/b2g/libxul.so (_ZN12nsAppStartup3RunEv+48)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #28 pc 015549bf  /system/b2g/libxul.so (_ZN7XREMain11XRE_mainRunEv+1806)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #29 pc 01554c85  /system/b2g/libxul.so (_ZN7XREMain8XRE_mainEiPPcPK12nsXREAppData+444)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #30 pc 01554e7b  /system/b2g/libxul.so (XRE_main+78)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #31 pc 00006421  /system/b2g/b2g (_ZL7do_mainiPPc+276)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #32 pc 00006519  /system/b2g/b2g (_Z8b2g_mainiPPKc+160)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #33 pc 000062b7  /system/b2g/b2g (main+326)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #34 pc 00016655  /system/lib/libc.so (__libc_init+44)
+01-15 04:32:28.777 31525 31525 D DHCUI   : #35 pc 00005db0  /system/b2g/b2g (_start+96)
+01-15 04:32:28.777 31525 31525 D DHCUI   : BluetoothSocket::Listen 1 this is 0xa57b1220
+01-15 04:32:28.777 31525 31525 D DHCUI   : BluetoothSocket::Listen 2 this is 0xa57b1220
+01-15 04:32:28.777 31525 31525 D DHCUI   : BluetoothSocket::LoadSocketInterface this is 0xa57b1220,mSocketInterface is 0x0
+01-15 04:32:28.777 31525 31525 I GeckoConsole: Content JS LOG: [System Bluetooth Transfer]: opp's device don't accept the file and timeout occurred. 
+01-15 04:32:28.777 31525 31525 I GeckoConsole:     at bt_debug (app://system.gaiamobile.org/js/bluetooth_transfer.js:98:5)
+01-15 04:32:28.807 31525 31525 I Gecko:DumpUtils: nsVolume: sdcard state Mounted @ '/data/usbmsc_mnt' gen 1 locked 0 fake 1 media 1 sharing 0 formatting 0 unmounting 0 removable 0 hotswappable 0
+01-15 04:32:28.807 31525 31546 I AutoMounter: Failed to get property, ro.kaios.usb.state_node, use default value.
+01-15 04:32:28.807 31525 31525 I WakeLock: Release volume-sdcard-1 wakelock
+01-15 04:32:28.807 31525 31546 I AutoMounter: Failed to get property, ro.kaios.usb.functions_node, use default value.
+01-15 04:32:28.807 31525 31546 I AutoMounter: Failed to get property, ro.kaios.usb.state_node, use default value.
+01-15 04:32:28.807 31525 31546 I AutoMounter: Failed to get property, ro.kaios.ums.directory_node, use default value.
+01-15 04:32:28.807 31525 31546 I AutoMounter: Failed to get property, ro.kaios.mtp.directory_node, use default value.
+01-15 04:32:28.807 31525 31546 I AutoMounter: UpdateState: ums:A0C0E0 mtp:A1C0E0 mode:0 usb:1 tryToShare:0 state:IDLE
+01-15 04:32:28.807 31525 31546 I AutoMounter: UpdateState: Volume sdcard is Mounted and inserted @ /data/usbmsc_mnt gen 1 locked 0 sharing x
+01-15 04:32:28.807 31525 31525 I WakeLock: Release cpu wakelock
+01-15 04:32:28.807 31525 31546 D DHCUI   : DroidSocketImpl::Listen
+01-15 04:32:28.807 31525 31546 D DHCUI   : DroidSocketImpl::OnFileCanReadWithoutBlocking
+01-15 04:32:28.807 31525 31546 D DHCUI   : DroidSocketImpl::OnSocketCanAcceptWithoutBlocking
+01-15 04:32:28.807 31525 31525 I FocusManager: << focus() called >>
+01-15 04:32:28.807 31525 31525 I FocusManager:    trying to set focus on, tag: HTML:IFRAME, id: systemapp, class: 
+01-15 04:32:28.807 31525 31525 I FocusManager: Warning: element is already focused.
+01-15 04:32:28.807 31525 31525 I FocusManager: << focus() called >>
+01-15 04:32:28.807 31525 31525 I FocusManager:    trying to set focus on, tag: HTML:IFRAME, id: systemapp, class: 
+01-15 04:32:28.807 31525 31525 I FocusManager: Warning: element is already focused.
+01-15 04:32:28.827 31525 31525 I FocusManager: << focus() called >>
+01-15 04:32:28.827 31525 31525 I FocusManager:    trying to set focus on, tag: HTML:IFRAME, id: systemapp, class: 
+01-15 04:32:28.827 31525 31525 I FocusManager: Warning: element is already focused.
+01-15 04:32:28.847 31525 31525 D DHCUI   : new AcceptResultHandler
+01-15 04:32:28.847 31525 31525 D DHCUI   : BluetoothSocket::LoadSocketInterface this is 0xa57b1220,mSocketInterface is 0xaa6d5db8
+01-15 04:32:28.907 31525   414 W AudioTrack: AUDIO_OUTPUT_FLAG_FAST denied by client; transfer 1,track 44100 Hz, output 48000 Hz
+01-15 04:32:28.907  7929  8032 D audio_hw_primary: start_output_stream: enter: stream(0xb868d540)usecase(1: low-latency-playback) devices(0x2)
+01-15 04:32:28.907  7929  8032 D audio_hw_primary: select_devices: out_snd_device(2: speaker) in_snd_device(0: )
+01-15 04:32:28.907  7929  8032 D hardware_info: hw_info_append_hw_type : device_name = speaker
+01-15 04:32:28.907  7929  8032 D audio_hw_primary: enable_snd_device: snd_device(2: speaker)
+01-15 04:32:28.907  7929  8032 W audio_hw_utils: audio_extn_utils_update_stream_app_type_cfg: App type could not be selected. Falling back to default
+01-15 04:32:28.907  7929  8032 I audio_hw_primary: select_devices Selected apptype: 69936
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> send_audio_cal, acdb_id = 14, path =  0
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> send_asm_topology
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> ACDB_CMD_GET_AUDPROC_STREAM_TOPOLOGY_ID
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> send_adm_topology
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> ACDB_CMD_GET_AUDPROC_COMMON_TOPOLOGY_ID
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> send_audtable
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> ACDB_CMD_GET_AUDPROC_COMMON_TABLE_SIZE
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> ACDB_CMD_GET_AUDPROC_COMMON_TABLE
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> AUDIO_SET_AUDPROC_CAL
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> send_audvoltable
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> ACDB_CMD_GET_AUDPROC_GAIN_DEP_STEP_TABLE
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> AUDIO_SET_AUDPROC_VOL_CAL
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> send_afe_cal
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> ACDB_CMD_GET_AFE_COMMON_TABLE
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> AUDIO_SET_AFE_CAL
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> send_hw_delay : acdb_id = 14 path = 0
+01-15 04:32:28.907  7929  8032 D ACDB-LOADER: ACDB -> ACDB_AVSYNC_INFO: ACDB_CMD_GET_DEVICE_PROPERTY
+01-15 04:32:28.907  7929  8032 I audio_hw_utils: audio_extn_utils_send_app_type_cfg app_type 69936, acdb_dev_id 14, sample_rate 48000
+01-15 04:32:28.907  7929  8032 D audio_hw_primary: enable_audio_route: apply mixer and update path: low-latency-playback
+01-15 04:32:28.907  7929  8032 D audio_hw_primary: select_devices: done
+01-15 04:32:28.937  7929  8032 D audio_hw_primary: start_output_stream: exit
+01-15 04:32:28.937  7929  8031 E FastThread: did not receive expected priority boost
+01-15 04:32:29.447 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:32:29.447 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:32:29.447 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:32:29.447 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:32:29.557 31649 31649 E sdcard  : missing packages.list; retrying
+
+
+
+
+01-15 04:32:32.187 31943 32049 I bt_btm_sec: btm_sec_disconnected clearing pending flag handle:6 reason:22
+01-15 04:32:32.187 31943 32049 W bt_l2cap: L2CA_SetDesireRole() new:x0, disallow_switch:0
+01-15 04:32:32.257 31525 31525 I WakeLock: Release cpu wakelock
+01-15 04:32:32.557 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:32:33.257  7929  8032 D audio_hw_primary: out_standby: enter: stream (0xb868d540) usecase(1: low-latency-playback)
+01-15 04:32:33.367  7929  8032 D audio_hw_primary: disable_audio_route: reset and update mixer path: low-latency-playback
+01-15 04:32:33.367  7929  8032 D hardware_info: hw_info_append_hw_type : device_name = speaker
+01-15 04:32:33.367  7929  8032 D audio_hw_primary: disable_snd_device: snd_device(2: speaker)
+
+01-15 04:32:34.487 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:32:34.487 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:32:34.497 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:32:34.497 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+
+
+
+01-15 04:32:35.557 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:32:38.557 31649 31649 E sdcard  : missing packages.list; retrying
+01-15 04:32:39.547 31525 31525 I GeckoConsole: Content JS LOG: [ELM] try again 
+01-15 04:32:39.547 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+01-15 04:32:39.547 31525 31525 I GeckoConsole: Content JS LOG: [ELM] self.allGet false 
+01-15 04:32:39.547 31525 31525 I GeckoConsole:     at debug (app://system.gaiamobile.org/dist/bundle.js:42308:6)
+

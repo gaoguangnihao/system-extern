@@ -386,5 +386,22 @@ cargo test -- --nocapture
 
 72055 
 
+/data/local/service/updater/installed
 
+/local/code/sidl/sidl/telemetry/src/app_scanner.rs
+
+TRACKED_APPS 
+
+api-daemon entry  
+
+/local/code/sidl/sidl/daemon/src/main.rs
+
+
+
+please connect to webide, check 'Device Preferences', show me the follow value:
+
+device.commercial.ref
+apps.token.uri
+dom.push.token.uri
+metrics.token.uri
 
