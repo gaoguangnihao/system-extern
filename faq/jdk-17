@@ -36,3 +36,48 @@ sudo apt update
 
 sudo apt install openjdk-7-jdk
 
+
+
+*********************************************************
+install oracle JDK
+
+ sudo apt-get install software-properties-common
+
+ sudo add-apt-repository ppa:webupd8team/java
+
+ sudo apt-get update
+
+install JDK8
+
+ sudo apt-get install oracle-java8-installer
+
+ java -version
+
+sudo dpkg -i https://packages.debian.org/sid/libjpeg62-turbo
+update-java-alternatives --list
+
+
+sudo vim ~/.bashrc
+
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+export PATH=${PATH}:${JAVA_HOME}/bin
+
+./build.sh -j1 2>&1 |tee bulid.log
+
+
+!!!!!!!!!!!!!!!!!!!!!!!11
+
+Lex: checkpolicy <= external/selinux/checkpolicy/policy_scan.l
+flex-2.5.39: loadlocale.c:130: _nl_intern_locale_data: Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
+make: *** [out/host/linux-x86/obj/EXECUTABLES/checkpolicy_intermediates/policy_scan.cpp] Aborted (core dumped)
+
+=====modify 
+
+sudo gedit ~/.bashrc
+
+export LC_ALL=C
+!!!!!!!!!!!!!!!!!!!!!!!!!!111
+
+

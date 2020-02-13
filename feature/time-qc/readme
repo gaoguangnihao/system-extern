@@ -1,0 +1,127 @@
+ https://bugzilla.kaiostech.com/show_bug.cgi?id=81722
+
+
+it's a known BSP/HW issue that when set time in `gecko/hal/gonk/GonkHal.cpp`, as we use `/dev/alarm/` and only software date updated, 'hwclock' remains untouched. After reboot, device would use hardware time to update software time, leading to this bug.
+
+No sure if switch to `/dev/rtc0` would fix this. As far as I know, never tried to set 'ro.kaios.use_timerfd' to 'true' on MSM8908. Leave this to System team.
+
+comments from others bug :
+
+It should be one bsp/HW issue. we can use below commands to check it.
+adb shell hwclock ---------------display hardware time
+adb shell date    ---------------display system time which display on the phone
+
+When we modify the time/date on the Qualcomm phone, we can find that the system time is modified as required. While the hardware time is always at about 1970 xxxxxx remaining t
+
+he old time. The kernel didn't update the system time into the hardware time.
+
+root@msm8909_256:/ # date
+Mon May 28 15:13:45 CST 2018
+root@msm8909_256:/ # hwclock
+Sat Jan 24 21:58:41 1970  0.000000 seconds
+
+[questition]
+
+1. Could u help to check  "ro.kaios.use_timerfd" is define or not ? 
+code should "AdjustSystemClock"
+
+2. try attachment code set in ril side ,this need to discuss with qualcomm
+
+you can see the source code is the following directory: 
+vendor/qcom/proprietary/time-services
+
+KAIOS framework need do the similar thing to sync time to time_daemon. 
+
+static int setTimeServicesTime(time_bases_type base, int64_t millis) 
+{ 
+int ret = 0; 
+time_genoff_info_type time_set; 
+uint64_t value = millis; 
+
+time_set.base = base; 
+time_set.unit = TIME_MSEC; 
+time_set.operation = T_SET; 
+time_set.ts_val = &value; 
+ret = time_genoff_operation(&time_set); //This function is done by time_deamon 
+
+if (ret) { 
+ALOGE("%s: Error setting generic offset: %d\n", sLogTag, ret); 
+} 
+
+return ret; 
+}
+
+
+
+
+if (strcmp(useTimerfd, "true") == 0) {
+1440    do {
+1441      fd = open("/dev/rtc0", O_RDWR);
+1442    } while (fd == -1 && errno == EINTR);
+1443  } else {
+1444    do {
+1445      fd = open("/dev/alarm", O_RDWR);
+1446    } while (fd == -1 && errno == EINTR);
+1447  }
+
+adb shell
+
+setprop persist.radio.adb_log_on 1
+
+setprop persist.log.tag.ril VERBOSE
+ 
+
+setprop debug.time_services.enable 1
+
+reboot
+
+adb pull system/b2g/distribution/bundles/b2g_time/timeservice.js .
+
+
+diff --git a/time-services/time_genoff_qmi.c b/time-services/time_genoff_qmi.c
+index 6a7a3863..8419180f 100755
+--- a/time-services/time_genoff_qmi.c
++++ b/time-services/time_genoff_qmi.c
+
+@@ -42,11 +42,11 @@ int time_genoff_operation(time_genoff_info_type *pargs)
+        }
+
+        strlcpy(time_socket.sun_path, GENOFF_SOCKET_NAME, UNIX_PATH_MAX);
+        /* Create abstract domain socket */
+        time_socket.sun_path[0] = 0;
+        length = strlen(GENOFF_SOCKET_NAME) + sizeof(time_socket.sun_family);
+        if (connect(sock_id, (struct sockaddr *)&time_socket, length) == -1) {
++               TIME_LOGE("errno is %d\n,sock_id is %d,socket name is %s",errno,sock_id,GENOFF_SOCKET_NAME);
+                TIME_LOGE("Lib:%s: Connection failed !!\n", __func__);
+                goto error_close_socket;
+        }
+
+
+
+diff --git a/time-services/time_daemon_qmi.c b/time-services/time_daemon_qmi.c
+index 37442fc1..0b47254f 100755
+--- a/time-services/time_daemon_qmi.c
++++ b/time-services/time_daemon_qmi.c
+
+
+@@ -84,7 +84,7 @@ static int time_persistent_memory_opr (const char *file_name,
+                                        __func__);
+                        if ((fd = open(fname,O_RDONLY)) < 0) {
+                                TIME_LOGD("Daemon:Unable to open file"
+-                                              "for read\n");
++                                              "for read errno is %d\n",errno);
+                                goto fail_operation;
+                        }
+
+
+
+when enable selinux .for set time in setting ,some socket connect error as
+below 
+
+should be add time_daemon permit
+
+
+<5>[15022.685717] type=1400 audit(1556985600.076:5): avc:  denied  { connectto
+} for  pid=422 comm="b2g" path=0074696D655F67656E6F6666 scontext=u:r:b2g:s0
+tcontext=u:r:time_daemon:s0 tclass=unix_stream_socket permissive=0
+
