@@ -1,1 +1,788 @@
+***************MAKE file ************************
+
+1. make snod rebuild system image 
+2. eval  pass the resulting empty string to the $(eval ...) function，
+$ make --warn-undefined-variables
+Makefile:3: warning: undefined variable `R'
+Makefile:3: warning: undefined variable `echo '
+make: Nothing to be done for `testt'.
+
+3. call
+4. $(info logsssss);
+
+*************************************************
+image list 
+*************************************************
+
+dhcui@linux-3:/local/code/mtk-m/KaiOS$ grep "out/target/product/kaios31_emmc_jio/sig" build.log 
+Create dir:/local/code/mtk-m/KaiOS/out/target/product/kaios31_emmc_jio/sig
+sig:out/target/product/kaios31_emmc_jio/sig/md3rom.sig
+Create dir:/local/code/mtk-m/KaiOS/out/target/product/kaios31_emmc_jio/sig
+sig:out/target/product/kaios31_emmc_jio/sig/md1arm7.sig
+Create dir:/local/code/mtk-m/KaiOS/out/target/product/kaios31_emmc_jio/sig
+sig:out/target/product/kaios31_emmc_jio/sig/md1dsp.sig
+Create dir:/local/code/mtk-m/KaiOS/out/target/product/kaios31_emmc_jio/sig
+sig:out/target/product/kaios31_emmc_jio/sig/md1rom.sig
+Create dir:/local/code/mtk-m/KaiOS/out/target/product/kaios31_emmc_jio/sig
+Create dir:/local/code/mtk-m/KaiOS/out/target/product/kaios31_emmc_jio/sig
+sig:out/target/product/kaios31_emmc_jio/sig/md1drdi.sig
+Create dir:/local/code/mtk-m/KaiOS/out/target/product/kaios31_emmc_jio/sig
+sig:out/target/product/kaios31_emmc_jio/sig/spmfw.sig
+Create dir:/local/code/mtk-m/KaiOS/out/target/product/kaios31_emmc_jio/sig
+sig:out/target/product/kaios31_emmc_jio/sig/mcupmfw.sig
+Create dir:/local/code/mtk-m/KaiOS/out/target/product/kaios31_emmc_jio/sig
+sig:out/target/product/kaios31_emmc_jio/sig/atf.sig
+Create dir:/local/code/mtk-m/KaiOS/out/target/product/kaios31_emmc_jio/sig
+Create dir:/local/code/mtk-m/KaiOS/out/target/product/kaios31_emmc_jio/sig
+Create dir:/local/code/mtk-m/KaiOS/out/target/product/kaios31_emmc_jio/sig
+sig:out/target/product/kaios31_emmc_jio/sig/boot.sig
+Create dir:/local/code/mtk-m/KaiOS/out/target/product/kaios31_emmc_jio/sig
+sig:out/target/product/kaios31_emmc_jio/sig/recovery.sig
+dhcui@linux-3:/local/code/mtk-m/KaiOS$ 
+
+
 vendor/mediatek/proprietary/scripts/
+
+vendor/mediatek/proprietary/custom/mt6739/security/cert_config
+
+*************************************************
+device/mediatek/build/tasks/sign_image.mk
+*************************************************
+
+
+define sign-image-in-list
+8 $(PRODUCT_OUT)/$(2):
+9 $(1): $(PRODUCT_OUT)/$(2) $(3) $(4) $(5)
+10 	@echo sign: $$<
+11 	@if [ -f "$$<" ]; then \
+12           PYTHONDONTWRITEBYTECODE=True \
+13           PRODUCT_OUT=$(PRODUCT_OUT) \
+14           BOARD_AVB_ENABLE=$(BOARD_AVB_ENABLE) \
+15           python $(4) -target $(2) -env_cfg $(5) $$(MTK_PLATFORM_DIR) $$(MTK_BASE_PROJECT); \
+16          else \
+17           echo $$< does not exist, no need to sign!; \
+18          fi
+19 endef
+
+matched logs 
+
+sign: out/target/product/kaios31_emmc_jio/tinysys-sspm.bin
+MCUPM_FW: GEN   out/target/product/kaios31_emmc_jio/obj/ETC/mcupmfw.img_intermediates/img_hdr_mcupmfw.cfg
+out/target/product/kaios31_emmc_jio/tinysys-sspm.bin does not exist, no need to sign!
+
+Found sign-image: out/target/product/kaios31_emmc_jio/lk-verified.bin out/target/product/kaios31_emmc_jio/loader_ext-verified.img out/target/product/kaios31_emmc_jio/logo-verified.bin 
+
+
+***************************
+
+makefile call sign_image.mk
+
+**************************×
+
+# These are some additional build tasks that need to be run.
+ifneq ($(dont_bother),true)
+include $(sort $(wildcard $(BUILD_SYSTEM)/tasks/*.mk))
+-include $(sort $(wildcard vendor/*/build/tasks/*.mk))
+-include $(sort $(wildcard device/*/build/tasks/*.mk))
+# Also the project-specific tasks
+-include $(sort $(wildcard vendor/*/*/build/tasks/*.mk))
+-include $(sort $(wildcard device/*/*/build/tasks/*.mk))
+endif
+
+
+^_^**********Ptgen Done********** ^_^
+Generated files list:
+out/target/product/kaios31_emmc_jio/obj/PTGEN/../../MT6731_Android_scatter.txt
+out/target/product/kaios31_emmc_jio/obj/PTGEN/partition_size.mk
+
+
+***********************
+
+try disable BOARD_SIGN_IMG
+
+device/mediatek/mt6739/BoardConfig.mk
+
+image list 
+
+dhcui@linux-3:/local/code/mtk-m/KaiOS/out/target/product/kaios31_emmc_jio$ ls -l
+total 537412
+-rw-r--r--  1 dhcui dhcui     14614 Feb 14 15:10 MT6731_Android_scatter.txt
+-rw-r--r--  1 dhcui dhcui     16896 Feb 14 15:10 PGPT
+-rw-r--r--  1 dhcui dhcui         7 Feb 14 15:12 android-info.txt
+-rw-r--r--  1 dhcui dhcui    493288 Feb 14 15:12 appsboot.mbn
+-rw-r--r--  1 dhcui dhcui    493248 Feb 14 15:12 appsboot.raw
+-rw-r--r--  1 dhcui dhcui   9985320 Feb 14 15:52 boot.img
+drwxr-xr-x  2 dhcui dhcui      4096 Feb 14 15:51 cache
+-rw-r--r--  1 dhcui dhcui   6086804 Feb 14 15:51 cache.img
+-rw-r--r--  1 dhcui dhcui     61535 Feb 14 15:11 clean_steps.mk
+drwxr-xr-x  4 dhcui dhcui      4096 Feb 14 15:52 data
+drwxr-xr-x  5 dhcui dhcui      4096 Feb 14 15:49 gen
+-rw-r--r--  1 dhcui dhcui     88014 Feb 14 15:55 installed-files.txt
+-rw-r--r--  1 dhcui dhcui   8429332 Feb 14 15:50 kernel
+-rw-r--r--  1 dhcui dhcui    493248 Feb 14 15:19 lk.bin
+-rw-r--r--  1 dhcui dhcui     45232 Feb 14 15:19 loader_ext.img
+-rw-r--r--  1 dhcui dhcui    156912 Feb 14 15:19 logo.bin
+-rw-r--r--  1 dhcui dhcui      3440 Feb 14 15:50 mcupmfw.img
+-rw-r--r--  1 dhcui dhcui       528 Feb 14 15:49 md1arm7.img
+-rw-r--r--  1 dhcui dhcui   4293408 Feb 14 15:49 md1dsp.img
+-rw-r--r--  1 dhcui dhcui  15989296 Feb 14 15:49 md1rom.img
+-rw-r--r--  1 dhcui dhcui       528 Feb 14 15:49 md3rom.img
+drwxr-xr-x 19 dhcui dhcui      4096 Feb 14 15:55 obj
+drwxr-xr-x  6 dhcui dhcui      4096 Feb 14 15:56 oem_fota_meta
+-rw-r--r--  1 dhcui dhcui    786153 Feb 14 15:56 oem_fota_meta.zip
+-rw-r--r--  1 dhcui dhcui       605 Feb 14 15:55 ota_scatter.txt
+-rw-r--r--  1 dhcui dhcui       189 Feb 14 15:56 ota_update_list.txt
+-rw-r--r--  1 dhcui dhcui    112972 Feb 14 15:50 preloader.bin
+-rw-r--r--  1 dhcui dhcui    115200 Feb 14 15:50 preloader.img
+-rw-r--r--  1 dhcui dhcui    112972 Feb 14 15:49 preloader_kaios31_emmc_jio.bin
+-rw-r--r--  1 dhcui dhcui       391 Feb 14 15:11 previous_build_config.mk
+-rw-r--r--  1 dhcui dhcui   2285430 Feb 14 15:52 ramdisk-recovery.img
+-rw-r--r--  1 dhcui dhcui   1551845 Feb 14 15:52 ramdisk.img
+drwxr-xr-x  3 dhcui dhcui      4096 Feb 14 15:49 recovery
+-rw-r--r--  1 dhcui dhcui        67 Feb 14 15:52 recovery.id
+-rw-r--r--  1 dhcui dhcui  10718508 Feb 14 15:52 recovery.img
+drwxr-xr-x  9 dhcui dhcui      4096 Feb 14 15:52 root
+-rw-r--r--  1 dhcui dhcui    135168 Feb 14 15:19 secro.img
+-rw-r--r--  1 dhcui dhcui     24752 Feb 14 15:50 spmfw.bin
+drwxr-xr-x  7 dhcui dhcui      4096 Feb 14 15:51 symbols
+drwxr-xr-x 14 dhcui dhcui      4096 Feb 14 15:52 system
+-rw-r--r--  1 dhcui dhcui 470471204 Feb 14 15:56 system.img
+drwxr-xr-x  4 dhcui dhcui      4096 Feb 14 15:12 trustzone
+-rw-r--r--  1 dhcui dhcui    103936 Feb 14 15:51 trustzone.bin
+-rw-r--r--  1 dhcui dhcui  17109500 Feb 14 15:52 userdata.img
+
+**********************
+
+************************scatter file ***
+############################################################################################################
+#
+#  General Setting
+#
+############################################################################################################
+- general: MTK_PLATFORM_CFG
+  info: 
+    - config_version: V1.1.6
+      platform: MT6731
+      project: kaios31_emmc_jio
+      storage: EMMC
+      boot_channel: MSDC_0
+      block_size: 0x20000
+      check_bootloaders_consistency: true
+############################################################################################################
+#
+#  Layout Setting
+#
+############################################################################################################
+- partition_index: SYS0
+  partition_name: preloader
+  file_name: preloader_kaios31_emmc_jio.bin
+  is_download: true
+  type: SV5_BL_BIN
+  linear_start_addr: 0x0
+  physical_start_addr: 0x0
+  partition_size: 0x40000
+  region: EMMC_BOOT1_BOOT2
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: BOOTLOADERS
+  is_upgradable: true
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS1
+  partition_name: pgpt
+  file_name: NONE
+  is_download: false
+  type: NORMAL_ROM
+  linear_start_addr: 0x0
+  physical_start_addr: 0x0
+  partition_size: 0x8000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: INVISIBLE
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS2
+  partition_name: boot_para
+  file_name: NONE
+  is_download: false
+  type: NORMAL_ROM
+  linear_start_addr: 0x8000
+  physical_start_addr: 0x8000
+  partition_size: 0x100000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: INVISIBLE
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS3
+  partition_name: recovery
+  file_name: recovery.img
+  is_download: true
+  type: NORMAL_ROM
+  linear_start_addr: 0x108000
+  physical_start_addr: 0x108000
+  partition_size: 0x1800000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: UPDATE
+  is_upgradable: true
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS4
+  partition_name: para
+  file_name: NONE
+  is_download: false
+  type: NORMAL_ROM
+  linear_start_addr: 0x1908000
+  physical_start_addr: 0x1908000
+  partition_size: 0x80000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: INVISIBLE
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS5
+  partition_name: expdb
+  file_name: NONE
+  is_download: false
+  type: NORMAL_ROM
+  linear_start_addr: 0x1988000
+  physical_start_addr: 0x1988000
+  partition_size: 0x1400000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: INVISIBLE
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS6
+  partition_name: frp
+  file_name: NONE
+  is_download: false
+  type: NORMAL_ROM
+  linear_start_addr: 0x2d88000
+  physical_start_addr: 0x2d88000
+  partition_size: 0x100000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: INVISIBLE
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS7
+  partition_name: nvcfg
+  file_name: NONE
+  is_download: false
+  type: EXT4_IMG
+  linear_start_addr: 0x2e88000
+  physical_start_addr: 0x2e88000
+  partition_size: 0x800000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: PROTECTED
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS8
+  partition_name: nvdata
+  file_name: NONE
+  is_download: false
+  type: EXT4_IMG
+  linear_start_addr: 0x3688000
+  physical_start_addr: 0x3688000
+  partition_size: 0x2000000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: INVISIBLE
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS9
+  partition_name: metadata
+  file_name: NONE
+  is_download: false
+  type: NORMAL_ROM
+  linear_start_addr: 0x5688000
+  physical_start_addr: 0x5688000
+  partition_size: 0x2000000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: INVISIBLE
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS10
+  partition_name: protect1
+  file_name: NONE
+  is_download: false
+  type: EXT4_IMG
+  linear_start_addr: 0x7688000
+  physical_start_addr: 0x7688000
+  partition_size: 0x800000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: PROTECTED
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS11
+  partition_name: protect2
+  file_name: NONE
+  is_download: false
+  type: EXT4_IMG
+  linear_start_addr: 0x7e88000
+  physical_start_addr: 0x7e88000
+  partition_size: 0x978000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: PROTECTED
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS12
+  partition_name: seccfg
+  file_name: NONE
+  is_download: false
+  type: NORMAL_ROM
+  linear_start_addr: 0x8800000
+  physical_start_addr: 0x8800000
+  partition_size: 0x800000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: INVISIBLE
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS13
+  partition_name: sec1
+  file_name: NONE
+  is_download: false
+  type: NORMAL_ROM
+  linear_start_addr: 0x9000000
+  physical_start_addr: 0x9000000
+  partition_size: 0x200000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: INVISIBLE
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS14
+  partition_name: proinfo
+  file_name: NONE
+  is_download: false
+  type: NORMAL_ROM
+  linear_start_addr: 0x9200000
+  physical_start_addr: 0x9200000
+  partition_size: 0x300000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: PROTECTED
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS15
+  partition_name: md1img
+  file_name: md1rom.img
+  is_download: true
+  type: NORMAL_ROM
+  linear_start_addr: 0x9500000
+  physical_start_addr: 0x9500000
+  partition_size: 0x4000000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: UPDATE
+  is_upgradable: true
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS16
+  partition_name: md1dsp
+  file_name: md1dsp.img
+  is_download: true
+  type: NORMAL_ROM
+  linear_start_addr: 0xd500000
+  physical_start_addr: 0xd500000
+  partition_size: 0x1000000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: UPDATE
+  is_upgradable: true
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS17
+  partition_name: spmfw
+  file_name: spmfw.bin
+  is_download: true
+  type: NORMAL_ROM
+  linear_start_addr: 0xe500000
+  physical_start_addr: 0xe500000
+  partition_size: 0x100000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: UPDATE
+  is_upgradable: true
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS18
+  partition_name: mcupmfw
+  file_name: mcupmfw.img
+  is_download: true
+  type: NORMAL_ROM
+  linear_start_addr: 0xe600000
+  physical_start_addr: 0xe600000
+  partition_size: 0x100000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: UPDATE
+  is_upgradable: true
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS19
+  partition_name: gz1
+  file_name: NONE
+  is_download: false
+  type: NORMAL_ROM
+  linear_start_addr: 0xe700000
+  physical_start_addr: 0xe700000
+  partition_size: 0x1000000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: INVISIBLE
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS20
+  partition_name: gz2
+  file_name: NONE
+  is_download: false
+  type: NORMAL_ROM
+  linear_start_addr: 0xf700000
+  physical_start_addr: 0xf700000
+  partition_size: 0x1000000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: INVISIBLE
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS21
+  partition_name: nvram
+  file_name: NONE
+  is_download: false
+  type: NORMAL_ROM
+  linear_start_addr: 0x10700000
+  physical_start_addr: 0x10700000
+  partition_size: 0x500000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: BINREGION
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS22
+  partition_name: lk
+  file_name: lk.bin
+  is_download: true
+  type: NORMAL_ROM
+  linear_start_addr: 0x10c00000
+  physical_start_addr: 0x10c00000
+  partition_size: 0x100000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: UPDATE
+  is_upgradable: true
+  empty_boot_needed: true
+  reserve: 0x00
+
+- partition_index: SYS23
+  partition_name: lk2
+  file_name: lk.bin
+  is_download: true
+  type: NORMAL_ROM
+  linear_start_addr: 0x10d00000
+  physical_start_addr: 0x10d00000
+  partition_size: 0x100000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: UPDATE
+  is_upgradable: true
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS24
+  partition_name: loader_ext1
+  file_name: loader_ext.img
+  is_download: true
+  type: NORMAL_ROM
+  linear_start_addr: 0x10e00000
+  physical_start_addr: 0x10e00000
+  partition_size: 0x10000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: BOOTLOADERS
+  is_upgradable: true
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS25
+  partition_name: loader_ext2
+  file_name: loader_ext.img
+  is_download: true
+  type: NORMAL_ROM
+  linear_start_addr: 0x10e10000
+  physical_start_addr: 0x10e10000
+  partition_size: 0x10000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: BOOTLOADERS
+  is_upgradable: true
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS26
+  partition_name: boot
+  file_name: boot.img
+  is_download: true
+  type: NORMAL_ROM
+  linear_start_addr: 0x10e20000
+  physical_start_addr: 0x10e20000
+  partition_size: 0x1800000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: UPDATE
+  is_upgradable: true
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS27
+  partition_name: logo
+  file_name: logo.bin
+  is_download: true
+  type: NORMAL_ROM
+  linear_start_addr: 0x12620000
+  physical_start_addr: 0x12620000
+  partition_size: 0x800000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: UPDATE
+  is_upgradable: false
+  empty_boot_needed: true
+  reserve: 0x00
+
+- partition_index: SYS28
+  partition_name: tee1
+  file_name: trustzone.bin
+  is_download: true
+  type: NORMAL_ROM
+  linear_start_addr: 0x12e20000
+  physical_start_addr: 0x12e20000
+  partition_size: 0x500000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: UPDATE
+  is_upgradable: true
+  empty_boot_needed: true
+  reserve: 0x00
+
+- partition_index: SYS29
+  partition_name: tee2
+  file_name: trustzone.bin
+  is_download: true
+  type: NORMAL_ROM
+  linear_start_addr: 0x13320000
+  physical_start_addr: 0x13320000
+  partition_size: 0xce0000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: UPDATE
+  is_upgradable: true
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS30
+  partition_name: system
+  file_name: system.img
+  is_download: true
+  type: EXT4_IMG
+  linear_start_addr: 0x14000000
+  physical_start_addr: 0x14000000
+  partition_size: 0x40000000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: UPDATE
+  is_upgradable: true
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS31
+  partition_name: cache
+  file_name: cache.img
+  is_download: true
+  type: EXT4_IMG
+  linear_start_addr: 0x54000000
+  physical_start_addr: 0x54000000
+  partition_size: 0x7000000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: UPDATE
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS32
+  partition_name: sdcard
+  file_name: NONE
+  is_download: false
+  type: EXT4_IMG
+  linear_start_addr: 0x5b000000
+  physical_start_addr: 0x5b000000
+  partition_size: 0x48000000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: INVISIBLE
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS33
+  partition_name: userdata
+  file_name: userdata.img
+  is_download: true
+  type: EXT4_IMG
+  linear_start_addr: 0xa3000000
+  physical_start_addr: 0xa3000000
+  partition_size: 0x36900000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: true
+  is_reserved: false
+  operation_type: UPDATE
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS34
+  partition_name: flashinfo
+  file_name: NONE
+  is_download: false
+  type: NORMAL_ROM
+  linear_start_addr: 0xFFFF0080
+  physical_start_addr: 0xFFFF0080
+  partition_size: 0x1000000
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: false
+  is_reserved: true
+  operation_type: RESERVED
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+- partition_index: SYS35
+  partition_name: sgpt
+  file_name: NONE
+  is_download: false
+  type: NORMAL_ROM
+  linear_start_addr: 0xFFFF0000
+  physical_start_addr: 0xFFFF0000
+  partition_size: 0x4200
+  region: EMMC_USER
+  storage: HW_STORAGE_EMMC
+  boundary_check: false
+  is_reserved: true
+  operation_type: RESERVED
+  is_upgradable: false
+  empty_boot_needed: false
+  reserve: 0x00
+
+
