@@ -1,0 +1,42 @@
+
+[DESCRIPTION]
+有时遇到ANR问题，查看SWT_JBT_TRACES文件，发现有些是native backtrace，且GAT-LogView目前无法解析这种不规则的native backtrace。
+这时可以找到带symbols信息的对应lib库，使用addr2line解析pc指针，就可以得到native backtrace对应的代码行号。
+ 
+[SOLUTION]
+带symbols信息的lib库位于out/target/product/{ProjectName}/symbols/system/lib/
+注意：带symbols信息的lib库必须是与复现问题的手机bin档同一次build出来的才可以，必须是位于out/target/product/{ProjectName}/symbols/system/lib/这个目录下的lib库才可以，
+从手机system/lib下adb pull出来的lib库不可以用来解析pc指针
+ 
+Q：如何check lib库是否带有symbols？
+A：将lib库copy到linux 开发环境下，在linux Terminal(终端命令行窗口)里面通过file命令来check:
+file libhwui.so
+若印出的信息后面带有not stripped，则是带symbols信息；
+若是stripped，则不带symbols信息；
+ 
+addr2line使用方法：
+步骤一：将需要解析的backtrace对应的lib库拷贝到android gcc目录下
+若是64位lib库，将带symbols信息的lib库拷贝到任意一份Android L及以上版本的代码路径下：platform(alps)/prebuilts/gcc/linux-x86/aarch64/cit-aarch64-linux-android-4.9/bin/
+ 
+若是32位的lib库，将带symbols信息的lib库拷贝到Android KK某版本对应代码下：
+platform(alps)/prebuilts/gcc/linux-x86/arm/cit-arm-linux-androideabi-4.8/bin/
+ 
+备注：黄色部分的路径不一定非要是cit开头的，在该目录下找一个版本最新的目录进去即可
+ 
+步骤二：用addr2line来逐行解析backtrace：
+例如SWT_JBT_TRACES里面某2行trace是：
+native: #02 pc 00077540  /system/lib64/libhwui.so
+native: #03 pc 00051d90  /system/lib64/libhwui.so
+ 
+那么如下命令就可以解析出上述trace的代码行号：
+addr2line -C -e libhwui.so -f 0x77540
+ 
+如下是上述2行trace的解析记录：
+[xxx@mszswglx07 bin]$addr2line -C -e libhwui.so -f 0x77540
+android::uirenderer::Task<android::uirenderer::VertexBuffer*>::getResult() const
+/home/jenkins/workspace/5918/build_chambal_cosmos/linux_repo/system/core/include/utils/Condition.h:106
+ 
+[xxx@mszswglx07 bin]$addr2line -C -e libhwui.so -f 0x51d90
+android::uirenderer::OpenGLRenderer::drawRoundRect(float, float, float, float, float, float, SkPaint const*)
+/home/jenkins/workspace/5918/build_chambal_cosmos/linux_repo/frameworks/base/libs/hwui/OpenGLRenderer.cpp:2660
+

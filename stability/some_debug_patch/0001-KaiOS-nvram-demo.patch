@@ -1,0 +1,150 @@
+From e996c03d2c10ec6f9d64b095c9034b29dc7e1d0e Mon Sep 17 00:00:00 2001
+From: zhengzhou <zhengzhou@sagereal.com>
+Date: Fri, 30 Aug 2019 14:16:55 +0800
+Subject: [PATCH] KaiOS demo
+
+Change-Id: I272d72606b59490b0e82d851874ba16746c5ecd5
+---
+ .../proprietary/engmodeEx/engmodeEx_service.jsm    | 67 ++++++++++++++++++++++
+ .../proprietary/engmodeEx/engmodeExtension.js      | 16 ++++++
+ .../proprietary/engmodeEx/engmodeExtension.webidl  |  5 ++
+ 3 files changed, 88 insertions(+)
+
+diff --git a/alps/gecko/proprietary/engmodeEx/engmodeEx_service.jsm b/alps/gecko/proprietary/engmodeEx/engmodeEx_service.jsm
+index 4751351..9d2faac 100644
+--- a/alps/gecko/proprietary/engmodeEx/engmodeEx_service.jsm
++++ b/alps/gecko/proprietary/engmodeEx/engmodeEx_service.jsm
+@@ -86,6 +86,10 @@ this.EngmodeService = {
+       'EngmodeSrv:closeHeadSetMic',
+       'EngmodeSrv:openHeadSetMic',
+ // redmine 165516 update mic test for mmitest auto_huangshun 2019-3-7 end 	
++      // demo start
++      'EngmodeSrv:writeNvram',
++      'EngmodeSrv:readNvram'
++      // demo end
+     ];
+ 
+     this._messages.forEach((function(msgName) {
+@@ -493,6 +497,61 @@ this.EngmodeService = {
+   },
+ 
+ 
++  // demo start
++  _writeNvram: function(nvramId, nvramValue) {
++    let file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile);
++    let process = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess);
++    let args = [];
++    file.initWithPath('/system/bin/nvram_wrapper');
++      args = ['writeNvram', nvramId, nvramValue];//bug160491 add  read/write nvram function wangxinbiao 20190506 
++      try {
++        let self = this;
++        process.init(file);
++        debug('_writeNvram');
++        process.runAsync(args, args.length, {
++          observe: function() {
++            if (self._nvramWrapperProcess && self._nvramWrapperProcess.isRunning) {
++              self._nvramWrapperProcess.kill();
++              self._nvramWrapperProcess = null;
++              debug('_nvramWrapperProcess--KILL by observe******');
++            }
++          }
++        });
++        debug('_nvramWrapperProcess: ' + this._nvramWrapperProcess);
++        this._nvramWrapperProcess = process;
++      } catch (e) {
++        debug('_nvramWrapperProcess: start process error:' + e);
++      }
++  },
++
++  _readNvram: function(nvramId, defaultValue) {
++    let file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile);
++    let process = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess);
++    let args = [];
++    file.initWithPath('/system/bin/nvram_wrapper');
++      args = ['readNvram', nvramId, defaultValue];//bug160491 add  read/write nvram function wangxinbiao 20190506 
++      try {
++        let self = this;
++        process.init(file);
++        debug('_readNvram');
++        process.runAsync(args, args.length, {
++          observe: function() {
++            if (self._nvramWrapperProcess && self._nvramWrapperProcess.isRunning) {
++              self._nvramWrapperProcess.kill();
++              self._nvramWrapperProcess = null;
++              debug('_nvramWrapperProcess--KILL by observe******');
++            }
++          }
++        });
++        //???return value
++        this._nvramWrapperProcess = process;
++        debug('_nvramWrapperProcess: ' + this._nvramWrapperProcess);
++      } catch (e) {
++        debug('_nvramWrapperProcess: start process error:' + e);
++      }
++  },
++  // demo end
++
+ 
+ // redmine 165516 update mic test for mmitest auto_huangshun 2019-3-7 begin
+ 
+@@ -1168,6 +1227,14 @@ this.EngmodeService = {
+             });
+           });
+         break;
++      // demo start
++      case 'EngmodeSrv:writeNvram':
++        this._writeNvram(msg.nvramId, msg.nvramValue);
++        break;
++      case 'EngmodeSrv:readNvram':
++        this._readNvram(msg.nvramId, msg.defaultValue);
++        break;
++     // demo end
+ // redmine 165516 update mic test for mmitest auto_huangshun 2019-3-7 begin
+       case 'EngmodeSrv:closeMic':
+         this._closeMic(msg.nvramId, msg.nvramValue);
+diff --git a/alps/gecko/proprietary/engmodeEx/engmodeExtension.js b/alps/gecko/proprietary/engmodeEx/engmodeExtension.js
+index 650fa6b..36f3e40 100644
+--- a/alps/gecko/proprietary/engmodeEx/engmodeExtension.js
++++ b/alps/gecko/proprietary/engmodeEx/engmodeExtension.js
+@@ -732,6 +732,22 @@ engmodeIDOMExtension.prototype = {
+       operation: 'stop'
+     });
+   },
++// demo start
++  writeNvram: function(nvramId, nvramValue) {
++    cpmm.sendAsyncMessage('EngmodeSrv:writeNvram', {
++      nvramId: nvramId,
++      nvramValue: nvramValue
++    });
++  },
++
++
++  readNvram: function(nvramId, defaultValue) {
++    cpmm.sendAsyncMessage('EngmodeSrv:readNvram', {
++      nvramId: nvramId,
++      defaultValue: defaultValue
++    });
++  },
++// demo end
+ 
+ // redmine 165516 update mic test for mmitest auto_huangshun 2019-3-7 begin
+   closeMic: function(nvramId, nvramValue) {
+diff --git a/alps/gecko/proprietary/engmodeEx/engmodeExtension.webidl b/alps/gecko/proprietary/engmodeEx/engmodeExtension.webidl
+index 57c8c74..f984377 100644
+--- a/alps/gecko/proprietary/engmodeEx/engmodeExtension.webidl
++++ b/alps/gecko/proprietary/engmodeEx/engmodeExtension.webidl
+@@ -60,6 +60,11 @@ interface engmodeExtension {
+   void stopGpsTest();
+ 
+ 
++  /*demo*/
++  void writeNvram(DOMString nvramId, DOMString nvramValue);
++
++  void readNvram(DOMString nvramId, DOMString defaultValue);
++  /*demo end */
+ // redmine 165516 update mic test for mmitest auto_huangshun 2019-3-7 begin
+   void closeMic(DOMString nvramId, DOMString nvramValue);
+ 
+-- 
+2.7.4
+
