@@ -1,0 +1,100 @@
+I’m having some problems using IBus as an input method for all
+applications on GuixSD.  Usually, it is enough to specify the following
+variables:
+
+    export GTK_IM_MODULE=ibus
+    export address@hidden
+    export QT_IM_MODULE=ibus
+
+    export IBUS_COMPONENT_PATH="$HOME/.guix-profile/share/ibus/component"
+
+The last variable is actually suggested by Guix via the search paths
+feature (specified on the “ibus” package), while the other three are
+suggested when running “ibus-setup”.
+
+Even when these environment variables are set, IBus won’t work right
+away.  After installation there is one more issue which can be solved
+easily.  IBus uses dconf to store its settings, so changing the settings
+with “ibus-setup” requires the dconf-service to be running (I’m planning
+to write a dmd service for this):
+
+    $(guix build dconf)/libexec/dconf-service &
+    ibus-setup
+
+Okay, now we can actually select input methods and our changes will be
+kept.  I installed the “ibus-libpinyin” package for inputting Chinese
+characters via pinyin, and selected it from the menu in “ibus-setup”.
+
+Unfortunately, things still don’t work, because the GTK_IM_MODULE “ibus”
+cannot be found.  GTK does not know where to look for it.  It looks up
+input method modules in a file called “immodules.cache”, which is
+generated with “gtk-query-immodules-3.0” for GTK3 and
+“gtk-query-immodules-2.0” for GTK2.
+
+Our GTK packages come with “immodules.cache” files at
+
+    $out/lib/gtk-3.0/3.0.0/immodules.cache
+
+and
+
+    $out/lib/gtk-2.0/2.10.0/immodules.cache
+
+for the two different versions of GTK.  Of course, neither of these
+files contain a reference to the IBus input module, which is located at
+
+    $out/lib/gtk-3.0/3.0.0/immodules/im-ibus.so
+    $out/lib/gtk-2.0/2.10.0/immodules/im-ibus.so
+
+in the output of the “ibus” package.  I can generate an entry for the
+immodules.cache file with
+
+    gtk-query-immodules-3.0 
+~/.guix-profile/lib/gtk-3.0/3.0.0/immodules/im-ibus.so
+
+and append this to a copy of the GTK immodules.cache file.  To make GTK
+use it I need to point to it with the GTK_IM_MODULE_FILE variable.
+
+However, it is not advisable to mix input method modules for different
+versions of GTK.  When I did the above and listed both the ‘im-ibus.so’
+for GTK2 and GTK3 in the immodules.cache file and opened the graphical
+file dialogue in Emacs (which uses GTK3), Emacs would crash with a
+segfault if the GTK2 input method module for IBus was listed first.  I
+get a similar problem when the GTK3 module is listed first and I try to
+run any of the XFCE tools, e.g. ‘xfce4-keyboard-settings’, which all use
+GTK2.  They all fail to start when the GTK3 module is listed first.
+
+This means that we cannot just use one cache file and we cannot let
+users set GTK_IM_MODULE_FILE for the whole session.  In fact, the GTK
+documentation warns that this variable should not be used session-wide.
+
+It seems that GTK3 only looks for
+‘$libdir/gtk-3.0/3.0.0/immodules.cache’ and GTK2 only looks for
+‘$libdir/gtk-2.0/2.10.0/immodules.cache’ by default, where ‘$libdir’ is
+‘$out/lib’ of the GTK package.  (According to
+https://developer.gnome.org/gtk3/stable/gtk-running.html)
+
+To make IBus work we need to find a way to make the different major
+versions of GTK respect different ‘immodules.cache’ files that are *not*
+located in their ‘$libdir’.  In that case we could generate a fresh
+‘immodules.cache’ file for each major GTK version when building a
+profile.  Unfortunately, I haven’t been able to find any documented
+means to achieve this.  It might require patching the GTKs to check an
+additional path or environment variable.
+
+If this was the only way to achieve this behaviour I would suggest to
+alter the GTKs to respect two variables in addition to the flawed and
+dangerous ‘GTK_IM_MODULE_FILE’:
+
+    ‘GTK2_IM_MODULE_FILE’ for GTK2
+    ‘GTK3_IM_MODULE_FILE’ for GTK3
+
+Right now, the only way to make IBus work for all GTK applications (no
+matter the version) is to edit the ‘immodules.cache’ files in the GTK
+packages’ output directory so that each contains a reference to the
+correct IBus input method module for the particular GTK version.  This
+involves changing stuff in ‘/gnu/store’ and I’m just not comfortable
+doing this after each update.
+
+What do you think would be the best approach here?
+
+~~ Ricardo

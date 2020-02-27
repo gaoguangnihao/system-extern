@@ -1,0 +1,113 @@
+1. for pdf evince
+sudo apparmor_parser -R /etc/apparmor.d/usr.bin.evince 
+sudo ln -s /etc/apparmor.d/usr.bin.evince /etc/apparmor.d/disable/ 
+
+dhcui@linux-3:/local/tools/system-faq/system-extern/debian$ thunderbird  
+Unable to init server: Unable to create socket: Permission denied
+Error: cannot open display: :0
+
+
+
+2. for 
+
+xhost +
+
+3. Loading IM context type 'fcitx' failed GLib version too old (micro mismatch
+
+4. synaptic 
+
+5 apt-file  /apt-rdepends  https://www.debian.org/doc/manuals/debian-reference/ch02.zh-cn.html
+
+6 .sudo apt hold nodejs
+
+7. upgrade kernel and os 
+
+7.1 modify /etc/apt/source.list to special version 
+    take my computer as a example 
+
+#deb http://mirrors.aliyun.com/debian buster main contrib non-free
+deb http://mirrors.aliyun.com/debian bullseye main contrib non-free
+#deb-src http://mirrors.aliyun.com/debian buster main contrib non-free
+deb-src http://mirrors.aliyun.com/debian bullseye main contrib non-free
+#deb http://mirrors.aliyun.com/debian buster-updates main contrib non-free
+deb http://mirrors.aliyun.com/debian bullseye-updates main contrib non-free
+#deb-src http://mirrors.aliyun.com/debian buster-updates main contrib non-free
+deb-src http://mirrors.aliyun.com/debian bullseye-updates main contrib non-free
+#deb http://mirrors.aliyun.com/debian-security buster/updates main contrib non-free
+#deb http://mirrors.aliyun.com/debian-security sid/updates main contrib non-free
+#deb-src http://mirrors.aliyun.com/debian-security buster/updates main contrib non-free
+#deb-src http://mirrors.aliyun.com/debian-security sid/updates main contrib non-free
+#deb http://mirrors.aliyun.com/debian buster-backports main contrib non-free
+deb http://mirrors.aliyun.com/debian bullseye-backports main contrib non-free
+#deb-src http://mirrors.aliyun.com/debian buster-backports main contrib non-free
+deb-src http://mirrors.aliyun.com/debian bullseye-backports main contrib non-free
+
+  sudo apt-get update 
+  sudo apt-get install upgrde 
+  sudo apt-get install dist-upgrade 
+
+check os version 
+
+  cat /proc/version or lsb_release -a 
+
+7.2 upgrade kernel version 
+
+  first check the valid image 
+
+apt-cache search linux-image
+
+dhcui@linux-3:/local/code/mtk-m/KaiOS$ apt-cache search linux-image
+linux-headers-5.4.0-4-686 - Header files for Linux 5.4.0-4-686
+linux-headers-5.4.0-4-686-pae - Header files for Linux 5.4.0-4-686-pae
+linux-headers-5.4.0-4-amd64 - Header files for Linux 5.4.0-4-amd64
+linux-headers-5.4.0-4-cloud-amd64 - Header files for Linux 5.4.0-4-cloud-amd64
+linux-headers-5.4.0-4-rt-686-pae - Header files for Linux 5.4.0-4-rt-686-pae
+linux-headers-5.4.0-4-rt-amd64 - Header files for Linux 5.4.0-4-rt-amd64
+linux-image-5.4.0-4-686-dbg - Debug symbols for linux-image-5.4.0-4-686
+linux-image-5.4.0-4-686-pae-dbg - Debug symbols for linux-image-5.4.0-4-686-pae
+linux-image-5.4.0-4-686-pae-unsigned - Linux 5.4 for modern PCs
+linux-image-5.4.0-4-686-unsigned - Linux 5.4 for older PCs
+linux-image-5.4.0-4-amd64-dbg - Debug symbols for linux-image-5.4.0-4-amd64
+linux-image-5.4.0-4-amd64-unsigned - Linux 5.4 for 64-bit PCs
+linux-image-5.4.0-4-cloud-amd64-dbg - Debug symbols for linux-image-5.4.0-4-cloud-amd64
+linux-image-5.4.0-4-cloud-amd64-unsigned - Linux 5.4 for x86-64 cloud
+linux-image-5.4.0-4-rt-686-pae-dbg - Debug symbols for linux-image-5.4.0-4-rt-686-pae
+linux-image-5.4.0-4-rt-686-pae-unsigned - Linux 5.4 for modern PCs, PREEMPT_RT
+linux-image-5.4.0-4-rt-amd64-dbg - Debug symbols for linux-image-5.4.0-4-rt-amd64
+linux-image-5.4.0-4-rt-amd64-unsigned - Linux 5.4 for 64-bit PCs, PREEMPT_RT
+linux-image-686-dbg - Debugging symbols for Linux 686 configuration (meta-package)
+linux-image-686-pae-dbg - Debugging symbols for Linux 686-pae configuration (meta-package)
+linux-image-amd64-dbg - Debugging symbols for Linux amd64 configuration (meta-package)
+linux-image-amd64-signed-template - Template for signed linux-image packages for amd64
+linux-image-cloud-amd64-dbg - Debugging symbols for Linux cloud-amd64 configuration (meta-package)
+linux-image-i386-signed-template - Template for signed linux-image packages for i386
+linux-image-rt-686-pae-dbg - Debugging symbols for Linux rt-686-pae configuration (meta-package)
+linux-image-rt-amd64-dbg - Debugging symbols for Linux rt-amd64 configuration (meta-package)
+linux-image-5.4.0-4-amd64 - Linux 5.4 for 64-bit PCs (signed)
+linux-image-5.4.0-4-cloud-amd64 - Linux 5.4 for x86-64 cloud (signed)
+linux-image-5.4.0-4-rt-amd64 - Linux 5.4 for 64-bit PCs, PREEMPT_RT (signed)
+linux-image-amd64 - Linux for 64-bit PCs (meta-package)
+linux-image-cloud-amd64 - Linux for x86-64 cloud (meta-package)
+linux-image-rt-amd64 - Linux for 64-bit PCs (meta-package)
+linux-image-5.4.0-4-686 - Linux 5.4 for older PCs (signed)
+linux-image-5.4.0-4-686-pae - Linux 5.4 for modern PCs (signed)
+linux-image-5.4.0-4-rt-686-pae - Linux 5.4 for modern PCs, PREEMPT_RT (signed)
+linux-image-686 - Linux for older PCs (meta-package)
+linux-image-686-pae - Linux for modern PCs (meta-package)
+linux-image-rt-686-pae - Linux for modern PCs (meta-package)
+alsa-base - ALSA driver configuration files
+linux-image-4.15.0-74-generic - Signed kernel image generic
+linux-image-4.15.0-76-generic - Signed kernel image generic
+linux-image-4.15.0-88-generic - Signed kernel image generic
+linux-image-generic - Generic Linux kernel image
+
+
+but we just need a image to instal is ok 
+
+sudo aptitude install linux-image-5.4.0-4-amd64
+
+and please read all install logs it's must !!!!!!!!!!!!!!!1
+
+sudo aptitude install linux-headers-5.4.0-4-amd64
+
+
