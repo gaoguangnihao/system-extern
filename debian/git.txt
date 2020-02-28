@@ -1,0 +1,27 @@
+update special git version for your pc 
+
+download the git form 
+
+https://git.kernel.org/pub/scm/git/git.git
+
+sudo apt update
+sudo apt install make libssl-dev libghc-zlib-dev libcurl4-gnutls-dev libexpat1-dev gettext unzip
+
+sudo wget https://github.com/git/git/archive/v2.18.0.tar.gz -O git.tar.gz
+
+sudo tar -xf git.tar.gz
+cd git-*
+
+
+sudo make prefix=/usr/local all
+sudo make prefix=/usr/local install
+
+
+add env fot git 
+
+
+~/.bashrc
+
+export PATH=/usr/local/git/bin:$PATH
+
+source ~/.bashrc
