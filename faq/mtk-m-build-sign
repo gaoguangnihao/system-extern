@@ -785,4 +785,1515 @@ drwxr-xr-x  4 dhcui dhcui      4096 Feb 14 15:12 trustzone
   empty_boot_needed: false
   reserve: 0x00
 
+sign_image.mk dhcui v2 sign flow
+PYTHONDONTWRITEBYTECODE=True PRODUCT_OUT=out/target/product/kaios31_jpv BOARD_AVB_ENABLE= python vendor/mediatek/proprietary/scripts/sign-image_v2/sign_flow.py -env_cfg vendor/mediatek/proprietary/scripts/sign-image_v2/env.cfg mt6739 kaios31_jpv
+==========================================
+sign_flow dhcui platform = mt6739
+sign_flow dhcui project = kaios31_jpv
+sign_flow dhcui target = Not Set
+==========================================
+sign_flow set_path: dhcui vendor/mediatek/proprietary/scripts/sign-image_v2/env.cfg
+sign_flow dhcui Use out path in Android
+===================================
+sign_flow dhcui environment configuration
+===================================
+sign_flow dhcui in_path = out/target/product/kaios31_jpv
+sign_flow dhcui out_path = out/target/product/kaios31_jpv
+sign_flow dhcui cert1_dir = /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert1
+sign_flow dhcui cert2_key_dir = /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key
+sign_flow dhcui img_list_path = /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_list.txt
+sign_flow dhcui img_ver_path = /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui bin_tmp_path = out/target/product/kaios31_jpv/resign/bin/multi_tmp
+sign_flow Create dir: dhcui /local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin/multi_tmp
+sign_flow dhcui will be parse_img_list/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_list.txt
+avb = 
+sign_flow dhcui sign_all_img
+sign_flow dhcui sign_single_bin
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/lk.bin
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name lk
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/lk/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/lk/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/lk/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/lk/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/lk/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/lk/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/lk.bin
+Raw IMG
+parse_multi_bin  dhcui 
+file_size: 0x788a0
+img-0 size:0x788a0
+Target image, remove cert for replace
+add index0 image, this is final image
+get_pure_img  dhcui 
+bin_number:1
+img_split  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+fill_cert_config  dhcui 
+    imgHash EXTERNAL_BITSTRING ::= 0
+
+    imgHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/lk/cert2/intermediate/hash/image.hash
+
+fill_cert_config  dhcui 
+    imgHdrHash EXTERNAL_BITSTRING ::= 0
+
+    imgHdrHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/lk/cert2/intermediate/hash/header.hash
+
+gen_cert dhcui 
+==============================
+env_cfg parsing
+==============================
+ignored: in_path
+ignored: out_path
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+ignored: mkimage_tool_path
+==============================
+Generating public key from private key...
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/lk_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+writing RSA key
+Generating tbsCertificate...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/lk_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+Generating x509cert...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+Done
+add_mkimg_header  dhcui 
+not target element
+not target element
+append_file  dhcui 
+padding_file  dhcui 
+0
+sig:out/target/product/kaios31_jpv/sig/lk.sig
+append_file  dhcui 
+padding_file  dhcui 
+cat_img  dhcui 
+output path:out/target/product/kaios31_jpv/lk-verified.bin
+sign_flow dhcui sign_single_bin
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/md1dsp.img
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name md1dsp
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/md1dsp/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/md1dsp/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/md1dsp/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/md1dsp/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/md1dsp/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/md1dsp/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/md1dsp.img
+Raw IMG
+parse_multi_bin  dhcui 
+file_size: 0x418320
+img-0 size:0x418320
+Target image, remove cert for replace
+add index0 image, this is final image
+get_pure_img  dhcui 
+bin_number:1
+img_split  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+fill_cert_config  dhcui 
+    imgHash EXTERNAL_BITSTRING ::= 0
+
+    imgHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/md1dsp/cert2/intermediate/hash/image.hash
+
+fill_cert_config  dhcui 
+    imgHdrHash EXTERNAL_BITSTRING ::= 0
+
+    imgHdrHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/md1dsp/cert2/intermediate/hash/header.hash
+
+gen_cert dhcui 
+==============================
+env_cfg parsing
+==============================
+ignored: in_path
+ignored: out_path
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+ignored: mkimage_tool_path
+==============================
+Generating public key from private key...
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/md1dsp_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+writing RSA key
+Generating tbsCertificate...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/md1dsp_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+Generating x509cert...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+Done
+add_mkimg_header  dhcui 
+not target element
+not target element
+append_file  dhcui 
+padding_file  dhcui 
+0
+sig:out/target/product/kaios31_jpv/sig/md1dsp.sig
+append_file  dhcui 
+padding_file  dhcui 
+cat_img  dhcui 
+output path:out/target/product/kaios31_jpv/md1dsp-verified.img
+sign_flow dhcui sign_single_bin
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/md1arm7.img
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name md1arm7
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/md1arm7/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/md1arm7/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/md1arm7/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/md1arm7/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/md1arm7/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/md1arm7/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/md1arm7.img
+Raw IMG
+parse_multi_bin  dhcui 
+file_size: 0x210
+img-0 size:0x210
+Target image, remove cert for replace
+add index0 image, this is final image
+get_pure_img  dhcui 
+bin_number:1
+img_split  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+fill_cert_config  dhcui 
+    imgHash EXTERNAL_BITSTRING ::= 0
+
+    imgHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/md1arm7/cert2/intermediate/hash/image.hash
+
+fill_cert_config  dhcui 
+    imgHdrHash EXTERNAL_BITSTRING ::= 0
+
+    imgHdrHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/md1arm7/cert2/intermediate/hash/header.hash
+
+gen_cert dhcui 
+==============================
+env_cfg parsing
+==============================
+ignored: in_path
+ignored: out_path
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+ignored: mkimage_tool_path
+==============================
+Generating public key from private key...
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/md1arm7_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+writing RSA key
+Generating tbsCertificate...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/md1arm7_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+Generating x509cert...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+Done
+add_mkimg_header  dhcui 
+not target element
+not target element
+append_file  dhcui 
+padding_file  dhcui 
+0
+sig:out/target/product/kaios31_jpv/sig/md1arm7.sig
+append_file  dhcui 
+padding_file  dhcui 
+cat_img  dhcui 
+output path:out/target/product/kaios31_jpv/md1arm7-verified.img
+sign_flow dhcui sign_single_bin
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/tinysys-sspm.bin
+sign_flow dhcui sign_single_bin
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/boot.img
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name boot
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/boot/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/boot/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/boot/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/boot/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/boot/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/boot/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/boot.img
+Not Raw Img
+check_is_boot  dhcui 
+Is Boot Img
+Header size:'0x670'
+Kernel size:'0x74a800'
+Ramdisk size:'0x17b800'
+DTBO size:'0x0'
+page size:'0x800'
+Total Size(include header and padding):'0x8c6800'
+0x8c6800
+get_vboot10_cert  dhcui 
+0x528
+padding_file  dhcui 
+get_pure_img  dhcui 
+bin_number:1
+img_split  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+fill_cert_config  dhcui 
+    imgHash EXTERNAL_BITSTRING ::= 0
+
+    imgHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/boot/cert2/intermediate/hash/image.hash
+
+fill_cert_config  dhcui 
+    imgHdrHash EXTERNAL_BITSTRING ::= 0
+
+    imgHdrHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/boot/cert2/intermediate/hash/header.hash
+
+gen_cert dhcui 
+==============================
+env_cfg parsing
+==============================
+ignored: in_path
+ignored: out_path
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+ignored: mkimage_tool_path
+==============================
+Generating public key from private key...
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/boot_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+writing RSA key
+Generating tbsCertificate...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/boot_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+Generating x509cert...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+Done
+add_mkimg_header  dhcui 
+not target element
+not target element
+append_file  dhcui 
+padding_file  dhcui 
+0
+sig:out/target/product/kaios31_jpv/sig/boot.sig
+append_file  dhcui 
+padding_file  dhcui 
+cat_img  dhcui 
+output path:out/target/product/kaios31_jpv/boot-verified.img
+sign_flow dhcui sign_single_bin
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/logo.bin
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name logo
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/logo/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/logo/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/logo/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/logo/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/logo/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/logo/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/logo.bin
+Raw IMG
+parse_multi_bin  dhcui 
+file_size: 0x264f0
+img-0 size:0x264f0
+Target image, remove cert for replace
+add index0 image, this is final image
+get_pure_img  dhcui 
+bin_number:1
+img_split  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+fill_cert_config  dhcui 
+    imgHash EXTERNAL_BITSTRING ::= 0
+
+    imgHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/logo/cert2/intermediate/hash/image.hash
+
+fill_cert_config  dhcui 
+    imgHdrHash EXTERNAL_BITSTRING ::= 0
+
+    imgHdrHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/logo/cert2/intermediate/hash/header.hash
+
+gen_cert dhcui 
+==============================
+env_cfg parsing
+==============================
+ignored: in_path
+ignored: out_path
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+ignored: mkimage_tool_path
+==============================
+Generating public key from private key...
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/logo_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+writing RSA key
+Generating tbsCertificate...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/logo_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+Generating x509cert...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+Done
+add_mkimg_header  dhcui 
+not target element
+not target element
+append_file  dhcui 
+padding_file  dhcui 
+0
+sig:out/target/product/kaios31_jpv/sig/logo.sig
+append_file  dhcui 
+padding_file  dhcui 
+cat_img  dhcui 
+output path:out/target/product/kaios31_jpv/logo-verified.bin
+sign_flow dhcui sign_single_bin
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/mcupmfw.img
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name mcupmfw
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/mcupmfw/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/mcupmfw/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/mcupmfw/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/mcupmfw/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/mcupmfw/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/mcupmfw/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/mcupmfw.img
+Raw IMG
+parse_multi_bin  dhcui 
+file_size: 0xd70
+img-0 size:0xd70
+Target image, remove cert for replace
+add index0 image, this is final image
+get_pure_img  dhcui 
+bin_number:1
+img_split  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+fill_cert_config  dhcui 
+    imgHash EXTERNAL_BITSTRING ::= 0
+
+    imgHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/mcupmfw/cert2/intermediate/hash/image.hash
+
+fill_cert_config  dhcui 
+    imgHdrHash EXTERNAL_BITSTRING ::= 0
+
+    imgHdrHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/mcupmfw/cert2/intermediate/hash/header.hash
+
+gen_cert dhcui 
+==============================
+env_cfg parsing
+==============================
+ignored: in_path
+ignored: out_path
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+ignored: mkimage_tool_path
+==============================
+Generating public key from private key...
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/mcupmfw_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+writing RSA key
+Generating tbsCertificate...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/mcupmfw_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+Generating x509cert...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+Done
+add_mkimg_header  dhcui 
+not target element
+not target element
+append_file  dhcui 
+padding_file  dhcui 
+0
+sig:out/target/product/kaios31_jpv/sig/mcupmfw.sig
+append_file  dhcui 
+padding_file  dhcui 
+cat_img  dhcui 
+output path:out/target/product/kaios31_jpv/mcupmfw-verified.img
+sign_flow dhcui sign_single_bin
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/recovery.img
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name recovery
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/recovery/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/recovery/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/recovery/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/recovery/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/recovery/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/recovery/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/recovery.img
+Not Raw Img
+check_is_boot  dhcui 
+Is Boot Img
+Header size:'0x670'
+Kernel size:'0x74a800'
+Ramdisk size:'0x22e800'
+DTBO size:'0x0'
+page size:'0x800'
+Total Size(include header and padding):'0x979800'
+0x979800
+get_vboot10_cert  dhcui 
+0x52c
+padding_file  dhcui 
+get_pure_img  dhcui 
+bin_number:1
+img_split  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+fill_cert_config  dhcui 
+    imgHash EXTERNAL_BITSTRING ::= 0
+
+    imgHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/recovery/cert2/intermediate/hash/image.hash
+
+fill_cert_config  dhcui 
+    imgHdrHash EXTERNAL_BITSTRING ::= 0
+
+    imgHdrHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/recovery/cert2/intermediate/hash/header.hash
+
+gen_cert dhcui 
+==============================
+env_cfg parsing
+==============================
+ignored: in_path
+ignored: out_path
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+ignored: mkimage_tool_path
+==============================
+Generating public key from private key...
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/recovery_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+writing RSA key
+Generating tbsCertificate...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/recovery_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+Generating x509cert...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+Done
+add_mkimg_header  dhcui 
+not target element
+not target element
+append_file  dhcui 
+padding_file  dhcui 
+0
+sig:out/target/product/kaios31_jpv/sig/recovery.sig
+append_file  dhcui 
+padding_file  dhcui 
+cat_img  dhcui 
+output path:out/target/product/kaios31_jpv/recovery-verified.img
+sign_flow dhcui sign_single_bin
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/spmfw.bin
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name spmfw
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/spmfw/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/spmfw/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/spmfw/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/spmfw/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/spmfw/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/spmfw/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/spmfw.bin
+Raw IMG
+parse_multi_bin  dhcui 
+file_size: 0x60b0
+img-0 size:0x60b0
+Target image, remove cert for replace
+add index0 image, this is final image
+get_pure_img  dhcui 
+bin_number:1
+img_split  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+fill_cert_config  dhcui 
+    imgHash EXTERNAL_BITSTRING ::= 0
+
+    imgHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/spmfw/cert2/intermediate/hash/image.hash
+
+fill_cert_config  dhcui 
+    imgHdrHash EXTERNAL_BITSTRING ::= 0
+
+    imgHdrHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/spmfw/cert2/intermediate/hash/header.hash
+
+gen_cert dhcui 
+==============================
+env_cfg parsing
+==============================
+ignored: in_path
+ignored: out_path
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+ignored: mkimage_tool_path
+==============================
+Generating public key from private key...
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/spmfw_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+writing RSA key
+Generating tbsCertificate...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/spmfw_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+Generating x509cert...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+Done
+add_mkimg_header  dhcui 
+not target element
+not target element
+append_file  dhcui 
+padding_file  dhcui 
+0
+sig:out/target/product/kaios31_jpv/sig/spmfw.sig
+append_file  dhcui 
+padding_file  dhcui 
+cat_img  dhcui 
+output path:out/target/product/kaios31_jpv/spmfw-verified.bin
+sign_flow dhcui sign_single_bin
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/md3rom.img
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name md3rom
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/md3rom/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/md3rom/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/md3rom/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/md3rom/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/md3rom/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/md3rom/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/md3rom.img
+MD IMG:C2K
+parse_multi_bin  dhcui 
+file_size: 0x210
+img-0 size:0x210
+Target image, remove cert for replace
+add index0 image, this is final image
+get_pure_img  dhcui 
+bin_number:1
+img_split  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+fill_cert_config  dhcui 
+    imgHash EXTERNAL_BITSTRING ::= 0
+
+    imgHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/md3rom/cert2/intermediate/hash/image.hash
+
+fill_cert_config  dhcui 
+    imgHdrHash EXTERNAL_BITSTRING ::= 0
+
+    imgHdrHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/md3rom/cert2/intermediate/hash/header.hash
+
+gen_cert dhcui 
+==============================
+env_cfg parsing
+==============================
+ignored: in_path
+ignored: out_path
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+ignored: mkimage_tool_path
+==============================
+Generating public key from private key...
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/md3rom_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+writing RSA key
+Generating tbsCertificate...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/md3rom_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+Generating x509cert...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+Done
+add_mkimg_header  dhcui 
+not target element
+not target element
+append_file  dhcui 
+padding_file  dhcui 
+0
+sig:out/target/product/kaios31_jpv/sig/md3rom.sig
+append_file  dhcui 
+padding_file  dhcui 
+cat_img  dhcui 
+output path:out/target/product/kaios31_jpv/md3rom-verified.img
+sign_flow dhcui sign_multi_bin
+image name path = out/target/product/kaios31_jpv/loader_ext.img
+image name = out/target/product/kaios31_jpv/resign/bin/multi_tmp/loader_ext.img
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/resign/bin/multi_tmp/loader_ext.img
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name loader_ext_dram
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/loader_ext_dram/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/loader_ext_dram/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/loader_ext_dram/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/loader_ext_dram/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/loader_ext_dram/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/loader_ext_dram/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/resign/bin/multi_tmp/loader_ext.img
+Raw IMG
+parse_multi_bin  dhcui 
+file_size: 0xb170
+img-0 size:0x62d0
+Target image, remove cert for replace
+img-0 size:0x4ea0
+Not target image, retain cert
+add index0 image
+add index1 image, this is final image
+get_pure_img  dhcui 
+bin_number:2
+img_split  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+fill_cert_config  dhcui 
+    imgHash EXTERNAL_BITSTRING ::= 0
+
+    imgHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/loader_ext_dram/cert2/intermediate/hash/image.hash
+
+fill_cert_config  dhcui 
+    imgHdrHash EXTERNAL_BITSTRING ::= 0
+
+    imgHdrHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/loader_ext_dram/cert2/intermediate/hash/header.hash
+
+gen_cert dhcui 
+==============================
+env_cfg parsing
+==============================
+ignored: in_path
+ignored: out_path
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+ignored: mkimage_tool_path
+==============================
+Generating public key from private key...
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/loader_ext_dram_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+writing RSA key
+Generating tbsCertificate...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/loader_ext_dram_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+Generating x509cert...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+Done
+add_mkimg_header  dhcui 
+not target element
+not target element
+append_file  dhcui 
+padding_file  dhcui 
+0
+sig:out/target/product/kaios31_jpv/sig/loader_ext_dram.sig
+append_file  dhcui 
+padding_file  dhcui 
+cat_img  dhcui 
+output path:out/target/product/kaios31_jpv/loader_ext-verified.img
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/resign/bin/multi_tmp/loader_ext.img
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name loader_ext_etc
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/loader_ext_etc/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/loader_ext_etc/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/loader_ext_etc/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/loader_ext_etc/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/loader_ext_etc/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/loader_ext_etc/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/resign/bin/multi_tmp/loader_ext.img
+Raw IMG
+parse_multi_bin  dhcui 
+file_size: 0xbfe0
+img-0 size:0x62d0
+Not target image, retain cert
+img-0 size:0x8b0
+img-0 size:0x5c0
+img-0 size:0x4ea0
+Target image, remove cert for replace
+add index0 image
+add index1 image, this is final image
+get_pure_img  dhcui 
+bin_number:2
+img_split  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+fill_cert_config  dhcui 
+    imgHash EXTERNAL_BITSTRING ::= 0
+
+    imgHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/loader_ext_etc/cert2/intermediate/hash/image.hash
+
+fill_cert_config  dhcui 
+    imgHdrHash EXTERNAL_BITSTRING ::= 0
+
+    imgHdrHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/loader_ext_etc/cert2/intermediate/hash/header.hash
+
+gen_cert dhcui 
+==============================
+env_cfg parsing
+==============================
+ignored: in_path
+ignored: out_path
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+ignored: mkimage_tool_path
+==============================
+Generating public key from private key...
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/loader_ext_etc_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+writing RSA key
+Generating tbsCertificate...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/loader_ext_etc_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+Generating x509cert...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+Done
+add_mkimg_header  dhcui 
+not target element
+not target element
+append_file  dhcui 
+padding_file  dhcui 
+0
+sig:out/target/product/kaios31_jpv/sig/loader_ext_etc.sig
+append_file  dhcui 
+padding_file  dhcui 
+cat_img  dhcui 
+output path:out/target/product/kaios31_jpv/loader_ext-verified.img
+sign_flow dhcui sign_multi_bin
+image name path = out/target/product/kaios31_jpv/md1rom.img
+image name = out/target/product/kaios31_jpv/resign/bin/multi_tmp/md1rom.img
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/resign/bin/multi_tmp/md1rom.img
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name md1rom
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/md1rom/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/md1rom/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/md1rom/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/md1rom/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/md1rom/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/md1rom/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/resign/bin/multi_tmp/md1rom.img
+MD IMG:LTE
+parse_multi_bin  dhcui 
+file_size: 0xf3f930
+img-0 size:0xf3eb30
+Target image, remove cert for replace
+img-0 size:0xe00
+Not target image, retain cert
+add index0 image
+add index1 image, this is final image
+get_pure_img  dhcui 
+bin_number:2
+img_split  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+fill_cert_config  dhcui 
+    imgHash EXTERNAL_BITSTRING ::= 0
+
+    imgHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/md1rom/cert2/intermediate/hash/image.hash
+
+fill_cert_config  dhcui 
+    imgHdrHash EXTERNAL_BITSTRING ::= 0
+
+    imgHdrHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/md1rom/cert2/intermediate/hash/header.hash
+
+gen_cert dhcui 
+==============================
+env_cfg parsing
+==============================
+ignored: in_path
+ignored: out_path
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+ignored: mkimage_tool_path
+==============================
+Generating public key from private key...
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/md1rom_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+writing RSA key
+Generating tbsCertificate...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/md1rom_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+Generating x509cert...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+Done
+add_mkimg_header  dhcui 
+not target element
+not target element
+append_file  dhcui 
+padding_file  dhcui 
+0
+sig:out/target/product/kaios31_jpv/sig/md1rom.sig
+append_file  dhcui 
+padding_file  dhcui 
+cat_img  dhcui 
+output path:out/target/product/kaios31_jpv/md1rom-verified.img
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/resign/bin/multi_tmp/md1rom.img
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name md1dsp
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/md1dsp/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/md1dsp/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/md1dsp/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/md1dsp/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/md1dsp/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/md1dsp/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/resign/bin/multi_tmp/md1rom.img
+MD IMG:LTE
+parse_multi_bin  dhcui 
+file_size: 0xf407d0
+img-0 size:0xf3eb30
+Not target image, retain cert
+img-0 size:0x8e0
+img-0 size:0x5c0
+img-0 size:0xe00
+Not target image, retain cert
+add index0 image
+add index1 image, this is final image
+img name not match,exit!!
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/resign/bin/multi_tmp/md1rom.img
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name md1drdi
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/md1drdi/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/md1drdi/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/md1drdi/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/md1drdi/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/md1drdi/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/md1drdi/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/resign/bin/multi_tmp/md1rom.img
+MD IMG:LTE
+parse_multi_bin  dhcui 
+file_size: 0xf407d0
+img-0 size:0xf3eb30
+Not target image, retain cert
+img-0 size:0x8e0
+img-0 size:0x5c0
+img-0 size:0xe00
+Target image, remove cert for replace
+add index0 image
+add index1 image, this is final image
+get_pure_img  dhcui 
+bin_number:2
+img_split  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+fill_cert_config  dhcui 
+    imgHash EXTERNAL_BITSTRING ::= 0
+
+    imgHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/md1drdi/cert2/intermediate/hash/image.hash
+
+fill_cert_config  dhcui 
+    imgHdrHash EXTERNAL_BITSTRING ::= 0
+
+    imgHdrHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/md1drdi/cert2/intermediate/hash/header.hash
+
+gen_cert dhcui 
+==============================
+env_cfg parsing
+==============================
+ignored: in_path
+ignored: out_path
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+ignored: mkimage_tool_path
+==============================
+Generating public key from private key...
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/md1drdi_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+writing RSA key
+Generating tbsCertificate...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/md1drdi_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+Generating x509cert...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+Done
+add_mkimg_header  dhcui 
+not target element
+not target element
+append_file  dhcui 
+padding_file  dhcui 
+0
+sig:out/target/product/kaios31_jpv/sig/md1drdi.sig
+append_file  dhcui 
+padding_file  dhcui 
+cat_img  dhcui 
+output path:out/target/product/kaios31_jpv/md1rom-verified.img
+sign_flow dhcui sign_multi_bin
+image name path = out/target/product/kaios31_jpv/trustzone.bin
+image name = out/target/product/kaios31_jpv/resign/bin/multi_tmp/trustzone.bin
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/resign/bin/multi_tmp/trustzone.bin
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name atf
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/atf/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/atf/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/atf/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/atf/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/atf/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/atf/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/resign/bin/multi_tmp/trustzone.bin
+Raw IMG
+parse_multi_bin  dhcui 
+file_size: 0x19600
+img-0 size:0x19600
+Target image, remove cert for replace
+add index0 image, this is final image
+get_pure_img  dhcui 
+bin_number:1
+img_split  dhcui 
+padding_file  dhcui 
+append_file  dhcui 
+padding_file  dhcui 
+fill_cert_config  dhcui 
+    imgHash EXTERNAL_BITSTRING ::= 0
+
+    imgHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/atf/cert2/intermediate/hash/image.hash
+
+fill_cert_config  dhcui 
+    imgHdrHash EXTERNAL_BITSTRING ::= 0
+
+    imgHdrHash EXTERNAL_BITSTRING ::= out/target/product/kaios31_jpv/resign/cert/atf/cert2/intermediate/hash/header.hash
+
+gen_cert dhcui 
+==============================
+env_cfg parsing
+==============================
+ignored: in_path
+ignored: out_path
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+ignored: mkimage_tool_path
+==============================
+Generating public key from private key...
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/atf_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+writing RSA key
+Generating tbsCertificate...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+==============================================
+testing: private key(error can be ignored)
+writing RSA key
+/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/cert2_key/atf_privk2.pem: valid private key
+==============================================
+start key conversion...
+key conversion done.
+Generating x509cert...
+EXTERNAL_BITSTRING file does not exist. (can be ignored)
+Done
+add_mkimg_header  dhcui 
+not target element
+not target element
+append_file  dhcui 
+padding_file  dhcui 
+0
+sig:out/target/product/kaios31_jpv/sig/atf.sig
+append_file  dhcui 
+padding_file  dhcui 
+cat_img  dhcui 
+output path:out/target/product/kaios31_jpv/trustzone-verified.bin
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/resign/bin/multi_tmp/trustzone.bin
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name atf_dram
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/atf_dram/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/atf_dram/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/atf_dram/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/atf_dram/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/atf_dram/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/atf_dram/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/resign/bin/multi_tmp/trustzone.bin
+Raw IMG
+parse_multi_bin  dhcui 
+file_size: 0x1a470
+img-0 size:0x19600
+Not target image, retain cert
+img-0 size:0x8b0
+img-0 size:0x5c0
+add index0 image, this is final image
+img name not match,exit!!
+sign_flow dhcui gen_cert2
+sign_flow dhcui will be get_img_ver/local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/../../custom/mt6739/security/cert_config/img_ver.txt
+sign_flow dhcui check bin exist in out folderout/target/product/kaios31_jpv/resign/bin/multi_tmp/trustzone.bin
+sign_op  dhcui 
+==============================
+env_cfg parsing dhcui begin
+==============================
+ignored: in_path
+Use out path in Android
+ignored: cert1_dir
+ignored: cert2_key_dir
+ignored: img_list_path
+ignored: img_ver_path
+============================== dhcui end
+dhcui mkimage_config /local/code/mtk-m/KaiOS/vendor/mediatek/proprietary/scripts/sign-image_v2/mkimage20/img_hdr.cfg
+dhcui img_name tee
+dhcui cert2 out/target/product/kaios31_jpv/resign/cert/tee/cert2/intermediate/img_hdr.cfg
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/tee/cert2/intermediate
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/bin
+__create_folder dhcui :out/target/product/kaios31_jpv/resign/cert/tee/cert2/intermediate/img_hdr.cfg
+bin pathout/target/product/kaios31_jpv/resign/bin
+Create dir dhcui out:out/target/product/kaios31_jpv/resign/cert/tee/cert2
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/tee/cert2/intermediate/hash
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/sig
+Create dir dhcui abs:/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv/resign/cert/tee/cert2/intermediate/tmp_bin
+gen_cert2  dhcui 
+check_is_raw  dhcui 
+out/target/product/kaios31_jpv/resign/bin/multi_tmp/trustzone.bin
+Raw IMG
+parse_multi_bin  dhcui 
+file_size: 0x1a470
+img-0 size:0x19600
+Not target image, retain cert
+img-0 size:0x8b0
+img-0 size:0x5c0
+add index0 image, this is final image
+img name not match,exit!!
+
+#### make completed successfully (49 seconds) ####
 

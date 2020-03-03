@@ -1,0 +1,5 @@
+/build.sh 2>&1 |tee -a build.log
+
+REPO_URL=git@git-sh.kaiostech.com:git-repo.git BRANCH=refs/tags/kaios_jio_pier_2_5_20181106_R3_ER11  ./config.sh -c pier2_s
+
+git clone git@git.kaiostech.com:KaiOS/KaiOS.git
