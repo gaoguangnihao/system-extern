@@ -1,0 +1,1 @@
+2020-0305 Bug 84654 - Add an empty string check to avoid a SIGSEGV crash
