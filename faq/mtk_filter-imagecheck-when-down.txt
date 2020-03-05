@@ -1,0 +1,10 @@
+//#define FLASHTOOL_SEC_CFG_64     ==> enable the define, change to  #define FLASHTOOL_SEC_CFG_64
+#ifdef FLASHTOOL_SEC_CFG_64
+#define BYPASS_CHECK_IMAGE_0_NAME           ""      ==> add the partition name, for example "cust1"
+#define BYPASS_CHECK_IMAGE_0_OFFSET         0x0     ==> add the offset of the partition, you can find the offset from scatter file
+#define BYPASS_CHECK_IMAGE_1_NAME           ""
+#define BYPASS_CHECK_IMAGE_1_OFFSET         0x0
+#define BYPASS_CHECK_IMAGE_2_NAME           ""
+#define BYPASS_CHECK_IMAGE_2_OFFSET         0x0
+#endif
+

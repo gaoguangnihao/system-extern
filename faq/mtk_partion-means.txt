@@ -1,0 +1,134 @@
+
+    preloader 
+        Store the first-stage bootloader. 
+    DSP_BL
+        DSP Boot Loader.
+    MBR¡¢EBR1¡¢EBR2
+        Ext4 file system partition index table.
+    PMT
+        Partition management table.
+    pgpt
+        Store the Primary Guid Partition Table.
+    boot_para
+        MTK in house parameter for boot up sequence.
+    recovery
+        Store the kernel and ramdisk for recovery boot. 
+    recovery_ramdisk
+        Store recovery_ramdisk image.
+    recovery_vendor
+        Store recovery_vendor image.
+    para
+        Store Google recovery data, system env and other misc info, which is used in lk and kernel.
+    custom
+        Store custom image data. 
+    expdb
+        Store Exception data.
+    frp
+        Store google factory reset protection info.
+    nvcfg
+        nvram config which will not be wiped when OTA update or factory reset.
+    nvdata
+        Store nvram data.
+    metadata
+        Store the master key for encryption.
+    oemkeystore
+        Container to store public key for verified boot.
+    keystore
+        Container to store public key for verified boot. 
+    protect1 or protect_f
+        Store SIM_ME lock data. 
+    protect2 or protect_s
+        Store backup copy of SIM_ME lock data.
+    SEC_RO or SECRO
+        Reserved for the security platform used.
+    Misc
+        Used for the recovery procedure (power loss).
+    seccfg
+        Store security partition configure information. 
+    persist
+        Store DRM/KeyInstall security data.
+    sec1
+        Container to store public key for verified boot. 
+    proinfo
+        Store Product Info of Mobile Phone or vendor. 
+    efuse
+        Store customer effuse bits(mainly security keys) .
+    md1img
+        Store modem image.
+    md1dsp
+        Store modem image.
+    md1arm7
+        Store modem image.
+    md3img
+        Store modem image.
+    mcupmfw
+        MediaTek in-house ASIC for cpu power management.
+    spmfw
+        MediaTek in-house ASIC for power management.
+    scp1
+        Store Tinysis SCP image.
+    scp2
+        Backup for scp1.
+    sspm_1
+        MediaTek in-house ASIC for power management under secure world.
+    sspm_2
+        Backup for sspm_1.
+    cam_vpu1
+        store camera vpu binary for in-house alg.
+    cam_vpu2
+        store camera vpu binary for in-house alg.
+    cam_vpu3
+        store camera vpu binary for in-house alg.
+    gz1
+        Firmware partition for memory management function. 
+    gz2
+        Backup for gz1. 
+    nvram
+        Store Calibration data of IMEI/BT/Wifi. 
+    lk
+        Store Uboot/LK image. 
+    lk2
+        backup for lk.
+    boot
+        Store the kernel and ramdisk for normal boot. 
+    logo
+        Store logo data showing during charging. 
+    odmdtbo or dtbo
+        For device tree overlay.
+    tee1
+        Store ARM trusted firmware and TEE binary.
+        Trusted Excution Environment: https://www.trustonic.com/technology/trustzone-and-tee
+    tee2
+        Backup of tee1.
+    odm
+        Store odm image.
+    vendor
+        Store vendor image.
+    system
+        Store system image.
+    vbmeta
+        Store vbmeta image used for AVB2.0 .
+    cache
+        Store Android internal cache data or web cache data.
+    eng_system
+        MTK Internal Only.
+    eng_vendor
+        MTK Internal Only.
+    userdata
+        User Storage Area.
+    intsd
+        Internal sdcard on emmc.
+    otp
+        Otp(one time program) area on emmc.
+    flashinfo
+        Flash tool download information.
+    BMTPOOL
+        Handles Bad Block Management£¨nandflash used and reserved on emmc£©.
+    ppl
+        Privacy protection lock£¬used for mobile phone antitheft.
+    loader_ext1
+        Store preloader extension image.
+    loader_ext2
+        Backup for loader_ext2.
+    sgpt
+        Backup of pgpt.
