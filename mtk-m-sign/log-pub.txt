@@ -1,0 +1,4 @@
+ 1 kaios31_jpv 2 in 3 sign_in 4 MT6739 5 mt6739
+v2 sign flow begin
+python sign-image_v2/sign_flow.py -env_cfg sign-image_v2/env.cfg mt6739 kaios31_jpv
+v2 sign flow done
