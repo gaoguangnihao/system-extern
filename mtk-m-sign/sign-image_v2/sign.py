@@ -85,7 +85,7 @@ class Sign(object):
         img_name = self.args['name']
 
         print '=============================='
-        print 'env_cfg parsing dhcui begin'
+        print 'sign.py env_cfg parsing dhcui begin'
         print '=============================='
         cfg_file = open(self.args['env_cfg'], 'r')
         cfg_file_dir = os.path.dirname(os.path.abspath(self.args['env_cfg']))
@@ -168,7 +168,7 @@ class Sign(object):
             self.context['sig_path'] = sig_path
 
         self.context['mkimage_config_out'] = mkimage_config_out
-        print 'dhcui cert2 ' + mkimage_config_out
+        print 'sign.py dhcui cert2 env_cfg parsing end' + mkimage_config_out
         return
 
     def __create_out_dir(self, path):
@@ -236,7 +236,7 @@ class Sign(object):
         """
         Generate certificate based on the configuration given.
         """
-        print "gen_cert dhcui  will be use cert.gen mod begin"
+        print "\033[1;34mgen_cert dhcui  will be use cert.gen mod begin\033[0m"
 
         cert_gen_args = cert_gen.CertGenArgs()
         cert_gen_args.config_file = cert_config
@@ -245,9 +245,8 @@ class Sign(object):
         if root_key_padding != 0:
             cert_gen_args.root_key_padding = root_key_padding
         cert_gen_args.x509cert_file = cert_der
-        print "gen_cert dhcui  will be use cert.gen mod cert_gen_op xxxxxxx" + cert_gen_args.prvk_file_path
         cert_gen.cert_gen_op(cert_gen_args)
-        print "gen_cert dhcui  will be use cert.gen mod end"
+        print "\033[1;34mgen_cert dhcui  will be use cert.gen mod end\033[0m"
 
     def gen_cert1(self):
         """
@@ -363,7 +362,7 @@ class Sign(object):
         Generate cert2, which is content certificate.
         """
 
-        print "gen_cert2  dhcui begin "
+        print "\033[1;35msign.py gen_cert2 begin\033[0m"
         img_file = self.args['img']
         cert1 = self.args['cert1']
         cert_privk = self.args['privk']
@@ -446,20 +445,26 @@ class Sign(object):
                     header_hash = os.path.join(cert2_hash_path, "header.hash")
 
                     #gen header hash
+                    print "\033[1;36msign.py gen header hash\033[0m"
                     lib.cert.hash_gen(split_header, header_hash)
                     #gen image hash
+                    print "\033[1;36msign.py gen image hash\033[0m"
                     lib.cert.hash_gen(split_image, image_hash)
 
+                    print "\033[1;36msign.py Dm cert \033[0m" + dm_cert
+                    print "\033[1;36msign.py Dm cert \033[0m" + img
 
                     #if exist DM cert, append it after hash calculate
                     if is_boot == 1 and has_dm_cert == 1:
                         append_file(img, dm_cert)
 
                     #cat cert1
+                    print "\033[1;36msign.py append_file cert1 to image \033[0m" +cert1
                     append_file(img, cert1)
 
 
-
+                    print "\033[1;36msign.py fill cert2 config \033[0m" + cert2_config
+                    print "\033[1;36msign.py fill cert2 config \033[0m" + cert2_config_out
                     #fill cert2 config
                     shutil.copy2(cert2_config, cert2_config_out)
                     fill_cert_config(cert2_config_out, image_hash, CERT2_REPLACE_HASH)
@@ -475,7 +480,7 @@ class Sign(object):
                     #send image_hash and header_hash to kaios server 
                     #wait server to generator cert
                     self.gen_cert(cert2_config_out, cert_privk, cert2_name, 0)
-
+                    print "dhcui sig sig_path is:" + sig_path
                     #add mkimage header on cert2
                     cert2_img_type = 0x2 << 24 | 0x2
                     add_mkimg_header(cert2_name, \
@@ -488,7 +493,8 @@ class Sign(object):
                     #cat sig file
                     sig_file = os.path.join(sig_path, img_name + ".sig")
                     print img_ver
-                    print "sig:" + sig_file
+                    print "dhcui sig:" + sig_file
+                    print "dhcui sig:" + cert1
                     shutil.copy2(cert1, sig_file)
                     append_file(sig_file, cert2_name)
 
@@ -505,7 +511,7 @@ class Sign(object):
         shutil.copy2(final_bin, os.path.join(bin_path, img_name))
         shutil.copy2(os.path.join(bin_path, img_name), os.path.join(out, img_name))
         print "output path:" + os.path.join(out, img_name)
-        print "gen_cert2  dhcui end "
+        print "\033[1;35msign.py gen_cert2 end\033[0m"
         return
 
     def gen_img_hash_list(self, img_file, cert1, cert_privk, img_name, img_ver):
@@ -577,7 +583,7 @@ class Sign(object):
         perform image signing
         """
 
-        print "sign_op  dhcui begin self.args['type'] is " + self.args['type']
+        print "\033[1;31msign.py sign_op begin type is \033[0m"+ self.args['type']
         self.set_context()
 
         if self.args['type'] == "cert1":
@@ -592,7 +598,7 @@ class Sign(object):
         else:
             print "wrong cert type !"
 
-        print "sign_op  dhcui end"
+        print "\033[1;31msign.py sign_op end \033[0m"
         return
 
     def dump(self):
@@ -917,7 +923,8 @@ def padding_file(input_file, align_num):
     """
     Fill 0 to make input_file size multiple of align_num.
     """
-    print "padding_file  dhcui " 
+    print "padding_file  dhcui beging" + input_file
+
     filesize = os.stat(input_file).st_size
     file1 = open(input_file, 'ab+')
     padding = filesize % align_num
@@ -926,18 +933,21 @@ def padding_file(input_file, align_num):
         for _ in range(padding):
             file1.write("\x00")
     file1.close()
+    print "padding_file  dhcui end"
 
 def append_file(img_file, cert_file):
     """
     Append cert_file to the end of img_file.
     """
-    print "append_file  dhcui " 
+    print "append_file  dhcui begin" + cert_file
+    print "append_file  dhcui begin" + img_file
     padding_file(img_file, 16)
     file1 = open(img_file, 'ab+')
     file2 = open(cert_file, 'rb')
     file1.write(file2.read())
     file1.close()
     file2.close()
+    print "append_file  dhcui end" + img_file
 
 def get_pure_img(img_file, img_array, size_array, offset_array):
     """

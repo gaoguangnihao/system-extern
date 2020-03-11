@@ -69,16 +69,17 @@ def cert_gen_op(cert_gen_args):
     pubk_file_path = os.path.join(intermediate_folder_path, core_name + "_pubk.pem")
 
     #generate public key
-    print "Generating public key from private key..."
+    print "\033[1;33mGenerating public key from private key...\033[0m"
+    print "#will delegate image signing to HSM.1" + prvk_file_path
     if lib.cert.is_prvk(prvk_file_path):
         lib.cert.prvk_to_pubk(os.path.abspath(prvk_file_path), pubk_file_path)
     elif lib.cert.is_pubk(prvk_file_path):
-        print "#will delegate image signing to HSM." + prvk_file_path
+        print "\033[1;33m#will delegate image signing to HSM.\033[0m" + prvk_file_path
+        print "\033[1;33m#will delegate image signing to HSM.\033[0m" + pubk_file_path
         shutil.copy2(prvk_file_path, pubk_file_path)
     else:
         print 'unknown key format'
         return
-    print "1111111111111111111111 " + pubk_file_path
     print "Generating tbsCertificate..."
     #update public key path in config file
     tbs_config_file_path = os.path.join(intermediate_folder_path, "tbs_" + core_name + ".cfg")
@@ -86,9 +87,14 @@ def cert_gen_op(cert_gen_args):
     gen_tbs_config_file(config_file, tbs_config_file_path, pubk_file_path, root_key_padding)
 
     lib.asn1_gen.asn1_gen(tbs_config_file_path, tbs_cert_file_path, False)
+
+    print "\033[1;31m cert_gen.py cert_gen_op data is \033[0m" + tbs_cert_file_path
+    print "\033[1;31m cert_gen.py cert_gen_op data is \033[0m" + sig_file_path
+    
     lib.cert.sig_gen(tbs_cert_file_path, prvk_file_path, 'pss', sig_file_path)
 
-    print "Generating x509cert..."
+    print "\033[1;32m cert_gen.py Generating x509cert...\033[0m"
+    print "\033[1;32m cert_gen.py x509cert  is \033[0m" + tbs_config_file_path
     #update signature file path in x509 config file
     x509cert_config_file_path = os.path.join(intermediate_folder_path, "x509_" + core_name + ".cfg")
     #generate x509 config file
@@ -98,7 +104,7 @@ def cert_gen_op(cert_gen_args):
                          tbs_config_file_path, \
                          sig_file_path)
     lib.asn1_gen.asn1_gen(x509cert_config_file_path, x509cert_file, False)
-    print "Done"
+    print "dhcui Done" + x509cert_file
     return
 
 def pubk_to_gfh(pubk, gfh_file_path, padding):
@@ -207,7 +213,7 @@ def parse_env_cfg(env_cfg_path, env_args):
     get environment arguments from the given environment configuration file
     """
     print '=============================='
-    print 'dhcui cert.gen.py env_cfg parsing'
+    print 'dhcui cert.gen.py env_cfg parsing' + env_cfg_path
     print '=============================='
     cfg_file = open(env_cfg_path, 'r')
     cfg_file_dir = os.path.dirname(os.path.abspath(env_cfg_path))

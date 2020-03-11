@@ -177,7 +177,7 @@ class SignFlow(object):
         certificate and inject it into proper place in image.
         """
 
-        print 'sign_flow dhcui gen_cert2'
+        print "\033[1;36msign_flow.py gen_cert2 begin\033[0m"
 
         prvk_path = os.path.join(self.cert2_key_dir, img_name + '_privk2.pem')
         pubk_path = os.path.join(self.cert2_key_dir, img_name + '_pubk2.pem')
@@ -185,10 +185,10 @@ class SignFlow(object):
         # image signing will be forwarded to HSM if public key is given.
         # public key has higher priority than private key.
 
-        print 'sign_flow dhcui gen_cert2 ..' + self.cert2_key_dir
-        print 'sign_flow dhcui gen_cert2 ..' + prvk_path
-        print 'sign_flow dhcui gen_cert2 ..' + pubk_path
-        print 'sign_flow dhcui gen_cert2 ..' + cert_path
+        print 'sign_flow dhcui gen_cert2 cert2_key_dir ..' + self.cert2_key_dir
+        print 'sign_flow dhcui gen_cert2 prvk_path ..' + prvk_path
+        print 'sign_flow dhcui gen_cert2 pubk_path ..' + pubk_path
+        print 'sign_flow dhcui gen_cert2 cert_path ..' + cert_path
 
         if os.path.isfile(pubk_path):
             key_path = pubk_path
@@ -197,11 +197,9 @@ class SignFlow(object):
         ver = self.get_img_ver(img_name)
 
         # check bin exist in out folder
-        print 'sign_flow dhcui check bin exist in out folder img_path is' + img_path
-        print 'sign_flow dhcui check bin exist in out folder key_path is' + key_path
+        print 'sign_flow img_path is ' + img_path + "\n" + "image name is" + img_name + "\n"+ "key path is " + key_path + "\n"
         if os.path.isfile(img_path):
             sign_obj = sign.Sign()
-            print 'sign_flow dhcui check 2222 exist in out folder ' + img_path
             sign_obj.args['type'] = 'cert2'
             sign_obj.args['img'] = img_path
             sign_obj.args['name'] = img_name
@@ -212,6 +210,7 @@ class SignFlow(object):
             sign_obj.args['platform'] = self.platform
             sign_obj.args['project'] = self.project
             sign_obj.sign_op()
+            print "\033[1;36msign_flow.py gen_cert2 end\033[0m"
         return
 
     def sign_single_bin(self, single_bin_dict, img):
@@ -275,15 +274,18 @@ class SignFlow(object):
         sign all images if it's in image list file and is also found
         in output folder.
         """
-        print 'sign_flow dhcui sign_all_img'
+        print "\033[1;35msign_flow dhcui sign_all_img\033[0m"
 
         for img in single_bin_dict.keys():
+            print "\033[1;31msign_flow dhcui sign_all_img\033[0m"
             self.sign_single_bin(single_bin_dict, img)
 
         for img in multi_bin_dict.keys():
+            print "\033[1;32msign_flow dhcui sign_all_img\033[0m"
             self.sign_multi_bin(multi_bin_dict, img)
 
         for img in img_hash_list:
+            print "\033[1;33msign_flow dhcui sign_all_img\033[0m"
             self.sign_img_hash_list(img)
 
         return

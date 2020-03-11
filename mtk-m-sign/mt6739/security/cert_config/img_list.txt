@@ -1,16 +1,2 @@
 [single_bin]
-logo.bin=logo
-lk.bin=lk
 boot.img=boot
-recovery.img=recovery
-md1arm7.img=md1arm7
-md1dsp.img=md1dsp
-md3rom.img=md3rom
-spmfw.bin=spmfw
-tinysys-sspm.bin=tinysys-sspm
-mcupmfw.img=mcupmfw
-
-[multi_bin]
-trustzone.bin=atf,atf_dram,tee
-loader_ext.img=loader_ext_dram,loader_ext_etc
-md1rom.img=md1rom,md1dsp,md1drdi
