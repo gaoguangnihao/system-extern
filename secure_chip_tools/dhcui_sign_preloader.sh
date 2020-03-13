@@ -16,7 +16,7 @@ function usage() {
 	echo "sign preloader ..."
 	echo "PLease given path of the preloader.bin"
 	echo '*****************************************'
-	echo "Command: ./sign_preloader.sh $path_preloader"
+	echo "Command: ./sign_preloader.sh out/target/product/kaios31_jpv"
 	echo '*****************************************'
 }
 #echo 'copy preloader to /prebuilt/pbp'
@@ -43,9 +43,9 @@ echo "preloader sign begin"
 ## below commond need root_prvk.pem to generator key_cert.bin 
 ## and sign the preloader
 
-#python pbp.py -i settings/pbp/pl_key.ini -k out/pbp/key_cert.bin -g settings/pbp/pl_gfh_config_cert_chain.ini -c settings/pbp/pl_content.ini -func sign -o out/pbp/preloader-signed.bin prebuilt/pbp/preloader.bin
+python pbp.py -i settings/pbp/pl_key.ini -k out/pbp/key_cert.bin -g settings/pbp/pl_gfh_config_cert_chain.ini -c settings/pbp/pl_content.ini -func sign -o out/pbp/preloader-signed.bin prebuilt/pbp/preloader.bin
 
-python pbp.py -k prebuilt/pbp/key_cert.bin -g settings/pbp/pl_gfh_config_cert_chain.ini  -c settings/pbp/pl_content.ini -func sign -o out/pbp/preloader-signed.bin prebuilt/pbp/preloader.bin
+#python pbp.py -k prebuilt/pbp/key_cert.bin -g settings/pbp/pl_gfh_config_cert_chain.ini  -c settings/pbp/pl_content.ini -func sign -o out/pbp/preloader-signed.bin prebuilt/pbp/preloader.bin
 
 echo "preloader sign down"
 
