@@ -4,8 +4,8 @@
 #!/bin/bash
 
 
-img_dir=/local/code/mtk-m/KaiOS/out/target/product/kaios31_emmc_jio
-dst_dir=/home/dhcui/dahui-share/mtk6731-m
+img_dir=$1
+dst_dir=$2
 
   img_files=(
    $img_dir/system*.img
