@@ -15,13 +15,13 @@ function usage() {
 	# Dump usage howto
 	#######################################
 
-	echo "sign image ..."
-	echo "first, and select correct project"
+	echo "First, and select correct project"
 	echo "Command: ./kaios_deploy)sign.sh $1 $2 $3 $4"
 	echo "$1 cert1 path"
 	echo "$2 cert2_key path"
 	echo "$3 image orign path"
 	echo "$4 image dest path"
+	echo " example :: ./kaios_deploy_sign.sh /local/keys-mtk/kaios_orign/root_prvk.pem /local/keys-mtk/kaios_orign/img_prvk.pem /local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv /home/dhcui/mtk_m_jpv"
 }
 
 ##generator certs for image 
@@ -47,7 +47,13 @@ v2_file="mt6739/security/cert_config/img_list.txt"
 echo '**********KAIOS-key-deploy Begin**************'
 
 
-bash ./sign-image_v2/img_key_deploy.sh $1 $2
+bash sign-image_v2/img_key_deploy.sh $1 $2
+Rva=$?
+
+if [ $Rva -ne 0 ] ;then
+	echo -e "\033[31m ERROR $Rva exit !!! \033[0m"	
+	exit
+fi
 
 #PLATFORM=mt6739 python ./sign-image_v2/img_key_deploy.py mt6739 kaios31_jpv cert1_key_path=/local/keys-mtk/kaios_orign/root_prvk.pem cert2_key_path=/local/keys-mtk/kaios_orign/img_prvk.pem root_key_padding=pss | tee img_key_deploy.log
 
