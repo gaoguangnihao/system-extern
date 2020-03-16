@@ -30,6 +30,11 @@ fi
 
 echo $1
 echo $2 
+if [ -d $1 ];then
 
-PLATFORM=mt6739 python ./sign-image_v2/img_key_deploy.py mt6739 kaios31_jpv cert1_key_path=$1/root_prvk.pem cert2_key_path=$2/img_prvk.pem root_key_padding=pss | tee img_key_deploy.log
+	PLATFORM=mt6739 python ./sign-image_v2/img_key_deploy.py mt6739 kaios31_jpv cert1_key_path=$1/root_prvk.pem cert2_key_path=$2/img_prvk.pem root_key_padding=pss | tee img_key_deploy.log
+else
+   	echo -e "\033[31m ERROR $1 NOT A FOLDER !!! \033[0m"
+	exit 100
+fi
 
