@@ -98,7 +98,6 @@ echo 'please note we need modify the dakey.h and replace keyword 'OEM' to 'DA' '
 echo "generator sign key for bootloader when bulid"
 
 #CHIP_TEST_KEY.ini need copy to vendor/mediatek/proprietary/bootable/bootloader/preloader/custom/kaios31_jpv/security/chip_config/s/key
-<<<<<<< HEAD
 #Note PBP_PY_SUPPORT will be affect the sign process if not exist 
 
 #$de_Tools root_prvk.der CHIP_TEST_KEY.ini SV5_SIGN
@@ -108,14 +107,12 @@ echo "generator sign key for DA_PL signing"
 
 #VERIFIED_BOOT_IMG_AUTH_KEY.ini need copy to $DA_Kit/Raphael-da/custom/security_export/usbdl4enduser_dummy/VERIFIED_BOOT_IMG_AUTH_KEY.ini
 
-=======
 
 #$de_Tools root_prvk.der CHIP_TEST_KEY.ini SV5_SIGN
 
 echo "generator sign key for DA_PL signing"
 
 #VERIFIED_BOOT_IMG_AUTH_KEY.ini need copy to $DA_Kit/Raphael-da/custom/security_export/usbdl4enduser_dummy/VERIFIED_BOOT_IMG_AUTH_KEY.ini
->>>>>>> 8567c1ab873cf83a932d1e280e84a93d91a90ab8
 #$de_Tools root_prvk.der VERIFIED_BOOT_IMG_AUTH_KEY.ini ANDROID_SIGN
 
 cd ..
@@ -134,12 +131,9 @@ DEST_FOLDER=/local/keys-mtk/
 cp -Rvdp $PRODUCT_NAME $DEST_FOLDER
 
 
-<<<<<<< HEAD
 ### generator cert1 and cert2 keys 
 
 
-=======
->>>>>>> 8567c1ab873cf83a932d1e280e84a93d91a90ab8
 
 ### replace to pl/lk/da
 
