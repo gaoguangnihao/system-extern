@@ -11,3 +11,8 @@
 
 # Java class files
 *.class
+
+# generator cert1 and cert2 
+
+cert_generator/mt6739/security/cert_config/cert1/
+cert_generator/mt6739/security/cert_config/cert2_key/
