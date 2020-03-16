@@ -1,0 +1,44 @@
+#cert_generator
+this folder is for mtk platform certifcates deploy and sign image 
+according the give path 
+
+#debian
+
+for debian linux os 
+
+#faq
+
+for generator issues and quick to ask customer
+
+#feature 
+
+Kaios some platform feature special
+
+#mtk-m-sign
+
+sign image alone with security 2.1 for MTK platform 
+
+#public_code
+
+public code fot anic and bonic
+
+#secure_chip_tools
+
+resign pl/da generator auth /scert files for mtk platform 
+
+#sop sign
+
+generator new keys and needed files by preloader / DA_kit  
+
+#stability 
+
+hack tools for adb root ,include qrd/mtk
+
+#tools
+third tools
+
+#work_flow
+
+some record about workr on Kai
+
+
