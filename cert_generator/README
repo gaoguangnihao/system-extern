@@ -1,0 +1,1 @@
+./kaios_deploy_sign.sh /local/keys-mtk/kaios_orign/root_prvk.pem /local/keys-mtk/kaios_orign/img_prvk.pem /local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv /home/dhcui/mtk_m_jpv

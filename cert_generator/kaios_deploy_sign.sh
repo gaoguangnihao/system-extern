@@ -17,21 +17,37 @@ function usage() {
 
 	echo "sign image ..."
 	echo "first, and select correct project"
-	echo "Command: ./sign_image.sh <BASE_PROJECT>"
+	echo "Command: ./kaios_deploy)sign.sh $1 $2 $3 $4"
+	echo "$1 cert1 path"
+	echo "$2 cert2_key path"
+	echo "$3 image orign path"
+	echo "$4 image dest path"
 }
 
 ##generator certs for image 
 
+if [ $# -lt 4 ];then
+	echo "############WORNG PARG ###########"
+	usage
+	exit
+else 
+        echo "Begin to deploy"
+fi
+
 CP_tools=/local/tools/system-faq/system-extern/faq/mtk_cp_m_6731.sh
-IMG_SRC=/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv
-IMG_DST=/home/dhcui/mtk_m_jpv
+#IMG_SRC=/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv
+#IMG_DST=/home/dhcui/mtk_m_jpv
+
+IMG_SRC=$3
+IMG_DST=$4
 
 v2_file="mt6739/security/cert_config/img_list.txt"
 
 
 echo '**********KAIOS-key-deploy Begin**************'
 
-bash ./sign-image_v2/img_key_deploy.sh
+
+bash ./sign-image_v2/img_key_deploy.sh $1 $2
 
 #PLATFORM=mt6739 python ./sign-image_v2/img_key_deploy.py mt6739 kaios31_jpv cert1_key_path=/local/keys-mtk/kaios_orign/root_prvk.pem cert2_key_path=/local/keys-mtk/kaios_orign/img_prvk.pem root_key_padding=pss | tee img_key_deploy.log
 
@@ -60,7 +76,7 @@ echo '**********KAIOS-SIGN-Begin***********'
 #######################################
 # Check arguments
 #######################################
-if [ "$1" == "" ]; then
+if [ "$5" == "" ]; then
 	MTK_BASE_PROJECT="kaios31_jpv"
 	OUT_DIR="out"
 	PRODUCT_OUT="out"
@@ -68,7 +84,7 @@ if [ "$1" == "" ]; then
 	MTK_PLATFORM_DIR=${MTK_PLATFORM,,}
 	echo " 1 "${MTK_BASE_PROJECT}" 2 "${OUT_DIR}" 3 "${PRODUCT_OUT}" 4 "${MTK_PLATFORM}" 5 "${MTK_PLATFORM_DIR}""
 else
-	MTK_BASE_PROJECT=$1
+	MTK_BASE_PROJECT=$5
 fi
 
 
