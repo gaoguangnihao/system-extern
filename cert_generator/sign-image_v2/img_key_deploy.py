@@ -256,7 +256,9 @@ def gen_cert2_key(img_list, args, tmp_path):
     print "Start gen cert2 key to " + tmp_path.cert2_key_dir
 
     print "clean up cert2_key_dir"
+    print "dhcui tmp_path %s ",tmp_path
     for old_file in os.listdir(tmp_path.cert2_key_dir):
+	print "dhcui old_file" + old_file
         os.remove(os.path.join(tmp_path.cert2_key_dir, old_file))
 
     for img in img_list:
@@ -269,10 +271,10 @@ def gen_cert2_key(img_list, args, tmp_path):
             lib.cert.rsa_key_gen(final_prvk, 2048)
         else:
             if lib.cert.is_prvk(args["cert2_key_path"]):
-                print "Gen " + prvk
+                print "Gen dhcui prvk " + prvk
                 shutil.copy2(args["cert2_key_path"], final_prvk)
             elif lib.cert.is_pubk(args["cert2_key_path"]):
-                print "Gen " + pubk
+                print "Gen dhcui pubk " + pubk
                 shutil.copy2(args["cert2_key_path"], final_pubk)
             else:
                 print 'Unknown key type: ignored'
