@@ -1,2 +1,13 @@
-img_key_deploy.log
-sign_flow.log
+# Built application files
+*.apk
+*.aar
+*.ap_
+*.aab
+*.pyc
+*.log
+
+# Files for the ART/Dalvik VM
+*.dex
+
+# Java class files
+*.class
