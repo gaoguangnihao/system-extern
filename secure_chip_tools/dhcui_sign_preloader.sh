@@ -47,6 +47,8 @@ python pbp.py -i settings/pbp/pl_key.ini -k out/pbp/key_cert.bin -g settings/pbp
 
 #python pbp.py -k prebuilt/pbp/key_cert.bin -g settings/pbp/pl_gfh_config_cert_chain.ini  -c settings/pbp/pl_content.ini -func sign -o out/pbp/preloader-signed.bin prebuilt/pbp/preloader.bin
 
+#python resign_da.py prebuilt/resignda/MTK_AllInOne_DA.bin MT6739 settings/resignda/bbchips_pss.ini all out/resignda/MTK_AllInOne_DA.bin
+
 echo "preloader sign down"
 
 echo '============================================='
@@ -56,3 +58,4 @@ echo '============================================='
 cp out/pbp/preloader-signed.bin $path_preloader/preloader_kaios31_jpv.bin
 
 echo success done 
+

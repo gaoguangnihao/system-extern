@@ -55,12 +55,15 @@ def main():
 	#dump function is for debug purpose
 	#da_info_obj.dump()
 	#extract da load regions for resign
+	print "dhcui 111 " + chip_name
 	for chip_config in chip_configs.chiplist:
+		print "chip_config.name %s",chip_config.name
 		if chip_name == chip_config.name:
 			for da_info_entry in da_info_obj.m_da_info_entries:
 				if dainfo.chip_match(chip_config, da_info_entry) == True:
 					print "chip match!: " + chip_name
 					if load_region_idx == 'all':
+						print " dhcui sign da all "
 						dainfo.resign_load_regions(out_da_file_path, chip_name, da_info_entry, chip_config)
 					else:
 						dainfo.resign_load_region_with_idx(load_region_idx, out_da_file_path, chip_name, da_info_entry, chip_config)
