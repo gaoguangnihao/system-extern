@@ -30,6 +30,7 @@ dst_dir=$2
    $img_dir/recovery.img
    $img_dir/*fota_meta.zip
    $img_dir/preloader_kaios*.bin
+   $img_dir/preloader.bin
    $img_dir/md1rom*.img
    $img_dir/md1dsp*.img
    $img_dir/mcupmfw*.img
