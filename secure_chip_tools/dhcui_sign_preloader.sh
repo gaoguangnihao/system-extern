@@ -24,8 +24,8 @@ function usage() {
 path_preloader=$1
 
 echo $path_preloader
-if [ -f "$path_preloader/preloader.bin" ]; then 
-   	cp $path_preloader/preloader.bin prebuilt/pbp/preloader.bin
+if [ -f "$path_preloader/preloader_NO_GFH.bin" ]; then 
+   	cp $path_preloader/preloader_NO_GFH.bin prebuilt/pbp/preloader.bin
 else
 	usage
 	exit
@@ -45,7 +45,9 @@ echo "preloader sign begin"
 
 python pbp.py -i settings/pbp/pl_key.ini -k out/pbp/key_cert.bin -g settings/pbp/pl_gfh_config_cert_chain.ini -c settings/pbp/pl_content.ini -func sign -o out/pbp/preloader-signed.bin prebuilt/pbp/preloader.bin
 
-#python pbp.py -k prebuilt/pbp/key_cert.bin -g settings/pbp/pl_gfh_config_cert_chain.ini  -c settings/pbp/pl_content.ini -func sign -o out/pbp/preloader-signed.bin prebuilt/pbp/preloader.bin
+echo "use key_cert.bin to sign"
+
+python pbp.py -k out/pbp/key_cert.bin -g settings/pbp/pl_gfh_config_cert_chain.ini  -c settings/pbp/pl_content.ini -func sign -o out/pbp/preloader-signed.bin prebuilt/pbp/preloader.bin
 
 #python resign_da.py prebuilt/resignda/MTK_AllInOne_DA.bin MT6739 settings/resignda/bbchips_pss.ini all out/resignda/MTK_AllInOne_DA.bin
 
