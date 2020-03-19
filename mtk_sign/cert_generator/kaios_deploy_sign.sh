@@ -21,7 +21,7 @@ function usage() {
 	echo "$2 cert2_key path"
 	echo "$3 image orign path"
 	echo "$4 image dest path"
-	echo " example :: ./kaios_deploy_sign.sh /local/keys-mtk/kaios_orign/root_prvk.pem /local/keys-mtk/kaios_orign/img_prvk.pem /local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv /home/dhcui/mtk_m_jpv"
+	echo " example :: /kaios_deploy_sign.sh /home/kai-user/keys_odm/MTK_Kaios31_jpv_jio /home/kai-user/keys_odm/MTK_Kaios31_jpv_jio /home/kai-user/mtk_m_jpv /home/dhcui/mtk_m_jpv_out"
 }
 
 ##generator certs for image 
@@ -29,25 +29,43 @@ function usage() {
 if [ $# -lt 4 ];then
 	echo "############WORNG PARG ###########"
 	usage
+	echo "############WORNG PARG ###########"
 	exit
 else 
         echo "Begin to deploy"
 fi
 
-CP_tools=/local/tools/system-faq/system-extern/faq/mtk_cp_m_6731.sh
+CP_tools=mtk_cp_m_6731.sh
 #IMG_SRC=/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv
 #IMG_DST=/home/dhcui/mtk_m_jpv
 
+CURDIR="`pwd`"/"`dirname $0`"
+
 IMG_SRC=$3
 IMG_DST=$4
+
+if [ -d $3 ];then
+   echo "path is ok $3"
+else
+   echo "\033[31m ERROR $3 WRONG FOLDER !!! \033[0m"
+   exit
+fi
+	
+if [ -d $4 ];then
+   echo "path is ok $4"
+else
+   echo "\033[31m ERROR $4 WRONG FOLDER !!! \033[0m"
+   exit
+fi
 
 v2_file="mt6739/security/cert_config/img_list.txt"
 
 
 echo '**********KAIOS-key-deploy Begin**************'
+echo $CURDIR
 
+bash $CURDIR/sign-image_v2/img_key_deploy.sh $1 $2
 
-bash sign-image_v2/img_key_deploy.sh $1 $2
 Rva=$?
 
 if [ $Rva -ne 0 ] ;then
@@ -64,8 +82,13 @@ echo '**********KAIOS-CP-IMG Begin***********'
 # copy image to the in folder 
 rm -fr $IMG_DST/*
 
-bash  $CP_tools  $IMG_SRC $IMG_DST
+if [ -f $CURDIR/$CP_tools ]; then
 
+	bash  $CURDIR/$CP_tools  $IMG_SRC $IMG_DST
+else
+        echo "copy tools not found"
+	exit
+fi
 echo 'delete the orign verified image'
 
 P_dir='pwd'
@@ -95,13 +118,13 @@ fi
 
 
 # sign-image-nodeps
-if [ -f "$v2_file" ]; then
+if [ -f "$CURDIR/$v2_file" ]; then
 	echo "v2 sign flow begin"
-	echo python sign-image_v2/sign_flow.py -env_cfg sign-image_v2/env.cfg "${MTK_PLATFORM_DIR}" "${MTK_BASE_PROJECT}"
+	echo python $CURDIR/sign-image_v2/sign_flow.py -env_cfg $CURDIR/sign-image_v2/env.cfg "${MTK_PLATFORM_DIR}" "${MTK_BASE_PROJECT}"
 
-	PYTHONDONTWRITEBYTECODE=True BOARD_AVB_ENABLE= python sign-image_v2/sign_flow.py -env_cfg sign-image_v2/env.cfg "${MTK_PLATFORM_DIR}" "${MTK_BASE_PROJECT}" |tee sign_flow.log
+	PYTHONDONTWRITEBYTECODE=True BOARD_AVB_ENABLE= python $CURDIR/sign-image_v2/sign_flow.py -env_cfg $CURDIR/sign-image_v2/env.cfg "${MTK_PLATFORM_DIR}" "${MTK_BASE_PROJECT}" |tee sign_flow.log
 	echo "v2 sign flow done"
-	echo "v2_file ($v2_file)"
+	echo "v2_file ($CURDIR/$v2_file)"
 else
 	echo "v1 sign flow but not support"
 	echo "v2_file ($v2_file)"
