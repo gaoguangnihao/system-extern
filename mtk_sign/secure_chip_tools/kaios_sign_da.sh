@@ -21,18 +21,20 @@ function usage() {
 #echo 'copy da to /prebuilt/resignda'
 
 path_da=$1
-
+CURDIR="`pwd`"/"`dirname $0`"
 
 echo $path_da
+echo $CURDIR
+
 if [ -f "$path_da/MTK_AllInOne_DA.bin" ]; then 
-   	cp $path_da/MTK_AllInOne_DA.bin prebuilt/resignda
+   	cp $path_da/MTK_AllInOne_DA.bin $CURDIR/prebuilt/resignda
 else
 	usage
 	exit
 fi
 
 if [ -f "$path_da/da_pl.bin" ]; then 
-   	cp $path_da/da_pl.bin prebuilt/resignda
+   	cp $path_da/da_pl.bin $CURDIR/prebuilt/resignda
 else
 	usage
 	echo "WWWWW maybe you need copy pl bin to the $path_da"
@@ -58,11 +60,11 @@ echo "da sign begin"
 #load_region2_key = keys/pbp/root_prvk.pem
 
 
-python resign_da.py prebuilt/resignda/MTK_AllInOne_DA.bin MT6739 settings/resignda/bbchips_pss.ini all out/resignda/MTK_AllInOne_DA.bin-sign
+python $CURDIR/resign_da.py $CURDIR/prebuilt/resignda/MTK_AllInOne_DA.bin MT6739 $CURDIR/settings/resignda/bbchips_pss.ini all $CURDIR/out/resignda/MTK_AllInOne_DA.bin-sign
 
 
 
-python resign_da.py prebuilt/resignda/da_pl.bin MT6739 settings/resignda/bbchips_pss.ini all out/resignda/DA_PL.bin-sign
+python $CURDIR/resign_da.py $CURDIR/prebuilt/resignda/da_pl.bin MT6739 $CURDIR/settings/resignda/bbchips_pss.ini all $CURDIR/out/resignda/DA_PL.bin-sign
 
 echo "DA-BR DA-PL sign down"
 
@@ -70,12 +72,12 @@ echo '============================================='
 echo '==copy sign da to the $path_da=='
 echo '============================================='
 
-cp out/resignda/MTK_AllInOne_DA.bin-sign $path_da/MTK_AllInOne_DA.bin-sign.bin
-cp out/resignda/DA_PL.bin-sign $path_da/DA_PL.bin-sign.bin
+cp $CURDIR/out/resignda/MTK_AllInOne_DA.bin-sign $path_da/MTK_AllInOne_DA.bin-sign.bin
+cp $CURDIR/out/resignda/DA_PL.bin-sign $path_da/DA_PL.bin-sign.bin
 
 echo "below is for test code for my pc"
-cp out/resignda/MTK_AllInOne_DA.bin-sign /local/tools/mtk-download/MTK_AllInOne_DA.bin-mt6739sign.bin
-cp out/resignda/DA_PL.bin-sign /local/tools/mtk-download/DA_PL.bin-mt6739sign.bin
+cp $CURDIR/out/resignda/MTK_AllInOne_DA.bin-sign /local/tools/mtk-download/MTK_AllInOne_DA.bin-mt6739sign.bin
+cp $CURDIR/out/resignda/DA_PL.bin-sign /local/tools/mtk-download/DA_PL.bin-mt6739sign.bin
 
 
 echo success done 
