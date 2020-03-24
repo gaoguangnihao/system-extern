@@ -57,10 +57,20 @@ bash secure_chip_tools/kaios_sign_da.sh $DA_BIN_PATH
 
 ##we really to generator auth_sv5 files like da just need check tools 
 ## DAA/SLA/ROOT/IMG keys
-python secure_chip_tools/toolauth.py -i secure_chip_tools/settings/toolauth/toolauth_key.ini -g secure_chip_tools/settings/toolauth/toolauth_gfh_config_pss.ini secure_chip_tools/out/toolauth/auth_sv5.auth
+echo "GENERATOR AUTH FILE BEGIN"
 
-cp secure_chip_tools/out/toolauth/auth_sv5.auth $DA_BIN_PATH
+bash secure_chip_tools/kaios_generator_auth_file.sh $DA_BIN_PATH
 
+echo $?
+
+if [ $? != 0 ];then
+  echo "ERROR WHEN GENERATOR AUTH FILE !!!!"
+  exit
+fi
+
+echo "GENERATOR AUTH FILE END"
+
+bash secure_chip_tools/kaios_generator_scert_file.sh $DA_BIN_PATH
 ##we will be generator scert file alsoe 
 echo "to be done about this files "
 else
