@@ -37,6 +37,12 @@ SIGN_DA=$6
 #temp path will be change
 DA_BIN_PATH=/home/dhcui/dahui-share/da_sign
 
+if [ -d "secure_chip_tools/out" ] ; then
+  echo "out folder exists. So remove it."
+  rm -rf secure_chip_tools/out
+fi
+mkdir secure_chip_tools/out
+
 ##beging to deploy sign certs and sign the image use img_prvk.pem 
 
 bash cert_generator/kaios_deploy_sign.sh $CERT1_PATH $CERT2_KEY_PATH $INPUT_IMG_PATH $OUTPUT_IMG_PATH

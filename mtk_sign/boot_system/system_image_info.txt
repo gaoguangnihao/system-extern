@@ -1,0 +1,14 @@
+fs_type=ext4
+system_size=1065250816
+userdata_size=915406848
+cache_fs_type=ext4
+cache_size=117440512
+extfs_sparse_flag=-s
+boot_signer=true
+verity=true
+verity_key=mt6731_jpv_jio/verity
+verity_signer_cmd=bin/verity_signer
+dm_verity_off=no
+block_list=out/target/product/kaios31_jpv/obj/PACKAGING/systemimage_intermediates/system.map
+system_verity_block_device=/dev/block/platform/bootdevice/by-name/system
+skip_fsck=true

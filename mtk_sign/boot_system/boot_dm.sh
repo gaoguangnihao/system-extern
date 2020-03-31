@@ -27,16 +27,6 @@ else
         echo "Begin to generator boot dm files"
 fi
 
-if [ -f $1/boot.img ];then 
-
-   cp $1/boot.img $CURDIR/in/boot-verified.img
-   
-else
-
-   echo "no boot imgae exist"
-   exit
-fi
-
 # Test if out/ exists already and delete it if yes.
 if [ -d "$CURDIR/out" ] ; then
   echo "out folder exists. So remove it."
@@ -44,5 +34,34 @@ if [ -d "$CURDIR/out" ] ; then
 fi
 mkdir $CURDIR/out
 
+if [ -d "$CURDIR/system" ] ; then
+  echo "system folder exists. So remove it."
+  rm -rf $CURDIR/system
+fi
+mkdir $CURDIR/system
+
+if [ -f $1/boot.img ];then
+
+   cp $1/boot.img $CURDIR/in/boot-verified.img
+  
+else
+
+   echo "no boot imgae exist"
+   exit
+fi
+
+if [ -f $1/system.img ];then 
+
+   cp $1/system.img $CURDIR/system/system.img
+   
+else
+
+   echo "no system imgae exist"
+   #exit
+fi
+
+
 
 LD_LIBRARY_PATH=$CURDIR/lib $CURDIR/bin/boot_signer /boot $CURDIR/in/boot-verified.img $CURDIR/mt6731_jpv_jio/verity.pk8  $CURDIR/mt6731_jpv_jio/verity.x509.pem $CURDIR/out/boot-dm.img
+
+python $CURDIR/sign_system.py $CURDIR/system/system.img $CURDIR/system_image_info.txt $CURDIR/out/system-verified.img
