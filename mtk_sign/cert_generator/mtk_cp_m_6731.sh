@@ -36,6 +36,7 @@ dst_dir=$2
    $img_dir/md1arm7*.img
    $img_dir/md3rom*.img
    $img_dir/ramdisk*.img
+   $img_dir/obj/PACKAGING/systemimage_intermediates/system_image_info.txt
  )
 
 

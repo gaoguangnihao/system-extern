@@ -13,11 +13,12 @@ function usage() {
 	    echo "4 $4 is signed imgae path"
 	    echo "5 $5 is a flag ,wiil be sign preloader or not"
 	    echo "6 $6 is a flag , will be sign da or not"
+	    echo "7 $7 is da image path for will be signed"
 	    echo "Try ./kaios_key_sign.sh /home/kai-user/keys_odm/MTK_Kaios31_jpv_jio /home/kai-user/keys_odm/MTK_Kaios31_jpv_jio /home/kai-user/mtk_m_jpv /home/dhcui/mtk_m_jpv_out null null"
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 }
 
-if [ $# -lt 6 ];then
+if [ $# -lt 7 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	exit
@@ -35,8 +36,13 @@ PRELOADER=$5
 SIGN_DA=$6
 
 #temp path will be change
-DA_BIN_PATH=/home/dhcui/dahui-share/da_sign
+DA_BIN_PATH=$7
 
+#prepare boot and system image with new dm key
+
+bash boot_system/boot_dm.sh $INPUT_IMG_PATH
+
+#done
 if [ -d "secure_chip_tools/out" ] ; then
   echo "out folder exists. So remove it."
   rm -rf secure_chip_tools/out

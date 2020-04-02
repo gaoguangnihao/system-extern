@@ -1,0 +1,50 @@
+diff --git a/arch/arm/configs/kaios31_jpv_debug_defconfig b/arch/arm/configs/kaios31_jpv_debug_defconfig
+index e582c52b0a4c..e7a283f5eda4 100644
+--- a/arch/arm/configs/kaios31_jpv_debug_defconfig
++++ b/arch/arm/configs/kaios31_jpv_debug_defconfig
+@@ -526,3 +526,4 @@ CONFIG_CRYPTO_AES_ARM_BS=y
+ CONFIG_CRYPTO_AES_ARM_CE=y
+ CONFIG_CRYPTO_GHASH_ARM_CE=y
+ CONFIG_LIBCRC32C=y
++CONFIG_MTK_SECURITY_SW_SUPPORT=y
+diff --git a/drivers/misc/mediatek/mtprintk/mtk_printk_ctrl.c b/drivers/misc/mediatek/mtprintk/mtk_printk_ctrl.c
+index b0f9d5700406..c5a0389dc643 100644
+--- a/drivers/misc/mediatek/mtprintk/mtk_printk_ctrl.c
++++ b/drivers/misc/mediatek/mtprintk/mtk_printk_ctrl.c
+@@ -37,7 +37,7 @@ static int mt_printk_ctrl_show(struct seq_file *m, void *v)
+ 	SEQ_printf(m, "xxx: printk too much detect count(xxx represents for a integer > 100)\n");
+ 	SEQ_printf(m, "=== mt printk controller ===\n\n");
+ 	SEQ_printf(m, "kernel log buffer len: %dKB\n", log_buf_len_get()/1024);
+-	SEQ_printf(m, "printk uart enable: %d\n", mt_get_uartlog_status());
++	SEQ_printf(m, "printk uart enable: %d\n", true);
+ 	SEQ_printf(m, "printk too much enable: %d\n", get_logtoomuch_enable());
+ 	SEQ_printf(m, "printk too much detect count: %d\n", get_detect_count());
+ 	return 0;
+diff --git a/include/linux/printk.h b/include/linux/printk.h
+index 43464813d00a..f083ab275549 100644
+--- a/include/linux/printk.h
++++ b/include/linux/printk.h
+@@ -89,7 +89,7 @@ static inline const char *printk_skip_level(const char *buffer)
+ #define CONSOLE_LOGLEVEL_SILENT  0 /* Mum's the word */
+ #define CONSOLE_LOGLEVEL_MIN	 1 /* Minimum loglevel we let people use */
+ #define CONSOLE_LOGLEVEL_QUIET	 4 /* Shhh ..., when booted with "quiet" */
+-#define CONSOLE_LOGLEVEL_DEFAULT 7 /* anything MORE serious than KERN_DEBUG */
++#define CONSOLE_LOGLEVEL_DEFAULT 8 /* anything MORE serious than KERN_DEBUG */
+ #define CONSOLE_LOGLEVEL_DEBUG	10 /* issue debug messages */
+ #define CONSOLE_LOGLEVEL_MOTORMOUTH 15	/* You can't shut this one up */
+ 
+diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+index 4e0a671f1c8a..06c1a45e9f38 100644
+--- a/kernel/printk/printk.c
++++ b/kernel/printk/printk.c
+@@ -96,8 +96,9 @@ void mt_disable_uart(void)
+ {
+ 	/* uart print not always enable */
+ 	if ((mt_need_uart_console != 1) && (printk_disable_uart != 2))
+-		printk_disable_uart = 1;
++		printk_disable_uart = 0;
+ }
++
+ void mt_enable_uart(void)
+ {
+ 	printk_disable_uart = 0;

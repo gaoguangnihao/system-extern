@@ -33,6 +33,7 @@ import tempfile
 OPTIONS = common.OPTIONS
 
 FIXED_SALT = "aee087a5be3b982978c923f566a94613496b417f2af592639bc80d141e34dfe7"
+CURDIR = os.getcwd()
 
 def RunCommand(cmd):
   """Echo and run the given command.
@@ -49,7 +50,7 @@ def RunCommand(cmd):
   return (output, p.returncode)
 
 def GetVerityTreeSize(partition_size):
-  cmd = "build_verity_tree -s %d"
+  cmd = "LD_LIBRARY_PATH=boot_system/lib boot_system/bin/build_verity_tree -s %d"
   cmd %= partition_size
   status, output = commands.getstatusoutput(cmd)
   if status:
@@ -58,7 +59,7 @@ def GetVerityTreeSize(partition_size):
   return True, int(output)
 
 def GetVerityMetadataSize(partition_size):
-  cmd = "system/extras/verity/build_verity_metadata.py -s %d"
+  cmd = "boot_system/build_verity_metadata.py -s %d"
   cmd %= partition_size
 
   status, output = commands.getstatusoutput(cmd)
@@ -76,6 +77,8 @@ def AdjustPartitionSizeForVerity(partition_size):
   Returns:
     The size of the partition adjusted for verity metadata.
   """
+  
+  print "AdjustPartitionSizeForVerity %d " % partition_size
   success, verity_tree_size = GetVerityTreeSize(partition_size)
   if not success:
     return 0
@@ -85,7 +88,7 @@ def AdjustPartitionSizeForVerity(partition_size):
   return partition_size - verity_tree_size - verity_metadata_size
 
 def BuildVerityTree(sparse_image_path, verity_image_path, prop_dict):
-  cmd = "LD_LIBRARY_PATH=./lib ./bin/build_verity_tree -A %s %s %s" % (
+  cmd = "LD_LIBRARY_PATH=boot_system/lib boot_system/bin/build_verity_tree -A %s %s %s" % (
       FIXED_SALT, sparse_image_path, verity_image_path)
   print cmd
   status, output = commands.getstatusoutput(cmd)
@@ -101,7 +104,7 @@ def BuildVerityTree(sparse_image_path, verity_image_path, prop_dict):
 def BuildVerityMetadata(image_size, verity_metadata_path, root_hash, salt,
                         block_device, signer_path, key):
   cmd_template = (
-      "python build_verity_metadata.py %s %s %s %s %s %s %s")
+      "python boot_system/build_verity_metadata.py %s %s %s %s %s %s %s")
   cmd = cmd_template % (image_size, verity_metadata_path, root_hash, salt,
                         block_device, signer_path, key)
   print cmd
@@ -120,7 +123,7 @@ def Append2Simg(sparse_image_path, unsparse_image_path, error_message):
   Returns:
     True on success, False on failure.
   """
-  cmd = "LD_LIBRARY_PATH=./lib bin/append2simg %s %s"
+  cmd = "LD_LIBRARY_PATH=boot_system/lib boot_system/bin/append2simg %s %s"
   cmd %= (sparse_image_path, unsparse_image_path)
   print cmd
   status, output = commands.getstatusoutput(cmd)
@@ -175,6 +178,7 @@ def MakeVerityEnabledImage(in_dir, prop_dict, out_file):
   
   print "verity_image_path is %s" % verity_image_path
   print "verity_metadata_path is %s" % verity_metadata_path
+  print "CURDIR is %s " + CURDIR
   
   if not BuildVerityTree(in_dir, verity_image_path, prop_dict):
     #shutil.rmtree(tempdir_name, ignore_errors=True)
@@ -184,7 +188,7 @@ def MakeVerityEnabledImage(in_dir, prop_dict, out_file):
   print "success build verifytree"
   root_hash = prop_dict["verity_root_hash"]
   salt = prop_dict["verity_salt"]
-  image_size = prop_dict["partition_size"]
+  image_size = int(prop_dict["partition_size"])
   block_dev = prop_dict["verity_block_device"]
   signer_key = prop_dict["verity_key"] + ".pk8"
   
@@ -196,8 +200,11 @@ def MakeVerityEnabledImage(in_dir, prop_dict, out_file):
   print "block_dev %s" % block_dev
   print "signer_key %s" % signer_key
   
+  adjusted_size = AdjustPartitionSizeForVerity(image_size)
+  
+  print "adjusted_size is %s" % adjusted_size
 
-  if not BuildVerityMetadata(image_size, verity_metadata_path, root_hash, salt,
+  if not BuildVerityMetadata(adjusted_size, verity_metadata_path, root_hash, salt,
                              block_dev, signer_path, signer_key):
     #shutil.rmtree(tempdir_name, ignore_errors=True)
     return False
