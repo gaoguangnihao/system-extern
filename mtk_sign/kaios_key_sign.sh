@@ -1,4 +1,8 @@
 ##########init valiable ###################
+# return value 127 means that files not exist
+# return value 128 means that parm NO. wrong
+# return value 129 means that exec prom wrong
+
 #########################################
 function usage() {
 
@@ -14,19 +18,16 @@ function usage() {
 	    echo "5 $5 is a flag ,wiil be sign preloader or not"
 	    echo "6 $6 is a flag , will be sign da or not"
 	    echo "7 $7 is da image path for will be signed"
-	    echo "Try ./kaios_key_sign.sh /home/kai-user/keys_odm/MTK_Kaios31_jpv_jio /home/kai-user/keys_odm/MTK_Kaios31_jpv_jio /home/kai-user/mtk_m_jpv /home/dhcui/mtk_m_jpv_out null null"
+	    echo "./kaios_key_sign.sh /home/kai-user/key_path /home/kai-user/key_path /home/kai-user/image_path /home/dhcui/image_out preloader signda /home/dhcui/da_path"
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 }
 
 if [ $# -lt 7 ];then
 	echo "############WORNG PARG ###########"
 	usage
-	exit
-else
-        echo "Begin to deploy sign"
+	echo "############WORNG PARG ###########"
+	exit 128
 fi
-
-
 
 CERT1_PATH=$1
 CERT2_KEY_PATH=$2
@@ -34,59 +35,72 @@ INPUT_IMG_PATH=$3
 OUTPUT_IMG_PATH=$4
 PRELOADER=$5
 SIGN_DA=$6
-
-#temp path will be change
 DA_BIN_PATH=$7
 
 #prepare boot and system image with new dm key
+#Note boot_system/mt6731_jpv_jio/ should be re-define FIXED-ME
+bash boot_system/boot_dm.sh $INPUT_IMG_PATH boot_system/mt6731_jpv_jio/
 
-bash boot_system/boot_dm.sh $INPUT_IMG_PATH
-
+if [ $? != 0 ];then
+   echo "error !! about DM sign boot and system images"
+   exit 129
+fi
+echo "success !!! DM sign "
 #done
 if [ -d "secure_chip_tools/out" ] ; then
-  echo "out folder exists. So remove it."
-  rm -rf secure_chip_tools/out
+   echo "out folder exists. So remove it."
+   rm -rf secure_chip_tools/out
 fi
 mkdir secure_chip_tools/out
-
 ##beging to deploy sign certs and sign the image use img_prvk.pem 
-
 bash cert_generator/kaios_deploy_sign.sh $CERT1_PATH $CERT2_KEY_PATH $INPUT_IMG_PATH $OUTPUT_IMG_PATH
+if [ $? != 0 ];then
+   echo "error !! deploy sign certs and sign the image "
+   exit 129
+fi
 
+echo "success !! kaios_deploy_sign"
 ##sign common image done!!!
 
 ##beging to sign NO-GFH preloader image
-echo $OUTPUT_IMG_PATH
-
 if [[ $PRELOADER = "preloader" ]]; then
-  bash secure_chip_tools/kaios_sign_preloader.sh $OUTPUT_IMG_PATH
+   bash secure_chip_tools/kaios_sign_preloader.sh $OUTPUT_IMG_PATH
+   if [ $? != 0 ];then
+   echo "error !! preloader sign error "
+   exit 129
+   fi
 else
-  echo "!!! preloader not signed"
+   echo "!!!!! preloader not signed"
 fi
 
+echo "success !! preloader sign \n"
 if [[ $SIGN_DA = "signda" ]]; then
-bash secure_chip_tools/kaios_sign_da.sh $DA_BIN_PATH
+   bash secure_chip_tools/kaios_sign_da.sh $DA_BIN_PATH
 
+   if [ $? != 0 ];then
+   echo "error!! preloader sign error "
+   exit 129
+   fi
+   echo "success !! signda "
 ##we really to generator auth_sv5 files like da just need check tools 
 ## DAA/SLA/ROOT/IMG keys
-echo "GENERATOR AUTH FILE BEGIN"
 
-bash secure_chip_tools/kaios_generator_auth_file.sh $DA_BIN_PATH
+   bash secure_chip_tools/kaios_generator_auth_file.sh $DA_BIN_PATH
+   if [ $? != 0 ];then
+     echo "error !! auth_sv5 files"
+     exit 129
+   fi
+   echo "success !! auth_sv5 generator "
 
-echo $?
-
-if [ $? != 0 ];then
-  echo "ERROR WHEN GENERATOR AUTH FILE !!!!"
-  exit
-fi
-
-echo "GENERATOR AUTH FILE END"
-
-bash secure_chip_tools/kaios_generator_scert_file.sh $DA_BIN_PATH
-##we will be generator scert file alsoe 
-echo "to be done about this files "
+   bash secure_chip_tools/kaios_generator_scert_file.sh $DA_BIN_PATH
+   if [ $? != 0 ];then
+   echo "error !! scert_file"
+   exit 129
+   fi
+   echo "success !! auth_sv5 generator "
+##we will be generator scert file also
 else
- echo "!!! da-br.da-pl not signed"
+    echo "!!!!! da-br.da-pl not signed"
 fi
 
 

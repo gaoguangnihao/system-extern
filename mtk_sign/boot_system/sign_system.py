@@ -1,18 +1,4 @@
 #!/usr/bin/env python
-#
-# Copyright (C) 2011 The Android Open Source Project
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 
 """
 Build image output_image_file from input_directory and properties_file.
@@ -98,7 +84,6 @@ def BuildVerityTree(sparse_image_path, verity_image_path, prop_dict):
   root, salt = output.split()
   prop_dict["verity_root_hash"] = root
   prop_dict["verity_salt"] = salt
-  print "verity_root_hash is %s" % prop_dict
   return True
 
 def BuildVerityMetadata(image_size, verity_metadata_path, root_hash, salt,
@@ -176,16 +161,16 @@ def MakeVerityEnabledImage(in_dir, prop_dict, out_file):
   verity_image_path = os.path.join(tempdir_name, "verity.img")
   verity_metadata_path = os.path.join(tempdir_name, "verity_metadata.img")
   
-  print "verity_image_path is %s" % verity_image_path
-  print "verity_metadata_path is %s" % verity_metadata_path
-  print "CURDIR is %s " + CURDIR
+  #print "verity_image_path is %s" % verity_image_path
+  #print "verity_metadata_path is %s" % verity_metadata_path
+  #print "CURDIR is %s " + CURDIR
   
   if not BuildVerityTree(in_dir, verity_image_path, prop_dict):
-    #shutil.rmtree(tempdir_name, ignore_errors=True)
+    shutil.rmtree(tempdir_name, ignore_errors=True)
     return False
 
   # build the metadata blocks
-  print "success build verifytree"
+  #print "success build verifytree"
   root_hash = prop_dict["verity_root_hash"]
   salt = prop_dict["verity_salt"]
   image_size = int(prop_dict["partition_size"])
@@ -194,31 +179,29 @@ def MakeVerityEnabledImage(in_dir, prop_dict, out_file):
   
   signer_path = prop_dict["verity_signer_cmd"]
     
-  print "verity_salt is %s" % salt
-  print "verity_root_hash %s" % root_hash
-  print "signer_path %s" % signer_path
-  print "block_dev %s" % block_dev
-  print "signer_key %s" % signer_key
-  
+  #print "verity_salt is %s" % salt
+  #print "verity_root_hash %s" % root_hash
+  #print "signer_path %s" % signer_path
+  #print "block_dev %s" % block_dev
+  #print "signer_key %s" % signer_key
   adjusted_size = AdjustPartitionSizeForVerity(image_size)
-  
-  print "adjusted_size is %s" % adjusted_size
+  #print "adjusted_size is %s" % adjusted_size
 
   if not BuildVerityMetadata(adjusted_size, verity_metadata_path, root_hash, salt,
                              block_dev, signer_path, signer_key):
-    #shutil.rmtree(tempdir_name, ignore_errors=True)
+    shutil.rmtree(tempdir_name, ignore_errors=True)
     return False
 
-  print "system image path %s" % in_dir
-  print "out system image path %s " % out_file
+  #print "system image path %s" % in_dir
+  #print "out system image path %s " % out_file
   shutil.copy2(in_dir,out_file)
   # build the full verified image
   if not BuildVerifiedImage(out_file,
                             verity_image_path,
                             verity_metadata_path):
-    #shutil.rmtree(tempdir_name, ignore_errors=True)
+    shutil.rmtree(tempdir_name, ignore_errors=True)
     return False
-
+  shutil.rmtree(tempdir_name, ignore_errors=True)
   return True
 
 def SignSystemImage(in_dir, prop_dict, out_file):
@@ -226,8 +209,6 @@ def SignSystemImage(in_dir, prop_dict, out_file):
 
   if not MakeVerityEnabledImage(in_dir, prop_dict, out_file):
       return False
-
-
   print "success MakeVerityEnabledImage"
   run_fsck = True 
   if run_fsck and prop_dict.get("skip_fsck") != "true":

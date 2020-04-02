@@ -3,7 +3,9 @@
 #######################################
 # Initialize variables
 #######################################
-
+# return value 127 means that files not exist
+# return value 128 means that parm NO. wrong
+# return value 129 means that exec prom wrong
 
 #######################################
 # Specify temporarily folder path
@@ -32,58 +34,52 @@ if [ $# -lt 4 ];then
 	echo "############WORNG PARG ###########"
 	exit
 else 
-        echo "Begin to deploy"
+        echo "Begin to deploy cert1s and cert2_key"
 fi
 
+#FIXED-ME for copy script
 CP_tools=mtk_cp_m_6731.sh
-#IMG_SRC=/local/code/mtk-m/KaiOS/out/target/product/kaios31_jpv
-#IMG_DST=/home/dhcui/mtk_m_jpv
 
 CURDIR="`pwd`"/"`dirname $0`"
 
+CERT1_PATH=$1
+CERT2_KEY_PATH=$2
 IMG_SRC=$3
 IMG_DST=$4
 
-if [ -d $3 ];then
-   echo "path is ok $3"
+if [ -d $IMG_SRC ];then
+   echo 
 else
-   echo "\033[31m ERROR $3 WRONG FOLDER !!! \033[0m"
-   exit
+   echo "\033[31m ERROR WRONG FOLDER !!! \033[0m"
+   exit 127
 fi
 	
-if [ -d $4 ];then
-   echo "path is ok $4"
+if [ -d $IMG_DST ];then
+   echo
 else
-   echo "\033[31m ERROR $4 WRONG FOLDER !!! \033[0m"
-   exit
+   echo "\033[31m ERROR WRONG FOLDER !!! \033[0m"
+   exit 127
 fi
 
+#FIXED-ME this need redefine for platform as img_key_deploy.sh
 v2_file="mt6739/security/cert_config/img_list.txt"
 
 
-echo '**********KAIOS-key-deploy Begin**************'
-echo $CURDIR
-
-bash $CURDIR/sign-image_v2/img_key_deploy.sh $1 $2
-
-Rva=$?
-
-if [ $Rva -ne 0 ] ;then
+echo '**********KAIOS key deploy Begin**************'
+bash $CURDIR/sign-image_v2/img_key_deploy.sh $CERT1_PATH $CERT2_KEY_PATH $IMG_DST
+if [ $? -ne 0 ] ;then
 	echo -e "\033[31m ERROR $Rva exit !!! \033[0m"	
-	exit
+	exit 129
 fi
 
 #PLATFORM=mt6739 python ./sign-image_v2/img_key_deploy.py mt6739 kaios31_jpv cert1_key_path=/local/keys-mtk/kaios_orign/root_prvk.pem cert2_key_path=/local/keys-mtk/kaios_orign/img_prvk.pem root_key_padding=pss | tee img_key_deploy.log
+echo '******success !!! keys deploy cert1 and cert2_key*******'
 
-echo '***********KAIOS-key-deploy End*************'
-
-echo '**********KAIOS-CP-IMG Begin***********'
+echo '******KAIOS copy image Begin*******'
 
 # copy image to the in folder 
 rm -fr $IMG_DST/*
-
 if [ -f $CURDIR/$CP_tools ]; then
-
 	bash  $CURDIR/$CP_tools  $IMG_SRC $IMG_DST
 else
         echo "copy tools not found"
