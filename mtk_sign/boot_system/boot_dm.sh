@@ -35,6 +35,13 @@ if [ -d "$CURDIR/out" ] ; then
 fi
 mkdir $CURDIR/out
 
+# Test if out/ exists already and delete it if yes.
+if [ -d "$CURDIR/in" ] ; then
+  echo "in folder exists. So remove it."
+  rm -rf $CURDIR/in
+fi
+mkdir $CURDIR/in
+
 if [ -d "$CURDIR/system" ] ; then
   echo "system folder exists. So remove it."
   rm -rf $CURDIR/system
@@ -53,7 +60,7 @@ fi
 
 if [ -f $PRJ_DIR/system-kaios.img ];then 
 
-   cp $PRJ_DIR/system-kaios.img $CURDIR/system/system.img
+   cp $PRJ_DIR/system-kaios.img $CURDIR/in/system.img
    
 else
 
@@ -73,7 +80,7 @@ fi
 
 LD_LIBRARY_PATH=$CURDIR/lib $CURDIR/bin/boot_signer /boot $CURDIR/in/boot.img $CURDIR/mt6731_jpv_jio/verity.pk8  $CURDIR/mt6731_jpv_jio/verity.x509.pem $CURDIR/out/boot-dm.img
 
-python $CURDIR/sign_system.py $CURDIR/system/system.img $CURDIR/system_image_info.txt $CURDIR/out/system-dm.img
+python $CURDIR/sign_system.py $CURDIR/in/system.img $CURDIR/system_image_info.txt $CURDIR/out/system-dm.img
 
 
 #after generator success need replace to PRJ_DIR files
