@@ -13,7 +13,7 @@ def create_out_dir(path):
     create output folder if it does not exist
     """
     folder_path = os.path.abspath(path)
-    print "Create dir:" + folder_path
+    #print "Create dir:" + folder_path
 
     try:
         os.makedirs(folder_path)
@@ -58,7 +58,7 @@ class SignFlow(object):
                         print 'Use out path in env.cfg'
                         self.out_path = os.path.join(cfg_file_dir, value)
                     else:
-                        print 'Use out path in Android'
+                        #print 'Use out path in Android'
                     # in_path is optional, hence we give it default value here
                     if self.in_path is None:
                         self.in_path = self.out_path
@@ -83,13 +83,13 @@ class SignFlow(object):
         print "==================================="
         print "environment configuration"
         print "==================================="
-        print 'in_path = ' + self.in_path
-        print 'out_path = ' + self.out_path
-        print 'cert1_dir = ' + self.cert1_dir
-        print 'cert2_key_dir = ' + self.cert2_key_dir
-        print 'img_list_path = ' + self.img_list_path
-        print 'img_ver_path = ' + self.img_ver_path
-        print 'bin_tmp_path = ' + self.bin_tmp_path
+        #print 'in_path = ' + self.in_path
+        #print 'out_path = ' + self.out_path
+        #print 'cert1_dir = ' + self.cert1_dir
+        #print 'cert2_key_dir = ' + self.cert2_key_dir
+        #print 'img_list_path = ' + self.img_list_path
+        #print 'img_ver_path = ' + self.img_ver_path
+        #print 'bin_tmp_path = ' + self.bin_tmp_path
 
         cfg_file.close()
 
@@ -220,8 +220,8 @@ class SignFlow(object):
         if not os.path.exists(in_img_path):
             print "no " + str(img) + " image"
             return
-        print "image name path = " + in_img_path
-        print "image name = " + multi_tmp_bin_in
+        #print "image name path = " + in_img_path
+        #print "image name = " + multi_tmp_bin_in
         shutil.copy2(in_img_path, multi_tmp_bin_in)
 
         for img_name in img_name_list:

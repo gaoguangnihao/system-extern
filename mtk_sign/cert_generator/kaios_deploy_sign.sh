@@ -33,8 +33,6 @@ if [ $# -lt 4 ];then
 	usage
 	echo "############WORNG PARG ###########"
 	exit
-else 
-        echo "Begin to deploy cert1s and cert2_key"
 fi
 
 #FIXED-ME for copy script
@@ -64,40 +62,50 @@ fi
 #FIXED-ME this need redefine for platform as img_key_deploy.sh
 v2_file="mt6739/security/cert_config/img_list.txt"
 
+echo "******************************************"
+echo '**********KAIOS key deploy Begin**********'
+echo "******************************************"
 
-echo '**********KAIOS key deploy Begin**************'
 bash $CURDIR/sign-image_v2/img_key_deploy.sh $CERT1_PATH $CERT2_KEY_PATH $IMG_DST
+
 if [ $? -ne 0 ] ;then
 	echo -e "\033[31m ERROR $Rva exit !!! \033[0m"	
 	exit 129
 fi
 
 #PLATFORM=mt6739 python ./sign-image_v2/img_key_deploy.py mt6739 kaios31_jpv cert1_key_path=/local/keys-mtk/kaios_orign/root_prvk.pem cert2_key_path=/local/keys-mtk/kaios_orign/img_prvk.pem root_key_padding=pss | tee img_key_deploy.log
-echo '******success !!! keys deploy cert1 and cert2_key*******'
-
+echo "******************************************"
+echo '**********KAIOS key deploy End**********'
+echo "******************************************"
+echo 
+echo 
+echo 
+echo "******************************************"
 echo '******KAIOS copy image Begin*******'
+echo "******************************************"
 
 # copy image to the in folder 
 rm -fr $IMG_DST/*
 if [ -f $CURDIR/$CP_tools ]; then
 	bash  $CURDIR/$CP_tools  $IMG_SRC $IMG_DST
 else
-        echo "copy tools not found"
-	exit
+    echo "copy tools not found"
+	exit 127
 fi
-echo 'delete the orign verified image'
-
-P_dir='pwd'
 
 rm -fr $IMG_DST/*-verified*
 
-echo '**********KAIOS-CP-IMG End***********'
+echo "******************************************"
+echo '******KAIOS copy image End*******'
+echo "******************************************"
 
 echo 
 echo 
-echo
 
-echo '**********KAIOS-SIGN-Begin***********'
+echo "******************************************"
+echo '*********KAIOS sign image Begin**********'
+echo "******************************************"
+
 #######################################
 # Check arguments
 #######################################
@@ -115,10 +123,11 @@ fi
 
 # sign-image-nodeps
 if [ -f "$CURDIR/$v2_file" ]; then
-	echo "v2 sign flow begin"
-	echo python $CURDIR/sign-image_v2/sign_flow.py -env_cfg $CURDIR/sign-image_v2/env.cfg "${MTK_PLATFORM_DIR}" "${MTK_BASE_PROJECT}"
-
-	PYTHONDONTWRITEBYTECODE=True BOARD_AVB_ENABLE= python $CURDIR/sign-image_v2/sign_flow.py -env_cfg $CURDIR/sign-image_v2/env.cfg "${MTK_PLATFORM_DIR}" "${MTK_BASE_PROJECT}" |tee sign_flow.log
+	PYTHONDONTWRITEBYTECODE=True BOARD_AVB_ENABLE= python $CURDIR/sign-image_v2/sign_flow.py -env_cfg $CURDIR/sign-image_v2/env.cfg "${MTK_PLATFORM_DIR}" "${MTK_BASE_PROJECT}" |tee $CURDIR/sign_flow.log
+	if [ $? -ne 0 ] ;then
+	echo -e "error !!! sign image"	
+	exit 129
+	fi
 	echo "v2 sign flow done"
 	echo "v2_file ($CURDIR/$v2_file)"
 else
@@ -132,4 +141,6 @@ else
 	#perl vendor/mediatek/proprietary/scripts/sign-image/SignTool.pl "${MTK_BASE_PROJECT}" "${MTK_PROJECT_NAME}" "${MTK_PATH_CUSTOM}" "${MTK_SEC_SECRO_AC_SUPPORT}" "${MTK_NAND_PAGE_SIZE}" "${PRODUCT_OUT}" "${OUT_DIR}"
 fi
 
-echo '**********KAIOS-SIGN-End***********'
+echo "******************************************"
+echo '*********KAIOS sign image End**********'
+echo "******************************************"

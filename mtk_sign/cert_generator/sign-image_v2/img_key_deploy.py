@@ -36,7 +36,7 @@ def create_out_dir(path):
     create output directory
     """
     out_dir = os.path.abspath(path)
-    print "Create dir:" + out_dir
+    #print "Create dir:" + out_dir
 
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
@@ -216,7 +216,7 @@ def check_img_type(img, env):
         is_raw = 1
         is_md = 0
         return is_raw, is_md
-    print img_file
+    #print img_file
 
     file1 = open(img_file, "rb")
     header_size = struct.calcsize(MKIMG_HDR_FMT)
@@ -253,12 +253,10 @@ def gen_cert2_key(img_list, args, tmp_path):
     """
     generate private key for image signing
     """
-    print "Start gen cert2 key to " + tmp_path.cert2_key_dir
-
-    print "clean up cert2_key_dir"
-    print "dhcui tmp_path %s ",tmp_path
+    #print "Start gen cert2 key to " + tmp_path.cert2_key_dir
+    #print "dhcui tmp_path %s ",tmp_path
     for old_file in os.listdir(tmp_path.cert2_key_dir):
-	print "dhcui old_file" + old_file
+	#print "dhcui old_file" + old_file
         os.remove(os.path.join(tmp_path.cert2_key_dir, old_file))
 
     for img in img_list:
@@ -271,10 +269,8 @@ def gen_cert2_key(img_list, args, tmp_path):
             lib.cert.rsa_key_gen(final_prvk, 2048)
         else:
             if lib.cert.is_prvk(args["cert2_key_path"]):
-                print "Gen dhcui prvk " + prvk
                 shutil.copy2(args["cert2_key_path"], final_prvk)
             elif lib.cert.is_pubk(args["cert2_key_path"]):
-                print "Gen dhcui pubk " + pubk
                 shutil.copy2(args["cert2_key_path"], final_pubk)
             else:
                 print 'Unknown key type: ignored'
@@ -300,7 +296,7 @@ def gen_cert1(img_list, args, env, tmp_path):
     is_raw = 0
     is_md = 0
 
-    print "clean up cert1_dir"
+    #print "clean up cert1_dir"
     for old_file in os.listdir(tmp_path.cert1_dir):
         os.remove(os.path.join(tmp_path.cert1_dir, old_file))
 
@@ -316,11 +312,11 @@ def gen_cert1(img_list, args, env, tmp_path):
         img_ver, img_group = get_img_ver_group(img, env)
         part_name = img_name_to_part_name(img)
         is_raw, is_md = check_img_type(part_name, env)
-        print "img: " + str(img)
-        print "img_ver: " + str(img_ver)
-        print "img_group: " + str(img_group)
-        print "is_raw: " + str(is_raw)
-        print "is_md: " + str(is_md)
+        #print "img: " + str(img)
+        #print "img_ver: " + str(img_ver)
+        #print "img_group: " + str(img_group)
+        #print "is_raw: " + str(is_raw)
+        #print "is_md: " + str(is_md)
         if is_md == 0:
             if args["root_key_padding"]:
                 sign_obj = sign.Sign()

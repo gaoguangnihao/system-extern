@@ -172,7 +172,7 @@ class Sign(object):
         create output folder
         """
         dir_path = os.path.dirname(path)
-        print "Create dir:" + dir_path
+        #print "Create dir:" + dir_path
 
         try:
             os.makedirs(dir_path)
@@ -185,7 +185,7 @@ class Sign(object):
         create output folder based on absolute path
         """
         dir_path = os.path.abspath(path)
-        print "Create dir:" + dir_path
+        #print "Create dir:" + dir_path
 
         try:
             os.makedirs(dir_path)
@@ -256,7 +256,6 @@ class Sign(object):
             root_key_padding = 'legacy'
         else:
             root_key_padding = self.args['root_key_padding']
-        print "root_key_padding = " + root_key_padding
 
         if int(sw_id) != 0:
             fill_cert_config(cert1_config_out, sw_id, SW_ID_REPLACE_TARGET)
@@ -273,7 +272,6 @@ class Sign(object):
                       root_key_padding)
         cert1_img_type = 0x2 << 24
         add_mkimg_header(cert1_name, 0, cert1_img_type, "cert1", self.context)
-        print "output path:" + cert1_name
         return
 
     def gen_cert1md(self):
@@ -290,9 +288,6 @@ class Sign(object):
             root_key_padding = 'legacy'
         else:
             root_key_padding = self.args['root_key_padding']
-        print "root_key_padding = " + root_key_padding
-
-        print img_file
         #check is Raw
         is_raw, is_md, hdr_size = check_is_raw(img_file)
 
@@ -341,7 +336,7 @@ class Sign(object):
 
         cert1md_img_type = 0x2 << 24 | 0x1
         add_mkimg_header(cert1md_name, 0, cert1md_img_type, "cert1md", self.context)
-        print "output path:" + cert1md_name
+        #print "output path:" + cert1md_name
 
     def gen_cert2(self):
         """
@@ -412,7 +407,7 @@ class Sign(object):
             return
 
         get_pure_img(img_file, img_array, size_array, offset_array)
-        print "bin_number:" + str(len(img_array))
+        #print "bin_number:" + str(len(img_array))
         #Get hash from image
         i = 0
         img_list_end = 0
@@ -459,8 +454,8 @@ class Sign(object):
                     append_file(img, cert2_name)
                     #cat sig file
                     sig_file = os.path.join(sig_path, img_name + ".sig")
-                    print img_ver
-                    print "sig:" + sig_file
+                    #print img_ver
+                    #print "sig:" + sig_file
                     shutil.copy2(cert1, sig_file)
                     append_file(sig_file, cert2_name)
 
@@ -476,7 +471,7 @@ class Sign(object):
         #Post Process
         shutil.copy2(final_bin, os.path.join(bin_path, img_name))
         shutil.copy2(os.path.join(bin_path, img_name), os.path.join(out, img_name))
-        print "output path:" + os.path.join(out, img_name)
+        #print "output path:" + os.path.join(out, img_name)
         return
 
     def gen_img_hash_list(self, img_file, cert1, cert_privk, img_name, img_ver):
@@ -491,11 +486,11 @@ class Sign(object):
         data_size = 128 * 1048576
 
         img_size = os.path.getsize(img_file)
-        print "img_size => "+ str(img_size)
+        #print "img_size => "+ str(img_size)
         file1 = open(img_file, 'rb')
         package_num = (img_size + (data_size - 1)) / data_size
-        print "package_num => "+ str(package_num)
-        print "get " + img_name + " hash list..."
+        #print "package_num => "+ str(package_num)
+        #print "get " + img_name + " hash list..."
 
         bin_tmp_path = self.context['bin_tmp_path']
         cert2_name = self.context['cert2_name']
@@ -599,7 +594,7 @@ def parse_multi_bin(img_file, target_img_name, context):
     img_name_array = []
 
     file_size = os.path.getsize(img_file)
-    print "file_size: "+ str(hex(file_size))
+    #print "file_size: "+ str(hex(file_size))
 
     first_img = 1
     final_size = 0
@@ -627,7 +622,7 @@ def parse_multi_bin(img_file, target_img_name, context):
 
         # include header + image + padding size to 16 bytes align
         img_size = (dsize + hdr_size + (align_size - 1)) / align_size * align_size
-        print "img-" + str(index) + " size:" + hex(img_size)
+        #print "img-" + str(index) + " size:" + hex(img_size)
 
         img_type_byte3 = (img_type >> 24) & 0xFF
 

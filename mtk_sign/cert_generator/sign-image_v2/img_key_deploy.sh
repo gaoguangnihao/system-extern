@@ -38,6 +38,7 @@ fi
 CURDIR="`dirname $0`"
 
 #FIXED-ME should be config the env.cfg
+
 #in_path = /home/dhcui/mtk_m_jpv
 #out_path = /home/dhcui/mtk_m_jpv
 #cert1_dir = ../${PLATFORM}/security/cert_config/cert1
@@ -48,15 +49,15 @@ CURDIR="`dirname $0`"
 #mkimage_tool_path = mkimage20/
 
 python $CURDIR/reconfig_env.py $CURDIR/env.cfg $IMAGE_PATH
-
+#FIXED-ME for platform name and project name
 if [ -d $CERT1_PATH ];then
-	PLATFORM=mt6739 python $CURDIR/img_key_deploy.py mt6739 kaios31_jpv cert1_key_path=$CERT1_PATH/root_prvk.pem cert2_key_path=$CERT2_KEY_PATH/img_prvk.pem root_key_padding=pss | tee img_key_deploy.log
+	PLATFORM=mt6739 python $CURDIR/img_key_deploy.py mt6739 kaios31_jpv cert1_key_path=$CERT1_PATH/root_prvk.pem cert2_key_path=$CERT2_KEY_PATH/img_prvk.pem root_key_padding=pss | tee $CURDIR/img_key_deploy.log
 	if [ $? != 0 ];then
 	echo "error!! img_key_deploy"
 	exit 129
 	fi
 else
    	echo "error !!! NOT A FOLDER"
-	exit 100
+	exit 128
 fi
 

@@ -54,13 +54,14 @@ for img_file in ${img_files[@]};do
 	fi
 done
 
-echo =====================================
+echo "====================================="
 if [ $COPY_IMG_ERR != 0 ];then
 	echo "===========  copy error ============="
+  exit 128
 else
-	echo "============= copy img files OK ==============="
+	echo "======== copy img files OK =========="
 fi
-echo =====================================
+echo "====================================="
 echo  
 
 echo 
