@@ -31,8 +31,6 @@ if [ $# -lt 3 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	exit 128
-else 
-    echo "******Begin to deploy certs******"
 fi
 #CURDIR="`pwd`"/"`dirname $0`"
 CURDIR="`dirname $0`"

@@ -58,7 +58,7 @@ class SignFlow(object):
                         print 'Use out path in env.cfg'
                         self.out_path = os.path.join(cfg_file_dir, value)
                     else:
-                        #print 'Use out path in Android'
+                        print 'Use out path in Android'
                     # in_path is optional, hence we give it default value here
                     if self.in_path is None:
                         self.in_path = self.out_path

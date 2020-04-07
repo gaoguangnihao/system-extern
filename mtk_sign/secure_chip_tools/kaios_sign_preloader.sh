@@ -50,15 +50,26 @@ echo "preloader sign begin"
 ## below commond need root_prvk.pem to generator key_cert.bin 
 ## and sign the preloader
 
+#before we need to config the pl_key.ini/pl_gfh_config_cert_chain.ini/pl_content.ini as platform 
+#FIXED-ME
+
 python $CURDIR/pbp.py -i $CURDIR/settings/pbp/pl_key.ini -k $CURDIR/out/pbp/key_cert.bin -g $CURDIR/settings/pbp/pl_gfh_config_cert_chain.ini -c $CURDIR/settings/pbp/pl_content.ini -func sign -o $CURDIR/out/pbp/preloader-signed.bin $CURDIR/prebuilt/pbp/preloader.bin
 
 echo "use key_cert.bin to sign"
+
+if [ $? -ne 0 ] ;then
+echo -e "error !!! preloader sign image"
+exit 129
+fi
 
 python $CURDIR/pbp.py -k $CURDIR/out/pbp/key_cert.bin -g $CURDIR/settings/pbp/pl_gfh_config_cert_chain.ini  -c $CURDIR/settings/pbp/pl_content.ini -func sign -o $CURDIR/out/pbp/preloader-signed.bin $CURDIR/prebuilt/pbp/preloader.bin
 
 #python resign_da.py prebuilt/resignda/MTK_AllInOne_DA.bin MT6739 settings/resignda/bbchips_pss.ini all out/resignda/MTK_AllInOne_DA.bin
 
-echo "preloader sign done"
+if [ $? -ne 0 ] ;then
+echo -e "error !!! preloader sign image"
+exit 129
+fi
 
 echo '============================================='
 echo '==copy sign preloader to the path_preloader=='
@@ -66,6 +77,11 @@ echo '============================================='
 
 echo $path_preloader
 cp $CURDIR/out/pbp/preloader-signed.bin $path_preloader/preloader_kaios31_jpv.bin
+
+if [ $? -ne 0 ] ;then
+echo -e "error !!! copy preloader signed image"
+exit 129
+fi
 
 echo success done 
 

@@ -45,10 +45,12 @@ if [ $? != 0 ];then
    echo "error !! about DM sign boot and system images"
    exit 129
 fi
+echo 
+echo 
 echo "success !!! DM sign "
 #done
 if [ -d "secure_chip_tools/out" ] ; then
-   echo "out folder exists. So remove it."
+   echo "secure_chip_tools out folder exists. So remove it."
    rm -rf secure_chip_tools/out
 fi
 mkdir secure_chip_tools/out

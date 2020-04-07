@@ -38,20 +38,20 @@ fi
 
 # Test if out/ exists already and delete it if yes.
 if [ -d "$CURDIR/out" ] ; then
-  echo "out folder exists. So remove it."
+  echo "boot_system out folder exists. So remove it."
   rm -rf $CURDIR/out
 fi
 mkdir $CURDIR/out
 
 # Test if out/ exists already and delete it if yes.
 if [ -d "$CURDIR/in" ] ; then
-  echo "in folder exists. So remove it."
+  echo "boot_system in folder exists. So remove it."
   rm -rf $CURDIR/in
 fi
 mkdir $CURDIR/in
 
 if [ -d "$CURDIR/system" ] ; then
-  echo "system folder exists. So remove it."
+  echo "boot_system system folder exists. So remove it."
   rm -rf $CURDIR/system
 fi
 mkdir $CURDIR/system
@@ -76,7 +76,7 @@ if [ -f $CURDIR/system_image_info.txt ];then
    rm $CURDIR/system_image_info.txt
    cp $PRJ_DIR/system_image_info.txt $CURDIR/system_image_info.txt
 else 
-   echo "error!! No system_image_info.txt config files"
+   echo "error!! No boot_system system_image_info.txt config files"
    exit 127
 fi
 
@@ -88,7 +88,7 @@ fi
 PATH_KEY=$KEY_PATH$KEY_SUFF
 
 if [ -d $KEY_PATH ];then
-   echo "KEY PATH is" $PATH_KEY
+   echo "keys path is" $PATH_KEY
 else 
    echo "error!! NO DM KEY exit"
    exit 127
