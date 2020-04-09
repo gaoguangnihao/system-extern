@@ -23,18 +23,35 @@ function usage() {
 ## primary_dbg_prvk and secondary_dbg_key 
 CURDIR="`pwd`"/"`dirname $0`"
 
-echo "GENERATOR AUTH FILE BEGIN"
-
+echo "******************************************"
+echo "********Generator auth file begin*********"
+echo "******************************************"
+echo "......"
+sleep 3
 echo $CURDIR
 
 DESTPATH=$1
 
+if [ $# -lt 1 ];then
+	echo "############WORNG PARG ###########"
+	usage
+	echo "############WORNG PARG ###########"
+	exit 128
+fi
 
 # this use by root private key owner
+# FIXED-ME sla/da key use same with root
 
 python $CURDIR/toolauth.py -i $CURDIR/settings/toolauth/toolauth_key.ini -g $CURDIR/settings/toolauth/toolauth_gfh_config_pss.ini $CURDIR/out/toolauth/auth_sv5.auth
 
+if [ $? -ne 0 ] ;then
+	echo -e "error !!! toolauth_key generator"	
+	exit 129
+fi
+
 cp $CURDIR/out/toolauth/auth_sv5.auth $DESTPATH
 
-echo "GENERATOR AUTH FILE END"
+echo "******************************************"
+echo "********Generator auth file end***********"
+echo "******************************************"
 

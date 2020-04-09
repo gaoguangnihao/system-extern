@@ -63,7 +63,7 @@ fi
 v2_file="mt6739/security/cert_config/img_list.txt"
 
 echo "******************************************"
-echo '**********KAIOS key deploy Begin**********'
+echo '**********KAIOS key deploy begin**********'
 echo "******************************************"
 
 bash $CURDIR/sign-image_v2/img_key_deploy.sh $CERT1_PATH $CERT2_KEY_PATH $IMG_DST
@@ -75,16 +75,16 @@ fi
 
 #PLATFORM=mt6739 python ./sign-image_v2/img_key_deploy.py mt6739 kaios31_jpv cert1_key_path=/local/keys-mtk/kaios_orign/root_prvk.pem cert2_key_path=/local/keys-mtk/kaios_orign/img_prvk.pem root_key_padding=pss | tee img_key_deploy.log
 echo "******************************************"
-echo '**********KAIOS key deploy end**********'
+echo '**********KAIOS key deploy end************'
 echo "******************************************"
+echo "......"
 sleep 3
 echo 
-echo 
-echo 
 echo "******************************************"
-echo '******KAIOS copy image Begin*******'
+echo "**********KAIOS copy image begin**********"
 echo "******************************************"
-
+echo "......"
+sleep 3
 # copy image to the in folder 
 rm -fr $IMG_DST/*
 if [ -f $CURDIR/$CP_tools ]; then
@@ -97,13 +97,15 @@ fi
 rm -fr $IMG_DST/*-verified*
 
 echo "******************************************"
-echo '******KAIOS copy image End*******'
+echo '**********KAIOS copy image end************'
+echo "******************************************"
+echo "......"
+sleep 3
+echo "......"
+echo "******************************************"
+echo '*********KAIOS sign image Begin***********'
 echo "******************************************"
 sleep 3
-
-echo "******************************************"
-echo '*********KAIOS sign image Begin**********'
-echo "******************************************"
 
 #######################################
 # Check arguments
