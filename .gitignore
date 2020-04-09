@@ -23,4 +23,5 @@ mtk_sign/secure_chip_tools/out/sctrlcert/
 mtk_sign/secure_chip_tools/out/toolauth/
 mtk_sign/secure_chip_tools/reconfig_bootloader.py
 mtk_sign/system_img_chage_backup.txt
+mtk_sign/efuse_generator/out/
 

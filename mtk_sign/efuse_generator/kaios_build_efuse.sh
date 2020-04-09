@@ -29,8 +29,8 @@ fi
 
 MTK_PROJECT=kaios31_jpv
 TARGET=kaios31_jpv
-#CURRDIR="`pwd`"/"`dirname $0`"
-CURRDIR=`pwd`
+CURRDIR="`pwd`"/"`dirname $0`"
+#CURRDIR=`pwd`
 PRELOADER_OUT=$CURRDIR/out
 PRELOADER_DIR=preloader
 MTK_PLATFORM=MT6739
