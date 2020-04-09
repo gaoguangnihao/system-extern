@@ -75,8 +75,9 @@ fi
 
 #PLATFORM=mt6739 python ./sign-image_v2/img_key_deploy.py mt6739 kaios31_jpv cert1_key_path=/local/keys-mtk/kaios_orign/root_prvk.pem cert2_key_path=/local/keys-mtk/kaios_orign/img_prvk.pem root_key_padding=pss | tee img_key_deploy.log
 echo "******************************************"
-echo '**********KAIOS key deploy End**********'
+echo '**********KAIOS key deploy end**********'
 echo "******************************************"
+sleep 3
 echo 
 echo 
 echo 
@@ -98,9 +99,7 @@ rm -fr $IMG_DST/*-verified*
 echo "******************************************"
 echo '******KAIOS copy image End*******'
 echo "******************************************"
-
-echo 
-echo 
+sleep 3
 
 echo "******************************************"
 echo '*********KAIOS sign image Begin**********'

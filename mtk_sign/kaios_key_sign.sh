@@ -45,8 +45,9 @@ if [ $? != 0 ];then
    echo "error !! about DM sign boot and system images"
    exit 129
 fi
-echo 
-echo 
+sleep 3
+echo "......"
+echo "......"
 echo "success !!! DM sign "
 #done
 if [ -d "secure_chip_tools/out" ] ; then
@@ -62,6 +63,7 @@ if [ $? != 0 ];then
 fi
 
 echo "success !! kaios_deploy_sign"
+sleep 3
 ##sign common image done!!!
 
 ##beging to sign NO-GFH preloader image
@@ -76,6 +78,8 @@ else
 fi
 
 echo "success !! preloader sign \n"
+sleep 3
+
 if [[ $SIGN_DA = "signda" ]]; then
    bash secure_chip_tools/kaios_sign_da.sh $DA_BIN_PATH
 
@@ -84,6 +88,7 @@ if [[ $SIGN_DA = "signda" ]]; then
    exit 129
    fi
    echo "success !! signda "
+   sleep 3
 ##we really to generator auth_sv5 files like da just need check tools 
 ## DAA/SLA/ROOT/IMG keys
 
@@ -93,6 +98,7 @@ if [[ $SIGN_DA = "signda" ]]; then
      exit 129
    fi
    echo "success !! auth_sv5 generator "
+   sleep 3
 
    bash secure_chip_tools/kaios_generator_scert_file.sh $DA_BIN_PATH
    if [ $? != 0 ];then
@@ -100,6 +106,7 @@ if [[ $SIGN_DA = "signda" ]]; then
    exit 129
    fi
    echo "success !! auth_sv5 generator "
+   sleep 3
 ##we will be generator scert file also
 else
     echo "!!!!! da-br.da-pl not signed"

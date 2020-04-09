@@ -16,3 +16,11 @@
 
 cert_generator/mt6739/security/cert_config/cert1/
 cert_generator/mt6739/security/cert_config/cert2_key/
+mtk_sign/boot_system/in/
+mtk_sign/boot_system/out/
+mtk_sign/env_backup.txt
+mtk_sign/secure_chip_tools/out/sctrlcert/
+mtk_sign/secure_chip_tools/out/toolauth/
+mtk_sign/secure_chip_tools/reconfig_bootloader.py
+mtk_sign/system_img_chage_backup.txt
+

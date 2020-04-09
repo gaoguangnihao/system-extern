@@ -30,7 +30,7 @@ if [ -f "$path_da/MTK_AllInOne_DA.bin" ]; then
    	cp $path_da/MTK_AllInOne_DA.bin $CURDIR/prebuilt/resignda
 else
 	usage
-	exit
+	exit 128
 fi
 
 if [ -f "$path_da/da_pl.bin" ]; then 
@@ -62,11 +62,18 @@ echo "da sign begin"
 
 python $CURDIR/resign_da.py $CURDIR/prebuilt/resignda/MTK_AllInOne_DA.bin MT6739 $CURDIR/settings/resignda/bbchips_pss.ini all $CURDIR/out/resignda/MTK_AllInOne_DA.bin-sign
 
+if [ $? != 0 ];then
+	echo "error!! resign_da for all in one"
+	exit 129
+fi
 
 
 python $CURDIR/resign_da.py $CURDIR/prebuilt/resignda/da_pl.bin MT6739 $CURDIR/settings/resignda/bbchips_pss.ini all $CURDIR/out/resignda/DA_PL.bin-sign
 
-echo "DA-BR DA-PL sign down"
+if [ $? != 0 ];then
+	echo "error!! resign_da for da_pl"
+	exit 129
+fi
 
 echo '============================================='
 echo '==copy sign da to the $path_da=='
@@ -76,8 +83,11 @@ cp $CURDIR/out/resignda/MTK_AllInOne_DA.bin-sign $path_da/MTK_AllInOne_DA.bin-si
 cp $CURDIR/out/resignda/DA_PL.bin-sign $path_da/DA_PL.bin-sign.bin
 
 echo "below is for test code for my pc"
-cp $CURDIR/out/resignda/MTK_AllInOne_DA.bin-sign /local/tools/mtk-download/MTK_AllInOne_DA.bin-mt6739sign.bin
-cp $CURDIR/out/resignda/DA_PL.bin-sign /local/tools/mtk-download/DA_PL.bin-mt6739sign.bin
+
+if [ -d "/local/tools/mtk-downloa"]; then
+	cp $CURDIR/out/resignda/MTK_AllInOne_DA.bin-sign /local/tools/mtk-download/MTK_AllInOne_DA.bin-mt6739sign.bin
+	cp $CURDIR/out/resignda/DA_PL.bin-sign /local/tools/mtk-download/DA_PL.bin-mt6739sign.bin
+fi
 
 
 echo success done 
