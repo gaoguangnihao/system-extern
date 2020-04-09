@@ -43,6 +43,7 @@ EFUSE_PY_DEF=$CURRDIR/efuse_definition.xml
 EFUSE_INPUT_FILE=$CURRDIR/input.xml
 EFUSE_IMAGE_NAME=efuse_$MTK_PROJECT.img
 OUTPUT_DIR=$CURRDIR/out
+CURRDATE="`date +%Y-%m-%d-%H:%M:%S`"
 
 echo $OUTPUT_DIR
 echo $EFUSE_IMAGE_NAME
@@ -67,7 +68,7 @@ if [ $? != 0 ];then
    exit 129
 fi
 #$(PBP_TOOL) -func keyhash -i $(CHIP_KEY) -o $(OUTPUT_DIR)/keyhash.txt
-python $EFUSE_PY_FILE -f $EFUSE_INPUT_FILE -d $EFUSE_PY_DEF -k $OUTPUT_DIR/keyhash.txt -o $OUTPUT_DIR/$EFUSE_IMAGE_NAME -l $PRELOADER_OUT/efuse_bingen.log
+python $EFUSE_PY_FILE -f $EFUSE_INPUT_FILE -d $EFUSE_PY_DEF -k $OUTPUT_DIR/keyhash.txt -o $OUTPUT_DIR/$EFUSE_IMAGE_NAME -l efuse_bingen_$CURRDATE.log
 
 if [ $? != 0 ];then
    echo "error !! generator efuse.img"

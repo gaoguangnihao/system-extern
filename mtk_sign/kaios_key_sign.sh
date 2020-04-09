@@ -18,11 +18,12 @@ function usage() {
 	    echo "5 $5 is a flag ,wiil be sign preloader or not"
 	    echo "6 $6 is a flag , will be sign da or not"
 	    echo "7 $7 is da image path for will be signed"
-	    echo "./kaios_key_sign.sh /home/kai-user/key_path /home/kai-user/key_path /home/kai-user/image_path /home/dhcui/image_out preloader signda /home/dhcui/da_path"
+	    echo "8 $8 is efuse to generator"
+	    echo "./kaios_key_sign.sh /home/kai-user/key_path /home/kai-user/key_path /home/kai-user/image_path /home/dhcui/image_out preloader signda /home/dhcui/da_path efuse"
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 }
 
-if [ $# -lt 7 ];then
+if [ $# -lt 8 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
@@ -36,6 +37,7 @@ OUTPUT_IMG_PATH=$4
 PRELOADER=$5
 SIGN_DA=$6
 DA_BIN_PATH=$7
+EFUSE=$8
 
 #prepare boot and system image with new dm key
 #Note boot_system/mt6731_jpv_jio/ should be re-define FIXED-ME
@@ -112,4 +114,16 @@ else
     echo "!!!!! da-br.da-pl not signed"
 fi
 
+##beging to sign NO-GFH preloader image
+if [[ $EFUSE = "efuse" ]]; then
+   bash efuse_generator/kaios_build_efuse.sh $CERT1_PATH/root_prvk.pem
+   
+   if [ $? != 0 ];then
+   echo "error !! preloader sign error "
+   exit 129
+   fi
+   echo "success !! efuse image generator \n"
+else
+   echo "!!!! efuse not generator"
+fi
 

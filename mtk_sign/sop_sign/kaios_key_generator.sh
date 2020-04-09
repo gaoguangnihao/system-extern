@@ -220,7 +220,7 @@ echo 'config pl_key.ini /plcontent.ini /pl_gfh_config_cert_chain.ini'
 ### but dakey.h use   secure_chip_tools/keys/pbp/root_prvk.pem ,why not security/chip_config/s/key?
 ### oemkey.h ===>     img_pubk.der
 ### da sign 
-
+###openssl rsa -in root_prvk.pem -text
 echo 'config da_prvk.pem and epp_prvk.pem'
 echo 
 echo '============================================='

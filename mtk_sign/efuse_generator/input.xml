@@ -34,9 +34,9 @@
         Enable_SW_JTAG_CON="false"
         Enable_ACC="false"
         Enable_ACK="false"
-        Enable_SLA="false"
-        Enable_DAA="false"
-        Enable_SBC="false"
+        Enable_SLA="true"
+        Enable_DAA="true"
+        Enable_SBC="true"
         Disable_JTAG="false" />
       <sbc-pub-key>
         <pub-key-e></pub-key-e>
