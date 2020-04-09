@@ -1,0 +1,13 @@
+diff --git a/kaios31_jpv/ProjectConfig.mk b/kaios31_jpv/ProjectConfig.mk
+index a72199f6..fdec85e0 100755
+--- a/kaios31_jpv/ProjectConfig.mk
++++ b/kaios31_jpv/ProjectConfig.mk
+@@ -330,7 +330,7 @@ MTK_DYNAMIC_SBP_LEVEL = 1
+ MTK_DYNAMIC_SBP_SUPPORT = yes
+ MTK_EAP_SIM_AKA = yes
+ MTK_ECCCI_C2K = yes
+-MTK_EFUSE_WRITER_SUPPORT = no
++MTK_EFUSE_WRITER_SUPPORT = yes
+ MTK_EMBMS_SUPPORT = yes
+ MTK_EMCAMERA_APP = no
+ MTK_EMMC_DISCARD = no

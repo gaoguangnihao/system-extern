@@ -1,0 +1,13 @@
+diff --git a/Android.mk b/Android.mk
+index 0806802..a68022f 100644
+--- a/Android.mk
++++ b/Android.mk
+@@ -594,7 +594,7 @@ LOCAL_C_INCLUDES += system/core/libsuspend/include
+ #endif
+ 
+ ifneq ($(BOARD_USES_MTK_AUDIO),yes)
+-LOCAL_CFLAGS -= -DFEATURE_FTM_AUDIO
++LOCAL_CFLAGS += -DFEATURE_FTM_AUDIO
+ endif
+ 
+ ifeq ($(MTK_DUAL_MIC_SUPPORT),yes)

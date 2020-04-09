@@ -1,0 +1,9 @@
+diff --git a/project/kaios31_jpv.mk b/project/kaios31_jpv.mk
+index 5a56378..12d3fae 100644
+--- a/project/kaios31_jpv.mk
++++ b/project/kaios31_jpv.mk
+@@ -41,3 +41,4 @@ MCUPM_FW_USE_PARTITION = yes
+ MTK_PRODUCT_LINE_PLATFORM = MT6731
+ DEFINES += MTK_LCM_IS_QVGA_PANEL
+ MTK_DYNAMIC_CCB_BUFFER_GEAR_ID = 2
++MTK_EFUSE_WRITER_SUPPORT = yes
