@@ -48,15 +48,15 @@ IMG_DST=$4
 if [ -d $IMG_SRC ];then
    echo 
 else
-   echo "\033[31m ERROR WRONG FOLDER !!! \033[0m"
+   echo "error !! images source" $IMG_SRC "not exist"
    exit 127
 fi
 	
 if [ -d $IMG_DST ];then
    echo
 else
-   echo "\033[31m ERROR WRONG FOLDER !!! \033[0m"
-   exit 127
+   echo "WARN !!  image output folder" $IMG_DST "not exist"
+   mkdir -p $IMG_DST
 fi
 
 #FIXED-ME this need redefine for platform as img_key_deploy.sh

@@ -14,6 +14,11 @@
 #-ot 判断file1是否比file2旧  [ "/usr/local/src/file1" -ot "/usr/local/src/file2" ]
 #########################################
 
+echo '============================================='
+echo '=========generator DFP keys by KAIOS========='
+echo '============================================='
+echo 
+
 pd_Tools="../der_extractor/pem_to_der.py"
 de_Tools="../der_extractor/der_extractor"
 D_CURR="pwd"
@@ -21,24 +26,34 @@ D_CURR="pwd"
 if [ ! -n "$1" ] ;then
     echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
     echo "You have not input PRODUCT_NAME!"
-    echo "Try ./kaios_key_generator.sh Kaios31_jpv"
+    echo "Try ./kaios_key_generator.sh Kaios31_jpv path_of_save"
     echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
-    exit
+    exit 127
 else
     echo "the args you input is $1"
 
 fi
 
-
+if [ $# -lt 2 ];then
+	echo "############WORNG PARG ###########"
+	echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
+	echo "You have not input PRODUCT_NAME!"
+	echo "try ./kaios_key_generator.sh Kaios31_jpv path_of_save"
+	echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
+	exit 127
+fi
+#DEST_FOLDER=/local/keys-mtk/ should be dynamic
 PRODUCT_NAME=$1
+DEST_FOLDER=$2
 
 if [ ! -d "$PRODUCT_NAME" ];then
        mkdir $PRODUCT_NAME
+       mkdir $PRODUCT_NAME/PUBLIC_KEYS
        echo "$PRODUCT_NAME Creat done"
 else 
-   
+    echo "!!the project already exist!!"
   	echo $PRODUCT_NAME
-	exit
+	exit 128
 fi
 
 # generator root key 
@@ -115,6 +130,43 @@ echo "generator sign key for DA_PL signing"
 #VERIFIED_BOOT_IMG_AUTH_KEY.ini need copy to $DA_Kit/Raphael-da/custom/security_export/usbdl4enduser_dummy/VERIFIED_BOOT_IMG_AUTH_KEY.ini
 #$de_Tools root_prvk.der VERIFIED_BOOT_IMG_AUTH_KEY.ini ANDROID_SIGN
 
+#beging to generator dm-key for system device verity
+
+echo "generator RSA key pair"
+openssl genrsa -out dm_prvk.pem 2048
+
+echo "generator verity.pk8"
+
+openssl pkcs8 -topk8 -inform PEM -outform DER -in dm_prvk.pem -out verity.pk8 -nocrypt
+
+echo "generator verity.x509.pem"
+openssl req -new -x509 -key dm_prvk.pem -out verity.x509.pem -sha256 -subj '/C=US/ST=ShangHai/L=Mountain View/O=KAIOS/OU=KAIOS/CN=KAIOS/emailAddress=kaios@kaiostech.com'
+
+
+echo "generator verity_key"
+LD_LIBRARY_PATH=../lib ../bin/generate_verity_key -convert verity.x509.pem verity_key
+
+echo "rename verity_key"
+
+mv verity_key.pub verity_key
+
+#da_prvk use same root key 
+cp root_prvk.pem da_prvk.pem
+#epp_prvk use same img key
+cp img_prvk.pem epp_prvk.pem
+
+#use img prvk key about debug
+#please note scert root key must same as preloader root prvk 
+#now config preloader prvk root key same as root key
+cp img_prvk.pem secondary_dbg_prvk.pem
+cp img_prvk.pem primary_dbg_prvk.pem
+
+#use new prvk key about SLA
+openssl genrsa -out sla_prvk.pem 2048
+
+#move public keys to PUBLIC_KEYS
+
+
 cd ..
 
 #lock or unlock 
@@ -126,7 +178,8 @@ cd ..
 ## should be backup to server for 
 ## contenct to server and copy to special folder temp to /local/keys-mtk
 
-DEST_FOLDER=/local/keys-mtk/
+#FIXED-ME
+#DEST_FOLDER=/local/keys-mtk/
 
 cp -Rvdp $PRODUCT_NAME $DEST_FOLDER
 
@@ -169,7 +222,10 @@ echo 'config pl_key.ini /plcontent.ini /pl_gfh_config_cert_chain.ini'
 ### da sign 
 
 echo 'config da_prvk.pem and epp_prvk.pem'
-
+echo 
+echo '============================================='
+echo '=========generator DFP keys by KAIOS========='
+echo '============================================='
 ###
 #
 

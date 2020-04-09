@@ -43,7 +43,7 @@ echo "generator verity.pk8"
 openssl pkcs8 -topk8 -inform PEM -outform DER -in $CURDIR/$PRJ_DIR/dm_prvk.pem -out $CURDIR/$PRJ_DIR/verity.pk8 -nocrypt
 
 echo "generator verity.x509.pem"
-openssl req -new -x509 -key $CURDIR/$PRJ_DIR/prvk.pem -out $CURDIR/$PRJ_DIR/verity.x509.pem -sha256 -subj '/C=US/ST=ShangHai/L=Mountain View/O=KAIOS/OU=KAIOS/CN=KAIOS/emailAddress=kaios@kaiostech.com'
+openssl req -new -x509 -key $CURDIR/$PRJ_DIR/dm_prvk.pem -out $CURDIR/$PRJ_DIR/verity.x509.pem -sha256 -subj '/C=US/ST=ShangHai/L=Mountain View/O=KAIOS/OU=KAIOS/CN=KAIOS/emailAddress=kaios@kaiostech.com'
 
 
 echo "generator verity_key"
