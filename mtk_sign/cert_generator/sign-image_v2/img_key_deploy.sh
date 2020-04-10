@@ -48,8 +48,11 @@ CURDIR="`dirname $0`"
 
 python $CURDIR/reconfig_env.py $CURDIR/env.cfg $IMAGE_PATH
 #FIXED-ME for platform name and project name
+
+CURRDATE="`date +%Y-%m-%d-%H:%M:%S`"
+
 if [ -d $CERT1_PATH ];then
-	PLATFORM=mt6739 python $CURDIR/img_key_deploy.py mt6739 kaios31_jpv cert1_key_path=$CERT1_PATH/root_prvk.pem cert2_key_path=$CERT2_KEY_PATH/img_prvk.pem root_key_padding=pss | tee $CURDIR/img_key_deploy.log
+	PLATFORM=mt6739 python $CURDIR/img_key_deploy.py mt6739 kaios31_jpv cert1_key_path=$CERT1_PATH/root_prvk.pem cert2_key_path=$CERT2_KEY_PATH/img_prvk.pem root_key_padding=pss | tee $CURDIR/img_key_deploy_$CURRDATE.log
 	if [ $? != 0 ];then
 	echo "error!! img_key_deploy"
 	exit 129

@@ -5,7 +5,7 @@ import shutil
 
 def env_chage(file, image_path):
 
-	shutil.copy2(file, "env_backup.txt")
+	shutil.copy2(file, "env_cfg_backup.txt")
 
 	f = open("env_backup.txt", "r+")
 	lines = f.readlines()

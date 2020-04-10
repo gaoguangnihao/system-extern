@@ -69,7 +69,7 @@ echo "******************************************"
 bash $CURDIR/sign-image_v2/img_key_deploy.sh $CERT1_PATH $CERT2_KEY_PATH $IMG_DST
 
 if [ $? -ne 0 ] ;then
-	echo -e "\033[31m ERROR $Rva exit !!! \033[0m"	
+	echo "error !! img_key_deploy.sh"
 	exit 129
 fi
 
@@ -121,10 +121,11 @@ else
 	MTK_BASE_PROJECT=$5
 fi
 
+CURRDATE="`date +%Y-%m-%d-%H:%M:%S`"
 
 # sign-image-nodeps
 if [ -f "$CURDIR/$v2_file" ]; then
-	PYTHONDONTWRITEBYTECODE=True BOARD_AVB_ENABLE= python $CURDIR/sign-image_v2/sign_flow.py -env_cfg $CURDIR/sign-image_v2/env.cfg "${MTK_PLATFORM_DIR}" "${MTK_BASE_PROJECT}" |tee $CURDIR/sign_flow.log
+	PYTHONDONTWRITEBYTECODE=True BOARD_AVB_ENABLE= python $CURDIR/sign-image_v2/sign_flow.py -env_cfg $CURDIR/sign-image_v2/env.cfg "${MTK_PLATFORM_DIR}" "${MTK_BASE_PROJECT}" |tee $CURDIR/sign_flow_$CURRDATE.log
 	if [ $? -ne 0 ] ;then
 	echo -e "error !!! sign image"	
 	exit 129

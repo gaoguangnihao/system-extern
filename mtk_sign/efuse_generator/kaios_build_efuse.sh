@@ -1,6 +1,7 @@
 #!/bin/bash
 
 KEY_FILE=$1
+IMG_OUT=$2
 
 #openssl rsa -pubin -in $keypath -text
 #openssl rsa -RSAPublicKey_in -in $filename -pubout
@@ -14,11 +15,11 @@ function usage() {
 	#######################################
 	echo "*************************************"
 	echo "!!!!!!!!!!#1 is keys_path!!!!!!!!!!!"
-	echo "try ./kaios_build_efuse.sh keys_path"
+	echo "try ./kaios_build_efuse.sh keys_path image_out"
 	echo "*************************************"
 }
 
-if [ $# -lt 1 ];then
+if [ $# -lt 2 ];then
 	usage
 	exit 128
 else
@@ -75,6 +76,13 @@ if [ $? != 0 ];then
    exit 129
 fi
 
+cp -v $OUTPUT_DIR/$EFUSE_IMAGE_NAME $IMG_OUT/efuse.img
+
+if [ $? != 0 ];then
+   echo "error !! copy efuse.img to" $IMG_OUT
+   exit 129
+fi
+
 echo "*************************************"
-echo "*****Begin to generator efuse.img****"
+echo "*****End to generator efuse.img****"
 echo "*************************************"

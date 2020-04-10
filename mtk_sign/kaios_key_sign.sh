@@ -116,7 +116,7 @@ fi
 
 ##beging to sign NO-GFH preloader image
 if [[ $EFUSE = "efuse" ]]; then
-   bash efuse_generator/kaios_build_efuse.sh $CERT1_PATH/root_prvk.pem
+   bash efuse_generator/kaios_build_efuse.sh $CERT1_PATH/root_prvk.pem $OUTPUT_IMG_PATH
    
    if [ $? != 0 ];then
    echo "error !! preloader sign error "
