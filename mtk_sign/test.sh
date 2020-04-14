@@ -3,7 +3,7 @@
 # return value 128 means that parm NO. wrong
 # return value 129 means that exec prom wrong
 
-bash efuse_generator/kaios_build_efuse.sh /local/keys-mtk/kaios_jpv/root_prvk.pem
+bash efuse_generator/kaios_build_efuse.sh /local/keys-mtk/kaios_jpv/root_prvk.pem /home/dhcui
 
 curdate="`date +%Y-%m-%d-%H:%M:%S`"
 

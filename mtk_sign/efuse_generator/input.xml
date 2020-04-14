@@ -22,8 +22,8 @@
   <commands>
     <efuse>
       <magic-key
-        key1="87654321"
-        key2="ABCDEF90" />
+        key1="f6e2b190"
+        key2="c9a8d573" />
 
       <common-ctrl
         USB_download_type="0"
@@ -34,8 +34,8 @@
         Enable_SW_JTAG_CON="false"
         Enable_ACC="false"
         Enable_ACK="false"
-        Enable_SLA="true"
-        Enable_DAA="true"
+        Enable_SLA="false"
+        Enable_DAA="false"
         Enable_SBC="true"
         Disable_JTAG="false" />
       <sbc-pub-key>
