@@ -70,7 +70,7 @@ sleep 3
 
 ##beging to sign NO-GFH preloader image
 if [[ $PRELOADER = "preloader" ]]; then
-   bash secure_chip_tools/kaios_sign_preloader.sh $OUTPUT_IMG_PATH
+   bash secure_chip_tools/kaios_sign_preloader.sh $OUTPUT_IMG_PATH $CERT1_PATH
    if [ $? != 0 ];then
    echo "error !! preloader sign error "
    exit 129
@@ -83,7 +83,7 @@ echo "success !! preloader sign \n"
 sleep 3
 
 if [[ $SIGN_DA = "signda" ]]; then
-   bash secure_chip_tools/kaios_sign_da.sh $DA_BIN_PATH
+   bash secure_chip_tools/kaios_sign_da.sh $DA_BIN_PATH $CERT1_PATH
 
    if [ $? != 0 ];then
    echo "error!! preloader sign error "
@@ -94,7 +94,7 @@ if [[ $SIGN_DA = "signda" ]]; then
 ##we really to generator auth_sv5 files like da just need check tools 
 ## DAA/SLA/ROOT/IMG keys
 
-   bash secure_chip_tools/kaios_generator_auth_file.sh $DA_BIN_PATH
+   bash secure_chip_tools/kaios_generator_auth_file.sh $DA_BIN_PATH $CERT1_PATH
    if [ $? != 0 ];then
      echo "error !! auth_sv5 files"
      exit 129
@@ -102,7 +102,7 @@ if [[ $SIGN_DA = "signda" ]]; then
    echo "success !! auth_sv5 generator "
    sleep 3
 
-   bash secure_chip_tools/kaios_generator_scert_file.sh $DA_BIN_PATH
+   bash secure_chip_tools/kaios_generator_scert_file.sh $DA_BIN_PATH $CERT1_PATH
    if [ $? != 0 ];then
    echo "error !! scert_file"
    exit 129

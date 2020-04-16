@@ -15,7 +15,7 @@ function usage() {
 	echo '*****************************************'
 	echo "Generator ScertFile ..."
 	echo '*****************************************'
-	echo "Command: ./kaios_generator_scert_file.sh DESTPATH"
+	echo "Command: ./kaios_generator_scert_file.sh out_path key_path"
 	echo '*****************************************'
 }
 
@@ -30,8 +30,9 @@ echo $CURDIR
 echo "......"
 sleep 3
 DESTPATH=$1
+keypath=$2
 
-if [ $# -lt 1 ];then
+if [ $# -lt 2 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
@@ -42,6 +43,25 @@ fi
 # config scc_seconday_dbg.ini soc_id (can get from GLB__XXX.log)
 
 # this use by root private key owner
+primary_key="/primary_dbg_prvk.pem"
+root_key="/root_prvk.pem"
+second_key="/secondary_dbg_prvk.pem"
+
+
+
+#config scc_key.ini
+sed -i "s#^imgkey =.*#imgkey = \"$keypath$primary_key\"#" $CURDIR/settings/sctrlcert/scc_key.ini
+sed -i "s#^rootkey =.*#rootkey = \"$keypath$root_key\"#" $CURDIR/settings/sctrlcert/scc_key.ini
+
+
+#config scc_primary_dbg.ini
+
+sed -i "s#^primary_dbg_prvk =.*#primary_dbg_prvk = \"$keypath$primary_key\"#" $CURDIR/settings/sctrlcert/scc_primary_dbg.ini
+sed -i "s#^secondary_dbg_prvk =.*#secondary_dbg_prvk = \"$keypath$second_key\"#" $CURDIR/settings/sctrlcert/scc_primary_dbg.ini
+
+#config scc_secondary_dbg.ini
+sed -i "s#^secondary_dbg_prvk =.*#secondary_dbg_prvk = \"$keypath$second_key\"#" $CURDIR/settings/sctrlcert/scc_secondary_dbg.ini
+
 
 python $CURDIR/sctrlcert.py -i $CURDIR/settings/sctrlcert/scc_key.ini -k $CURDIR/out/sctrlcert/key_cert.bin -g $CURDIR/settings/sctrlcert/scc_gfh_config_cert_chain.ini -q $CURDIR/settings/sctrlcert/scc_primary_dbg.ini -p $CURDIR/out/sctrlcert/primary_dbg_cert.bin -s $CURDIR/settings/sctrlcert/scc_secondary_dbg.ini $CURDIR/out/sctrlcert/scc_sv5.cert
 

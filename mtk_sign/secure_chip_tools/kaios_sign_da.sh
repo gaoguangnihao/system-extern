@@ -15,16 +15,24 @@ function usage() {
 	echo '*****************************************'
 	echo "sign DA-BR and DA-PL ..."
 	echo '*****************************************'
-	echo "Command: ./kaios_sign_da.sh" /home/dhcui/share_all_da_sign
+	echo "Command: ./kaios_sign_da.sh /home/dhcui/share_all_da_sign key_path"
 	echo '*****************************************'
 }
 #echo 'copy da to /prebuilt/resignda'
 
 path_da=$1
+keypath=$2
 CURDIR="`pwd`"/"`dirname $0`"
 
 echo $path_da
 echo $CURDIR
+
+if [ $# -lt 2 ];then
+	echo "############WORNG PARG ###########"
+	usage
+	echo "############WORNG PARG ###########"
+	exit 128
+fi
 
 if [ -f "$path_da/MTK_AllInOne_DA.bin" ]; then 
    	cp $path_da/MTK_AllInOne_DA.bin $CURDIR/prebuilt/resignda
@@ -59,6 +67,15 @@ echo "da sign begin"
 #load_region2_sigpad = pss
 #load_region2_key = keys/pbp/root_prvk.pem
 
+#parpre config files fot generator da
+ 
+img_key="/img_prvk.pem"
+root_key="/root_prvk.pem"
+
+#config bbchips_pss.ini
+sed -i "s#^load_region0_key =.*#load_region0_key = $keypath$img_key#" $CURDIR/settings/resignda/bbchips_pss.ini
+sed -i "s#^load_region1_key =.*#load_region1_key = $keypath$root_key#" $CURDIR/settings/resignda/bbchips_pss.ini
+sed -i "s#^load_region2_key =.*#load_region2_key = $keypath$root_key#" $CURDIR/settings/resignda/bbchips_pss.ini
 
 python $CURDIR/resign_da.py $CURDIR/prebuilt/resignda/MTK_AllInOne_DA.bin MT6739 $CURDIR/settings/resignda/bbchips_pss.ini all $CURDIR/out/resignda/MTK_AllInOne_DA.bin-sign
 

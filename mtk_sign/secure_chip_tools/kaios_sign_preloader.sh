@@ -16,12 +16,20 @@ function usage() {
 	echo "sign preloader ..."
 	echo "PLease given path of the preloader.bin"
 	echo '*****************************************'
-	echo "Command: ./sign_preloader.sh out/target/product/kaios31_jpv"
+	echo "Command: ./sign_preloader.sh out/target/product/kaios31_jpv key_path"
 	echo '*****************************************'
 }
 #echo 'copy preloader to /prebuilt/pbp'
 
 path_preloader=$1
+keypath=$2
+
+if [ $# -lt 2 ];then
+	echo "############WORNG PARG ###########"
+	usage
+	echo "############WORNG PARG ###########"
+	exit 128
+fi
 
 CURDIR="`pwd`"/"`dirname $0`"
 
@@ -32,7 +40,7 @@ if [ -f "$path_preloader/preloader.bin" ]; then
    	cp $path_preloader/preloader.bin $CURDIR/prebuilt/pbp/preloader.bin
 else
 	usage
-	exit
+	exit 128
 fi
 
 
@@ -46,6 +54,20 @@ echo "preloader sign begin"
 #rootkey = "keys/pbp/root_prvk.pem"
 #imgkey = "keys/pbp/img_prvk.pem"
 #ac_key = "0x112233445566778899aabbccddeeff"
+
+#parpre config files fot generator preloader 
+img_key="/img_prvk.pem"
+root_key="/root_prvk.pem"
+
+#config pl_content.ini
+sed -i "s#^imgkey =.*#imgkey = \"$keypath$img_key\"#" $CURDIR/settings/pbp/pl_content.ini
+
+#config pl_key.ini
+sed -i "s#^imgkey =.*#imgkey = \"$keypath$img_key\"#" $CURDIR/settings/pbp/pl_key.ini
+sed -i "s#^rootkey =.*#rootkey = \"$keypath$root_key\"#" $CURDIR/settings/pbp/pl_key.ini
+
+#config pl_gfh_config_cert_chain.ini
+
 
 ## below commond need root_prvk.pem to generator key_cert.bin 
 ## and sign the preloader
