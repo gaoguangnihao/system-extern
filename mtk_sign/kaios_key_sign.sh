@@ -41,7 +41,7 @@ EFUSE=$8
 
 #prepare boot and system image with new dm key
 #Note boot_system/mt6731_jpv_jio/ should be re-define FIXED-ME
-bash boot_system/boot_dm.sh $INPUT_IMG_PATH boot_system/mt6731_jpv_jio/
+bash boot_system/boot_dm.sh $INPUT_IMG_PATH $CERT1_PATH
 
 if [ $? != 0 ];then
    echo "error !! about DM sign boot and system images"
