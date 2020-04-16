@@ -19,9 +19,12 @@ echo '=========generator DFP keys by KAIOS========='
 echo '============================================='
 echo 
 
-pd_Tools="../der_extractor/pem_to_der.py"
-de_Tools="../der_extractor/der_extractor"
-D_CURR="pwd"
+CURDIR="`pwd`"/"`dirname $0`"
+
+echo $CURDIR
+
+pd_Tools="/der_extractor/pem_to_der.py"
+de_Tools="/der_extractor/der_extractor"
 
 if [ ! -n "$1" ] ;then
     echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
@@ -63,25 +66,25 @@ cd $PRODUCT_NAME
 
 openssl genrsa -out root_prvk.pem 2048
 #
-python $pd_Tools root_prvk.pem root_prvk.der
+python $CURDIR$pd_Tools root_prvk.pem root_prvk.der
 
 #
 openssl rsa -in root_prvk.pem -pubout >root_pubk.pem
 
 #
-python $pd_Tools root_pubk.pem root_pubk.der
+python $CURDIR$pd_Tools root_pubk.pem root_pubk.der
 
 ##genator imgkey 
 
 openssl genrsa -out img_prvk.pem 2048
 #
-python $pd_Tools img_prvk.pem img_prvk.der
+python $CURDIR$pd_Tools img_prvk.pem img_prvk.der
 
 #
 openssl rsa -in img_prvk.pem -pubout >img_pubk.pem
 
 #
-python $pd_Tools img_pubk.pem img_pubk.der
+python $CURDIR$pd_Tools img_pubk.pem img_pubk.der
 
 #exit
 
@@ -90,7 +93,7 @@ echo '******generator keys and der done******'
 
 echo 'use root_pubk.der generator oemkey.h and copy to matched folder (need release to odm)'
 
-$de_Tools  root_pubk.der oemkey.h ANDROID_SBC
+$CURDIR$de_Tools  root_pubk.der oemkey.h ANDROID_SBC
 
 #copy oemkey.h to [DA] $DA_Kit/Raphael-da/custom/$PLATFORM/oemkey.h
 #copy oemkey.h to [PL] $PL/custom/$PORJECT/inc/oemkey.h
@@ -101,7 +104,7 @@ $de_Tools  root_pubk.der oemkey.h ANDROID_SBC
 echo 'use root_pubk.der generator dakey.h this include DA_PL public key to verify preloader DA_PL.bin'
 #when sign DA_PL.bin use matched prvk.pem to sign
 
-$de_Tools root_pubk.der dakey.h ANDROID_SBC
+$CURDIR$de_Tools root_pubk.der dakey.h ANDROID_SBC
 
 #copy dakey.h to [PL]$PL/custom/$PROJECT/inc/dakey.h
 #generator by /local/tools/system-faq/system-extern/secure_chip_tools/keys/pbp/root_prvk.pem 
@@ -144,7 +147,7 @@ openssl req -new -x509 -key dm_prvk.pem -out verity.x509.pem -sha256 -subj '/C=U
 
 
 echo "generator verity_key"
-LD_LIBRARY_PATH=../lib ../bin/generate_verity_key -convert verity.x509.pem verity_key
+LD_LIBRARY_PATH=$CURDIR/lib $CURDIR/bin/generate_verity_key -convert verity.x509.pem verity_key
 
 echo "rename verity_key"
 
@@ -182,7 +185,6 @@ cd ..
 #DEST_FOLDER=/local/keys-mtk/
 
 cp -Rvdp $PRODUCT_NAME $DEST_FOLDER
-
 
 ### generator cert1 and cert2 keys 
 
