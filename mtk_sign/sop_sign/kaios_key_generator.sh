@@ -65,27 +65,62 @@ echo '******generator keys and der begin******'
 cd $PRODUCT_NAME
 
 openssl genrsa -out root_prvk.pem 2048
+
+if [ $? != 0 ];then
+   echo "error !! generator root_prvk.pem"
+   exit 129
+fi
 #
 python $CURDIR$pd_Tools root_prvk.pem root_prvk.der
 
+if [ $? != 0 ];then
+   echo "error !! generator root_prvk.der"
+   exit 129
+fi
 #
 openssl rsa -in root_prvk.pem -pubout >root_pubk.pem
 
+if [ $? != 0 ];then
+   echo "error !! generator root_pubk.pem"
+   exit 129
+fi
 #
 python $CURDIR$pd_Tools root_pubk.pem root_pubk.der
 
+if [ $? != 0 ];then
+   echo "error !! generator root_pubk.der"
+   exit 129
+fi
 ##genator imgkey 
 
 openssl genrsa -out img_prvk.pem 2048
 #
+
+if [ $? != 0 ];then
+   echo "error !! generator img_prvk.pem"
+   exit 129
+fi
+
 python $CURDIR$pd_Tools img_prvk.pem img_prvk.der
 
+if [ $? != 0 ];then
+   echo "error !! generator img_prvk.der"
+   exit 129
+fi
 #
 openssl rsa -in img_prvk.pem -pubout >img_pubk.pem
 
+if [ $? != 0 ];then
+   echo "error !! generator img_pubk.pem"
+   exit 129
+fi
 #
 python $CURDIR$pd_Tools img_pubk.pem img_pubk.der
 
+if [ $? != 0 ];then
+   echo "error !! generator img_pubk.der"
+   exit 129
+fi
 #exit
 
 echo '******generator keys and der done******'
@@ -94,6 +129,11 @@ echo '******generator keys and der done******'
 echo 'use root_pubk.der generator oemkey.h and copy to matched folder (need release to odm)'
 
 $CURDIR$de_Tools  root_pubk.der oemkey.h ANDROID_SBC
+
+if [ $? != 0 ];then
+   echo "error !! generator oemkey.h"
+   exit 129
+fi
 
 #copy oemkey.h to [DA] $DA_Kit/Raphael-da/custom/$PLATFORM/oemkey.h
 #copy oemkey.h to [PL] $PL/custom/$PORJECT/inc/oemkey.h
@@ -105,6 +145,11 @@ echo 'use root_pubk.der generator dakey.h this include DA_PL public key to verif
 #when sign DA_PL.bin use matched prvk.pem to sign
 
 $CURDIR$de_Tools root_pubk.der dakey.h ANDROID_SBC
+
+if [ $? != 0 ];then
+   echo "error !! generator dakey.h"
+   exit 129
+fi
 
 #copy dakey.h to [PL]$PL/custom/$PROJECT/inc/dakey.h
 #generator by /local/tools/system-faq/system-extern/secure_chip_tools/keys/pbp/root_prvk.pem 
@@ -138,16 +183,35 @@ echo "generator sign key for DA_PL signing"
 echo "generator RSA key pair"
 openssl genrsa -out dm_prvk.pem 2048
 
+if [ $? != 0 ];then
+   echo "error !! generator dm_prvk.pem"
+   exit 129
+fi
+
 echo "generator verity.pk8"
 
 openssl pkcs8 -topk8 -inform PEM -outform DER -in dm_prvk.pem -out verity.pk8 -nocrypt
 
+if [ $? != 0 ];then
+   echo "error !! generator verity.pk8"
+   exit 129
+fi
+
 echo "generator verity.x509.pem"
 openssl req -new -x509 -key dm_prvk.pem -out verity.x509.pem -sha256 -subj '/C=US/ST=ShangHai/L=Mountain View/O=KAIOS/OU=KAIOS/CN=KAIOS/emailAddress=kaios@kaiostech.com'
 
+if [ $? != 0 ];then
+   echo "error !! generator verity.x509.pem"
+   exit 129
+fi
 
 echo "generator verity_key"
 LD_LIBRARY_PATH=$CURDIR/lib $CURDIR/bin/generate_verity_key -convert verity.x509.pem verity_key
+
+if [ $? != 0 ];then
+   echo "error !! generator verity_key"
+   exit 129
+fi
 
 echo "rename verity_key"
 
