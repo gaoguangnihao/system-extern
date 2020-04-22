@@ -65,7 +65,7 @@ v2_file="mt6739/security/cert_config/img_list.txt"
 echo "******************************************"
 echo '**********KAIOS key deploy begin**********'
 echo "******************************************"
-
+sleep 3
 bash $CURDIR/sign-image_v2/img_key_deploy.sh $CERT1_PATH $CERT2_KEY_PATH $IMG_DST
 
 if [ $? -ne 0 ] ;then

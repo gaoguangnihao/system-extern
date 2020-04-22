@@ -66,8 +66,26 @@ fi
 
 echo "success !! kaios_deploy_sign"
 sleep 3
-##sign common image done!!!
 
+##should be clean the signed temp files for customer
+echo
+echo
+echo "******************************************"
+echo "******Begin to clean temp signed files******"
+echo "******************************************"
+rm -f $OUTPUT_IMG_PATH/system-kaios.img
+echo "clean system image"
+rm -fr $OUTPUT_IMG_PATH/resign
+echo "clean resign folder"
+rm -fr $OUTPUT_IMG_PATH/sig
+echo "clean sig folder"
+echo "******************************************"
+echo "******End to clean temp signed files******"
+echo "******************************************"
+echo
+echo
+##sign common image done!!!
+sleep 3
 ##beging to sign NO-GFH preloader image
 if [[ $PRELOADER = "preloader" ]]; then
    bash secure_chip_tools/kaios_sign_preloader.sh $OUTPUT_IMG_PATH $CERT1_PATH
