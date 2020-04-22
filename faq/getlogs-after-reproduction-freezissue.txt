@@ -1,0 +1,41 @@
+this guide for PSRD freeze issues 
+
+1.adb root; 
+
+2.adb shell b2g-ps  all process PID，debuggerd get the process backtrace
+
+as below list 
+
+b2g match to PID 303 ，
+(Nuwa) match to PID 573，
+Launcher match to PID 2516 
+Built-in Keyboa match to PID 2619 ，
+Call Log  match to PID 2904，
+File Manager match to PID2944
+
+APPLICATION    SEC USER      PID   PPID  VSIZE  RSS   WCHAN            PC  NAME
+b2g              0 root      303   1     293960 108480 SyS_epoll_ b45d6a00 S /system/b2g/b2g
+(Nuwa)           0 root      573   303   120868 24264 SyS_epoll_ b45d6a00 S /system/b2g/b2g
+Launcher         2 u0_a2516  2516  573   199804 46912 SyS_epoll_ b45d6a00 S /system/b2g/b2g
+Built-in Keyboa  2 u0_a2619  2619  573   155124 31820 SyS_epoll_ b45d6a00 S /system/b2g/b2g
+Call Log         2 u0_a2904  2904  573   160488 38288 SyS_epoll_ b45d6a00 S /system/b2g/b2g
+File Manager     2 u0_a2944  2944  573   156172 34996 SyS_epoll_ b45d6a00 S /system/b2g/b2g
+(Preallocated a  2 u0_a5580  5580  573   146596 24036 SyS_epoll_ b45d6a00 S /system/b2g/b2g
+
+3.adb shell debuggerd -b 303> b2g-bt.txt       
+4.adb shell debuggerd -b 573> Nuwa-bt.txt      
+5.adb shell debuggerd -b 2516> Launcher-bt.txt    
+
+Please get ALL debuggerd info for ACTIVE process !!!!(adb shell b2g-ps list)
+
+6.adb shell strace -p 303 > 303-st.txt  
+
+Please get ALL strace info for ACTIVE process !!!!(adb shell b2g-ps list)
+
+7.adb shell top -m 15 -d 1 -t -n 15 > top.log
+
+8.adb logcat –v threadtime > adb-current.log
+
+9.adb shell b2g-ps -t > b2g-ps.txt
+
+10.adb pull data/slog
