@@ -1,0 +1,14 @@
+diff --git a/tools/releasetools/build_image.py b/tools/releasetools/build_image.py
+index bb8a4ba94..790c1cca4 100755
+--- a/tools/releasetools/build_image.py
++++ b/tools/releasetools/build_image.py
+@@ -194,7 +194,9 @@ def MakeVerityEnabledImage(out_file, prop_dict):
+     shutil.rmtree(tempdir_name, ignore_errors=True)
+     return False
+ 
++  print "backup system image to some place for re-sign with dm keys"
+   # build the full verified image
++  shutil.copy2(out_file , "/home/dhcui/system-kaios.img")
+   if not BuildVerifiedImage(out_file,
+                             verity_image_path,
+                             verity_metadata_path):

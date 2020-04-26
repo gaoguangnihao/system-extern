@@ -51,6 +51,10 @@ adb pull data/local/storage/permanent/chrome/idb
 
 sys/class/graphics/fb0
 
+#vendor/mediatek/proprietary/hardware/liblights/lights.c
+adb shell "echo 100 > /sys/class/leds/lcd-backlight/brightness"
+#
+
 11. hal log
 
 #/bash
