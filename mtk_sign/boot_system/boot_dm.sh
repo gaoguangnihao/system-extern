@@ -63,6 +63,14 @@ else
    exit 127
 fi
 
+#we need sign recovery image with dm key also
+if [ -f $PRJ_DIR/recovery.img ];then
+   cp $PRJ_DIR/recovery.img $CURDIR/in/recovery.img
+else
+   echo "error!! No recovery.img exist"
+   exit 127
+fi
+
 #Note system-kaios.img is defined by KAI FIXED-ME
 if [ -f $PRJ_DIR/system-kaios.img ];then 
    cp $PRJ_DIR/system-kaios.img $CURDIR/in/system.img 
@@ -110,6 +118,15 @@ if [ $? != 0 ];then
    exit 129
 fi
 echo "success !!! boot_signer dm boot.img"
+
+#we need sign recovery image with dm key also
+LD_LIBRARY_PATH=$CURDIR/lib $CURDIR/bin/boot_signer /recovery $CURDIR/in/recovery.img $KEY_PATH/verity.pk8  $KEY_PATH/verity.x509.pem $CURDIR/out/recovery-dm.img
+if [ $? != 0 ];then
+   echo "error!! sign dm recovery image"
+   exit 129
+fi
+echo "success !!! boot_signer dm recovery.img"
+
 python $CURDIR/sign_system.py $CURDIR/in/system.img $CURDIR/system_image_info.txt $CURDIR/out/system-dm.img
 if [ $? != 0 ];then
    echo "error!! sign dm system image"
@@ -123,6 +140,13 @@ if [ $? != 0 ];then
    echo "error!! copy boot dm image"
    exit 129
 fi
+#we need sign recovery image with dm key also
+cp $CURDIR/out/recovery-dm.img $PRJ_DIR/recovery.img
+if [ $? != 0 ];then
+   echo "error!! copy recovery dm image"
+   exit 129
+fi
+
 cp $CURDIR/out/system-dm.img $PRJ_DIR/system.img
 if [ $? != 0 ];then
    echo "error!! copy system dm image"

@@ -1,0 +1,21 @@
+1. download code 
+git clone git@git.kaiostech.com:KaiOS/KaiOS.git
+REPO_URL=git@172.31.8.251:git-repo.git BRANCH=v2.5R3 ./config.sh -c  pier2_m_sfp
+
+2. project
+/vendor/sprd/proprietories-source/sprd_secure_boot_tool/
+
+   2.1 VLRSign
+	/build/tools/releasetools/sprd_secure_boot_sign.py
+	
+	/build/core/Makefile 
+	maybe fot fota # cp ./vendor/sprd/proprietories-source/sprd_secure_boot_tool/VLRSign $(oem_ota_tmp)/META
+
+   2.2 RSAKeyGen
+	looks like just # sig_script.sh will be use it to generator key.db 
+   2.3 BscGen
+   	/build/tools/releasetools/sprd_secure_boot_sign.py
+	
+	/build/core/Makefile 
+	maybe fot fota # cp ./vendor/sprd/proprietories-source/sprd_secure_boot_tool/VLRSign $(oem_ota_tmp)/META
+

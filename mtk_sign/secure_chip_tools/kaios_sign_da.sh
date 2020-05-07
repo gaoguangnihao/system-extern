@@ -101,7 +101,7 @@ cp $CURDIR/out/resignda/DA_PL.bin-sign $path_da/DA_PL.bin-sign.bin
 
 echo "below is for test code for my pc"
 
-if [ -d "/local/tools/mtk-downloa" ]; then
+if [ -d "/local/tools/mtk-download" ]; then
 	cp $CURDIR/out/resignda/MTK_AllInOne_DA.bin-sign /local/tools/mtk-download/MTK_AllInOne_DA.bin-mt6739sign.bin
 	cp $CURDIR/out/resignda/DA_PL.bin-sign /local/tools/mtk-download/DA_PL.bin-mt6739sign.bin
 fi

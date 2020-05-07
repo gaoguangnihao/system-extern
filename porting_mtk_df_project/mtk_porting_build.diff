@@ -1,0 +1,30 @@
+diff --git a/core/main.mk b/core/main.mk
+index 5b6e1e9e7..d838d4767 100644
+--- a/core/main.mk
++++ b/core/main.mk
+@@ -145,7 +145,7 @@ javac_version_str := $(shell unset _JAVA_OPTIONS && javac -version 2>&1)
+ 
+ # Check for the correct version of java, should be 1.7 by
+ # default, and 1.8 if EXPERIMENTAL_USE_JAVA8 is set
+-ifneq ($(EXPERIMENTAL_USE_JAVA8),)
++ifneq ($(EXPERIMENTAL_USE_JAVA8),1)
+ required_version := "1.8.x"
+ required_javac_version := "1.8"
+ java_version := $(shell echo '$(java_version_str)' | grep 'openjdk .*[ "]1\.8[\. "$$]')
+diff --git a/target/product/security/verity_key b/target/product/security/verity_key
+index 31982d95a..ca37406a3 100644
+Binary files a/target/product/security/verity_key and b/target/product/security/verity_key differ
+diff --git a/tools/releasetools/build_image.py b/tools/releasetools/build_image.py
+index bb8a4ba94..790c1cca4 100755
+--- a/tools/releasetools/build_image.py
++++ b/tools/releasetools/build_image.py
+@@ -194,7 +194,9 @@ def MakeVerityEnabledImage(out_file, prop_dict):
+     shutil.rmtree(tempdir_name, ignore_errors=True)
+     return False
+ 
++  print "backup system image to some place for re-sign with dm keys"
+   # build the full verified image
++  shutil.copy2(out_file , "/home/dhcui/system-kaios.img")
+   if not BuildVerifiedImage(out_file,
+                             verity_image_path,
+                             verity_metadata_path):

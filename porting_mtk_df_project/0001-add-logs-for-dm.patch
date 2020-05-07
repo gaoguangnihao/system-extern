@@ -1,0 +1,25 @@
+From 965ee99ea8842f71c476281d3e3f9fd28c87d13d Mon Sep 17 00:00:00 2001
+From: "dahui.cui" <dahui.cui@kaiostech.com>
+Date: Tue, 28 Apr 2020 16:36:10 +0800
+Subject: [PATCH] add logs for dm
+
+---
+ fs_mgr/fs_mgr_verity.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs_mgr/fs_mgr_verity.c b/fs_mgr/fs_mgr_verity.c
+index 2d1abbea5..bb5a17139 100644
+--- a/fs_mgr/fs_mgr_verity.c
++++ b/fs_mgr/fs_mgr_verity.c
+@@ -1011,7 +1011,7 @@ int fs_mgr_setup_verity(struct fstab_rec *fstab) {
+         mode = VERITY_MODE_EIO;
+     }
+ 
+-    INFO("Enabling dm-verity for %s (mode %d)\n",  mount_point, mode);
++    INFO("Enabling dhcui-debug dm-verity for %s (mode %d)\n",  mount_point, mode);
+ 
+     // load the verity mapping table
+     if (load_verity_table(io, mount_point, device_size, fd, verity_table,
+-- 
+2.19.0
+
