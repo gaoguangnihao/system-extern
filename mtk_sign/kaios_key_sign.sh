@@ -129,7 +129,7 @@ if [[ $SIGN_DA = "signda" ]]; then
    sleep 3
 ##we will be generator scert file also
 else
-    echo "!!!!! da-br.da-pl not signed"
+    echo "!!!! da-br.da-pl not signed"
 fi
 
 ##beging to sign NO-GFH preloader image

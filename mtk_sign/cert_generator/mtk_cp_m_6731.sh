@@ -4,47 +4,52 @@
 #!/bin/bash
 
 
-img_dir=$1
-dst_dir=$2
+IMG_DIR=$1
+DST_DIR=$2
+
+if [ -d $DST_DIR ]; then
+   echo "begin to copy"
+else
+   echo "creat floder about dst"
+   mkdir -p $DST_DIR
+fi
+
+# define image and file list to copy 
 
   img_files=(
-   $img_dir/system*.img
-   $img_dir/boot.img
-   $img_dir/cache*img
-   $img_dir/userdata*img
-   $img_dir/MT673*_Android_scatter.txt
-   $img_dir/preloader_kaios31*.bin
-   $img_dir/lk-verified.bin
-   $img_dir/loader_ext-verified.img
-   $img_dir/loader_ext.img
-   $img_dir/boot-verified.img
-   $img_dir/recovery*.img
-   $img_dir/secro.img
-   $img_dir/spmfw*.bin
-   $img_dir/mcupmfw-verified.img
-   $img_dir/trustzone*.bin
-   $img_dir/logo-verified.bin
-   $img_dir/lk.bin
-   $img_dir/logo.bin
-   $img_dir/recovery.img
-   $img_dir/*fota_meta.zip
-   $img_dir/preloader_kaios*.bin
-   $img_dir/preloader.bin
-   $img_dir/md1rom*.img
-   $img_dir/md1dsp*.img
-   $img_dir/mcupmfw*.img
-   $img_dir/md1arm7*.img
-   $img_dir/md3rom*.img
-   $img_dir/ramdisk*.img
-   $img_dir/obj/PACKAGING/systemimage_intermediates/system_image_info.txt
+   $IMG_DIR/boot.img
+   $IMG_DIR/cache.img
+   $IMG_DIR/userdata.img
+   $IMG_DIR/MT673*_Android_scatter.txt
+   $IMG_DIR/preloader.bin
+   $IMG_DIR/lk.bin
+   $IMG_DIR/loader_ext.img
+   $IMG_DIR/recovery.img
+   $IMG_DIR/secro.img
+   $IMG_DIR/spmfw.bin
+   $IMG_DIR/mcupmfw.img
+   $IMG_DIR/trustzone.bin
+   $IMG_DIR/logo.bin
+   $IMG_DIR/md1rom.img
+   $IMG_DIR/md1dsp.img
+   $IMG_DIR/mcupmfw.img
+   $IMG_DIR/md1arm7.img
+   $IMG_DIR/md3rom.img
+   $IMG_DIR/ramdisk.img
+   $IMG_DIR/system-kaios.img
+   $IMG_DIR/system.img
+   $IMG_DIR/system_image_info.txt
  )
 
+if [ -f $IMG_DIR/*fota_meta.zip ];then
+    cp -vf $IMG_DIR/*fota_meta.zip  $DST_DIR/
+fi
 
 COPY_IMG_ERR=0
 
 for img_file in ${img_files[@]};do
 	
-	cp -vf ${img_file}  ${dst_dir}/
+	cp -vf ${img_file}  ${DST_DIR}/
 	
 	if [ "$?" != "0" ];then
 	  echo 
@@ -62,6 +67,9 @@ else
 	echo "======== copy img files OK =========="
 fi
 echo "====================================="
-echo  
+echo
+
+
+#tar -zcvf $DST_DIR.tar.gz $DST_DIR/
 
 echo 
