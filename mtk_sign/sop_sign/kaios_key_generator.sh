@@ -19,9 +19,9 @@ echo '=========generator DFP keys by KAIOS========='
 echo '============================================='
 echo 
 
-CURDIR="`pwd`"/"`dirname $0`"
-
-echo $CURDIR
+#CURDIR="`pwd`"/"`dirname $0`"
+TOOLSDIR="`dirname $0`"
+echo "The tools path is "$TOOLSDIR
 
 pd_Tools="/der_extractor/pem_to_der.py"
 de_Tools="/der_extractor/der_extractor"
@@ -33,7 +33,7 @@ if [ ! -n "$1" ] ;then
     echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
     exit 127
 else
-    echo "the args you input is $1"
+    echo "The first args you input is $1"
 
 fi
 
@@ -46,17 +46,30 @@ if [ $# -lt 2 ];then
 	exit 127
 fi
 #DEST_FOLDER=/local/keys-mtk/ should be dynamic
-PRODUCT_NAME=$1
+PRODUCT_NAME=/tmp/$1
 DEST_FOLDER=$2
+
+clean()
+{
+       echo "!!!!clean begin!!!!"
+       rm -fr $PRODUCT_NAME
+       echo "!!!!clean end!!!!"
+}
 
 if [ ! -d "$PRODUCT_NAME" ];then
        mkdir $PRODUCT_NAME
        mkdir $PRODUCT_NAME/PUBLIC_KEYS
-       echo "$PRODUCT_NAME Creat done"
+       echo "Should be creat $PRODUCT_NAME for keys generator"
 else 
-    echo "!!the project already exist!!"
+        echo "!!the project already exist!!"
   	echo $PRODUCT_NAME
 	exit 128
+fi
+
+if [ ! -d $DEST_FOLDER ];then
+  echo "!!!!!please creat path of save keys first!!!!"
+  clean
+  exit 129
 fi
 
 # generator root key 
@@ -68,13 +81,15 @@ openssl genrsa -out root_prvk.pem 2048
 
 if [ $? != 0 ];then
    echo "error !! generator root_prvk.pem"
+   clean
    exit 129
 fi
 #
-python $CURDIR$pd_Tools root_prvk.pem root_prvk.der
+python $TOOLSDIR$pd_Tools root_prvk.pem root_prvk.der
 
 if [ $? != 0 ];then
    echo "error !! generator root_prvk.der"
+   clean
    exit 129
 fi
 #
@@ -82,13 +97,15 @@ openssl rsa -in root_prvk.pem -pubout >root_pubk.pem
 
 if [ $? != 0 ];then
    echo "error !! generator root_pubk.pem"
+   clean
    exit 129
 fi
 #
-python $CURDIR$pd_Tools root_pubk.pem root_pubk.der
+python $TOOLSDIR$pd_Tools root_pubk.pem root_pubk.der
 
 if [ $? != 0 ];then
    echo "error !! generator root_pubk.der"
+   clean
    exit 129
 fi
 ##genator imgkey 
@@ -98,13 +115,15 @@ openssl genrsa -out img_prvk.pem 2048
 
 if [ $? != 0 ];then
    echo "error !! generator img_prvk.pem"
+   clean
    exit 129
 fi
 
-python $CURDIR$pd_Tools img_prvk.pem img_prvk.der
+python $TOOLSDIR$pd_Tools img_prvk.pem img_prvk.der
 
 if [ $? != 0 ];then
    echo "error !! generator img_prvk.der"
+   clean
    exit 129
 fi
 #
@@ -112,13 +131,15 @@ openssl rsa -in img_prvk.pem -pubout >img_pubk.pem
 
 if [ $? != 0 ];then
    echo "error !! generator img_pubk.pem"
+   clean
    exit 129
 fi
 #
-python $CURDIR$pd_Tools img_pubk.pem img_pubk.der
+python $TOOLSDIR$pd_Tools img_pubk.pem img_pubk.der
 
 if [ $? != 0 ];then
    echo "error !! generator img_pubk.der"
+   clean
    exit 129
 fi
 #exit
@@ -128,10 +149,11 @@ echo '******generator keys and der done******'
 
 echo 'use root_pubk.der generator oemkey.h and copy to matched folder (need release to odm)'
 
-$CURDIR$de_Tools  root_pubk.der oemkey.h ANDROID_SBC
+$TOOLSDIR$de_Tools  root_pubk.der oemkey.h ANDROID_SBC
 
 if [ $? != 0 ];then
    echo "error !! generator oemkey.h"
+   clean
    exit 129
 fi
 
@@ -144,10 +166,11 @@ fi
 echo 'use root_pubk.der generator dakey.h this include DA_PL public key to verify preloader DA_PL.bin'
 #when sign DA_PL.bin use matched prvk.pem to sign
 
-$CURDIR$de_Tools root_pubk.der dakey.h ANDROID_SBC
+$TOOLSDIR$de_Tools root_pubk.der dakey.h ANDROID_SBC
 
 if [ $? != 0 ];then
    echo "error !! generator dakey.h"
+   clean
    exit 129
 fi
 
@@ -185,6 +208,7 @@ openssl genrsa -out dm_prvk.pem 2048
 
 if [ $? != 0 ];then
    echo "error !! generator dm_prvk.pem"
+   clean
    exit 129
 fi
 
@@ -194,6 +218,7 @@ openssl pkcs8 -topk8 -inform PEM -outform DER -in dm_prvk.pem -out verity.pk8 -n
 
 if [ $? != 0 ];then
    echo "error !! generator verity.pk8"
+   clean
    exit 129
 fi
 
@@ -202,14 +227,16 @@ openssl req -new -x509 -key dm_prvk.pem -out verity.x509.pem -sha256 -subj '/C=U
 
 if [ $? != 0 ];then
    echo "error !! generator verity.x509.pem"
+   clean
    exit 129
 fi
 
 echo "generator verity_key"
-LD_LIBRARY_PATH=$CURDIR/lib $CURDIR/bin/generate_verity_key -convert verity.x509.pem verity_key
+LD_LIBRARY_PATH=$TOOLSDIR/lib $TOOLSDIR/bin/generate_verity_key -convert verity.x509.pem verity_key
 
 if [ $? != 0 ];then
    echo "error !! generator verity_key"
+   clean
    exit 129
 fi
 
@@ -247,9 +274,18 @@ cd ..
 
 #FIXED-ME
 #DEST_FOLDER=/local/keys-mtk/
+echo "copy key files to dest path"
+
+if [ -d $DEST_FOLDER/$1 ];then
+  echo "!!!! error for $1 already generator"
+  clean
+  exit 129
+fi  
 
 cp -Rvdp $PRODUCT_NAME $DEST_FOLDER
 
+echo "clean tmp key files"
+rm -fr $PRODUCT_NAME
 ### generator cert1 and cert2 keys 
 
 
