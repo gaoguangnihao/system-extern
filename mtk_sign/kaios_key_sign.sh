@@ -39,6 +39,10 @@ SIGN_DA=$6
 DA_BIN_PATH=$7
 EFUSE=$8
 
+CURDIR="`dirname $0`"
+
+cd $CURDIR
+
 #prepare boot and system image with new dm key
 #Note boot_system/mt6731_jpv_jio/ should be re-define FIXED-ME
 bash boot_system/boot_dm.sh $INPUT_IMG_PATH $CERT1_PATH
