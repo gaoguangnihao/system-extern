@@ -226,126 +226,26 @@ function BUILD(){
 function PAC(){
 	#制作 pac 包
 	echo "dhcui-debug 1"
-	
-
 	OUT_DIR=$production_out
-	echo_eval OUT_DIR
+	modem_config="SHARKLE_9820E_2C10_AOV"
+	Project="sp9820e_2c10aov_k_native-userdebug-native"
 
+	#FIXED_ME product.img mv to copy script 
+	#if [ -e "$production_out/.carrier" ];then
+	#	. $production_out/.carrier
+	#	echo_eval carrier
+	#	if [ -e $OUT_DIR/$carrier/product.img ] && [ -e $Script_path/../ImageFiles/product.img ];then
+	#		cp -rfv $OUT_DIR/$carrier/product.img $Script_path/../ImageFiles/product.img
+	#	else
+	#		echo -e "\n[product.img check fail !]\n"
+	#		continue
+	#	fi
+	#fi
+	cd $production_out
+	
+        echo perl mkpac.pl "${Project}_${modem_config}.pac" "flash.cfg" "FlashParam"
+	perl $root_path/modem_script/mkpac.pl "${Project}_${modem_config}.pac" "flash.cfg" "FlashParam"
 
-	for flash_cfg in `cd $OUT_DIR && find -maxdepth 2 -name flash.cfg`;do
-		pac_dir=${flash_cfg%/*}
-		export modem_config=${pac_dir##*/}
-
-		echo_eval flash_cfg
-		echo_eval modem_config
-		
-		exit
-		if [ -d $Script_path/../$Project/$modem_config ];then
-			rm -rf $Script_path/../$Project/$modem_config/*.pac
-			
-			[ -d $Script_path/../ImageFiles ] && rm -rf $Script_path/../ImageFiles
-			mkdir -p $Script_path/../ImageFiles
-			
-############################################################################################################
-#以下 "#" 之间的部分是 unisoc 用于内部编译验证使用。
-			. $Script_path/.unisoc
-			echo_eval unisoc_release_path
-			
-			if [ -d $unisoc_release_path ];then
-				pac_url=(`find $unisoc_release_path/Images -name "${Project}_${modem_config}.pac*"`)
-				
-				if [[ "${#pac_url[@]}" == "1" ]] && [ -e $pac_url ];then
-					echo -e "[find unisoc pac success!]\n"
-					
-					cd $Script_path/../ImageFiles
-					system_return $? cd_ImageFiles
-					
-					cp -rfv $pac_url ./
-					
-					if [[ "${pac_url##*/}" =~ ".pac.gz" ]];then
-						gzip -d ${pac_url##*/} >/dev/null 2>&1
-						system_return $? gzip_pac_gz
-					elif [[ "${pac_url##*/}" =~ ".rar" ]];then
-						unrar x ${pac_url##*/} >/dev/null 2>&1
-						system_return $? unrar_pac
-					else
-						echo -e "\n[${pac_url##*/}][不支持此格式解压！]\n"
-						echo "${Project}_${modem_config}.pac [FAIL]">>$Script_path/../build_pac.log
-						exit 1
-					fi
-					
-					pacname=(`ls *.pac`)  && echo_eval pacname
-
-					chmod a+x $Script_path/unpac.pl
-					perl $Script_path/unpac.pl $pacname -S
-					system_return $? unpac
-					
-					rm -rf ./*.pac*
-					
-					while read lin ;do
-						image=${lin#*@}
-						echo_eval image
-						if [ -e $Script_path/../ImageFiles/ImageFiles/$image ];then
-							cp -rf $Script_path/../ImageFiles/ImageFiles/$image ./
-						else
-							echo "[don't exist $image]"
-							echo "${Project}_${modem_config}.pac [FAIL]">>$Script_path/../build_pac.log
-							exit 1
-						fi
-					done <$Script_path/../$Project/$modem_config/.sign
-				else
-					echo "pac_url 解析错误:$pac_url"
-					echo "${Project}_${modem_config}.pac [FAIL]">>$Script_path/../build_pac.log
-					exit 1
-				fi
-			else
-				echo "[${unisoc_release_path} don't exist!]"
-                #SIGN
-			fi
-############################################################################################################
-			cd $OUT_DIR
-			system_return $? cd_OUT_DIR
-			
-			for imgs in `ls`;do
-				if [ -f $imgs ];then
-					cp -rf $imgs $Script_path/../ImageFiles
-				fi
-			done
-			
-			#获取运营商 product.img
-			if [ -e "$Script_path/../$Project/$modem_config/.carrier" ];then
-				. $Script_path/../$Project/$modem_config/.carrier
-				echo_eval carrier
-				if [ -e $OUT_DIR/$carrier/product.img ] && [ -e $Script_path/../ImageFiles/product.img ];then
-					cp -rfv $OUT_DIR/$carrier/product.img $Script_path/../ImageFiles/product.img
-				else
-					echo -e "\n[product.img check fail !]\n"
-					continue
-				fi
-			fi
-			cd -
-			
-			cd $Script_path/../ImageFiles
-			system_return $? cd_ImageFiles
-			
-			cp -rf $Script_path/../$Project/$modem_config/* ./
-			rm -rf ./*.pac*
-			
-			chmod a+x $Script_path/*
-			perl $Script_path/mkpac.pl "${Project}_${modem_config}.pac" "flash.cfg" "FlashParam"
-			
-			if [ -e $Script_path/../ImageFiles/${Project}_${modem_config}.pac ];then
-				cp $Script_path/../ImageFiles/${Project}_${modem_config}.pac $Script_path/../$Project/$modem_config/
-				echo "${Project}_${modem_config}.pac [PASS]">>$Script_path/../build_pac.log
-				echo -e "\n\n${Project}_${modem_config}.pac [PASS]\n\n"
-			else
-				echo "${Project}_${modem_config}.pac [FAIL]">>$Script_path/../build_pac.log
-				echo -e "\n\n${Project}_${modem_config}.pac [FAIL]\n\n"
-			fi
-		else
-			echo -e "\n\n[don't $Script_path/../$Project/$modem_config exist!]\n\n"
-		fi
-	done
 }
 
 function PAC_TMP(){
@@ -1075,29 +975,33 @@ function MAKEOTA(){
 #export carrier_param=""
 #export Modem_path=`cd ${Script_path}/../Modem && pwd` && echo_eval Modem_path
 
-while getopts ":a:b:c:p:" opt;do
+while getopts ":a:b:c:p:t:" opt;do
 	case $opt in
 		a)
 			export Project=$OPTARG
-			echo -e "参数-a:$Project"
+			echo -e "parmerter -a:$Project"
 			Project_Split $Project
 		;;
 		b)
 			export build_pac=$OPTARG
-			echo -e "参数-b:$build_pac"
+			echo -e "parmerter -b:$build_pac"
 		;;
 		p)
 			export production_out=$OPTARG
-			echo -e "参数-p:$production_out"
+			echo -e "parmerter -p:$production_out"
+		;;
+		t)
+			export root_path=$OPTARG
+			echo -e "parmerter -t:$root_path"
 		;;
 		c)
 			export carriers=$OPTARG
 			export carriers=`echo "$carriers"|tr ' ;|' ','`
 			export carrier_param="--product_carrier $carriers"
-			echo -e "参数-c:$carriers"
+			echo -e "parmerter -c:$carriers"
 		;;
 		\?)
-			echo -e "\n[未知参数 ERROR!]\n"
+			echo -e "\n[unknow ERROR!]\n"
 			exit 1;;
 	esac
 done

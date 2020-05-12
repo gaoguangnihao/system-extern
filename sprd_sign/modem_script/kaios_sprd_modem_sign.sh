@@ -78,7 +78,7 @@ cp ${PRODUCT_OUT}/sign_modem/sharkle_cm4-sign.bin ${PRODUCT_OUT}
 #begin to make pac 
 echo ${PRODUCT_NAME}-${VARIANT}-native 
 
-./build_pac.sh -a ${PRODUCT_NAME}_k_native-${VARIANT}-native -b PAC -p ${PRODUCT_OUT}
+bash $CURDIR/kaios_build_pac.sh -a ${PRODUCT_NAME}_k_native-${VARIANT}-native -b PAC -p ${PRODUCT_OUT} -t ${ROOT_PATH}
 
 
 exit
