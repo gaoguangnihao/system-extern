@@ -18,7 +18,7 @@ function usage() {
 	    echo "1 $1 is root project path"
 	    echo "3 $2 is dest image path"
 	    echo "4 $3 is build type user or userdebug"
-	    echo "./sprd_cp_m_98203_odm.sh /local/code/pier2_m_sfp_jio/KaiOS/ "
+	    echo "./sprd_cp_m_98203_odm.sh /local/code/pier2_m_sfp_jio/KaiOS/ /home/dhcui/home/dhcui/test_sprd_pier2m userdebug"
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 }
 
@@ -36,12 +36,14 @@ echo "==============================================="
 ROOT_DIR=$1
 DST_DIR=$2
 VARIANT=$3
+
+#FIXED-ME should be dynamic parmerter for project name
 PRODUCT_NAME=sp9820e_2c10aov
 #define some variable for copy 
 
 
 IMG_DIR=${ROOT_DIR}/out/target/product/${PRODUCT_NAME}
-Modem_PATH=vendor/sprd/release/IDH/Script
+Modem_PATH=/vendor/sprd/release/IDH/Script
 Modem_SHARKLE_PATH=${ROOT_DIR}/vendor/sprd/release/IDH/Modem/FM_BASE_19A_W*_9820e_K_CUSTOMER/sharkle_pubcp_Feature_Phone_builddir
 SHARKLE_PATH=$ROOT_DIR${Modem_PATH}/../${PRODUCT_NAME}_k_native-${VARIANT}-native/SHARKLE_*
 
@@ -77,6 +79,7 @@ fi
    ${IMG_DIR}/userdata.img
    ${IMG_DIR}/system_raw.img
    ${IMG_DIR}/sp9820e_2c10aov.xml
+   ${IMG_DIR}/./obj/PACKAGING/systemimage_intermediates/system_image_info.txt
 
  )
 

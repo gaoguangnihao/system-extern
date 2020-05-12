@@ -29,19 +29,29 @@ fi
 KEY_PATH=$1
 PRODUCT_OUT=$2
 
+if [ -d $KEY_PATH ];then
+   echo "Begin to sign"
+else
+   echo "!!! error !!! key path not exist "
+   exit 127
+fi
+
+
+CURDIR="`dirname $0`"
+
 SECURE_BOOT="SPRD"
 SECURE_BOOT_KCE="NONE"
-HOST_OUT="../bin"
-HOST_OUT_LIB="../lib"
+HOST_OUT="/../bin"
+HOST_OUT_LIB="/../lib"
 TARGETBOARD="sp9820e"
 TARGETPRODUCT="sp9820e_2c10aov"
 CURPATH=$(pwd)
 
 #this path for dosprdcopy
-DESTDIR=$CURPATH/signimage/sprd/mkdbimg/bin
+DESTDIR=$CURDIR/signimage/sprd/mkdbimg/bin
 
 #FIXED-ME key config path
-CFGPATH=$CURPATH/signimage/sprd/config
+CFGPATH=$CURDIR/signimage/sprd/config
 
 KCE_TYPE="NONE"
 if [ "128" = "$KCE_TYPE" ]; then
@@ -193,7 +203,7 @@ doImgHeaderInsert()
     for loop in $@
     do
         if [ -f $loop ] ; then
-            LD_LIBRARY_PATH=$HOST_OUT_LIB $HOST_OUT/imgheaderinsert $loop $NO_SECURE_BOOT
+            LD_LIBRARY_PATH=$CURDIR$HOST_OUT_LIB $CURDIR$HOST_OUT/imgheaderinsert $loop $NO_SECURE_BOOT
         else
             echo "#### HeaderInsert $loop, check ####"
         fi
@@ -217,7 +227,7 @@ doAESencrypt()
 	for image in $@
 	do
 		if [ -f $image ]; then
-			LD_LIBRARY_PATH=$HOST_OUT_LIB $HOST_OUT/sprd_encrypt $AESKEY   $image
+			LD_LIBRARY_PATH=$CURDIR$HOST_OUT_LIB $CURDIR$HOST_OUT/sprd_encrypt $AESKEY   $image
 		else
 			echo -e "\033[31m ####  no $image or aeskey file, pls check #### \033[0m"
 		fi
@@ -247,7 +257,7 @@ doSignImage()
         for image in $@
         do
             if [ -f $image ]; then
-               LD_LIBRARY_PATH=$HOST_OUT_LIB  $HOST_OUT/sprd_sign  $image  $CFGPATH
+               LD_LIBRARY_PATH=$CURDIR$HOST_OUT_LIB $CURDIR$HOST_OUT/sprd_sign  $image  $KEY_PATH
             else
                 echo -e "\033[31m ####  SignImage $image, check #### \033[0m"
             fi
@@ -260,9 +270,9 @@ doSignImage()
         for image in $@
         do
             if [ -f $image ] ; then
-                LD_LIBRARY_PATH=$HOST_OUT_LIB $HOST_OUT/sansa_sign.sh $image $SECURE_BOOT_KCE
+                LD_LIBRARY_PATH=$CURDIR$HOST_OUT_LIB $CURDIR$HOST_OUT/sansa_sign.sh $image $SECURE_BOOT_KCE
                 if [ $? -eq 0 ]; then
-                    LD_LIBRARY_PATH=$HOST_OUT_LIB  $HOST_OUT/signimage $CERTPATH $image $(getCertLevel $image) $debug_cert
+                    LD_LIBRARY_PATH=$CURDIR$HOST_OUT_LIB $CURDIR$HOST_OUT/signimage $CERTPATH $image $(getCertLevel $image) $debug_cert
                 else
                     echo "sansa_sign result failed"
                 fi
@@ -342,7 +352,8 @@ doPackImage()
                     doImgHeaderInsert $SPL $SML $TOS $UBOOT $FDL1 $FDL2 $BOOT $RECOVERY $UBOOTAUTO
                     doSignImage $SPLSIGN $SMLSIGN $TOSSIGN $UBOOTSIGN $FDL1SIGN $FDL2SIGN $BOOTSIGN $RECOVERYSIGN $UBOOTAUTOSIGN
                 fi
-                rm -f $SPL $FDL1 $UBOOT $FDL2 $BOOT $RECOVERY $UBOOTAUTO
+                #FIXED-ME temp disable remove 
+                #rm -f $SPL $FDL1 $UBOOT $FDL2 $BOOT $RECOVERY $UBOOTAUTO
             fi
             ;;
         "clean")
