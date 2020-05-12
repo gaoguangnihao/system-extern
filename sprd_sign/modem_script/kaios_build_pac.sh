@@ -228,7 +228,7 @@ function PAC(){
 	echo "dhcui-debug 1"
 	OUT_DIR=$production_out
 	modem_config="SHARKLE_9820E_2C10_AOV"
-	Project="sp9820e_2c10aov_k_native-userdebug-native"
+	#Project="sp9820e_2c10aov_k_native-userdebug-native"
 
 	#FIXED_ME product.img mv to copy script 
 	#if [ -e "$production_out/.carrier" ];then

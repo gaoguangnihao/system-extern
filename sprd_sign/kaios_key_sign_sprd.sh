@@ -20,7 +20,7 @@ function usage() {
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 }
 
-if [ $# -lt 4 ];then
+if [ $# -lt 5 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
@@ -34,10 +34,25 @@ PRODUCT_NAME=$4
 VARIANT=$5
 
 if [ $PRODUCT_NAME != "sp9820e_2c10aov" ];then
-echo $PRODUCT_NAME "!!! NOT SUPPORT !!!"
+echo 
+echo 
+echo "!!! error !!!" $PRODUCT_NAME "!!! NOT SUPPORT !!!"
 exit 128
 fi
 
+#check pac files exist or not 
+if [ -f $INPUT_IMG_PATH/$PRODUCT_NAME*.pac ];then
+echo "clean pac files"
+rm -f  $INPUT_IMG_PATH/$PRODUCT_NAME*.pac
+fi
+
+#check if sec boot enable 
+if [ -f $INPUT_IMG_PATH/PRODUCT_SECURE_BOOT_SPRD ];then
+echo "secure boot production"
+else
+echo "!!! this not secure boot production version"
+exit 129
+fi
 
 CURDIR="`dirname $0`"
 
@@ -56,3 +71,19 @@ CURDIR="`dirname $0`"
 #echo "......"
 #echo "success !!! DM sign "
 
+#sign package image files
+bash $CURDIR/packimage_scripts/kaios_sprd_packimg_sign.sh $CERTS_PATH $INPUT_IMG_PATH
+
+if [ $? != 0 ];then
+   echo "error !! sign package image files"
+   exit 129
+fi
+
+#sign modem image and make package
+
+bash $CURDIR/modem_script/kaios_sprd_modem_sign.sh $CERTS_PATH $INPUT_IMG_PATH $TOOLS_PATH $VARIANT
+
+if [ $? != 0 ];then
+   echo "error !! sign modem image"
+   exit 129
+fi
