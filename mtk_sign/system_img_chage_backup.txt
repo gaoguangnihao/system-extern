@@ -1,0 +1,15 @@
+fs_type=ext4
+system_size=1073741824
+userdata_size=915406848
+cache_fs_type=ext4
+cache_size=117440512
+extfs_sparse_flag=-s
+selinux_fc=out/target/product/kaios31_jpv/root/file_contexts
+boot_signer=true
+verity=true
+verity_key=build/target/product/security/verity
+verity_signer_cmd=out/host/linux-x86/bin/verity_signer
+dm_verity_off=no
+block_list=out/target/product/kaios31_jpv/obj/PACKAGING/systemimage_intermediates/system.map
+system_verity_block_device=/dev/block/platform/bootdevice/by-name/system
+skip_fsck=true
