@@ -474,7 +474,7 @@ while getopts ":c:m:d:g:l:a:x:" opt;do
             echo_yellow "\n-c PAC_CONFILE"
             echo_eval PAC_CONFILE
             
-            export IMG_DIR=${PAC_CONFILE%out*}
+            export IMG_DIR=${PAC_CONFILE%sp9820e_2c10aov*}
             echo_eval IMG_DIR
             
             export SPRD_SECURE_FILE=${PAC_CONFILE%/*}/PRODUCT_SECURE_BOOT_SPRD
