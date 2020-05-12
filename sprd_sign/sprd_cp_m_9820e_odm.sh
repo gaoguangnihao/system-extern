@@ -79,6 +79,7 @@ fi
    ${IMG_DIR}/userdata.img
    ${IMG_DIR}/system_raw.img
    ${IMG_DIR}/sp9820e_2c10aov.xml
+   ${IMG_DIR}/PRODUCT_SECURE_BOOT_SPRD
    ${IMG_DIR}/./obj/PACKAGING/systemimage_intermediates/system_image_info.txt
 
  )

@@ -1,13 +1,13 @@
 #!/bin/bash
-# Author: bill.ji@unisoc.com
-# secureboot avb2.0: sign modem bins
-#
+
 # Command usage:
-#${BUILD_DIR}/avb_sign_modem.sh -c $IMG_DIR/out/target/product/***/***.xml -m ${MODEM_MODEM} -l ${MODEM_DSP} -g ${MODEM_G_DSP} -a ${MODEM_DSP_AG} -d ${MODEM_DFS}
+#${BUILD_DIR}/avb_sign_modem.sh -c $IMG_DIR/out/target/product/***/***.xml -m ${MODEM_MODEM} -l ${MODEM_DSP} -g ${MODEM_G_DSP} -a ${MODEM_DSP_AG} -d ${MODEM_DFS} -t ${ROOT_PATH}
 
 # ********* #
 # functions #
 # ********* #
+
+CURDIR="`dirname $0`"
 
 echo_title(){
     echo -e "\033[42;34m$1 \033[0m"
@@ -235,7 +235,6 @@ doSprdModemSignImage(){
             
             $STOOL_PATH/sprd_sign $(getRawSignImageName $loop) $SPRD_CONFIG_FILE
             #system_return $? sprd_sign
-            echo "Sign $(getImageName $loop) succeed" > $Script_path/../$Project/$modem_config/Sign_Check/$(getImageName $loop).check
         else
             echo_exit "[== no $loop,please check ==]"
         fi
@@ -456,7 +455,7 @@ doInit_v2(){
 }
 
 sign_modem_dir(){
-    if [ -d $IMG_DIR/$PROJ ] && [ -d $IMG_DIR/out ];then
+    if [ -d $IMG_DIR/$PROJ ];then
         rm -rf $IMG_DIR/$PROJ/
     fi
     mkdir -p $IMG_DIR/$PROJ
@@ -467,7 +466,7 @@ sign_modem_dir(){
 # **************** #
 echo_title "#### Sign modem script, ver 2.0 ####"
 
-while getopts ":c:m:d:g:l:a:x:" opt;do
+while getopts ":c:m:d:g:l:a:x:t:" opt;do
     case $opt in
         c)
             export PAC_CONFILE=$OPTARG
@@ -520,6 +519,11 @@ while getopts ":c:m:d:g:l:a:x:" opt;do
             echo_yellow "\n-a MODEM_DSP_AG"
             echo_eval MODEM_DSP_AG
         ;;
+        t)
+            export ROOT_PATH=$OPTARG
+            echo_yellow "\n-t ROOT_PATH"
+            echo_eval ROOT_PATH
+        ;;
         \?)
             echo -e "\n[parameters error!]\n"
             exit 1
@@ -530,81 +534,25 @@ done
 # ************* #
 # main function #
 # ************* #
+#PLATFORM_VERSION=$(grep "PLATFORM_VERSION :="  $IMG_DIR/build/core/version_defaults.mk | awk -F "= " '{print $NF}')
+PLATFORM_VERSION="6.0"
+#PLATFORM_VERSION_QP1A=$(grep "PLATFORM_VERSION.QP1A :="  $IMG_DIR/build/core/version_defaults.mk | awk -F "= " '{print $NF}')
+STOOL_PATH=$ROOT_PATH/bin
+SPRD_CONFIG_FILE=$ROOT_PATH/packimage_scripts/signimage/sprd/config
+SANSA_CONFIG_PATH=$ROOT_PATH/packimage_scripts/signimage/sansa/config
+SANSA_OUTPUT_PATH=$ROOT_PATH/packimage_scripts/signimage/sansa/output
+SANSA_PYPATH=$ROOT_PATH/packimage_scripts/signimage/sansa/python
 
-PLATFORM_VERSION=$(grep "PLATFORM_VERSION :="  $IMG_DIR/build/core/version_defaults.mk | awk -F "= " '{print $NF}')
-PLATFORM_VERSION_QP1A=$(grep "PLATFORM_VERSION.QP1A :="  $IMG_DIR/build/core/version_defaults.mk | awk -F "= " '{print $NF}')
+export LD_LIBRARY_PATH=$ROOT_PATH/lib/
 
-case $PLATFORM_VERSION in
-    '4.4.4'|'6.0'|'7.0')
-        export STOOL_PATH=$IMG_DIR/out/host/linux-x86/bin
-        export SPRD_CONFIG_FILE=$IMG_DIR/vendor/sprd/proprietories-source/packimage_scripts/signimage/sprd/config
-        export SANSA_CONFIG_PATH=$IMG_DIR/vendor/sprd/proprietories-source/packimage_scripts/signimage/sansa/config
-        export SANSA_OUTPUT_PATH=$IMG_DIR/vendor/sprd/proprietories-source/packimage_scripts/signimage/sansa/output
-        export SANSA_PYPATH=$IMG_DIR/vendor/sprd/proprietories-source/packimage_scripts/signimage/sansa/python
-        
-        echo_eval PLATFORM_VERSION
-        echo_eval STOOL_PATH
-        echo_eval SPRD_CONFIG_FILE
-        echo_eval SANSA_CONFIG_PATH
-        echo_eval SANSA_OUTPUT_PATH
-        echo_eval SANSA_PYPATH
-        
-        sign_modem_dir
-        doInit_v1 $@
-    ;;
-    *)
-        if [[ $PLATFORM_VERSION_QP1A == "10" ]];then
-            PLATFORM_VERSION_QP1A=$(grep "PLATFORM_VERSION.QP1A :="  $IMG_DIR/build/core/version_defaults.mk | awk -F "= " '{print $NF}')
-            export AVB_TOOL=$IMG_DIR/out/host/linux-x86/bin/avbtool
-            export SPLIT_TOOL=$IMG_DIR/out/host/linux-x86/bin/splitimg
-            export MODEM_KEY=$IMG_DIR/vendor/sprd/proprietories-source/packimage_scripts/signimage/sprd/config/rsa4096_modem.pem
-            export VER_CONFIG=$IMG_DIR/vendor/sprd/proprietories-source/packimage_scripts/signimage/sprd/config/version.cfg
-            export MB=1048576
+echo_eval PLATFORM_VERSION
+echo_eval STOOL_PATH
+echo_eval SPRD_CONFIG_FILE
+echo_eval SANSA_CONFIG_PATH
+echo_eval SANSA_OUTPUT_PATH
+echo_eval SANSA_PYPATH
+echo_eval LD_LIBRARY_PATH
 
-            echo_eval PLATFORM_VERSION_QP1A
-            echo_eval AVB_TOOL
-            echo_eval SPLIT_TOOL
-            echo_eval MODEM_KEY
-            echo_eval VER_CONFIG
-            echo_eval MB
+sign_modem_dir
+doInit_v1 $@
 
-            sign_modem_dir
-            doInit_v2 $@
-        else
-            PLATFORM_VERSION=$(grep "PLATFORM_VERSION.[a-Z][a-Z][a-Z][0-9] :="  $IMG_DIR/build/core/version_defaults.mk |awk -F "= " '{print $NF}')
-            export AVB_TOOL=$IMG_DIR/out/host/linux-x86/bin/avbtool
-            if [ ! -e $AVB_TOOL ] && [[ "$PLATFORM_VERSION" = "8.1.0" ]];then
-                export STOOL_PATH=$IMG_DIR/out/host/linux-x86/bin
-                export SPRD_CONFIG_FILE=$IMG_DIR/vendor/sprd/proprietories-source/packimage_scripts/signimage/sprd/config
-                export SANSA_CONFIG_PATH=$IMG_DIR/vendor/sprd/proprietories-source/packimage_scripts/signimage/sansa/config
-                export SANSA_OUTPUT_PATH=$IMG_DIR/vendor/sprd/proprietories-source/packimage_scripts/signimage/sansa/output
-                export SANSA_PYPATH=$IMG_DIR/vendor/sprd/proprietories-source/packimage_scripts/signimage/sansa/python
-
-                echo_eval PLATFORM_VERSION
-                echo_eval STOOL_PATH
-                echo_eval SPRD_CONFIG_FILE
-                echo_eval SANSA_CONFIG_PATH
-                echo_eval SANSA_OUTPUT_PATH
-                echo_eval SANSA_PYPATH
-
-                sign_modem_dir
-                doInit_v1 $@
-            else
-                export SPLIT_TOOL=$IMG_DIR/out/host/linux-x86/bin/splitimg
-                export MODEM_KEY=$IMG_DIR/vendor/sprd/proprietories-source/packimage_scripts/signimage/sprd/config/rsa4096_modem.pem
-                export VER_CONFIG=$IMG_DIR/vendor/sprd/proprietories-source/packimage_scripts/signimage/sprd/config/version.cfg
-                export MB=1048576
-
-                echo_eval PLATFORM_VERSION
-                echo_eval AVB_TOOL
-                echo_eval SPLIT_TOOL
-                echo_eval MODEM_KEY
-                echo_eval VER_CONFIG
-                echo_eval MB
-
-                sign_modem_dir
-                doInit_v2 $@
-            fi
-        fi
-;;
-esac

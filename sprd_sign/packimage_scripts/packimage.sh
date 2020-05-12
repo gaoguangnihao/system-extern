@@ -39,6 +39,7 @@ fi
 
 CURDIR="`dirname $0`"
 
+#FIXED-ME 
 SECURE_BOOT="SPRD"
 SECURE_BOOT_KCE="NONE"
 HOST_OUT="/../bin"
