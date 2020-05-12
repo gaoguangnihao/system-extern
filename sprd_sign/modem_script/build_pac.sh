@@ -50,7 +50,7 @@ function Project_Split(){
 	#拆分 $Project ，获取参数
 	
 	local ARGV=$1
-	[ ! -d $Script_path/../$ARGV ] && echo -e "\n[Project_Split Check ERROR!]\n" && exit 1
+	#[ ! -d $Script_path/../$ARGV ] && echo -e "\n[Project_Split Check ERROR!]\n" && exit 1
 
 	export Project_name=`echo $ARGV | awk -F "-" '{print $1}'`
 	export Project_ver=`echo $ARGV | awk -F "-" '{print $2}'`
@@ -225,26 +225,21 @@ function BUILD(){
 
 function PAC(){
 	#制作 pac 包
+	echo "dhcui-debug 1"
 	
-	TARGET_BOARD=`find $code_path/out/target/product -maxdepth 2 -name "*.xml"|tail -n 1|awk -F ".xml" '{print$1}'|awk -F "/" '{print$(NF-1)}'`
-	echo_eval TARGET_BOARD
-	
-	if [[ "${#TARGET_BOARD[@]}" == "1" ]] && [ -d $code_path/out/target/product/$TARGET_BOARD ];then
-		OUT_DIR="$code_path/out/target/product/$TARGET_BOARD"
-		echo_eval OUT_DIR
-	else
-		echo -e "\n[ out dir find fail !]\n"
-		echo "${Project}_${modem_config}.pac [FAIL]">>$Script_path/../build_pac.log
-		exit 1
-	fi
-	
-	for flash_cfg in `cd $Script_path/../$Project && find -maxdepth 2 -name flash.cfg`;do
+
+	OUT_DIR=$production_out
+	echo_eval OUT_DIR
+
+
+	for flash_cfg in `cd $OUT_DIR && find -maxdepth 2 -name flash.cfg`;do
 		pac_dir=${flash_cfg%/*}
 		export modem_config=${pac_dir##*/}
 
 		echo_eval flash_cfg
 		echo_eval modem_config
 		
+		exit
 		if [ -d $Script_path/../$Project/$modem_config ];then
 			rm -rf $Script_path/../$Project/$modem_config/*.pac
 			
@@ -1075,12 +1070,12 @@ function MAKEOTA(){
     cd -
 }
 
-export Script_path=`pwd`	&& echo_eval Script_path
-export code_path=`cd ${Script_path}/../../../../.. && pwd` && echo_eval code_path
-export carrier_param=""
-export Modem_path=`cd ${Script_path}/../Modem && pwd` && echo_eval Modem_path
+#export Script_path=`pwd`	&& echo_eval Script_path
+#export code_path=`cd ${Script_path}/../../../../.. && pwd` && echo_eval code_path
+#export carrier_param=""
+#export Modem_path=`cd ${Script_path}/../Modem && pwd` && echo_eval Modem_path
 
-while getopts ":a:b:c:" opt;do
+while getopts ":a:b:c:p:" opt;do
 	case $opt in
 		a)
 			export Project=$OPTARG
@@ -1090,6 +1085,10 @@ while getopts ":a:b:c:" opt;do
 		b)
 			export build_pac=$OPTARG
 			echo -e "参数-b:$build_pac"
+		;;
+		p)
+			export production_out=$OPTARG
+			echo -e "参数-p:$production_out"
 		;;
 		c)
 			export carriers=$OPTARG

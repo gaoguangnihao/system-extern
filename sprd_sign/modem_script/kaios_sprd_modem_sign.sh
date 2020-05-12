@@ -16,11 +16,13 @@ function usage() {
 	    echo "1 $1 is root key path"
 	    echo "2 $2 is source image path"
 	    echo "3 $3 is tools root paths"
-	    echo "./packimage.sh /local/keys_sprd /home/dhcui/sprd_2020_0515 /local/tools/system-faq/system-extern/sprd_sign"
+	    echo "4 $4 build type user or userdebug"
+	    echo "./packimage.sh /local/tools/system-faq/system-extern/sprd_sign/packimage_scripts/signimage/sprd/config
+ /home/dhcui/test_sprd_pier2m/source /local/tools/system-faq/system-extern/sprd_sign userdebug"
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 }
 
-if [ $# -lt 3 ];then
+if [ $# -lt 4 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
@@ -34,7 +36,7 @@ echo "==============================================="
 KEY_PATH=$1
 PRODUCT_OUT=$2
 ROOT_PATH=$3
-
+VARIANT=$4
 
 CURDIR="`dirname $0`"
 
@@ -73,9 +75,14 @@ cp ${PRODUCT_OUT}/sign_modem/SHARKLE1_DM_DSP-sign.bin ${PRODUCT_OUT}
 cp ${PRODUCT_OUT}/sign_modem/sharkle_cm4-sign.bin ${PRODUCT_OUT}
 
 
+#begin to make pac 
+echo ${PRODUCT_NAME}-${VARIANT}-native 
+
+./build_pac.sh -a ${PRODUCT_NAME}_k_native-${VARIANT}-native -b PAC -p ${PRODUCT_OUT}
+
+
 exit
 
-./build_pac.sh -a ${PRODUCT_NAME}-${VARIANT}-native -b PAC
 cd ${root_dir}
 cp ${PRODUCT_OUT}/${PRODUCT_NAME}-${VARIANT}-native_*.pac ./out/target/product/${TARGET_NAME}/
 

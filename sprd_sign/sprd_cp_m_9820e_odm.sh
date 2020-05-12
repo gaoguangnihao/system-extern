@@ -92,6 +92,7 @@ echo "modem sharkle image files path is "${Modem_SHARKLE_PATH}
    ${SHARKLE_PATH}/PM_sharkle_cm4*
    ${SHARKLE_PATH}/gnssmodem.bin
    ${SHARKLE_PATH}/gnssbdmodem.bin
+   ${SHARKLE_PATH}/flash.cfg
    ${SHARKLE_PATH}/sprd_240320*
    ${Modem_SHARKLE_PATH}/SC9600_sharkle_pubcp_Feature_Phone_modem.dat
    ${Modem_SHARKLE_PATH}/SharkLE_LTEA_DSP_evs_off.bin
