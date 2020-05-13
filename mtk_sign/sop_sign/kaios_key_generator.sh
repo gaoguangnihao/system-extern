@@ -52,6 +52,7 @@ DEST_FOLDER=$2
 clean()
 {
        echo "!!!!clean begin!!!!"
+       echo $PRODUCT_NAME
        rm -fr $PRODUCT_NAME
        echo "!!!!clean end!!!!"
 }
@@ -260,6 +261,13 @@ openssl genrsa -out sla_prvk.pem 2048
 
 #move public keys to PUBLIC_KEYS
 
+#cp dakey.h $PRODUCT_NAME/PUBLIC_KEYS || echo "copy dakey error " && exit 127
+#cp oemkey.h $PRODUCT_NAME/PUBLIC_KEYS || echo "copy oemkey error " && exit 127
+#cp verity_key $PRODUCT_NAME/PUBLIC_KEYS || echo "copy verity_key error " && exit 127
+
+cp dakey.h $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dakey error"
+cp oemkey.h $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dakey error"
+cp verity_key $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dakey error"
 
 cd ..
 
