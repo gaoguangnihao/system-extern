@@ -13,14 +13,15 @@ function usage() {
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 	    echo "1 $1 is keys path"
 	    echo "2 $2 is pre imgae path"
-	    echo "3 $3 is sprd tools path"
-	    echo "4 $4 is product name"
-	    echo "5 $5 build type user or userdebug"
-	    echo "./kaios_key_sign_sprd.sh /home/dhcui/key_path /home/dhcui/test_sprd_pier2m/source /local/tools/system-faq/system-extern/sprd_sign$ sp9820e_2c10aov userdebug"
+		echo "2 $3 is signed imgae path"
+	    echo "3 $4 is sprd tools path"
+	    echo "4 $5 is product name"
+	    echo "5 $6 build type user or userdebug"
+	    echo "./kaios_key_sign_sprd.sh /home/dhcui/key_path /home/dhcui/test_sprd_pier2m/source /home/dhcui/test_sprd_pier2m/dest /local/tools/system-faq/system-extern/sprd_sign$ sp9820e_2c10aov userdebug"
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 }
 
-if [ $# -lt 5 ];then
+if [ $# -lt 6 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
@@ -29,9 +30,10 @@ fi
 
 CERTS_PATH=$1
 INPUT_IMG_PATH=$2
-TOOLS_PATH=$3
-PRODUCT_NAME=$4
-VARIANT=$5
+SIGNED_IMG_PATH=$3
+TOOLS_PATH=$4
+PRODUCT_NAME=$5
+VARIANT=$6
 
 if [ $PRODUCT_NAME != "sp9820e_2c10aov" ];then
 echo 
@@ -54,6 +56,15 @@ echo "!!! this not secure boot production version"
 exit 129
 fi
 
+if [ -d $SIGNED_IMG_PATH ];then
+echo "!!! will be clean signed folder !!!"
+rm -fr $SIGNED_IMG_PATH ||{ echo "can not delete dst floder"; exit 127;}
+mkdir -p $SIGNED_IMG_PATH ||{ echo "can not creat floder"; exit 127;}
+else
+echo "!!! will be creat signed folder !!!"
+mkdir -p $SIGNED_IMG_PATH ||{ echo "can not creat floder"; exit 127;}
+fi
+
 CURDIR="`dirname $0`"
 
 #cd $CURDIR
@@ -71,8 +82,12 @@ CURDIR="`dirname $0`"
 #echo "......"
 #echo "success !!! DM sign "
 
+#copy the imgs to signed folder prepare sign process 
+
+cp $INPUT_IMG_PATH/* $SIGNED_IMG_PATH ||{ echo "can not copy floder"; exit 127;}
+echo "scuccess copy file list to dest folder"
 #sign package image files
-bash $CURDIR/packimage_scripts/kaios_sprd_packimg_sign.sh $CERTS_PATH $INPUT_IMG_PATH
+bash $CURDIR/packimage_scripts/kaios_sprd_packimg_sign.sh $CERTS_PATH $SIGNED_IMG_PATH $PRODUCT_NAME
 
 if [ $? != 0 ];then
    echo "error !! sign package image files"
@@ -81,7 +96,7 @@ fi
 
 #sign modem image and make package
 
-bash $CURDIR/modem_script/kaios_sprd_modem_sign.sh $CERTS_PATH $INPUT_IMG_PATH $TOOLS_PATH $VARIANT
+bash $CURDIR/modem_script/kaios_sprd_modem_sign.sh $CERTS_PATH $SIGNED_IMG_PATH $TOOLS_PATH $VARIANT $PRODUCT_NAME
 
 if [ $? != 0 ];then
    echo "error !! sign modem image"

@@ -18,11 +18,12 @@ function usage() {
 	    echo "1 $1 is root project path"
 	    echo "3 $2 is dest image path"
 	    echo "4 $3 is build type user or userdebug"
-	    echo "./sprd_cp_m_98203_odm.sh /local/code/pier2_m_sfp_jio/KaiOS/ /home/dhcui/home/dhcui/test_sprd_pier2m userdebug"
+      echo "5 $4 is production name"
+	    echo "./sprd_cp_m_98203_odm.sh /local/code/pier2_m_sfp_jio/KaiOS/ /home/dhcui/home/dhcui/test_sprd_pier2m userdebug sp9820e_2c10aov"
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 }
 
-if [ $# -lt 3 ];then
+if [ $# -lt 4 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
@@ -38,7 +39,7 @@ DST_DIR=$2
 VARIANT=$3
 
 #FIXED-ME should be dynamic parmerter for project name
-PRODUCT_NAME=sp9820e_2c10aov
+PRODUCT_NAME=$4
 #define some variable for copy 
 
 

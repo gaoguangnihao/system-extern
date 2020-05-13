@@ -17,12 +17,13 @@ function usage() {
 	    echo "2 $2 is source image path"
 	    echo "3 $3 is tools root paths"
 	    echo "4 $4 build type user or userdebug"
+		echo "5 $5 production name"
 	    echo "./packimage.sh /local/tools/system-faq/system-extern/sprd_sign/packimage_scripts/signimage/sprd/config
- /home/dhcui/test_sprd_pier2m/source /local/tools/system-faq/system-extern/sprd_sign userdebug"
+ /home/dhcui/test_sprd_pier2m/source /local/tools/system-faq/system-extern/sprd_sign userdebug sp9820e_2c10aov"
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 }
 
-if [ $# -lt 4 ];then
+if [ $# -lt 5 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
@@ -37,11 +38,11 @@ KEY_PATH=$1
 PRODUCT_OUT=$2
 ROOT_PATH=$3
 VARIANT=$4
+PRODUCT_NAME=$5
 
 CURDIR="`dirname $0`"
 
 #FIXED-ME should be dynamic parmerter for project name
-PRODUCT_NAME=sp9820e_2c10aov
 TARGET_NAME=sp9820e
 #define some variable for copy 
 
@@ -67,19 +68,30 @@ Modem_unsign_cm=${PRODUCT_OUT}/sharkle_cm4.bin
 #begin to sign modem image 
 
 bash $CURDIR/avb_sign_modem_v3.sh -c ${PRODUCT_OUT}/${PRODUCT_NAME}.xml -m ${Modem_unsign_dat} -g ${Modem_unsign_gdsp} -l ${Modem_unsign_ldsp} -d ${Modem_unsign_cm} -t ${ROOT_PATH}
-    
-#copy signed image to out folder
-cp ${PRODUCT_OUT}/sign_modem/SC9600_sharkle_pubcp_Feature_Phone_modem-sign.dat ${PRODUCT_OUT}
-cp ${PRODUCT_OUT}/sign_modem/SharkLE_LTEA_DSP_evs_off-sign.bin ${PRODUCT_OUT}
-cp ${PRODUCT_OUT}/sign_modem/SHARKLE1_DM_DSP-sign.bin ${PRODUCT_OUT}
-cp ${PRODUCT_OUT}/sign_modem/sharkle_cm4-sign.bin ${PRODUCT_OUT}
 
+if [ $? != 0 ];then
+   echo "!!! error !!! avb_sign_modem_v3"
+   exit 129
+fi
+
+#copy signed image to out folder
+cp ${PRODUCT_OUT}/sign_modem/SC9600_sharkle_pubcp_Feature_Phone_modem-sign.dat ${PRODUCT_OUT} ||{ echo "can not copy sign_modem"; exit 127;}
+cp ${PRODUCT_OUT}/sign_modem/SharkLE_LTEA_DSP_evs_off-sign.bin ${PRODUCT_OUT} ||{ echo "can not copy sign_modem"; exit 127;}
+cp ${PRODUCT_OUT}/sign_modem/SHARKLE1_DM_DSP-sign.bin ${PRODUCT_OUT} ||{ echo "can not copy sign_modem"; exit 127;}
+cp ${PRODUCT_OUT}/sign_modem/sharkle_cm4-sign.bin ${PRODUCT_OUT} ||{ echo "can not copy sign_modem"; exit 127;}
+
+#clean signed modem image 
+rm -fr ${PRODUCT_OUT}/sign_modem ||{ echo "can not delete sign_modem"; exit 127;}
 
 #begin to make pac 
 echo ${PRODUCT_NAME}-${VARIANT}-native 
 
 bash $CURDIR/kaios_build_pac.sh -a ${PRODUCT_NAME}_k_native-${VARIANT}-native -b PAC -p ${PRODUCT_OUT} -t ${ROOT_PATH}
 
+if [ $? != 0 ];then
+   echo "!!! error !!! kaios_build_pac"
+   exit 129
+fi
 
 exit
 

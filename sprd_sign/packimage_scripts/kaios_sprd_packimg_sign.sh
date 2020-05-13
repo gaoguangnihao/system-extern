@@ -15,11 +15,12 @@ function usage() {
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 	    echo "1 $1 is root key path"
 	    echo "2 $2 is source image path"
-	    echo "./packimage.sh /local/keys_sprd /home/dhcui/sprd_2020_0515"
+        echo "3 $3 is production name"
+	    echo "./packimage.sh /local/keys_sprd /home/dhcui/sprd_2020_0515 sp9820e_2c10aov"
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 }
 
-if [ $# -lt 2 ];then
+if [ $# -lt 3 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
@@ -28,6 +29,12 @@ fi
 
 KEY_PATH=$1
 PRODUCT_OUT=$2
+TARGETPRODUCT=$3
+
+#if [ "" = $PRODUCT_NAME ];then
+#echo "NOT SUPPORT"
+#exit 129
+#fi
 
 if [ -d $KEY_PATH ];then
    echo "Begin to sign"
@@ -45,7 +52,7 @@ SECURE_BOOT_KCE="NONE"
 HOST_OUT="/../bin"
 HOST_OUT_LIB="/../lib"
 TARGETBOARD="sp9820e"
-TARGETPRODUCT="sp9820e_2c10aov"
+
 CURPATH=$(pwd)
 
 #this path for dosprdcopy
@@ -83,8 +90,8 @@ FDL2=$PRODUCT_OUT/fdl2.bin
 FDL2SIGN=$PRODUCT_OUT/fdl2-sign.bin
 BOOT=$PRODUCT_OUT/boot.img
 BOOTSIGN=$PRODUCT_OUT/boot-sign.img
-UBOOTAUTO=$PRODUCT_OUT/u-boot_autopoweron.bin
-UBOOTAUTOSIGN=$PRODUCT_OUT/u-boot_autopoweron-sign.bin
+#UBOOTAUTO=$PRODUCT_OUT/u-boot_autopoweron.bin
+#UBOOTAUTOSIGN=$PRODUCT_OUT/u-boot_autopoweron-sign.bin
 RECOVERY=$PRODUCT_OUT/recovery.img
 RECOVERYSIGN=$PRODUCT_OUT/recovery-sign.img
 
@@ -204,6 +211,7 @@ doImgHeaderInsert()
     for loop in $@
     do
         if [ -f $loop ] ; then
+            echo "begin to imgheaderinsert about" $loop
             LD_LIBRARY_PATH=$CURDIR$HOST_OUT_LIB $CURDIR$HOST_OUT/imgheaderinsert $loop $NO_SECURE_BOOT
         else
             echo "#### HeaderInsert $loop, check ####"
@@ -238,12 +246,12 @@ doAESencrypt()
 dosprdcopy()
 {
     if [ -f $SPLSIGN ];then
-        cp $SPLSIGN $DESTDIR
+        cp $SPLSIGN $DESTDIR ||{ echo "can not copy dosprdcopy" $SPLSIGN; exit 127;}
         #echo -e "\033[33m copy spl-sign.bin finish!\033[0m"
     fi
 
     if [ -f $FDL1SIGN ]; then
-        cp $FDL1SIGN $DESTDIR
+        cp $FDL1SIGN $DESTDIR ||{ echo "can not copy dosprdcopy" $FDL1SIGN; exit 127;}
         #echo -e "\033[33m copy fdl1-sign.bin finish!\033[0m"
     fi
 }
@@ -258,7 +266,12 @@ doSignImage()
         for image in $@
         do
             if [ -f $image ]; then
+               echo "********************************"
+               echo "begin to sprd sign about " $image 
+               echo LD_LIBRARY_PATH=$CURDIR$HOST_OUT_LIB $CURDIR$HOST_OUT/sprd_sign  $image  $KEY_PATH
                LD_LIBRARY_PATH=$CURDIR$HOST_OUT_LIB $CURDIR$HOST_OUT/sprd_sign  $image  $KEY_PATH
+               echo "********************************"
+               echo "end to sprd sign about " $image 
             else
                 echo -e "\033[31m ####  SignImage $image, check #### \033[0m"
             fi
@@ -267,21 +280,21 @@ doSignImage()
         dosprdcopy
     fi
 
-    if [ "SANSA" = $SECURE_BOOT ]; then
-        for image in $@
-        do
-            if [ -f $image ] ; then
-                LD_LIBRARY_PATH=$CURDIR$HOST_OUT_LIB $CURDIR$HOST_OUT/sansa_sign.sh $image $SECURE_BOOT_KCE
-                if [ $? -eq 0 ]; then
-                    LD_LIBRARY_PATH=$CURDIR$HOST_OUT_LIB $CURDIR$HOST_OUT/signimage $CERTPATH $image $(getCertLevel $image) $debug_cert
-                else
-                    echo "sansa_sign result failed"
-                fi
-            else
-                echo "#### no $image,please check ####"
-            fi
-        done
-    fi
+#    if [ "SANSA" = $SECURE_BOOT ]; then
+#        for image in $@
+#        do
+#            if [ -f $image ] ; then
+#                LD_LIBRARY_PATH=$CURDIR$HOST_OUT_LIB $CURDIR$HOST_OUT/sansa_sign.sh $image $SECURE_BOOT_KCE
+#                if [ $? -eq 0 ]; then
+#                    LD_LIBRARY_PATH=$CURDIR$HOST_OUT_LIB $CURDIR$HOST_OUT/signimage $CERTPATH $image $(getCertLevel $image) $debug_cert
+#                else
+#                    echo "sansa_sign result failed"
+#                fi
+#            else
+#                echo "#### no $image,please check ####"
+#            fi
+#        done
+#    fi
 }
 
 doPackImage()
@@ -351,6 +364,7 @@ doPackImage()
             else
                 if (echo $TARGETBOARD | grep -E 'whale|sp9001|sp9850s|sp9860g|sp9833|sp9850ka|sc9850j|9850kh|sp9820e'); then
                     doImgHeaderInsert $SPL $SML $TOS $UBOOT $FDL1 $FDL2 $BOOT $RECOVERY $UBOOTAUTO
+                    sleep 3
                     doSignImage $SPLSIGN $SMLSIGN $TOSSIGN $UBOOTSIGN $FDL1SIGN $FDL2SIGN $BOOTSIGN $RECOVERYSIGN $UBOOTAUTOSIGN
                 fi
                 #FIXED-ME temp disable remove 
