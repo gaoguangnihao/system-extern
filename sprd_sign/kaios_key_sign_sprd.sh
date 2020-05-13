@@ -34,11 +34,14 @@ SIGNED_IMG_PATH=$3
 TOOLS_PATH=$4
 PRODUCT_NAME=$5
 VARIANT=$6
+TARGET_NAME="sp9820e"
 
-if [ $PRODUCT_NAME != "sp9820e_2c10aov" ];then
+#FIXED-ME if match the "sp9820e" project
+if [[ $PRODUCT_NAME == $TARGET_NAME ]];then
 echo 
 echo 
 echo "!!! error !!!" $PRODUCT_NAME "!!! NOT SUPPORT !!!"
+echo "only support 9820e production"
 exit 128
 fi
 
@@ -96,7 +99,7 @@ fi
 
 #sign modem image and make package
 
-bash $CURDIR/modem_script/kaios_sprd_modem_sign.sh $CERTS_PATH $SIGNED_IMG_PATH $TOOLS_PATH $VARIANT $PRODUCT_NAME
+bash $CURDIR/modem_script/kaios_sprd_modem_sign.sh $CERTS_PATH $SIGNED_IMG_PATH $TOOLS_PATH $VARIANT $PRODUCT_NAME $TARGET_NAME
 
 if [ $? != 0 ];then
    echo "error !! sign modem image"

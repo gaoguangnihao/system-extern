@@ -18,12 +18,13 @@ function usage() {
 	    echo "3 $3 is tools root paths"
 	    echo "4 $4 build type user or userdebug"
 		echo "5 $5 production name"
+		echo "6 $6 target name"
 	    echo "./packimage.sh /local/tools/system-faq/system-extern/sprd_sign/packimage_scripts/signimage/sprd/config
- /home/dhcui/test_sprd_pier2m/source /local/tools/system-faq/system-extern/sprd_sign userdebug sp9820e_2c10aov"
+ /home/dhcui/test_sprd_pier2m/source /local/tools/system-faq/system-extern/sprd_sign userdebug sp9820e_2c10aov sp9820e"
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 }
 
-if [ $# -lt 5 ];then
+if [ $# -lt 6 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
@@ -39,11 +40,12 @@ PRODUCT_OUT=$2
 ROOT_PATH=$3
 VARIANT=$4
 PRODUCT_NAME=$5
+TARGET_NAME=$6
 
 CURDIR="`dirname $0`"
 
 #FIXED-ME should be dynamic parmerter for project name
-TARGET_NAME=sp9820e
+
 #define some variable for copy 
 
 if [[ "$TARGET_NAME" == "sp9820e"* ]]; then
