@@ -464,9 +464,9 @@ sign_modem_dir(){
 # **************** #
 # input parameters #
 # **************** #
-echo_title "#### Sign modem script, ver 2.0 ####"
+echo_title "#### Sign modem script, ver 3.0 ####"
 
-while getopts ":c:m:d:g:l:a:x:t:" opt;do
+while getopts ":c:m:d:g:l:a:x:t:k:" opt;do
     case $opt in
         c)
             export PAC_CONFILE=$OPTARG
@@ -524,6 +524,11 @@ while getopts ":c:m:d:g:l:a:x:t:" opt;do
             echo_yellow "\n-t ROOT_PATH"
             echo_eval ROOT_PATH
         ;;
+        k)
+            export KEY_PATH=$OPTARG
+            echo_yellow "\n-t KEY_PATH"
+            echo_eval KEY_PATH
+        ;;
         \?)
             echo -e "\n[parameters error!]\n"
             exit 1
@@ -538,7 +543,7 @@ done
 PLATFORM_VERSION="6.0"
 #PLATFORM_VERSION_QP1A=$(grep "PLATFORM_VERSION.QP1A :="  $IMG_DIR/build/core/version_defaults.mk | awk -F "= " '{print $NF}')
 STOOL_PATH=$ROOT_PATH/bin
-SPRD_CONFIG_FILE=$ROOT_PATH/packimage_scripts/signimage/sprd/config
+SPRD_CONFIG_FILE=$KEY_PATH
 SANSA_CONFIG_PATH=$ROOT_PATH/packimage_scripts/signimage/sansa/config
 SANSA_OUTPUT_PATH=$ROOT_PATH/packimage_scripts/signimage/sansa/output
 SANSA_PYPATH=$ROOT_PATH/packimage_scripts/signimage/sansa/python
@@ -553,6 +558,7 @@ echo_eval SANSA_OUTPUT_PATH
 echo_eval SANSA_PYPATH
 echo_eval LD_LIBRARY_PATH
 
+echo_title "#### Sign modem script, ver 3.0 ####"
 sign_modem_dir
 doInit_v1 $@
 

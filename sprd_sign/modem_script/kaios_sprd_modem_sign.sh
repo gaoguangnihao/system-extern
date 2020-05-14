@@ -34,6 +34,7 @@ fi
 echo "==============================================="
 echo "======== sign modem img begin=========="
 echo "==============================================="
+sleep 3
 
 KEY_PATH=$1
 PRODUCT_OUT=$2
@@ -69,7 +70,7 @@ Modem_unsign_cm=${PRODUCT_OUT}/sharkle_cm4.bin
     
 #begin to sign modem image 
 
-bash $CURDIR/avb_sign_modem_v3.sh -c ${PRODUCT_OUT}/${PRODUCT_NAME}.xml -m ${Modem_unsign_dat} -g ${Modem_unsign_gdsp} -l ${Modem_unsign_ldsp} -d ${Modem_unsign_cm} -t ${ROOT_PATH}
+bash $CURDIR/avb_sign_modem_v3.sh -c ${PRODUCT_OUT}/${PRODUCT_NAME}.xml -m ${Modem_unsign_dat} -g ${Modem_unsign_gdsp} -l ${Modem_unsign_ldsp} -d ${Modem_unsign_cm} -t ${ROOT_PATH}  -k $KEY_PATH
 
 if [ $? != 0 ];then
    echo "!!! error !!! avb_sign_modem_v3"

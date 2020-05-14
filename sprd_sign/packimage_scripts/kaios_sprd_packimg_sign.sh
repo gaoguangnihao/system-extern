@@ -61,6 +61,9 @@ DESTDIR=$CURDIR/signimage/sprd/mkdbimg/bin
 #FIXED-ME key config path
 CFGPATH=$CURDIR/signimage/sprd/config
 
+#this for modem sign process
+cp $CFGPATH/version.cfg $KEY_PATH || { echo "can not copy version config"; exit 127 ; }
+
 KCE_TYPE="NONE"
 if [ "128" = "$KCE_TYPE" ]; then
         AESKEY=$CFGPATH/aeskey_128
@@ -388,7 +391,7 @@ fi
 echo "==============================================="
 echo "======== sign img begin=========="
 echo "==============================================="
-
+sleep 3
 echo "INFO: input param: $@"
 doPackImage "$@"
 

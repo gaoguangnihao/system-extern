@@ -5,4 +5,4 @@
 BOOTSIGNER_HOME=`dirname "$0"`
 BOOTSIGNER_HOME=`dirname "$BOOTSIGNER_HOME"`
 
-java -Xmx512M -jar system/extras/verity/BootSignature.jar "$@"
+java -Xmx512M -jar $BOOTSIGNER_HOME/system/extras/verity/BootSignature.jar "$@"

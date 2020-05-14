@@ -70,17 +70,18 @@ fi
 
 CURDIR="`dirname $0`"
 
-#cd $CURDIR
-
+## FIXED-ME should be get the right dir
+cd $CURDIR
 #prepare boot and system image with new dm key
 #Note boot_system/mt6731_jpv_jio/ should be re-define FIXED-ME
-#bash boot_system/boot_dm.sh $INPUT_IMG_PATH $CERTS_PATH
+bash $CURDIR/boot_system/boot_dm.sh $INPUT_IMG_PATH $CERTS_PATH
 
-#if [ $? != 0 ];then
-#   echo "error !! about DM sign boot and system images"
-#   exit 129
-#fi
-#sleep 3
+if [ $? != 0 ];then
+   echo "error !! about DM sign boot and system images"
+   exit 129
+fi
+sleep 3
+
 #echo "......"
 #echo "......"
 #echo "success !!! DM sign "

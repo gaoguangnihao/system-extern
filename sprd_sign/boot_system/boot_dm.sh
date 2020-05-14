@@ -148,7 +148,31 @@ if [ $? != 0 ];then
    exit 129
 fi
 
-cp $CURDIR/out/system-dm.img $PRJ_DIR/system.img
+#before copy to project folder we need check sparse or not 
+INSTALLED_SYSTEMIMAGE=$CURDIR/out/system-dm.img
+PRODUCT_OUT=$CURDIR/out
+SIMG2IMG="/../bin/simg2img"
+
+echo INSTALLED_SYSTEMIMAGE=${INSTALLED_SYSTEMIMAGE}
+echo PRODUCT_OUT=${PRODUCT_OUT}
+echo SIMG2IMG=${SIMG2IMG}
+
+dd if=${INSTALLED_SYSTEMIMAGE} of=${PRODUCT_OUT}/system_header.img bs=1 skip=0 count=4
+echo -e -n "\x3a\xff\x26\xed" > ${PRODUCT_OUT}/sparse_magic.img
+cmp -s ${PRODUCT_OUT}/system_header.img ${PRODUCT_OUT}/sparse_magic.img
+if [ $? -eq 0 ] ; then
+   echo "transfer sparse system img to unsparse img"
+   LD_LIBRARY_PATH=$CURDIR/../lib $CURDIR${SIMG2IMG} ${INSTALLED_SYSTEMIMAGE} ${PRODUCT_OUT}/system_raw.img
+#   ${SIMG2IMG} ${INSTALLED_SYSTEMIMAGE} ${PRODUCT_OUT}/unsparse_system.img
+#   rm ${INSTALLED_SYSTEMIMAGE}
+#   mv ${PRODUCT_OUT}/unsparse_system.img ${INSTALLED_SYSTEMIMAGE}
+fi
+
+rm ${PRODUCT_OUT}/sparse_magic.img
+rm ${PRODUCT_OUT}/system_header.img
+#end transfer
+
+cp $CURDIR/out/system_raw.img $PRJ_DIR/system_raw.img
 if [ $? != 0 ];then
    echo "error!! copy system dm image"
    exit 129

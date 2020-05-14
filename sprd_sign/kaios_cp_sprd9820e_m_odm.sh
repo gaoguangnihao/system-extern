@@ -84,7 +84,7 @@ fi
    ${IMG_DIR}/u-boot-spl-16k.bin
    ${IMG_DIR}/usbmsc.img
    ${IMG_DIR}/userdata.img
-   ${IMG_DIR}/system_raw.img
+   ${IMG_DIR}/system-kaios-sprd.img
    ${IMG_DIR}/sp9820e_*.xml
    ${IMG_DIR}/PRODUCT_SECURE_BOOT_SPRD
    ${IMG_DIR}/./obj/PACKAGING/systemimage_intermediates/system_image_info.txt
@@ -143,7 +143,8 @@ for modem_img_file in ${modem_img_files[@]};do
 	fi
 done
 
-
+#rename system-image to system-kaios.img
+mv ${DST_DIR}/system-kaios-sprd.img ${DST_DIR}/system-kaios.img || { echo "rename fail";exit 128; }
 echo "==============================================="
 if [ $COPY_IMG_ERR != 0 ];then
 	echo "===========  copy error ============="
