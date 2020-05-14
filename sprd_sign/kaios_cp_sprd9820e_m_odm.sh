@@ -37,9 +37,9 @@ echo "==============================================="
 ROOT_DIR=$1
 DST_DIR=$2
 VARIANT=$3
-
-#FIXED-ME should be dynamic parmerter for project name
 PRODUCT_NAME=$4
+
+
 #define some variable for copy 
 
 
@@ -55,7 +55,13 @@ Modem_DELTANV=${Modem_SHARKLE_PATH}/../sharkle_pubcp_Feature_Phone_L278_DVT2_bui
 if [ ! -d $Modem_SHARKLE_PATH ]; then
 	Modem_SHARKLE_PATH=${ROOT_DIR}/vendor/sprd/release/IDH/Modem/FM_BASE_17B_*_9820e_K_CUSTOMER/sharkle_pubcp_Feature_Phone_builddir
 fi
-	  
+
+#specifal project modem image is not same 
+if [[ "$TARGET_NAME" == "sp9820e_1h10" ]] || [[ "$PRODUCT_NAME" == "sp9820e_1h20" ]]; then
+Modem_NV=${Modem_SHARKLE_PATH}/../sharkle_pubcp_Feature_Phone_builddir/sharkle_pubcp_Feature_Phone_nvitem.bin
+Modem_DELTANV=${Modem_SHARKLE_PATH}/../sharkle_pubcp_Feature_Phone_builddir/sharkle_pubcp_Feature_Phone_deltanv.bin
+fi
+        
 if [ -d $DST_DIR ]; then
    echo "Begin to copy to "$DST_DIR
 else
@@ -99,8 +105,8 @@ echo "modem sharkle image files path is "${Modem_SHARKLE_PATH}
    ${Modem_SHARKLE_PATH}/SharkLE_LTEA_DSP_evs_off.bin
    ${Modem_SHARKLE_PATH}/SHARKLE1_DM_DSP.bin
    ${Modem_SHARKLE_PATH}/../sharkle_cm4_builddir/sharkle_cm4.bin
-   ${Modem_SHARKLE_PATH}/../sharkle_pubcp_Feature_Phone_L278_DVT2_builddir/sharkle_pubcp_Feature_Phone_L278_DVT2_deltanv.bin
-   ${Modem_SHARKLE_PATH}/../sharkle_pubcp_Feature_Phone_L278_DVT2_builddir/sharkle_pubcp_Feature_Phone_L278_DVT2_nvitem.bin
+   ${Modem_NV}
+   ${Modem_DELTANV}
    
 
  )
