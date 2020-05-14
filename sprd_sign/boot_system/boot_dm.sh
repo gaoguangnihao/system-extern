@@ -7,9 +7,10 @@
 
 PRJ_DIR=$1
 KEY_PATH=$2
-CURDIR="`pwd`"/"`dirname $0`"
+#CURDIR="`pwd`"/"`dirname $0`"
+CURDIR="`dirname $0`"
 KEY_SUFF="/verity"
-KEY_TOOLS="boot_system/bin/verity_signer"
+KEY_TOOLS="./bin/verity_signer"
 #CURDIR="`pwd`"
 
 function usage() {
@@ -112,7 +113,7 @@ fi
 
 echo "success !!! parse system config file"
 
-LD_LIBRARY_PATH=$CURDIR/lib $CURDIR/bin/boot_signer /boot $CURDIR/in/boot.img $KEY_PATH/verity.pk8  $KEY_PATH/verity.x509.pem $CURDIR/out/boot-dm.img
+LD_LIBRARY_PATH=$CURDIR/../lib $CURDIR/../bin/boot_signer /boot $CURDIR/in/boot.img $KEY_PATH/verity.pk8  $KEY_PATH/verity.x509.pem $CURDIR/out/boot-dm.img
 if [ $? != 0 ];then
    echo "error!! sign dm boot image"
    exit 129
@@ -120,7 +121,7 @@ fi
 echo "success !!! boot_signer dm boot.img"
 
 #we need sign recovery image with dm key also
-LD_LIBRARY_PATH=$CURDIR/lib $CURDIR/bin/boot_signer /recovery $CURDIR/in/recovery.img $KEY_PATH/verity.pk8  $KEY_PATH/verity.x509.pem $CURDIR/out/recovery-dm.img
+LD_LIBRARY_PATH=$CURDIR/../lib $CURDIR/../bin/boot_signer /recovery $CURDIR/in/recovery.img $KEY_PATH/verity.pk8  $KEY_PATH/verity.x509.pem $CURDIR/out/recovery-dm.img
 if [ $? != 0 ];then
    echo "error!! sign dm recovery image"
    exit 129

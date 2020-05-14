@@ -36,7 +36,7 @@ def RunCommand(cmd):
   return (output, p.returncode)
 
 def GetVerityTreeSize(partition_size):
-  cmd = "LD_LIBRARY_PATH=boot_system/lib boot_system/bin/build_verity_tree -s %d"
+  cmd = "LD_LIBRARY_PATH=./lib ./bin/build_verity_tree -s %d"
   cmd %= partition_size
   status, output = commands.getstatusoutput(cmd)
   if status:
@@ -74,7 +74,7 @@ def AdjustPartitionSizeForVerity(partition_size):
   return partition_size - verity_tree_size - verity_metadata_size
 
 def BuildVerityTree(sparse_image_path, verity_image_path, prop_dict):
-  cmd = "LD_LIBRARY_PATH=boot_system/lib boot_system/bin/build_verity_tree -A %s %s %s" % (
+  cmd = "LD_LIBRARY_PATH=./lib ./bin/build_verity_tree -A %s %s %s" % (
       FIXED_SALT, sparse_image_path, verity_image_path)
   print cmd
   status, output = commands.getstatusoutput(cmd)
@@ -108,7 +108,7 @@ def Append2Simg(sparse_image_path, unsparse_image_path, error_message):
   Returns:
     True on success, False on failure.
   """
-  cmd = "LD_LIBRARY_PATH=boot_system/lib boot_system/bin/append2simg %s %s"
+  cmd = "LD_LIBRARY_PATH=lib bin/append2simg %s %s"
   cmd %= (sparse_image_path, unsparse_image_path)
   print cmd
   status, output = commands.getstatusoutput(cmd)
