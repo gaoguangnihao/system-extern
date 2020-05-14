@@ -5,57 +5,97 @@ REPO_URL=git@172.31.8.251:git-repo.git BRANCH=v2.5R3 ./config.sh -c  pier2_m_sfp
 2. orign project
 /vendor/sprd/proprietories-source/sprd_secure_boot_tool/
 
-   2.1 VLRSign
-	/build/tools/releasetools/sprd_secure_boot_sign.py
-	
-	/build/core/Makefile 
-	maybe fot fota # cp ./vendor/sprd/proprietories-source/sprd_secure_boot_tool/VLRSign $(oem_ota_tmp)/META
+2.1 VLRSign
+/build/tools/releasetools/sprd_secure_boot_sign.py
 
-   2.2 RSAKeyGen
-	looks like just # sig_script.sh will be use it to generator key.db 
-   2.3 BscGen
-   	/build/tools/releasetools/sprd_secure_boot_sign.py
-	
-	/build/core/Makefile 
-	maybe fot fota # cp ./vendor/sprd/proprietories-source/sprd_secure_boot_tool/VLRSign $(oem_ota_tmp)/META
+/build/core/Makefile 
+maybe fot fota # cp ./vendor/sprd/proprietories-source/sprd_secure_boot_tool/VLRSign $(oem_ota_tmp)/META
+
+2.2 RSAKeyGen
+looks like just # sig_script.sh will be use it to generator key.db 
+2.3 BscGen
+/build/tools/releasetools/sprd_secure_boot_sign.py
+
+/build/core/Makefile 
+maybe fot fota # cp ./vendor/sprd/proprietories-source/sprd_secure_boot_tool/VLRSign $(oem_ota_tmp)/META
 
 3. kaios_key_sign_sprd.sh 
 
- main script 
+main script 
 
- et:
+et:
 
- bash /local/tools/system-faq/system-extern/sprd_sign/kaios_key_sign_sprd.sh 
-      /local/keys-sprd/kaios_sp9820e_2c10aov/
-	  /home/dhcui/test_sprd_pier2m/20200513/ 
-	  /home/dhcui/test_sprd_pier2m/source-dst/ 
-	  /local/tools/system-faq/system-extern/sprd_sign/
-	  sp9820e_2c10aov 
-	  userdebug
+bash $CURDIR/kaios_key_sign_sprd.sh 
+/local/keys-sprd/kaios_sp9820e_2c10aov/
+/home/dhcui/test_sprd_pier2m/20200513/ 
+/home/dhcui/test_sprd_pier2m/source-dst/ 
+/local/tools/system-faq/system-extern/sprd_sign/
+sp9820e_2c10aov 
+userdebug
 
 
- 4. boot_system
+4. boot_system
 
- for dm-verify boot image and system images
+for dm-verify boot image and system images
 
- 5. bin 
 
- tools on sprd platform 
+bash $CURDIR/boot_dm.sh 
+/home/dhcui/image_path 
+/home/dhcui/dmkey_path
 
- 6. lib 
+5. bin 
 
- libs for [5] bins
+tools on sprd platform 
 
- 7. modem_script 
+6. lib 
 
- sign modem images and pacage all images to pac 
+libs for [5] bins
 
- 8. sop_sign_keys 
+7. modem_script 
 
- generator keys on sprd platform
+sign modem images and pacage all images to pac 
+kaios_sprd_modem_sign.sh
 
- 9. packimage_scripts
+bash $CURDIR/kaios_sprd_modem_sign.sh 
+/local/keys_path
+/home/dhcui/test_sprd_pier2m/source 
+/local/tools/system-faq/system-extern/sprd_sign 
+userdebug 
+sp9820e_2c10aov 
+sp9820e
+
+bash $CURDIR/avb_sign_modem_v3.sh 
+-c ${PRODUCT_OUT}/${PRODUCT_NAME}.xml 
+-m ${Modem_unsign_dat} 
+-g ${Modem_unsign_gdsp} 
+-l ${Modem_unsign_ldsp} 
+-d ${Modem_unsign_cm} 
+-t ${ROOT_PATH}  
+-k $KEY_PATH
+
+bash $CURDIR/kaios_build_pac.sh 
+-a ${PRODUCT_NAME}_k_native-${VARIANT}-native 
+-b PAC //kaios project only support this one
+-p ${PRODUCT_OUT} 
+-t ${ROOT_PATH} 
+-m ${MODEM_CONFIG}
+
+
+
+8. sop_sign_keys 
+
+generator keys on sprd platform
+
+bash $CURDIR/kaios_key_generator.sh 
+Kaios31_jpv 
+path_of_save
+
+9. packimage_scripts
 
 sign commond images 
 
+bash $CURDIR/packimage.sh 
+/local/keys_sprd 
+/home/dhcui/sprd_2020_0515 
+sp9820e_2c10aov"
 
