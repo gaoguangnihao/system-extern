@@ -102,10 +102,10 @@ if [ $? != 0 ];then
    exit 129
 fi
 
+#FIXED-ME why rename that's modem bin files 
 exit
 
 cd ${root_dir}
-cp ${PRODUCT_OUT}/${PRODUCT_NAME}-${VARIANT}-native_*.pac ./out/target/product/${TARGET_NAME}/
 
 cp $Modem_nv ./out/target/product/${TARGET_NAME}/ltenvitem.bin
 cp $Modem_dat ./out/target/product/${TARGET_NAME}/ltemodem.bin
