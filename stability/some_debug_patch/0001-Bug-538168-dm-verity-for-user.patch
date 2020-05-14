@@ -1,0 +1,54 @@
+From f6a4fb1ce71335f2ac78c80842c0ece8781b16e7 Mon Sep 17 00:00:00 2001
+From: jasontang <jason.tang@spreadtrum.com>
+Date: Tue, 12 Apr 2016 13:52:50 +0800
+Subject: [PATCH] Bug #538168 dm-verity for user
+
+[root cause  ] dm-verity
+[changes     ] dm-verity
+[side effects]none
+[self test   ]<board, Test cases summary>:9850s-2,test cases:following bug test steps, test 3 times, pass
+[reviewers   ] justin
+[change_type ] bringup --> build_config
+[tag_product ] common
+
+Change-Id: I51dad86d4936bd95b8c81a55a96e69f7c42d5a2a
+---
+ fs_mgr/fs_mgr_verity.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/fs_mgr/fs_mgr_verity.c b/fs_mgr/fs_mgr_verity.c
+index 2d1abbea..3234c365 100644
+--- a/fs_mgr/fs_mgr_verity.c
++++ b/fs_mgr/fs_mgr_verity.c
+@@ -72,6 +72,16 @@ struct verity_state {
+ 
+ extern struct fs_info info;
+ 
++static int device_is_debuggable()
++{
++    int ret = -1;
++    char value[PROP_VALUE_MAX];
++    ret = __system_property_get("ro.debuggable", value);
++    if (ret < 0)
++        return ret;
++    return strcmp(value, "1") ? 0 : 1;
++}
++
+ static RSAPublicKey *load_key(char *path)
+ {
+     FILE *f;
+@@ -225,6 +235,11 @@ static int read_verity_metadata(uint64_t device_size, char *block_device, char *
+         goto out;
+     }
+ 
++    if(device_is_debuggable()) {
++        retval = FS_MGR_SETUP_VERITY_DISABLED;
++        goto out;
++    }
++
+     if (TEMP_FAILURE_RETRY(lseek64(device, device_size, SEEK_SET)) < 0) {
+         ERROR("Could not seek to start of verity metadata block.\n");
+         goto out;
+-- 
+2.19.0
+
