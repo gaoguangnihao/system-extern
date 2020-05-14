@@ -177,6 +177,20 @@ if [ $? != 0 ];then
    echo "error!! copy system dm image"
    exit 129
 fi
+
+#clean temp folder after done 
+# Test if out/ exists already and delete it if yes.
+if [ -d "$CURDIR/out" ] ; then
+  echo "boot_system out  So remove it."
+  rm -rf $CURDIR/out
+fi
+
+# Test if out/ exists already and delete it if yes.
+if [ -d "$CURDIR/in" ] ; then
+  echo "boot_system in . So remove it."
+  rm -rf $CURDIR/in
+fi
+
 echo "******************************************"
 echo "******end to generator boot dm files******"
 echo "******************************************"

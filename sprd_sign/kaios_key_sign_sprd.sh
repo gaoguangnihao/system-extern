@@ -69,12 +69,12 @@ mkdir -p $SIGNED_IMG_PATH ||{ echo "can not creat floder"; exit 127;}
 fi
 
 CURDIR="`dirname $0`"
-
+CURRDATE="`date +%Y-%m-%d-%H:%M:%S`"
 ## FIXED-ME should be get the right dir
 cd $CURDIR
 #prepare boot and system image with new dm key
 #Note boot_system/mt6731_jpv_jio/ should be re-define FIXED-ME
-bash $CURDIR/boot_system/boot_dm.sh $INPUT_IMG_PATH $CERTS_PATH
+bash $CURDIR/boot_system/boot_dm.sh $INPUT_IMG_PATH $CERTS_PATH 2>&1 |tee -a $CURDIR/kaios_sprd_boot_dm_$CURRDATE.log
 
 if [ $? != 0 ];then
    echo "error !! about DM sign boot and system images"
@@ -91,7 +91,7 @@ sleep 3
 cp $INPUT_IMG_PATH/* $SIGNED_IMG_PATH ||{ echo "can not copy floder"; exit 127;}
 echo "scuccess copy file list to dest folder"
 #sign package image files
-bash $CURDIR/packimage_scripts/kaios_sprd_packimg_sign.sh $CERTS_PATH $SIGNED_IMG_PATH $PRODUCT_NAME
+bash $CURDIR/packimage_scripts/kaios_sprd_packimg_sign.sh $CERTS_PATH $SIGNED_IMG_PATH $PRODUCT_NAME 2>&1 |tee -a $CURDIR/kaios_sprd_sign_$CURRDATE.log
 
 if [ $? != 0 ];then
    echo "error !! sign package image files"
@@ -100,7 +100,7 @@ fi
 
 #sign modem image and make package
 
-bash $CURDIR/modem_script/kaios_sprd_modem_sign.sh $CERTS_PATH $SIGNED_IMG_PATH $TOOLS_PATH $VARIANT $PRODUCT_NAME $TARGET_NAME
+bash $CURDIR/modem_script/kaios_sprd_modem_sign.sh $CERTS_PATH $SIGNED_IMG_PATH $TOOLS_PATH $VARIANT $PRODUCT_NAME $TARGET_NAME 2>&1 |tee -a $CURDIR/kaios_modem_sign_$CURRDATE.log
 
 if [ $? != 0 ];then
    echo "error !! sign modem image"

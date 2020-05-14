@@ -89,7 +89,13 @@ rm -fr ${PRODUCT_OUT}/sign_modem ||{ echo "can not delete sign_modem"; exit 127;
 #begin to make pac 
 echo ${PRODUCT_NAME}-${VARIANT}-native 
 
-bash $CURDIR/kaios_build_pac.sh -a ${PRODUCT_NAME}_k_native-${VARIANT}-native -b PAC -p ${PRODUCT_OUT} -t ${ROOT_PATH}
+#get the modem config name for pacage name
+MODEM_CONFIG=KAIOS
+for pac_dir in `cd $PRODUCT_OUT && find -maxdepth 2 -name SHARKLE_9820E*`;do
+MODEM_CONFIG=${pac_dir##*/}
+done
+
+bash $CURDIR/kaios_build_pac.sh -a ${PRODUCT_NAME}_k_native-${VARIANT}-native -b PAC -p ${PRODUCT_OUT} -t ${ROOT_PATH} -m ${MODEM_CONFIG}
 
 if [ $? != 0 ];then
    echo "!!! error !!! kaios_build_pac"

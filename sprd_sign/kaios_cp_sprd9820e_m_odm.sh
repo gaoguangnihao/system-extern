@@ -15,7 +15,7 @@ function usage() {
 	#######################################
 
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
-	    echo "1 $1 is root project path"
+	    echo "1 $1 is root code project path"
 	    echo "3 $2 is dest image path"
 	    echo "4 $3 is build type user or userdebug"
       echo "5 $4 is production name"
@@ -47,7 +47,7 @@ IMG_DIR=${ROOT_DIR}/out/target/product/${PRODUCT_NAME}
 Modem_PATH=/vendor/sprd/release/IDH/Script
 Modem_SHARKLE_PATH=${ROOT_DIR}/vendor/sprd/release/IDH/Modem/FM_BASE_19A_W*_9820e_K_CUSTOMER/sharkle_pubcp_Feature_Phone_builddir
 SHARKLE_PATH=$ROOT_DIR${Modem_PATH}/../${PRODUCT_NAME}_k_native-${VARIANT}-native/SHARKLE_*
-
+TEST=$ROOT_DIR${Modem_PATH}/../${PRODUCT_NAME}_k_native-${VARIANT}-native
 
 Modem_NV=${Modem_SHARKLE_PATH}/../sharkle_pubcp_Feature_Phone_L278_DVT2_builddir/sharkle_pubcp_Feature_Phone_L278_DVT2_deltanv.bin
 Modem_DELTANV=${Modem_SHARKLE_PATH}/../sharkle_pubcp_Feature_Phone_L278_DVT2_builddir/sharkle_pubcp_Feature_Phone_L278_DVT2_nvitem.bin
@@ -145,6 +145,17 @@ done
 
 #rename system-image to system-kaios.img
 mv ${DST_DIR}/system-kaios-sprd.img ${DST_DIR}/system-kaios.img || { echo "rename fail";exit 128; }
+
+for flash_cfg in `cd $TEST && find -maxdepth 2 -name flash.cfg`;do
+pac_dir=${flash_cfg%/*}
+modem_config=${pac_dir##*/}
+
+touch $modem_config
+cp $modem_config ${DST_DIR}/
+rm $modem_config
+done
+
+
 echo "==============================================="
 if [ $COPY_IMG_ERR != 0 ];then
 	echo "===========  copy error ============="

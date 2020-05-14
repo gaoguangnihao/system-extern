@@ -227,8 +227,6 @@ function PAC(){
 	#制作 pac 包
 	echo "dhcui-debug 1"
 	OUT_DIR=$production_out
-	modem_config="SHARKLE_9820E_2C10_AOV"
-	#Project="sp9820e_2c10aov_k_native-userdebug-native"
 
 	#FIXED_ME product.img mv to copy script 
 	#if [ -e "$production_out/.carrier" ];then
@@ -975,7 +973,7 @@ function MAKEOTA(){
 #export carrier_param=""
 #export Modem_path=`cd ${Script_path}/../Modem && pwd` && echo_eval Modem_path
 
-while getopts ":a:b:c:p:t:" opt;do
+while getopts ":a:b:c:p:t:m:" opt;do
 	case $opt in
 		a)
 			export Project=$OPTARG
@@ -999,6 +997,10 @@ while getopts ":a:b:c:p:t:" opt;do
 			export carriers=`echo "$carriers"|tr ' ;|' ','`
 			export carrier_param="--product_carrier $carriers"
 			echo -e "parmerter -c:$carriers"
+		;;
+        m)
+			export modem_config=$OPTARG
+			echo -e "parmerter -m:$modem_config"
 		;;
 		\?)
 			echo -e "\n[unknow ERROR!]\n"
