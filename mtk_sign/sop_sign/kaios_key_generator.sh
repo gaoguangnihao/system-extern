@@ -268,6 +268,7 @@ openssl genrsa -out sla_prvk.pem 2048
 cp dakey.h $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dakey error"
 cp oemkey.h $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dakey error"
 cp verity_key $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dakey error"
+cp root_pubk.pem $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dakey error"
 
 cd ..
 

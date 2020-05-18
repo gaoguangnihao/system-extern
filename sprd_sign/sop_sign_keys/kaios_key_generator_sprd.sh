@@ -162,6 +162,11 @@ echo "rename verity_key"
 mv verity_key.pub verity_key
 
 
+#cp dakey.h $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dakey error"
+#cp oemkey.h $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dakey error"
+cp verity_key $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dakey error"
+cp rsa2048_0_pub.pem $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dakey error"
+
 cd ..
 
 #FIXED-ME
