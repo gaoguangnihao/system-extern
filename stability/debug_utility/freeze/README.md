@@ -1,4 +1,4 @@
-1.we should double check if key drive or focus issue?
+## we should double check if key drive or focus issue?
   1.1 adb log check focus and gecko key status 
   1.2 adb shell getevent -l to check kernel 
   1.3 use webide check system app and others variables ,as document.activeElement
