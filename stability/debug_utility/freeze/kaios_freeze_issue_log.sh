@@ -63,6 +63,8 @@ LOG_PATH=$2
 echo "****************KaiOS******************"
 if [ -d $LOG_PATH$NAME ];then
    echo
+   rm -fr "$LOG_PATH$NAME"
+   mkdir -p "$LOG_PATH$NAME"
 else
    echo "WARN !!  image output folder" $LOG_PATH$NAME "not exist"
    echo 
