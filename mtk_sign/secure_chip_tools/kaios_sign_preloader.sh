@@ -98,7 +98,13 @@ echo '==copy sign preloader to the path_preloader=='
 echo '============================================='
 
 echo $path_preloader
-cp $CURDIR/out/pbp/preloader-signed.bin $path_preloader/preloader_kaios31_jpv.bin
+#Adjust the preloader bin name to match to scatter files 
+#2020-0608
+
+name_preloader="$(cat  $path_preloader/*_scatter.txt |grep project)"
+name_project=(${name_preloader//:/ }) 
+
+cp $CURDIR/out/pbp/preloader-signed.bin $path_preloader/preloader_${name_project[1]}.bin
 
 if [ $? -ne 0 ] ;then
 echo -e "error !!! copy preloader signed image"
