@@ -19,11 +19,12 @@ function usage() {
 	    echo "6 $6 is a flag , will be sign da or not"
 	    echo "7 $7 is da image path for will be signed"
 	    echo "8 $8 is efuse to generator"
-	    echo "./kaios_key_sign.sh /home/kai-user/key_path /home/kai-user/key_path /home/kai-user/image_path /home/dhcui/image_out preloader signda /home/dhcui/da_path efuse"
+       echo "9 $9 is da name"
+	    echo "./kaios_key_sign.sh /home/kai-user/key_path /home/kai-user/key_path /home/kai-user/image_path /home/dhcui/image_out preloader signda /home/dhcui/da_path efuse daname"
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 }
 
-if [ $# -lt 8 ];then
+if [ $# -lt 9 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
@@ -38,6 +39,7 @@ PRELOADER=$5
 SIGN_DA=$6
 DA_BIN_PATH=$7
 EFUSE=$8
+DA_NAME=$9
 
 CURDIR="`dirname $0`"
 
@@ -105,7 +107,7 @@ echo "success !! preloader sign \n"
 sleep 3
 
 if [[ $SIGN_DA = "signda" ]]; then
-   bash secure_chip_tools/kaios_sign_da.sh $DA_BIN_PATH $CERT1_PATH
+   bash secure_chip_tools/kaios_sign_da.sh $DA_BIN_PATH $CERT1_PATH $DA_NAME $OUTPUT_IMG_PATH
 
    if [ $? != 0 ];then
    echo "error!! preloader sign error "

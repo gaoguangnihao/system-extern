@@ -15,19 +15,22 @@ function usage() {
 	echo '*****************************************'
 	echo "sign DA-BR and DA-PL ..."
 	echo '*****************************************'
-	echo "Command: ./kaios_sign_da.sh /home/dhcui/share_all_da_sign key_path"
+	echo "Command: ./kaios_sign_da.sh /home/dhcui/share_all_da_sign key_path da_name out_path"
 	echo '*****************************************'
 }
 #echo 'copy da to /prebuilt/resignda'
 
 path_da=$1
 keypath=$2
+da_name=$3
+da_out_path=$4
 CURDIR="`pwd`"/"`dirname $0`"
 
 echo $path_da
 echo $CURDIR
+echo $da_name
 
-if [ $# -lt 2 ];then
+if [ $# -lt 4 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
@@ -38,6 +41,7 @@ if [ -f "$path_da/MTK_AllInOne_DA.bin" ]; then
    	cp $path_da/MTK_AllInOne_DA.bin $CURDIR/prebuilt/resignda
 else
 	usage
+	echo "WWWWW maybe you need copy MTK_AllInOne_DA.bin to the $path_da"
 	exit 128
 fi
 
@@ -96,14 +100,20 @@ echo '============================================='
 echo '==copy sign da to the $path_da=='
 echo '============================================='
 
-cp $CURDIR/out/resignda/MTK_AllInOne_DA.bin-sign $path_da/MTK_AllInOne_DA.bin-sign.bin
-cp $CURDIR/out/resignda/DA_PL.bin-sign $path_da/DA_PL.bin-sign.bin
+cp $CURDIR/out/resignda/MTK_AllInOne_DA.bin-sign $path_da/MTK_AllInOne_DA_$da_name-kaios-sign.bin
+cp $CURDIR/out/resignda/DA_PL.bin-sign $path_da/DA_PL_$da_name-kaios-sign.bin
+
+echo "below is fot server package to odm"
 
 echo "below is for test code for my pc"
+if [ -d $da_out_path ]; then
+cp $CURDIR/out/resignda/MTK_AllInOne_DA.bin-sign $da_out_path/MTK_AllInOne_DA_$da_name-kaios-sign.bin
+cp $CURDIR/out/resignda/DA_PL.bin-sign $da_out_path/DA_PL_$da_name-kaios-sign.bin
+fi
 
 if [ -d "/local/tools/mtk-download" ]; then
-	cp $CURDIR/out/resignda/MTK_AllInOne_DA.bin-sign /local/tools/mtk-download/MTK_AllInOne_DA.bin-mt6739sign.bin
-	cp $CURDIR/out/resignda/DA_PL.bin-sign /local/tools/mtk-download/DA_PL.bin-mt6739sign.bin
+	cp $CURDIR/out/resignda/MTK_AllInOne_DA.bin-sign /local/tools/mtk-download/MTK_AllInOne_DA_$da_name-kaios-sign.bin
+	cp $CURDIR/out/resignda/DA_PL.bin-sign /local/tools/mtk-download/DA_PL_$da_name-kaios-sign.bin
 fi
 
 
