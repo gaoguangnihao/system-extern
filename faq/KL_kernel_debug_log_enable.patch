@@ -1,0 +1,54 @@
+diff --git a/drivers/char/diag/Makefile b/drivers/char/diag/Makefile
+index 7282197c9e56..b8bdfd333857 100644
+--- a/drivers/char/diag/Makefile
++++ b/drivers/char/diag/Makefile
+@@ -1,3 +1,6 @@
++subdir-ccflags-y       := -DDEBUG
++subdir-ccflags-y       += -DVERBOSE_DEBUG
++
+ obj-$(CONFIG_DIAG_CHAR) := diagchar.o
+ obj-$(CONFIG_DIAGFWD_BRIDGE_CODE) += diagfwd_bridge.o
+ obj-$(CONFIG_USB_QCOM_DIAG_BRIDGE) += diagfwd_hsic.o
+diff --git a/drivers/char/diag/diag_usb.c b/drivers/char/diag/diag_usb.c
+index 646f247285f0..c0e328702547 100644
+--- a/drivers/char/diag/diag_usb.c
++++ b/drivers/char/diag/diag_usb.c
+@@ -364,7 +364,9 @@ static void diag_usb_notifier(void *priv, unsigned int event,
+ 	case USB_DIAG_CONNECT:
+ 		usb_info->max_size = usb_diag_request_size(usb_info->hdl);
+ 		atomic_set(&usb_info->connected, 1);
+-		pr_info("diag: USB channel %s connected\n", usb_info->name);
++		pr_info("diag-dhcui: USB channel %s connected\n", usb_info->name);
++		pr_debug("diag-dhcui: USB channel %s connected\n", usb_info->name);
++		
+ 		queue_work(usb_info->usb_wq,
+ 			   &usb_info->connect_work);
+ 		break;
+diff --git a/drivers/usb/gadget/Makefile b/drivers/usb/gadget/Makefile
+index 2bde573d0096..773e3ed62f87 100644
+--- a/drivers/usb/gadget/Makefile
++++ b/drivers/usb/gadget/Makefile
+@@ -1,8 +1,8 @@
+ #
+ # USB peripheral controller drivers
+ #
+-subdir-ccflags-$(CONFIG_USB_GADGET_DEBUG)	:= -DDEBUG
+-subdir-ccflags-$(CONFIG_USB_GADGET_VERBOSE)	+= -DVERBOSE_DEBUG
++subdir-ccflags-y	:= -DDEBUG
++subdir-ccflags-y	+= -DVERBOSE_DEBUG
+ ccflags-y				+= -I$(srctree)/drivers/usb/gadget/udc
+ 
+ obj-$(CONFIG_USB_LIBCOMPOSITE)	+= libcomposite.o
+diff --git a/include/linux/printk.h b/include/linux/printk.h
+index eac1af8502bb..db200eda9ed7 100644
+--- a/include/linux/printk.h
++++ b/include/linux/printk.h
+@@ -40,7 +40,7 @@ static inline const char *printk_skip_level(const char *buffer)
+ #define CONSOLE_LOGLEVEL_SILENT  0 /* Mum's the word */
+ #define CONSOLE_LOGLEVEL_MIN	 1 /* Minimum loglevel we let people use */
+ #define CONSOLE_LOGLEVEL_QUIET	 4 /* Shhh ..., when booted with "quiet" */
+-#define CONSOLE_LOGLEVEL_DEFAULT 7 /* anything MORE serious than KERN_DEBUG */
++#define CONSOLE_LOGLEVEL_DEFAULT 8 /* anything MORE serious than KERN_DEBUG */
+ #define CONSOLE_LOGLEVEL_DEBUG	10 /* issue debug messages */
+ #define CONSOLE_LOGLEVEL_MOTORMOUTH 15	/* You can't shut this one up */
+ 

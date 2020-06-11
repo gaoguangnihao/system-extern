@@ -80,5 +80,77 @@ echo 'Done!'
 ```
 #12 android logs
 
+##13 ftrace 
+```
+FOR 4.9 Kernel
 
+PROCEDURE for Static/idle screen usecase: 
+
+adb root
+adb remount
+adb shell 
+su
+
+echo 51200 > /d/tracing/buffer_size_kb && echo "" > /d/tracing/set_event
+cat /d/tracing/buffer_size_kb  ----> make sure it shows above value.  If NOT set it again and check it.
+
+echo "" > /d/tracing/trace && echo "sched:* power:* msm_bus:* kgsl:* msm_low_power:* cpufreq_interactive:* timer:* irq:* workqueue:* clk:*" > /d/tracing/set_event
+echo irq:* >> /d/tracing/set_event 
+echo clk:* >> /d/tracing/set_event 
+cat /d/tracing/set_event
+
+Start usecase and run below command and remove usb
+
+sleep 10 && echo 0 > /d/tracing/tracing_on && echo 1 > /d/tracing/tracing_on && sleep 10 && echo 0 > /d/tracing/tracing_on &
+
+After 1min, 
+adb pull /sys/kernel/debug/tracing/trace trace_log.txt
+```
+
+```
+For 3.10 kernel
+
+Static idle usecase
+=================== 
+
+adb root
+adb remount
+adb shell
+su
+
+start usecase and run below command and remove USB
+
+sleep 10 && echo 51200 > /d/tracing/buffer_size_kb && echo "" > /d/tracing/set_event && echo "" > /d/tracing/trace && echo "sched:* power:* msm_bus:* kgsl:* msm_low_power:* cpufreq_interactive:* timer:* irq:* workqueue:* clk:* " > /d/tracing/set_event && echo 0 > /d/tracing/tracing_on && echo 1 > /d/tracing/tracing_on && sleep 10 && echo 0 > /d/tracing/tracing_on & 
+
+After 1min, 
+adb pull /sys/kernel/debug/tracing/trace trace_log.txt
+```
+
+##14 power 
+
+```
+adb root
+adb remount
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/kgsl/kgsl_gpubusy/enable"
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/kgsl/kgsl_pwr_request_state/enable"
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/kgsl/kgsl_pwr_set_state/enable"
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/kgsl/kgsl_pwrstats/enable"
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/kgsl/kgsl_buslevel/enable"
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/kgsl/kgsl_pwrlevel/enable"
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/kgsl/kgsl_clk/enable"
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/kgsl/kgsl_bus/enable"
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/kgsl/kgsl_rail/enable"
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/kgsl/adreno_cmdbatch_queued/enable"
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/kgsl/adreno_cmdbatch_submitted/enable"
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/kgsl/adreno_cmdbatch_retired/enable"
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/kgsl/kgsl_user_pwrlevel_constraint/enable"
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/kgsl/kgsl_constraint/enable"
+
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/msm_bus/bus_update_request/enable"
+adb shell "echo 1 > /sys/kernel/debug/tracing/events/msm_bus/bus_agg_bw/enable"
+
+adb shell "echo 1 > /sys/kernel/debug/tracing/tracing_on"
+
+adb shell cat /sys/kernel/debug/tracing/trace_pipe > traces_kgsl.txt
+```
 
