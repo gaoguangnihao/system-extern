@@ -22,12 +22,12 @@ cp $PATCH_PATH/mtk_porting_build.diff $PRJ_DIR/build
 
 echo "KaiOS/build"
 
-#device/mediatek/kaios31_jpv/full_kaios31_jpv.mk
+#device/mediatek/kaios31_jpv/full_kaios31_jpv.mk //nothing need to modify
 
 echo "device/mediatek"
 
 
-#kernel project kernel-4.4/ 
+#kernel project kernel-4.4/  //add logs at kernel
 
 echo "kernel-4.4/"
 
@@ -43,5 +43,5 @@ echo "lk public key"
 #vendor/mediatek/proprietary/bootable/bootloader/preloader/
 echo "preloader public key"
 
-
-
+#at last please copy oem.da to windows build the DA file
+echo " build da"
