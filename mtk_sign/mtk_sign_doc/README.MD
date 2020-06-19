@@ -50,6 +50,7 @@
 * 6  is a flag , will be sign da or not
 * 7  is da image path for will be signed
 * 8  is a flag , will be for efuse write  to generator
+* 9  is a name for rename da files 
 
 >  sample as blow 
->  kaios_key_sign.sh /home/kai-user/key_path /home/kai-user/key_path /home/kai-user/image_path /home/dhcui/image_out preloader null /home/dhcui/da_path null
+>  kaios_key_sign.sh /home/kai-user/key_path /home/kai-user/key_path /home/kai-user/image_path /home/dhcui/image_out preloader null /home/dhcui/da_path null daname
