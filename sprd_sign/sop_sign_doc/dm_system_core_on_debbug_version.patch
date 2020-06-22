@@ -1,0 +1,19 @@
+diff --git a/fs_mgr/fs_mgr_verity.c b/fs_mgr/fs_mgr_verity.c
+index 3234c365..06ffb40b 100644
+--- a/fs_mgr/fs_mgr_verity.c
++++ b/fs_mgr/fs_mgr_verity.c
+@@ -234,11 +234,13 @@ static int read_verity_metadata(uint64_t device_size, char *block_device, char *
+         ERROR("Could not open block device %s (%s).\n", block_device, strerror(errno));
+         goto out;
+     }
+-
++    
++#if 0
+     if(device_is_debuggable()) {
+         retval = FS_MGR_SETUP_VERITY_DISABLED;
+         goto out;
+     }
++#endif
+ 
+     if (TEMP_FAILURE_RETRY(lseek64(device, device_size, SEEK_SET)) < 0) {
+         ERROR("Could not seek to start of verity metadata block.\n");
