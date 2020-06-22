@@ -1,0 +1,3 @@
+Linux Ram Dump Parser Version 2.0
+Arguments: ramparse.py --force-hardware=8905 -v /home/dhcui/dahui-share/qualcomm_crash/vmliux 
+/home/dhcui/dahui-share/qualcomm_crash/vmliux does not exist. Cannot proceed without vmlinux. Exiting...

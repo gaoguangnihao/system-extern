@@ -1,0 +1,1 @@
+Output path: /home/dhcui/dahui-share/qualcomm_crash/tools/linux-ramdump-parser-v2/ipc_logging
