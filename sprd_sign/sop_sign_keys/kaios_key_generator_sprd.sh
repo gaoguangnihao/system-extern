@@ -14,7 +14,7 @@ echo "The script tools path is "$TOOLSDIR
 if [ ! -n "$1" ] ;then
     echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
     echo "You have not input PRODUCT_NAME!"
-    echo "Try ./kaios_key_generator_sprd.sh Kaios31_jpv path_of_save"
+    echo "Try ./kaios_key_generator_sprd.sh 9820e_2h10_fise path_of_save"
     echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
     exit 127
 else
@@ -26,7 +26,7 @@ if [ $# -lt 2 ];then
 	echo "############WORNG PARG ###########"
 	echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 	echo "You have not input PRODUCT_NAME!"
-	echo "try ./kaios_key_generator.sh Kaios31_jpv path_of_save"
+	echo "try ./kaios_key_generator_sprd.sh 9820e_2h10_fise path_of_save"
 	echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 	exit 127
 fi
@@ -153,6 +153,7 @@ LD_LIBRARY_PATH=$TOOLSDIR/lib $TOOLSDIR/bin/generate_verity_key -convert verity.
 
 if [ $? != 0 ];then
    echo "error !! generator verity_key"
+   echo "error !! should be given a absolute path of the sign tools"
    clean
    exit 129
 fi
@@ -162,10 +163,8 @@ echo "rename verity_key"
 mv verity_key.pub verity_key
 
 
-#cp dakey.h $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dakey error"
-#cp oemkey.h $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dakey error"
-cp verity_key $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dakey error"
-cp rsa2048_0_pub.pem $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dakey error"
+cp verity_key $PRODUCT_NAME/PUBLIC_KEYS||echo "copy dm public key error"
+cp rsa2048_0_pub.pem $PRODUCT_NAME/PUBLIC_KEYS||echo "copy root key error"
 
 cd ..
 
