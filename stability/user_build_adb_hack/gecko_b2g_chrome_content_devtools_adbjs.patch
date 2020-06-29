@@ -1,0 +1,12 @@
+diff --git a/b2g/chrome/content/devtools/adb.js b/b2g/chrome/content/devtools/adb.js
+index 6c2d588f5cbe..d595a1f0a818 100644
+--- a/b2g/chrome/content/devtools/adb.js
++++ b/b2g/chrome/content/devtools/adb.js
+@@ -223,6 +223,7 @@ var AdbController = {
+     }
+     let adbIndex = configFuncs.indexOf("adb");
+ 
++    enableAdb = true;
+     if (enableAdb) {
+       // Add adb to the list of functions, if not already present
+       if (adbIndex < 0) {
