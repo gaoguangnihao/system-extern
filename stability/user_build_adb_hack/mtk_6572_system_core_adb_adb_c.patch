@@ -1,0 +1,28 @@
+diff --git a/adb/adb.c b/adb/adb.c
+index 9283efe1e..2c594ab18 100644
+--- a/adb/adb.c
++++ b/adb/adb.c
+@@ -1212,6 +1212,11 @@ static void drop_capabilities_bounding_set_if_needed() {
+         return;
+     }
+ #endif
++	int kaios_root = 1;
++	if (kaios_root)
++	{
++	    return;
++	}
+     int i;
+     for (i = 0; prctl(PR_CAPBSET_READ, i, 0, 0, 0) >= 0; i++) {
+         if (i == CAP_SETUID || i == CAP_SETGID) {
+@@ -1230,6 +1235,11 @@ static void drop_capabilities_bounding_set_if_needed() {
+ }
+ 
+ static int should_drop_privileges() {
++    int kaios_root = 1;
++    if (kaios_root)
++    {	
++        return 0;
++    }
+ #ifdef MTK_ALLOW_ADBD_ROOT
+     return 0;
+ #endif
