@@ -21,6 +21,7 @@
 ## 4.others 
 ##  adb shell df
 ##  adb shell strace -p $PID 
+##  bugreport files
 ## try to  get b2g-ps and b2g-info about freeze issue
 
 CURDIR="`dirname $0`"
@@ -32,8 +33,8 @@ function usage() {
 	# Dump usage howto
 	#######################################
 	echo "please select correct parameter"
-	echo "1 $1 folder ame"
-	echo "2 $2 log save LOG_PATH"
+	echo "1 $1 Folder logs name"
+	echo "2 $2 Log Saved Absolute Path"
 	echo " example :: /kaios_freeze_issue_log.sh MTK_Kaios31_jpv_jio"
 	echo "            /home/kai-user/"
 }
@@ -70,15 +71,18 @@ else
    echo 
    mkdir -p "$LOG_PATH$NAME"
 fi
+echo "WARN !!  Please don't plug out USB cable till see success info"
+echo 
 
-adb root 
+adb wait-for-device root
 #adb remount 
 
-echo "step 1 : begin to get b2g* info"
+echo "step 1 : begin to get b2g* info and basic log info"
 
 adb shell b2g-info >$LOG_PATH$NAME/$CURRDATE-b2g-info.txt
-adb shell b2g-ps >$LOG_PATH$NAME/$CURRDATE-2g-ps.txt
-
+adb shell b2g-ps >$LOG_PATH$NAME/$CURRDATE-b2g-ps.txt
+adb logcat -v threadtime -d >$LOG_PATH$NAME/$CURRDATE-logcat.txt
+adb shell dmesg >$LOG_PATH$NAME/$CURRDATE-kernel.txt
 
 echo "step 2 : begin to get debuggerd* info"
 
@@ -117,5 +121,10 @@ adb shell top -t -d 3 -m 10 -n 5 >$LOG_PATH$NAME/$CURRDATE-top.txt
 
 echo "step 4:  begin to get df info"
 adb shell df >$LOG_PATH$NAME/$CURRDATE-df.txt
+
+
+echo "step 5:  begin to bugreport logs ,it need long time"
+adb shell bugreport >$LOG_PATH$NAME/$CURRDATE-bugreport.txt
 echo 
+echo "Done success logs"
 echo "****************KaiOS******************"
