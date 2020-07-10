@@ -1,0 +1,15 @@
+title "/home/dhcui/dahui-share/qualcomm_crash/Port_COM6/out"
+sys.cpu CORTEXA7
+sys.up
+data.load.binary /home/dhcui/dahui-share/qualcomm_crash/Port_COM6/DDRCS0.BIN 0x80000000
+PER.S.F C15:0x2 %L 0x80004000
+mmu.on
+mmu.scan
+data.load.elf /home/dhcui/dahui-share/qualcomm_crash/Port_COM6/vmlinux /noclear
+
+task.config /opt/t32/demo/arm/kernel/linux/linux.t32
+menu.reprogram /opt/t32/demo/arm/kernel/linux/linux.men
+task.dtask
+
+v.v  %ASCII %STRING linux_banner
+do /home/dhcui/dahui-share/qualcomm_crash/Port_COM6/out/regs_panic.cmm

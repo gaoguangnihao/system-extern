@@ -126,5 +126,8 @@ adb shell df >$LOG_PATH$NAME/$CURRDATE-df.txt
 echo "step 5:  begin to bugreport logs ,it need long time"
 adb shell bugreport >$LOG_PATH$NAME/$CURRDATE-bugreport.txt
 echo 
+
+echo "step 6:  begin pull DB files"
+adb pull data/local/storage/permanent/chrome $LOG_PATH$NAME/$CURRDATE-chrome
 echo "Done success logs"
 echo "****************KaiOS******************"
