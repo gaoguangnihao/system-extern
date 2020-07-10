@@ -1,4 +1,10 @@
 #! /bin/bash
+#
+# get from qualcomm 
+#dhcui@cuidahui-pc:~/dahui-share/qualcomm_crash/tools/.git$ git remote -v
+#origin	git://codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools (fetch)
+#origin	git://codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools (push)
+#please build vmlinux with symbols 
 echo ""
 echo "Start ramdump parser.."
  
