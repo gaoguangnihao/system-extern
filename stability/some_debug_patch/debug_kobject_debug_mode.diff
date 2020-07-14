@@ -1,0 +1,27 @@
+diff --git a/arch/arm/configs/msm8909-perf_defconfig b/arch/arm/configs/msm8909-perf_defconfig
+index c9cf52896037..e5bc1b87bc10 100755
+--- a/arch/arm/configs/msm8909-perf_defconfig
++++ b/arch/arm/configs/msm8909-perf_defconfig
+@@ -552,3 +552,5 @@ CONFIG_CRYPTO_SHA2_ARM_CE=y
+ CONFIG_CRYPTO_AES_ARM_BS=y
+ CONFIG_CRYPTO_AES_ARM_CE=y
+ CONFIG_QMI_ENCDEC=y
++CONFIG_DEBUG_INFO=y
++CONFIG_COREDUMP=y
+diff --git a/lib/Makefile b/lib/Makefile
+index 977e03f9984b..b65deb135776 100644
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -60,10 +60,10 @@ obj-$(CONFIG_TEST_PRINTF) += test_printf.o
+ obj-$(CONFIG_TEST_BITMAP) += test_bitmap.o
+ obj-$(CONFIG_TEST_UUID) += test_uuid.o
+ 
+-ifeq ($(CONFIG_DEBUG_KOBJECT),y)
++
+ CFLAGS_kobject.o += -DDEBUG
+ CFLAGS_kobject_uevent.o += -DDEBUG
+-endif
++
+ 
+ obj-$(CONFIG_DEBUG_INFO_REDUCED) += debug_info.o
+ CFLAGS_debug_info.o += $(call cc-option, -femit-struct-debug-detailed=any)
