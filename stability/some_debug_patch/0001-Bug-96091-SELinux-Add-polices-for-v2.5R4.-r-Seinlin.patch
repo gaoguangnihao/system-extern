@@ -1,0 +1,26 @@
+From c4ae5694f9f457ee48218d21941e0c2bb285e224 Mon Sep 17 00:00:00 2001
+From: "Neo.Tian" <Neo.Tian@kaiostech.com>
+Date: Fri, 5 Jun 2020 11:17:52 +0800
+Subject: [PATCH] Bug 96091 SELinux: Add polices for v2.5R4. r=Seinlin.
+
+---
+ sepolicy/common/b2g.te | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/sepolicy/common/b2g.te b/sepolicy/common/b2g.te
+index 9a79d33..c3f1679 100644
+--- a/sepolicy/common/b2g.te
++++ b/sepolicy/common/b2g.te
+@@ -140,7 +140,8 @@ allow b2g socket_device:dir rw_dir_perms;
+ allow b2g socket_device:sock_file create_file_perms;
+ allow b2g surfaceflinger_service:service_manager add;
+ allow b2g sysfs:file w_file_perms;
+-allow b2g sysfs_lowmemorykiller:file w_file_perms;
++allow b2g sysfs_lowmemorykiller:dir create_dir_perms;
++allow b2g sysfs_lowmemorykiller:file create_file_perms;
+ allow b2g sysfs_wake_lock:file rw_file_perms;
+ allow b2g system_data_file:dir create_dir_perms;
+ allow b2g system_data_file:file create_file_perms;
+-- 
+2.19.0
+

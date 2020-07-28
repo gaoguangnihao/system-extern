@@ -14,7 +14,7 @@ function usage() {
 
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 	    echo "1 $1 is root key path"
-	    echo "2 $2 is source image path"
+	    echo "2 $2 is out image path"
 	    echo "3 $3 is tools root paths"
 	    echo "4 $4 build type user or userdebug"
 		echo "5 $5 production name"
