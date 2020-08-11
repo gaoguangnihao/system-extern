@@ -1,0 +1,25 @@
+From 1fcf083802c0b29d0d538ffbb709f41e587e72a1 Mon Sep 17 00:00:00 2001
+From: Rex Hung <rex.hung@kaiostech.com>
+Date: Fri, 19 Jun 2020 17:06:49 +0800
+Subject: [PATCH] Bug 93986 - Turn on kmemleak and page_owner.
+
+---
+ BoardConfig.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/BoardConfig.mk b/BoardConfig.mk
+index 6fcd82c..181c0a0 100644
+--- a/BoardConfig.mk
++++ b/BoardConfig.mk
+@@ -106,7 +106,7 @@ TARGET_USERIMAGES_USE_EXT4 := true
+ BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
+ BOARD_PERSISTIMAGE_FILE_SYSTEM_TYPE := ext4
+ 
+-BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 earlyprintk earlycon=msm_hsl_uart,0x78B0000
++BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 earlyprintk earlycon=msm_hsl_uart,0x78B0000 page_owner=on kmemleak=on
+ BOARD_KERNEL_CMDLINE += $(EXTRA_BOARD_KERNEL_CMDLINE)
+ # BOARD_KERNEL_SEPARATED_DT := true
+ 
+-- 
+2.17.1
+
