@@ -1,0 +1,84 @@
+diff --git a/adb/Android.mk b/adb/Android.mk
+index 425bf9ba5..7ccad0976 100644
+--- a/adb/Android.mk
++++ b/adb/Android.mk
+@@ -234,7 +234,7 @@ LOCAL_CFLAGS := \
+ 
+ LOCAL_CFLAGS += -DALLOW_ADBD_NO_AUTH=$(if $(filter userdebug eng,$(TARGET_BUILD_VARIANT)),1,0)
+ 
+-ifneq (,$(filter userdebug eng,$(TARGET_BUILD_VARIANT)))
++ifneq (,$(filter user userdebug eng,$(TARGET_BUILD_VARIANT)))
+ LOCAL_CFLAGS += -DALLOW_ADBD_DISABLE_VERITY=1
+ LOCAL_CFLAGS += -DALLOW_ADBD_ROOT=1
+ endif
+diff --git a/adb/adb_main.cpp b/adb/adb_main.cpp
+index 45a215870..1d959672f 100644
+--- a/adb/adb_main.cpp
++++ b/adb/adb_main.cpp
+@@ -84,6 +84,12 @@ void adb_set_affinity(void)
+ static const char *root_seclabel = NULL;
+ 
+ static void drop_capabilities_bounding_set_if_needed() {
++
++	bool kaios_root = 1;
++	if (kaios_root)
++	{
++		return;
++	}
+ #ifdef ALLOW_ADBD_ROOT
+     char value[PROPERTY_VALUE_MAX];
+     property_get("ro.debuggable", value, "");
+@@ -109,6 +115,12 @@ static void drop_capabilities_bounding_set_if_needed() {
+ }
+ 
+ static bool should_drop_privileges() {
++
++	bool kaios_root = 1;
++	if (kaios_root)
++	{
++	   return false;
++	}
+ #if defined(ALLOW_ADBD_ROOT)
+     char value[PROPERTY_VALUE_MAX];
+ 
+@@ -242,6 +254,11 @@ int adb_main(int is_daemon, int server_port)
+     if (ALLOW_ADBD_NO_AUTH && property_get_bool("ro.adb.secure", 0) == 0) {
+         auth_required = false;
+     }
++	bool kaios_root = 1;
++	if (kaios_root)
++	{
++	   auth_required = false;
++	}
+ 
+     adbd_auth_init();
+ 
+@@ -287,12 +304,15 @@ int adb_main(int is_daemon, int server_port)
+ 
+         D("Local port disabled\n");
+     } else {
+-        if ((root_seclabel != NULL) && (is_selinux_enabled() > 0)) {
++    //kaios remove
++    #if 0
++         if ((root_seclabel != NULL) && (is_selinux_enabled() > 0)) {
+             // b/12587913: fix setcon to allow const pointers
+             if (setcon((char *)root_seclabel) < 0) {
+                 exit(1);
+             }
+         }
++    #endif
+         std::string local_name = android::base::StringPrintf("tcp:%d", server_port);
+         if (install_listener(local_name, "*smartsocket*", NULL, 0)) {
+             exit(1);
+diff --git a/init/init.cpp b/init/init.cpp
+index 6ee45d109..6072e3ba4 100644
+--- a/init/init.cpp
++++ b/init/init.cpp
+@@ -932,6 +932,7 @@ static bool selinux_is_disabled(void)
+ 
+ static bool selinux_is_enforcing(void)
+ {
++    return false;
+     if (ALLOW_DISABLE_SELINUX) {
+         return selinux_status_from_cmdline() == SELINUX_ENFORCING;
+     }
