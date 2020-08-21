@@ -1,0 +1,50 @@
+diff --git a/adb/Android.mk b/adb/Android.mk
+index 721b48d5a..4ace0084e 100644
+--- a/adb/Android.mk
++++ b/adb/Android.mk
+@@ -120,7 +120,7 @@ LOCAL_SRC_FILES := \
+ LOCAL_CFLAGS := -O2 -g -DADB_HOST=0 -Wall -Wno-unused-parameter
+ LOCAL_CFLAGS += -D_XOPEN_SOURCE -D_GNU_SOURCE
+ 
+-ifneq (,$(filter userdebug eng,$(TARGET_BUILD_VARIANT)))
++ifneq (,$(filter user userdebug eng,$(TARGET_BUILD_VARIANT)))
+ LOCAL_CFLAGS += -DALLOW_ADBD_ROOT=1
+ endif
+ 
+diff --git a/adb/adb.c b/adb/adb.c
+index 72b7484af..fcebd901d 100644
+--- a/adb/adb.c
++++ b/adb/adb.c
+@@ -1219,6 +1219,7 @@ static int should_drop_privileges() {
+ #ifndef ALLOW_ADBD_ROOT
+     return 1;
+ #else /* ALLOW_ADBD_ROOT */
++    return 0;
+     int secure = 0;
+     char value[PROPERTY_VALUE_MAX];
+ 
+@@ -1285,7 +1286,7 @@ int adb_main(int is_daemon, int server_port)
+     }
+ #else
+     property_get("ro.adb.secure", value, "0");
+-    auth_enabled = !strcmp(value, "1");
++    auth_enabled = 0;
+     if (auth_enabled)
+         adb_auth_init();
+ 
+diff --git a/adb/services.c b/adb/services.c
+index 951048e58..1c3e9a7e0 100644
+--- a/adb/services.c
++++ b/adb/services.c
+@@ -67,14 +67,7 @@ void restart_root_service(int fd, void *cookie)
+         writex(fd, buf, strlen(buf));
+         adb_close(fd);
+     } else {
+-        property_get("ro.debuggable", value, "");
+-        if (strcmp(value, "1") != 0) {
+-            snprintf(buf, sizeof(buf), "adbd cannot run as root in production builds\n");
+-            writex(fd, buf, strlen(buf));
+-            adb_close(fd);
+-            return;
+-        }
+-
