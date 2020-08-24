@@ -1,0 +1,482 @@
+From c37b4b3721cce964d39ddd4f039b9c0d822c721c Mon Sep 17 00:00:00 2001
+From: "dahui.cui" <dahui.cui@kaiostech.com>
+Date: Mon, 24 Aug 2020 10:00:02 +0800
+Subject: [PATCH] WIP-make-mparent-valid-debug-log-for-telephonyParent
+
+---
+ dom/telephony/ipc/TelephonyChild.cpp      | 17 +++++++
+ dom/telephony/ipc/TelephonyIPCService.cpp |  7 +++
+ dom/telephony/ipc/TelephonyParent.cpp     | 61 +++++++++++++++++------
+ dom/telephony/ipc/TelephonyParent.h       |  6 +--
+ 4 files changed, 73 insertions(+), 18 deletions(-)
+
+diff --git a/dom/telephony/ipc/TelephonyChild.cpp b/dom/telephony/ipc/TelephonyChild.cpp
+index 38fe62f92361..136e7e31d031 100644
+--- a/dom/telephony/ipc/TelephonyChild.cpp
++++ b/dom/telephony/ipc/TelephonyChild.cpp
+@@ -13,6 +13,10 @@
+ #include "mozilla/UniquePtr.h"
+ #include "TelephonyIPCService.h"
+ 
++#include <android/log.h>
++#define DHCUI_DEBUG(args...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI-debug", ## args)
++
++
+ USING_TELEPHONY_NAMESPACE
+ USING_VIDEOCALLPROVIDER_NAMESPACE
+ 
+@@ -24,15 +28,18 @@ TelephonyChild::TelephonyChild(TelephonyIPCService* aService)
+   : mService(aService)
+ {
+   MOZ_ASSERT(aService);
++  DHCUI_DEBUG("TelephonyChild::TelephonyChild %p",this);
+ }
+ 
+ TelephonyChild::~TelephonyChild()
+ {
++    DHCUI_DEBUG("TelephonyChild::~~~TelephonyChild %p",this);
+ }
+ 
+ void
+ TelephonyChild::ActorDestroy(ActorDestroyReason aWhy)
+ {
++  DHCUI_DEBUG("TelephonyChild::ActorDestroy %p",this);
+   if (mService) {
+     mService->NoteActorDestroyed();
+     mService = nullptr;
+@@ -195,6 +202,7 @@ TelephonyRequestChild::TelephonyRequestChild(nsITelephonyListener* aListener,
+                                              nsITelephonyCallback* aCallback)
+   : mListener(aListener), mCallback(aCallback)
+ {
++  DHCUI_DEBUG("TelephonyRequestChild::TelephonyRequestChild %p",this);
+ }
+ 
+ void
+@@ -202,11 +210,14 @@ TelephonyRequestChild::ActorDestroy(ActorDestroyReason aWhy)
+ {
+   mListener = nullptr;
+   mCallback = nullptr;
++  DHCUI_DEBUG("TelephonyRequestChild::ActorDestroy %p",this);
+ }
+ 
+ bool
+ TelephonyRequestChild::Recv__delete__(const IPCTelephonyResponse& aResponse)
+ {
++
++  DHCUI_DEBUG("TelephonyRequestChild::Recv__delete__ %p",this);
+   switch (aResponse.type()) {
+     case IPCTelephonyResponse::TEnumerateCallsResponse:
+       mListener->EnumerateCallStateComplete();
+@@ -246,6 +257,7 @@ bool
+ TelephonyRequestChild::RecvNotifyDialMMI(const nsString& aServiceCode)
+ {
+   MOZ_ASSERT(mCallback);
++  DHCUI_DEBUG("TelephonyRequestChild::RecvNotifyDialMMI %p",this);
+   nsCOMPtr<nsITelephonyDialCallback> callback = do_QueryInterface(mCallback);
+   callback->NotifyDialMMI(aServiceCode);
+   return true;
+@@ -254,6 +266,7 @@ TelephonyRequestChild::RecvNotifyDialMMI(const nsString& aServiceCode)
+ bool
+ TelephonyRequestChild::DoResponse(const SuccessResponse& aResponse)
+ {
++  DHCUI_DEBUG("TelephonyRequestChild::DoResponse 1 %p",this);
+   MOZ_ASSERT(mCallback);
+   mCallback->NotifySuccess();
+   return true;
+@@ -262,6 +275,7 @@ TelephonyRequestChild::DoResponse(const SuccessResponse& aResponse)
+ bool
+ TelephonyRequestChild::DoResponse(const ErrorResponse& aResponse)
+ {
++  DHCUI_DEBUG("TelephonyRequestChild::DoResponse 2 %p",this);
+   MOZ_ASSERT(mCallback);
+   mCallback->NotifyError(aResponse.name());
+   return true;
+@@ -270,6 +284,7 @@ TelephonyRequestChild::DoResponse(const ErrorResponse& aResponse)
+ bool
+ TelephonyRequestChild::DoResponse(const DialResponseCallSuccess& aResponse)
+ {
++  DHCUI_DEBUG("TelephonyRequestChild::DoResponse 3 %p",this);
+   MOZ_ASSERT(mCallback);
+   nsCOMPtr<nsITelephonyDialCallback> callback = do_QueryInterface(mCallback);
+   callback->NotifyDialCallSuccess(aResponse.clientId(), aResponse.callIndex(),
+@@ -286,6 +301,7 @@ TelephonyRequestChild::DoResponse(const DialResponseCallSuccess& aResponse)
+ bool
+ TelephonyRequestChild::DoResponse(const DialResponseMMISuccess& aResponse)
+ {
++  DHCUI_DEBUG("TelephonyRequestChild::DoResponse 4 %p",this);
+   MOZ_ASSERT(mCallback);
+   nsCOMPtr<nsITelephonyDialCallback> callback = do_QueryInterface(mCallback);
+ 
+@@ -339,6 +355,7 @@ TelephonyRequestChild::DoResponse(const DialResponseMMISuccess& aResponse)
+ bool
+ TelephonyRequestChild::DoResponse(const DialResponseMMIError& aResponse)
+ {
++  DHCUI_DEBUG("TelephonyRequestChild::DoResponse 5 %p",this);
+   MOZ_ASSERT(mCallback);
+   nsCOMPtr<nsITelephonyDialCallback> callback = do_QueryInterface(mCallback);
+ 
+diff --git a/dom/telephony/ipc/TelephonyIPCService.cpp b/dom/telephony/ipc/TelephonyIPCService.cpp
+index 8938c4b01495..f0b4cd969624 100644
+--- a/dom/telephony/ipc/TelephonyIPCService.cpp
++++ b/dom/telephony/ipc/TelephonyIPCService.cpp
+@@ -12,6 +12,10 @@
+ 
+ #include "nsITelephonyCallInfo.h"
+ 
++#include <android/log.h>
++#define DHCUI_DEBUG(args...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI-debug", ## args)
++
++
+ USING_TELEPHONY_NAMESPACE
+ using namespace mozilla::dom;
+ USING_VIDEOCALLPROVIDER_NAMESPACE
+@@ -63,6 +67,7 @@ TelephonyIPCService::TelephonyIPCService()
+ #endif
+ {
+   LOG("constructor");
++  DHCUI_DEBUG("TelephonyIPCService::TelephonyIPCService %p",this);
+   // Deallocated in ContentChild::DeallocPTelephonyChild().
+   mPTelephonyChild = new TelephonyChild(this);
+   ContentChild::GetSingleton()->SendPTelephonyConstructor(mPTelephonyChild);
+@@ -74,6 +79,7 @@ TelephonyIPCService::TelephonyIPCService()
+ TelephonyIPCService::~TelephonyIPCService()
+ {
+   LOG("deconstructor");
++    DHCUI_DEBUG("TelephonyIPCService::~TelephonyIPCService %p",this);
+ #ifdef MOZ_WIDGET_GONK
+   CleanupVideocallProviders();
+ #endif
+@@ -105,6 +111,7 @@ void
+ TelephonyIPCService::NoteActorDestroyed()
+ {
+   LOG("NoteActorDestroyed");
++  DHCUI_DEBUG("TelephonyIPCService::NoteActorDestroyed %p",this);
+   MOZ_ASSERT(mPTelephonyChild);
+ 
+   mPTelephonyChild = nullptr;
+diff --git a/dom/telephony/ipc/TelephonyParent.cpp b/dom/telephony/ipc/TelephonyParent.cpp
+index 81d248d6218c..401b06410f41 100644
+--- a/dom/telephony/ipc/TelephonyParent.cpp
++++ b/dom/telephony/ipc/TelephonyParent.cpp
+@@ -10,6 +10,10 @@
+ #include "mozilla/dom/videocallprovider/VideoCallProviderParent.h"
+ #endif
+ 
++#include <android/log.h>
++#define DHCUI_DEBUG(args...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI-debug", ## args)
++
++
+ USING_TELEPHONY_NAMESPACE
+ USING_VIDEOCALLPROVIDER_NAMESPACE
+ 
+@@ -23,6 +27,7 @@ TelephonyParent::TelephonyParent()
+   : mActorDestroyed(false)
+   , mRegistered(false)
+ {
++  DHCUI_DEBUG("TelephonyParent::TelephonyParent %p",this);
+ }
+ 
+ void
+@@ -32,7 +37,7 @@ TelephonyParent::ActorDestroy(ActorDestroyReason why)
+   // case ActorDestroy() was called and mActorDestroyed is set to true. Return
+   // an error here to avoid sending a message to the dead process.
+   mActorDestroyed = true;
+-
++  DHCUI_DEBUG("TelephonyParent::ActorDestroy %p",this);
+   // Try to unregister listener if we're still registered.
+   RecvUnregisterListener();
+ }
+@@ -44,6 +49,7 @@ TelephonyParent::RecvPTelephonyRequestConstructor(PTelephonyRequestParent* aActo
+   TelephonyRequestParent* actor = static_cast<TelephonyRequestParent*>(aActor);
+   nsCOMPtr<nsITelephonyService> service = do_GetService(TELEPHONY_SERVICE_CONTRACTID);
+ 
++  DHCUI_DEBUG("TelephonyParent::RecvPTelephonyRequestConstructor");
+   if (!service) {
+     return NS_SUCCEEDED(actor->GetCallback()->NotifyError(NS_LITERAL_STRING("InvalidStateError")));
+   }
+@@ -182,6 +188,7 @@ TelephonyParent::RecvPTelephonyRequestConstructor(PTelephonyRequestParent* aActo
+ PTelephonyRequestParent*
+ TelephonyParent::AllocPTelephonyRequestParent(const IPCTelephonyRequest& aRequest)
+ {
++  DHCUI_DEBUG("TelephonyParent::AllocPTelephonyRequestParent %p",this);
+   TelephonyRequestParent* actor = new TelephonyRequestParent();
+   // Add an extra ref for IPDL. Will be released in
+   // TelephonyParent::DeallocPTelephonyRequestParent().
+@@ -194,6 +201,7 @@ bool
+ TelephonyParent::DeallocPTelephonyRequestParent(PTelephonyRequestParent* aActor)
+ {
+   // TelephonyRequestParent is refcounted, must not be freed manually.
++  DHCUI_DEBUG("TelephonyParent::DeallocPTelephonyRequestParent, %p",this);
+   static_cast<TelephonyRequestParent*>(aActor)->Release();
+   return true;
+ }
+@@ -222,6 +230,7 @@ TelephonyParent::DeallocPVideoCallProviderParent(PVideoCallProviderParent* aActo
+ bool
+ TelephonyParent::Recv__delete__()
+ {
++   DHCUI_DEBUG("TelephonyParent::Recv__delete__ %p",this);
+   return true; // Unregister listener in TelephonyParent::ActorDestroy().
+ }
+ 
+@@ -374,6 +383,7 @@ TelephonyParent::RecvSetTtyMode(const uint16_t& aMode)
+ NS_IMETHODIMP
+ TelephonyParent::CallStateChanged(uint32_t aLength, nsITelephonyCallInfo** aAllInfo)
+ {
++  DHCUI_DEBUG("TelephonyParent::CallStateChanged,%p",this);
+   NS_ENSURE_TRUE(!mActorDestroyed, NS_ERROR_FAILURE);
+ 
+   nsTArray<nsITelephonyCallInfo*> allInfo;
+@@ -404,7 +414,7 @@ TelephonyParent::NotifyCdmaCallWaiting(uint32_t aClientId,
+                                        uint16_t aNamePresentation)
+ {
+   NS_ENSURE_TRUE(!mActorDestroyed, NS_ERROR_FAILURE);
+-
++  DHCUI_DEBUG("TelephonyParent::NotifyCdmaCallWaiting");
+   IPCCdmaWaitingCallData data(nsString(aNumber), aNumberPresentation,
+                               nsString(aName), aNamePresentation);
+   return SendNotifyCdmaCallWaiting(aClientId, data) ? NS_OK : NS_ERROR_FAILURE;
+@@ -415,7 +425,7 @@ TelephonyParent::NotifyConferenceError(const nsAString& aName,
+                                        const nsAString& aMessage)
+ {
+   NS_ENSURE_TRUE(!mActorDestroyed, NS_ERROR_FAILURE);
+-
++DHCUI_DEBUG("TelephonyParent::NotifyConferenceError");
+   return SendNotifyConferenceError(nsString(aName), nsString(aMessage)) ? NS_OK
+                                                                         : NS_ERROR_FAILURE;
+ }
+@@ -424,7 +434,7 @@ NS_IMETHODIMP
+ TelephonyParent::NotifyRingbackTone(bool aPlayRingbackTone)
+ {
+   NS_ENSURE_TRUE(!mActorDestroyed, NS_ERROR_FAILURE);
+-
++  DHCUI_DEBUG("TelephonyParent::NotifyRingbackTone");
+   return SendNotifyRingbackTone(aPlayRingbackTone) ? NS_OK
+                                                    : NS_ERROR_FAILURE;
+ }
+@@ -433,7 +443,7 @@ NS_IMETHODIMP
+ TelephonyParent::NotifyTtyModeReceived(uint16_t mode)
+ {
+   NS_ENSURE_TRUE(!mActorDestroyed, NS_ERROR_FAILURE);
+-
++  DHCUI_DEBUG("TelephonyParent::NotifyTtyModeReceived");
+   return SendNotifyTtyModeReceived(mode) ? NS_OK
+                                          : NS_ERROR_FAILURE;
+ }
+@@ -442,7 +452,7 @@ NS_IMETHODIMP
+ TelephonyParent::NotifyTelephonyCoverageLosing(uint16_t aType)
+ {
+   NS_ENSURE_TRUE(!mActorDestroyed, NS_ERROR_FAILURE);
+-
++  DHCUI_DEBUG("TelephonyParent::NotifyTelephonyCoverageLosing");
+   return SendNotifyTelephonyCoverageLosing(aType) ? NS_OK
+                                                   : NS_ERROR_FAILURE;
+ }
+@@ -456,7 +466,7 @@ TelephonyParent::SupplementaryServiceNotification(uint32_t aClientId,
+                                                   const nsAString& aNumber)
+ {
+   NS_ENSURE_TRUE(!mActorDestroyed, NS_ERROR_FAILURE);
+-
++  DHCUI_DEBUG("TelephonyParent::SupplementaryServiceNotification");
+   return SendNotifySupplementaryService(aClientId, aNotificationType, aCode,
+       aIndex, aType, nsString(aNumber)) ? NS_OK : NS_ERROR_FAILURE;
+ }
+@@ -467,6 +477,7 @@ TelephonyParent::NotifyRttModifyRequestReceived(uint32_t aClientId,
+                                                 uint16_t aRttMode)
+ {
+   NS_ENSURE_TRUE(!mActorDestroyed, NS_ERROR_FAILURE);
++  DHCUI_DEBUG("TelephonyParent::NotifyRttModifyRequestReceived");
+   return SendNotifyRttModifyRequestReceived(aClientId, aCallIndex, aRttMode)
+       ? NS_OK : NS_ERROR_FAILURE;
+ }
+@@ -477,6 +488,7 @@ TelephonyParent::NotifyRttModifyResponseReceived(uint32_t aClientId,
+                                                  uint16_t aStatus)
+ {
+   NS_ENSURE_TRUE(!mActorDestroyed, NS_ERROR_FAILURE);
++  DHCUI_DEBUG("TelephonyParent::NotifyRttModifyResponseReceived");
+   return SendNotifyRttModifyResponseReceived(aClientId, aCallIndex, aStatus)
+       ? NS_OK : NS_ERROR_FAILURE;
+ }
+@@ -487,6 +499,7 @@ TelephonyParent::NotifyRttMessageReceived(uint32_t aClientId,
+                                           const nsAString& aMessage)
+ {
+   NS_ENSURE_TRUE(!mActorDestroyed, NS_ERROR_FAILURE);
++  DHCUI_DEBUG("TelephonyParent::NotifyRttMessageReceived");
+   return SendNotifyRttMessageReceived(aClientId, aCallIndex, nsString(aMessage))
+       ? NS_OK : NS_ERROR_FAILURE;
+ }
+@@ -500,9 +513,10 @@ NS_IMPL_ISUPPORTS(TelephonyRequestParent,
+ 
+ TelephonyRequestParent::TelephonyRequestParent()
+   : mActorDestroyed(false),
+-    mCallback(new Callback(*this)),
+-    mDialCallback(new DialCallback(*this))
++    mCallback(new Callback(this)),
++    mDialCallback(new DialCallback(this))
+ {
++  DHCUI_DEBUG("TelephonyRequestParent::TelephonyRequestParent this is %p",this);
+ }
+ 
+ void
+@@ -511,6 +525,7 @@ TelephonyRequestParent::ActorDestroy(ActorDestroyReason why)
+   // The child process could die before this asynchronous notification, in which
+   // case ActorDestroy() was called and mActorDestroyed is set to true. Return
+   // an error here to avoid sending a message to the dead process.
++  DHCUI_DEBUG("TelephonyRequestParent::ActorDestroy %p,mCallback is %p ,mDialCallback is %p",this,mCallback.get(),mDialCallback.get());
+   mActorDestroyed = true;
+ }
+ 
+@@ -518,7 +533,7 @@ nsresult
+ TelephonyRequestParent::SendResponse(const IPCTelephonyResponse& aResponse)
+ {
+   NS_ENSURE_TRUE(!mActorDestroyed, NS_ERROR_FAILURE);
+-
++  DHCUI_DEBUG("TelephonyRequestParent::SendResponse %p",this);
+   return Send__delete__(this, aResponse) ? NS_OK : NS_ERROR_FAILURE;
+ }
+ 
+@@ -534,7 +549,7 @@ NS_IMETHODIMP
+ TelephonyRequestParent::EnumerateCallStateComplete()
+ {
+   NS_ENSURE_TRUE(!mActorDestroyed, NS_ERROR_FAILURE);
+-
++DHCUI_DEBUG("TelephonyRequestParent::EnumerateCallStateComplete %p",this);
+   return Send__delete__(this, EnumerateCallsResponse()) ? NS_OK : NS_ERROR_FAILURE;
+ }
+ 
+@@ -542,7 +557,7 @@ NS_IMETHODIMP
+ TelephonyRequestParent::EnumerateCallState(nsITelephonyCallInfo* aInfo)
+ {
+   NS_ENSURE_TRUE(!mActorDestroyed, NS_ERROR_FAILURE);
+-
++DHCUI_DEBUG("TelephonyRequestParent::EnumerateCallState %p",this);
+   return SendNotifyEnumerateCallState(aInfo) ? NS_OK : NS_ERROR_FAILURE;
+ }
+ 
+@@ -625,18 +640,26 @@ NS_IMPL_ISUPPORTS(TelephonyRequestParent::Callback,
+ 
+ nsresult TelephonyRequestParent::Callback::SendResponse(const IPCTelephonyResponse& aResponse)
+ {
+-  return mParent.SendResponse(aResponse);
++  if(mParent && mParent->mActorDestroyed)
++  { //ASYNC operation feedback from ril message 
++    LOG("TelephonyRequestParent::Callback::SendResponse return with child process already exit");
++    mParent = nullptr;
++    return NS_ERROR_FAILURE;
++  }
++  return mParent->SendResponse(aResponse);
+ }
+ 
+ NS_IMETHODIMP
+ TelephonyRequestParent::Callback::NotifySuccess()
+ {
++  DHCUI_DEBUG("TelephonyRequestParent::Callback::NotifySuccess");
+   return SendResponse(SuccessResponse());
+ }
+ 
+ NS_IMETHODIMP
+ TelephonyRequestParent::Callback::NotifyError(const nsAString& aError)
+ {
++  DHCUI_DEBUG("TelephonyRequestParent::Callback::NotifyError");
+   return SendResponse(ErrorResponse(nsAutoString(aError)));
+ }
+ 
+@@ -651,9 +674,10 @@ NS_IMPL_ISUPPORTS_INHERITED(TelephonyRequestParent::DialCallback,
+ NS_IMETHODIMP
+ TelephonyRequestParent::DialCallback::NotifyDialMMI(const nsAString& aServiceCode)
+ {
+-  NS_ENSURE_TRUE(!mParent.mActorDestroyed, NS_ERROR_FAILURE);
++  NS_ENSURE_TRUE(!mParent->mActorDestroyed, NS_ERROR_FAILURE);
+ 
+-  return mParent.SendNotifyDialMMI(nsAutoString(aServiceCode)) ? NS_OK : NS_ERROR_FAILURE;
++  DHCUI_DEBUG("TelephonyRequestParent::DialCallback::NotifyDialMMI");
++  return mParent->SendNotifyDialMMI(nsAutoString(aServiceCode)) ? NS_OK : NS_ERROR_FAILURE;
+ }
+ 
+ NS_IMETHODIMP
+@@ -667,6 +691,7 @@ TelephonyRequestParent::DialCallback::NotifyDialCallSuccess(uint32_t aClientId,
+                                                             uint32_t aCapabilities,
+                                                             uint16_t aRadioTech)
+ {
++  DHCUI_DEBUG("TelephonyRequestParent::DialCallback::NotifyDialCallSuccess");
+   return SendResponse(DialResponseCallSuccess(aClientId, aCallIndex,
+                                               nsAutoString(aNumber),
+                                               aIsEmergency,
+@@ -680,6 +705,7 @@ TelephonyRequestParent::DialCallback::NotifyDialCallSuccess(uint32_t aClientId,
+ NS_IMETHODIMP
+ TelephonyRequestParent::DialCallback::NotifyDialMMISuccess(const nsAString& aStatusMessage)
+ {
++  DHCUI_DEBUG("TelephonyRequestParent::DialCallback::NotifyDialMMISuccess");
+   return SendResponse(DialResponseMMISuccess(nsAutoString(aStatusMessage),
+                                              AdditionalInformation(mozilla::void_t())));
+ }
+@@ -688,6 +714,7 @@ NS_IMETHODIMP
+ TelephonyRequestParent::DialCallback::NotifyDialMMISuccessWithInteger(const nsAString& aStatusMessage,
+                                                                       uint16_t aAdditionalInformation)
+ {
++   DHCUI_DEBUG("TelephonyRequestParent::DialCallback::NotifyDialMMISuccessWithInteger");
+   return SendResponse(DialResponseMMISuccess(nsAutoString(aStatusMessage),
+                                              AdditionalInformation(aAdditionalInformation)));
+ }
+@@ -699,6 +726,7 @@ TelephonyRequestParent::DialCallback::NotifyDialMMISuccessWithStrings(const nsAS
+ {
+   nsTArray<nsString> additionalInformation;
+   nsString* infos = additionalInformation.AppendElements(aCount);
++   DHCUI_DEBUG("TelephonyRequestParent::DialCallback::NotifyDialMMISuccessWithStrings");
+   for (uint32_t i = 0; i < aCount; i++) {
+     infos[i].Rebind(aAdditionalInformation[i],
+                     nsCharTraits<char16_t>::length(aAdditionalInformation[i]));
+@@ -718,6 +746,7 @@ TelephonyRequestParent::DialCallback::NotifyDialMMISuccessWithCallForwardingOpti
+     additionalInformation.AppendElement(aAdditionalInformation[i]);
+   }
+ 
++ DHCUI_DEBUG("TelephonyRequestParent::DialCallback::NotifyDialMMISuccessWithCallForwardingOptions");
+   return SendResponse(DialResponseMMISuccess(nsAutoString(aStatusMessage),
+                                              AdditionalInformation(additionalInformation)));
+ }
+@@ -725,6 +754,7 @@ TelephonyRequestParent::DialCallback::NotifyDialMMISuccessWithCallForwardingOpti
+ NS_IMETHODIMP
+ TelephonyRequestParent::DialCallback::NotifyDialMMIError(const nsAString& aError)
+ {
++   DHCUI_DEBUG("TelephonyRequestParent::DialCallback::NotifyDialMMIError");
+   return SendResponse(DialResponseMMIError(nsAutoString(aError),
+                                            AdditionalInformation(mozilla::void_t())));
+ }
+@@ -733,6 +763,7 @@ NS_IMETHODIMP
+ TelephonyRequestParent::DialCallback::NotifyDialMMIErrorWithInfo(const nsAString& aError,
+                                                                  uint16_t aInfo)
+ {
++   DHCUI_DEBUG("TelephonyRequestParent::DialCallback::NotifyDialMMIErrorWithInfo");
+   return SendResponse(DialResponseMMIError(nsAutoString(aError),
+                                            AdditionalInformation(aInfo)));
+ }
+diff --git a/dom/telephony/ipc/TelephonyParent.h b/dom/telephony/ipc/TelephonyParent.h
+index 9853b93fbd00..aa400e4865e6 100644
+--- a/dom/telephony/ipc/TelephonyParent.h
++++ b/dom/telephony/ipc/TelephonyParent.h
+@@ -107,12 +107,12 @@ public:
+     NS_DECL_NSITELEPHONYCALLBACK
+ 
+   protected:
+-    explicit Callback(TelephonyRequestParent& aParent): mParent(aParent) {}
++    explicit Callback(TelephonyRequestParent* aParent): mParent(aParent) {}
+     virtual ~Callback() {}
+ 
+   private:
+     nsresult SendResponse(const IPCTelephonyResponse& aResponse);
+-    TelephonyRequestParent& mParent;
++    RefPtr<TelephonyRequestParent> mParent;
+   };
+ 
+   class DialCallback final : public Callback
+@@ -125,7 +125,7 @@ public:
+     NS_FORWARD_NSITELEPHONYCALLBACK(Callback::)
+ 
+   private:
+-    explicit DialCallback(TelephonyRequestParent& aParent): Callback(aParent) {}
++    explicit DialCallback(TelephonyRequestParent* aParent): Callback(aParent) {}
+     ~DialCallback() {}
+   };
+ 
+-- 
+2.19.0
+
