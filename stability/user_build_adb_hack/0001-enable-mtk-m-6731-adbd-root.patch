@@ -1,0 +1,51 @@
+From a60b494e434a292c934850080a0dcaf6cffceed9 Mon Sep 17 00:00:00 2001
+From: "hongxiu.wang" <hongxiu.wang@kaiostech.com>
+Date: Thu, 27 Aug 2020 10:52:52 +0800
+Subject: [PATCH] enable mtk m 6731 adbd root
+
+---
+ adb/Android.mk   | 4 ++--
+ adb/adb_main.cpp | 4 +++-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/adb/Android.mk b/adb/Android.mk
+index 425bf9ba5..da138bc8a 100644
+--- a/adb/Android.mk
++++ b/adb/Android.mk
+@@ -232,9 +232,9 @@ LOCAL_CFLAGS := \
+     -D_GNU_SOURCE \
+     -Wno-deprecated-declarations \
+ 
+-LOCAL_CFLAGS += -DALLOW_ADBD_NO_AUTH=$(if $(filter userdebug eng,$(TARGET_BUILD_VARIANT)),1,0)
++LOCAL_CFLAGS += -DALLOW_ADBD_NO_AUTH=$(if $(filter user userdebug eng,$(TARGET_BUILD_VARIANT)),1,0)
+ 
+-ifneq (,$(filter userdebug eng,$(TARGET_BUILD_VARIANT)))
++ifneq (,$(filter user userdebug eng,$(TARGET_BUILD_VARIANT)))
+ LOCAL_CFLAGS += -DALLOW_ADBD_DISABLE_VERITY=1
+ LOCAL_CFLAGS += -DALLOW_ADBD_ROOT=1
+ endif
+diff --git a/adb/adb_main.cpp b/adb/adb_main.cpp
+index 45a215870..519a0b1f5 100644
+--- a/adb/adb_main.cpp
++++ b/adb/adb_main.cpp
+@@ -287,7 +287,8 @@ int adb_main(int is_daemon, int server_port)
+ 
+         D("Local port disabled\n");
+     } else {
+-        if ((root_seclabel != NULL) && (is_selinux_enabled() > 0)) {
++    #if 0
++         if ((root_seclabel != NULL) && (is_selinux_enabled() > 0)) {
+             // b/12587913: fix setcon to allow const pointers
+             if (setcon((char *)root_seclabel) < 0) {
+                 exit(1);
+@@ -297,6 +298,7 @@ int adb_main(int is_daemon, int server_port)
+         if (install_listener(local_name, "*smartsocket*", NULL, 0)) {
+             exit(1);
+         }
++    #endif
+     }
+ 
+     int usb = 0;
+-- 
+2.18.2
+
