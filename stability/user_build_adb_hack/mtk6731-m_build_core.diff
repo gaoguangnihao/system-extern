@@ -20,13 +20,3 @@ index 5b6e1e9e7..4ae20b39d 100644
  endif # !enable_target_debugging
  
  ## eng ##
-diff --git a/tools/buildinfo.sh b/tools/buildinfo.sh
-index 5c199b809..899cb4379 100755
---- a/tools/buildinfo.sh
-+++ b/tools/buildinfo.sh
-@@ -56,4 +56,5 @@ if [ -n "$BUILD_THUMBPRINT" ] ; then
- fi
- echo "ro.build.characteristics=$TARGET_AAPT_CHARACTERISTICS"
- 
-+echo "ro.build.cver=MT_6731_4_4_22_SEC_1"
- echo "# end build properties"
