@@ -19,12 +19,13 @@ function usage() {
 	    echo "6 $6 is a flag , will be sign da or not"
 	    echo "7 $7 is da image path for will be signed"
 	    echo "8 $8 is efuse to generator"
-       echo "9 $9 is da name"
-	    echo "./kaios_key_sign.sh /home/kai-user/key_path /home/kai-user/key_path /home/kai-user/image_path /home/dhcui/image_out preloader signda /home/dhcui/da_path efuse daname"
+        echo "9 $9 is da name"
+        echo "10 ${10}is version number for anti rollback"
+	    echo "./kaios_key_sign.sh /home/kai-user/key_path /home/kai-user/key_path /home/kai-user/image_path /home/dhcui/image_out preloader signda /home/dhcui/da_path efuse daname version"
 	    echo "!!!!!!!!!!!!!!!!!!!!!!!!!"
 }
 
-if [ $# -lt 9 ];then
+if [ $# -lt 10 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
@@ -40,6 +41,7 @@ SIGN_DA=$6
 DA_BIN_PATH=$7
 EFUSE=$8
 DA_NAME=$9
+SW_VER=${10}
 
 CURDIR="`dirname $0`"
 
@@ -64,7 +66,7 @@ if [ -d "secure_chip_tools/out" ] ; then
 fi
 mkdir secure_chip_tools/out
 ##beging to deploy sign certs and sign the image use img_prvk.pem 
-bash cert_generator/kaios_deploy_sign.sh $CERT1_PATH $CERT2_KEY_PATH $INPUT_IMG_PATH $OUTPUT_IMG_PATH
+bash cert_generator/kaios_deploy_sign.sh $CERT1_PATH $CERT2_KEY_PATH $INPUT_IMG_PATH $OUTPUT_IMG_PATH $SW_VER
 if [ $? != 0 ];then
    echo "error !! deploy sign certs and sign the image "
    exit 129
@@ -94,7 +96,7 @@ echo
 sleep 3
 ##beging to sign NO-GFH preloader image
 if [[ $PRELOADER = "preloader" ]]; then
-   bash secure_chip_tools/kaios_sign_preloader.sh $OUTPUT_IMG_PATH $CERT1_PATH
+   bash secure_chip_tools/kaios_sign_preloader.sh $OUTPUT_IMG_PATH $CERT1_PATH $SW_VER
    if [ $? != 0 ];then
    echo "error !! preloader sign error "
    exit 129

@@ -18,21 +18,22 @@ function usage() {
 	#######################################
 
 	echo "First, and select correct project"
-	echo "Command: ./kaios_deploy)sign.sh $1 $2 $3 $4"
+	echo "Command: ./kaios_deploy_sign.sh $1 $2 $3 $4 $5"
 	echo "$1 cert1 path"
 	echo "$2 cert2_key path"
 	echo "$3 image orign path"
 	echo "$4 image dest path"
-	echo " example :: /kaios_deploy_sign.sh /home/kai-user/keys_odm/MTK_Kaios31_jpv_jio /home/kai-user/keys_odm/MTK_Kaios31_jpv_jio /home/kai-user/mtk_m_jpv /home/dhcui/mtk_m_jpv_out"
+	echo "$5 sw version fot anti rollback" 
+	echo " example :: /kaios_deploy_sign.sh /home/kai-user/keys_odm/MTK_Kaios31_jpv_jio /home/kai-user/keys_odm/MTK_Kaios31_jpv_jio /home/kai-user/mtk_m_jpv /home/dhcui/mtk_m_jpv_out 1"
 }
 
 ##generator certs for image 
 
-if [ $# -lt 4 ];then
+if [ $# -lt 5 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
-	exit
+	exit 127
 fi
 
 #FIXED-ME for copy script
@@ -44,6 +45,7 @@ CERT1_PATH=$1
 CERT2_KEY_PATH=$2
 IMG_SRC=$3
 IMG_DST=$4
+SW_VER=$5
 
 if [ -d $IMG_SRC ];then
    echo 
@@ -61,6 +63,10 @@ fi
 
 #FIXED-ME this need redefine for platform as img_key_deploy.sh
 v2_file="mt6739/security/cert_config/img_list.txt"
+ver_file="mt6739/security/cert_config/img_ver.txt"
+
+#re-config image versio for anti rollback
+sed -i "s#^sw_ver =.*#img_ver = $SW_VER#" $CURDIR/$ver_file
 
 echo "******************************************"
 echo '**********KAIOS key deploy begin**********'
@@ -110,7 +116,7 @@ sleep 3
 #######################################
 # Check arguments
 #######################################
-if [ "$5" == "" ]; then
+if [ "$6" == "" ]; then
 	MTK_BASE_PROJECT="kaios31_jpv"
 	OUT_DIR="out"
 	PRODUCT_OUT="out"
@@ -118,7 +124,7 @@ if [ "$5" == "" ]; then
 	MTK_PLATFORM_DIR=${MTK_PLATFORM,,}
 	echo " 1 "${MTK_BASE_PROJECT}" 2 "${OUT_DIR}" 3 "${PRODUCT_OUT}" 4 "${MTK_PLATFORM}" 5 "${MTK_PLATFORM_DIR}""
 else
-	MTK_BASE_PROJECT=$5
+	MTK_BASE_PROJECT=$6
 fi
 
 CURRDATE="`date +%Y-%m-%d-%H:%M:%S`"
@@ -135,6 +141,7 @@ if [ -f "$CURDIR/$v2_file" ]; then
 else
 	echo "v1 sign flow but not support"
 	echo "v2_file ($v2_file)"
+	exit 129
 	#MTK_PROJECT_NAME=$(get_build_var MTK_PROJECT_NAME)
 	#MTK_PATH_CUSTOM=$(get_build_var MTK_PATH_CUSTOM)
 	#MTK_SEC_SECRO_AC_SUPPORT=$(get_build_var MTK_SEC_SECRO_AC_SUPPORT)

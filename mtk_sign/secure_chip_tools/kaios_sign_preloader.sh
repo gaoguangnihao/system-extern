@@ -23,8 +23,9 @@ function usage() {
 
 path_preloader=$1
 keypath=$2
+version=$3
 
-if [ $# -lt 2 ];then
+if [ $# -lt 3 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
@@ -61,10 +62,12 @@ root_key="/root_prvk.pem"
 
 #config pl_content.ini
 sed -i "s#^imgkey =.*#imgkey = \"$keypath$img_key\"#" $CURDIR/settings/pbp/pl_content.ini
+sed -i "s#^sw_ver =.*#sw_ver = \"$version\"#" $CURDIR/settings/pbp/pl_content.ini
 
 #config pl_key.ini
 sed -i "s#^imgkey =.*#imgkey = \"$keypath$img_key\"#" $CURDIR/settings/pbp/pl_key.ini
 sed -i "s#^rootkey =.*#rootkey = \"$keypath$root_key\"#" $CURDIR/settings/pbp/pl_key.ini
+sed -i "s#^sw_ver =.*#sw_ver = \"$version\"#" $CURDIR/settings/pbp/pl_key.ini
 
 #config pl_gfh_config_cert_chain.ini
 
