@@ -66,7 +66,8 @@ v2_file="mt6739/security/cert_config/img_list.txt"
 ver_file="mt6739/security/cert_config/img_ver.txt"
 
 #re-config image versio for anti rollback
-sed -i "s#^sw_ver =.*#img_ver = $SW_VER#" $CURDIR/$ver_file
+sed -i "s#^img_ver =.*#img_ver = $SW_VER#" $CURDIR/$ver_file
+
 
 echo "******************************************"
 echo '**********KAIOS key deploy begin**********'
