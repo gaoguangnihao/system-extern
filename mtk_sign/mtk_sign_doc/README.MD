@@ -40,7 +40,7 @@
 
 
 ### Signature
->  kaios_key_sign.sh /home/kai-user/key_path /home/kai-user/key_path /home/kai-user/image_path /home/dhcui/image_out preloader signda /home/dhcui/da_path efuse
+>  kaios_key_sign.sh /home/kai-user/key_path /home/kai-user/key_path /home/kai-user/image_path /home/dhcui/image_out preloader signda /home/dhcui/da_path null daname 1
 
 * 1  is root key path
 * 2  is imgae key path
