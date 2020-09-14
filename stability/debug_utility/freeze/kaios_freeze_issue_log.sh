@@ -23,6 +23,7 @@
 ##  adb shell strace -p $PID 
 ##  bugreport files
 ## try to  get b2g-ps and b2g-info about freeze issue
+## check DB errors
 
 CURDIR="`dirname $0`"
 CURRDATE="`date +%Y-%m-%d-%H-%M-%S`"
@@ -82,6 +83,7 @@ echo "step 1 : begin to get b2g* info and basic log info"
 adb shell b2g-info >$LOG_PATH$NAME/$CURRDATE-b2g-info.txt
 adb shell b2g-ps >$LOG_PATH$NAME/$CURRDATE-b2g-ps.txt
 adb shell ps >$LOG_PATH$NAME/$CURRDATE-ps.txt
+adb shell ps -t >$LOG_PATH$NAME/$CURRDATE-ps-t.txt
 adb logcat -v threadtime -d >$LOG_PATH$NAME/$CURRDATE-logcat.txt
 adb shell dmesg >$LOG_PATH$NAME/$CURRDATE-kernel.txt
 

@@ -133,7 +133,7 @@ if [[ $SIGN_DA = "signda" ]]; then
    echo "error !! scert_file"
    exit 129
    fi
-   echo "success !! auth_sv5 generator "
+   echo "success !! scert_file generator "
    sleep 3
 ##we will be generator scert file also
 else
