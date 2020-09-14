@@ -40,7 +40,7 @@
 
 
 ### Signature
->  kaios_key_sign.sh /home/kai-user/key_path /home/kai-user/key_path /home/kai-user/image_path /home/dhcui/image_out preloader signda /home/dhcui/da_path efuse
+>  kaios_key_sign.sh /home/kai-user/key_path /home/kai-user/key_path /home/kai-user/image_path /home/dhcui/image_out preloader signda /home/dhcui/da_path null daname 1
 
 * 1  is root key path
 * 2  is imgae key path
@@ -51,6 +51,7 @@
 * 7  is da image path for will be signed
 * 8  is a flag , will be for efuse write  to generator
 * 9  is a name for rename da files 
+* 10 is a version number for anti rollback
 
 >  sample as blow 
->  kaios_key_sign.sh /home/kai-user/key_path /home/kai-user/key_path /home/kai-user/image_path /home/dhcui/image_out preloader null /home/dhcui/da_path null daname
+>  kaios_key_sign.sh /home/kai-user/key_path /home/kai-user/key_path /home/kai-user/image_path /home/dhcui/image_out preloader null /home/dhcui/da_path null daname 1
