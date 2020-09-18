@@ -61,18 +61,22 @@ LOG_PATH=$2
 #        ;;
 #    esac
 #  done
-
+echo "***************************************"
 echo "****************KaiOS******************"
+echo "***************************************"
+echo 
 if [ -d $LOG_PATH$NAME ];then
+   echo "Clean old logs ...."
    echo
    rm -fr "$LOG_PATH$NAME"
    mkdir -p "$LOG_PATH$NAME"
 else
-   echo "WARN !!  image output folder" $LOG_PATH$NAME "not exist"
-   echo 
+   echo "!! WARN !!  image output folder" $LOG_PATH$NAME "not exist"
+   echo "Create $LOG_PATH$NAME folder"
    mkdir -p "$LOG_PATH$NAME"
 fi
-echo "WARN !!  Please don't plug out USB cable till see success info"
+echo "!! WARN !!  Please don't plug out USB cable"
+echo "            until see success info"
 echo 
 
 adb wait-for-device root
@@ -113,14 +117,19 @@ adb shell toolbox ps | (
     # it (using the -t option will cause toolbox ps to show all of threads)
     if [ "${b2g[${pid}]}" == "1" -o "${b2g[${ppid}]}" == "1" ]; then
     
-    adb shell debuggerd -b $pid > $LOG_PATH$NAME/$CURRDATE-$pid.txt
-    
+    for i in `seq 0 4`
+    do
+    # define one second per times
+    echo "try to get $pid info $i "
+    adb shell debuggerd -b $pid > $LOG_PATH$NAME/$CURRDATE-$pid-$i-kaios.txt;sleep 1
+    done
     fi
   done
 )
 
+## define 2 seconds and 10 times
 echo "step 3:  begin to get top info"
-adb shell top -t -d 3 -m 10 -n 5 >$LOG_PATH$NAME/$CURRDATE-top.txt
+adb shell top -t -d 2 -m 10 -n 10 >$LOG_PATH$NAME/$CURRDATE-top.txt
 
 echo "step 4:  begin to get df info"
 adb shell df >$LOG_PATH$NAME/$CURRDATE-df.txt
@@ -133,4 +142,7 @@ echo
 echo "step 6:  begin pull DB files"
 adb pull data/local/storage/permanent/chrome $LOG_PATH$NAME/$CURRDATE-chrome
 echo "Done success logs"
+
+echo "***************************************"
 echo "****************KaiOS******************"
+echo "***************************************"
