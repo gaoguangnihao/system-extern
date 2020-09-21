@@ -32,8 +32,9 @@ echo $CURDIR
 
 DESTPATH=$1
 keypath=$2
+authname=$3
 
-if [ $# -lt 2 ];then
+if [ $# -lt 3 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
@@ -70,7 +71,7 @@ if [ $? -ne 0 ] ;then
 	exit 129
 fi
 
-cp $CURDIR/out/toolauth/auth_sv5.auth $DESTPATH
+cp $CURDIR/out/toolauth/auth_sv5.auth $DESTPATH/auth_${authname}_sv5.auth
 
 echo "******************************************"
 echo "********Generator auth file end***********"

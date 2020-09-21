@@ -31,8 +31,9 @@ echo "......"
 sleep 3
 DESTPATH=$1
 keypath=$2
+sccname=$3
 
-if [ $# -lt 2 ];then
+if [ $# -lt 3 ];then
 	echo "############WORNG PARG ###########"
 	usage
 	echo "############WORNG PARG ###########"
@@ -83,7 +84,7 @@ if [ $? -ne 0 ] ;then
 	exit 129
 fi
 
-cp $CURDIR/out/sctrlcert/scc_sv5.cert $DESTPATH
+cp $CURDIR/out/sctrlcert/scc_sv5.cert $DESTPATH/scc_${sccname}_sv5.cert
 
 echo "******************************************"
 echo "********Generator scert file end**********"
