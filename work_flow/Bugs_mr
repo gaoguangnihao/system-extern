@@ -1,2 +1,4 @@
 2020-0305 Bug 84654 - Add an empty string check to avoid a SIGSEGV crash
 2020-0619 Bug 97465 - Add statfs64 and rt_tgsigqueueinfo to sandbox whitelist
+2020-0910 Bug 103761 - [IPC][CRASH][TELEPHONY]Make sure mParent is valid then SendResponsee to child
+2020-0910 Bug 100439 b2g-info calculation for kernel dynamic memory and ZRAM on kernel49 to be reviewed. r=rex
