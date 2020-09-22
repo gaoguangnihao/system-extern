@@ -4,23 +4,23 @@ img_group = 0
 
 [spmfw]
 img_ver = 0
-img_group = 1
+img_group = 0
 
 [mcupmfw]
 img_ver = 0
-img_group = 1
+img_group = 0
 
 [logo]
 img_ver = 0
-img_group = 1
+img_group = 0
 
 [boot]
 img_ver = 0
-img_group = 1
+img_group = 0
 
 [recovery]
 img_ver = 0
-img_group = 1
+img_group = 0
 
 [atf]
 img_ver = 0
@@ -36,23 +36,23 @@ img_group = 0
 
 [md1arm7]
 img_ver = 0
-img_group = 1
+img_group = 0
 
 [md1dsp]
 img_ver = 0
-img_group = 1
+img_group = 0
 
 [md1rom]
 img_ver = 0
-img_group = 1
+img_group = 0
 
 [md1drdi]
 img_ver = 0
-img_group = 1
+img_group = 0
 
 [md3rom]
 img_ver = 0
-img_group = 1
+img_group = 0
 
 [tinysys-sspm]
 img_ver = 0
@@ -60,19 +60,19 @@ img_group = 0
 
 [tinysys-loader-CM4_A]
 img_ver = 0
-img_group = 1
+img_group = 0
 
 [tinysys-scp-CM4_A]
 img_ver = 0
-img_group = 1
+img_group = 0
 
 [tinysys-loader-CM4_B]
 img_ver = 0
-img_group = 1
+img_group = 0
 
 [tinysys-scp-CM4_B]
 img_ver = 0
-img_group = 1
+img_group = 0
 
 [loader_ext_dram]
 img_ver = 0
