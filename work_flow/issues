@@ -1,0 +1,282 @@
+stability 
+
+https://bugzilla.kaiostech.com/show_bug.cgi?id=76872
+
+Bug 37929 - [MTBF][2.5] Camera app crashed at libxul.so!mozilla::nsGonkCameraControl::StopInternal [StrongPointer.h : 197 + 0x0]
+
+https://bugzilla.kaiostech.com/show_bug.cgi?id=103979
+https://bugzilla.kaiostech.com/show_bug.cgi?id=10299
+https://bugzilla.kaiostech.com/show_bug.cgi?id=35813
+https://bugzilla.kaiostech.com/show_bug.cgi?id=47207
+https://bugzilla.kaiostech.com/show_bug.cgi?id=36876
+https://bugzilla.kaiostech.com/show_bug.cgi?id=56648
+https://bugzilla.kaiostech.com/show_bug.cgi?id=7780
+
+https://bugzilla.kaiostech.com/show_bug.cgi?id=104212
+
+https://bugzilla.kaiostech.com/show_bug.cgi?id=44990 zram
+
+memory 
+https://bugzilla.kaiostech.com/show_bug.cgi?id=45745
+https://bugzilla.kaiostech.com/show_bug.cgi?id=93755#c3
+https://bugzilla.kaiostech.com/show_bug.cgi?id=1687
+https://bugzilla.kaiostech.com/show_bug.cgi?id=2273
+https://bugzilla.kaiostech.com/show_bug.cgi?id=5197
+https://bugzilla.kaiostech.com/show_bug.cgi?id=16969
+https://bugzilla.kaiostech.com/show_bug.cgi?id=10924
+
+
+https://bugzilla.kaiostech.com/show_bug.cgi?id=45747
+47230
+
+freeze 
+
+https://bugzilla.kaiostech.com/show_bug.cgi?id=50453
+https://bugzilla.kaiostech.com/show_bug.cgi?id=56094
+
+https://bugzilla.kaiostech.com/show_bug.cgi?id=65782
+
+102959  	[MTBF]hang at camera take photo page after 117 hours MTBF test 	2020-08-24 		2020-08-13
+103238 	    [MTBF] After run 100 hours, device stock on homescreen and without app icon 	2020-08-19 		2020-08-17
+79044 	    MTBF][QRD][Frozen]screen frozen after mtbf test 110 hours on browser screen 	 
+
+power 
+
+https://bugzilla.kaiostech.com/show_bug.cgi?id=51466
+
+https://bugzilla.kaiostech.com/show_bug.cgi?id=62801 永远返回在一个错误的app
+
+others 
+
+https://bugzilla.kaiostech.com/show_bug.cgi?id=1355
+
+When checking this device locally, the device does not stuck actually and I observe that:
+
+- The device stays at Launcher screen instead.
+
+- Pressing "SoftRight" or "SoftLeft" keys can switch screen to "Contacts" or 
+  "Notices", respectively, but the device is still switched back to Browser app 
+  screen after "Backspace" key is pressed.
+
+- Pressing "Enter" key and then "ArrowRight/ArrowLeft/ArrowUp/ArrowDown" can 
+  launch the corresponding apps, but the device is still switched back to Browser 
+  app screen after "Backspace" key is pressed several times.
+  
+
+arm-linux-androideabi-addr2line -f -e  ~/symbols/libxul.so  007c31d3 007bb2fb 007bb4d5 007c3d37 007c3dc5 004112ef 00411359 00426d4f 0043884f 0061900b 00608b91 00608c41 011c0fa5 0155de67 01579343 015795d5
+
+
+Hi reporter,
+Do you still encounter this issue? We have fixed several issues regarding focus lost and didn't observe this kind of issue on our side for a long time. Please reopen it if you still encounter this issue and provide valid logs. Thanks
+
+Update the discussion with dhcui, the first thing we will do is review the LMK related settings, what we observed is processes are killed in a short time but no memory pressure event to release memory.
+What we proposed are:
+1. increase the gonk.notifyHardLowMemUnderKB from 14MB to higher than 20MB
+2. reset the threshold from gonk.notifyHardLowMemUnderKB to gonk.notifySoftLowMemUnderKB in some conditions.
+
+
+The element, 'magic', is the first element of struct arena_s and used for debug purpose.
+========================================
+// gecko/memory/mozjemalloc/jemalloc.c
+struct arena_s {
+#if defined(MALLOC_DEBUG) || defined(MOZ_JEMALLOC_HARD_ASSERTS)
+	uint32_t		magic;
+#  define ARENA_MAGIC 0x947d3d24
+#endif
+
+
+complete minidump result for the same crash symptom.
+
+The crash was reproduced successfully in the same build image with coredump enabled. According to the core file output in GDB, it shows that the IDBTransaction object was reset to 'nullptr' AFTER IDBTransaction::OnRequestFinished() was called. Suspect that this operation(mTransaction = nullptr) should occur simultaneously in other threads.
+
+pdate my analysis as follow for chunchun's device which hit this issue symptom:
+
+
+
+Please reproduce this crash and refer to the following steps to provide related information for analysis.
+
+1. Generate crashreport symbol
+  Please MUST run the command("source setup.sh && make buildsymbols") to 
+  generate crashreport symbol RIGHT AFTER the creation of your test images is 
+  finished, because the crashreport symbol should be generated based on the 
+  binary files in this test images.
+
+2. Pull crashreport out of the device after device ran into a crash.
+  $ adb pull "/data/b2g/mozilla/Crash\ Reports/pending"
+
+3. Use the attached binary to generate minidump result based on the 
+  crashreport(step 2) and crashreport symbol(step 1)
+  $ minidump_stackwalk_gecko48 xxxxxxxx-xxxx-xxxx-xxxxxxxx-xxxxxxxx.dmp crashreporter-symbols/ > minidump_result
+
+4. Create a bug to describe what test cases have been examined before the crash 
+  occurs, and attach the following information on the bug.
+  - crashreport symbol at step 1
+  - crashreport at step 2
+  - minidump_result at step 3
+  - tombstone file(better to have)
+  - not stripped libxul.so(objdir-gecko/toolkit/library/libxul.so)
+  - not stripped libmozglue.so(objdir-gecko/mozglue/build/libmozglue.so)
+  - not stripped libnss3.so(objdir-gecko/config/external/nss/libnss3.so)
+  - not stripped libc.so(out/target/product/kaios31_256/symbols/system/lib/libc.so)
+  
+  
+I was a little confused with your explanation of too small USB buffer. Do you mean we are not supposed to run into this problem in MTK touch device? But, we found this problem at this project actually.  
+  
+  
+  The following are normal logcat logs after abort() is called in gecko. The whole calling flow are abort() => mozalloc_abort() => MOZ_CRASH() => MOZ_REALLY_CRASH(). In MOZ_REALLY_CRASH(), SIGSEGV signal is created by assigning some value to a null pointer. That is why the crashed signal in tombstone as follow is SIGSEGV.
+  
+  
+  According to tombstone, the root cause is that Z23handleDataAndMsgFromRTPv() called _FD_SET_chk() with the given fd whose value is over FD_SETSIZE(1024)
+so __fortify_chk_fail() is called to output error messages and triggers abort() to terminate the process. Since Z23handleDataAndMsgFromRTPv() is implemented in QCT library(lib-imsvt.so), it requires QCT to check further why the given fd is over 1024. Refer to the following for detail analysis
+==========================================
+// call flow:
+_Z23handleDataAndMsgFromRTPv()
+=> __FD_SET_chk(...)
+   => __fortify_chk_fail(...)
+      => __libc_fatal(...)
+         => abort()
+            => mozalloc_abort()
+               => MOZ_CRASH()
+
+Note: In MOZ_CRASH(), the abortion operation is actually simulated by assigning some values to a NULL pointer. That is why the signal in tombstone is SIGSEGV, instead of SIGABRT.
+
+// tombstone:
+08-24 15:13:52.070   303 14002 E VTLib   : QPLP_CRITICAL : vendor/qcom/proprietary/ims/vt/src/QpDplImsThinClient.cpp| 3143 || 303 || 14002 |BAMSERVER socket created
+08-24 15:13:52.070   303 14002 E VTLib   : vendor/qcom/proprietary/ims/vt/src/QpDplImsThinClient.cpp| 3170 || 303 || 14002 |[THINCLIENT]Waiting for the data
+08-24 15:13:52.070   303 14002 F libc    : FORTIFY: FD_SET: file descriptor >= FD_SETSIZE
+08-24 15:13:52.070   303 14002 E Gecko   : mozalloc_abort: Redirecting call to abort() to mozalloc_abort
+08-24 15:13:52.090   303 14002 F libc    : Fatal signal 11 (SIGSEGV), code 1, fault addr 0x0 in tid 14002 (b2g)
+
+Build fingerprint: 'qcom/msm8909_512/msm8909_512:6.0.1/MMB29M/rex08241157:userdebug/test-keys'
+Revision: '0'
+ABI: 'arm'
+pid: 303, tid: 14002, name: b2g  >>> /system/b2g/b2g <<<
+signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0
+    r0 00000046  r1 9e42d334  r2 ffdb4d37  r3 00000000
+    r4 b4815879  r5 9e42d870  r6 00000038  r7 00000001
+    r8 b0e347e8  r9 b0e0fc5c  sl b0de9614  fp b0ddbddc
+    ip 9e42d38c  sp 9e42d7b0  lr b6f6bb0b  pc b6f6bb0c  cpsr 600f0030
+    d0  726f62615f636f6c  d1  206f74206c6c6163
+    d2  20292874726f6261  d3  6c617a6f6d206f74
+    d4  54736d496c704470  d5  6e65696c436e6968
+    d6  33207c7070632e74  d7  33207c7c20303731
+    d8  0000000000000000  d9  0000000000000000
+    d10 0000000000000000  d11 0000000000000000
+    d12 0000000000000000  d13 0000000000000000
+    d14 0000000000000000  d15 0000000000000000
+    d16 0000000000000000  d17 0000000000000000
+    d18 3feccccccccccccd  d19 0000022a00000229
+    d20 0000022400000223  d21 0000022600000225
+    d22 000002200000021f  d23 0000022200000221
+    d24 0000021c0000021b  d25 0000021e0000021d
+    d26 0000021800000217  d27 0000021a00000219
+    d28 0000021400000213  d29 0000021600000215
+    d30 000002100000020f  d31 0000021200000211
+    scr 2800001d
+
+backtrace:
+    #00 pc 00008b0c  /system/b2g/libmozglue.so (_Z14mozalloc_abortPKc+19)
+    #01 pc 00008b07  /system/b2g/libmozglue.so (_Z14mozalloc_abortPKc+14)
+
+stack:
+         9e42d770  00000000
+         9e42d774  00000000
+         9e42d778  00000000
+         9e42d77c  00000000
+         9e42d780  00000000
+         9e42d784  00000000
+         9e42d788  00000000
+         9e42d78c  ffdb4d37
+         9e42d790  00000000
+         9e42d794  b4815879  /system/lib/libc.so
+         9e42d798  9e42d870  [stack:14002]
+         9e42d79c  00000038
+         9e42d7a0  00000001
+         9e42d7a4  b6f6bb0b  /system/b2g/libmozglue.so (_Z14mozalloc_abortPKc+18)
+         9e42d7a8  b6f7a311  /system/b2g/libmozglue.so
+         9e42d7ac  b6f7a2dc  /system/b2g/libmozglue.so
+    #00  9e42d7b0  00000002
+         ........  ........
+    #01  9e42d7b0  00000002
+         9e42d7b4  b6f6baef  /system/b2g/libmozglue.so (abort+10)
+         9e42d7b8  00000002
+         9e42d7bc  b47d957b  /system/lib/libc.so
+         9e42d7c0  b4811980  /system/lib/libc.so
+         9e42d7c4  9e42d7d4  [stack:14002]
+         9e42d7c8  00000080
+         9e42d7cc  b47d9593  /system/lib/libc.so (__fortify_chk_fail+22)
+         9e42d7d0  b4811980  /system/lib/libc.so
+         9e42d7d4  b4815879  /system/lib/libc.so
+         9e42d7d8  00000080
+         9e42d7dc  00000002
+         9e42d7e0  00000002
+         9e42d7e4  b4806e3d  /system/lib/libc.so (__FD_SET_chk+28)
+         9e42d7e8  00000002
+         9e42d7ec  b0dbb623  /system/vendor/lib/lib-imsvt.so (_Z23handleDataAndMsgFromRTPv+298)
+
+
+// lib-imsvt.so
+0002e4f8 <_Z23handleDataAndMsgFromRTPv>:
+   2e61e:       f7e4 eaa6       blx     12b6c <__FD_SET_chk@plt>
+   2e622:       f8df 2bec       ldr.w   r2, [pc, #3052] ; 2f210 <_Z23handleDataAndMsgFromRTPv+0xd18>
+   2e626:       4629            mov     r1, r5
+   2e628:       f85a 6002       ldr.w   r6, [sl, r2]
+   2e62c:       2280            movs    r2, #128        ; 0x80
+   2e62e:       6830            ldr     r0, [r6, #0]
+   2e630:       f7e4 ea9c       blx     12b6c <__FD_SET_chk@plt>
+   2e634:       7823            ldrb    r3, [r4, #0]
+   2e636:       2b31            cmp     r3, #49 ; 0x31
+   2e638:       dd37            ble.n   2e6aa <_Z23handleDataAndMsgFromRTPv+0x1b2>
+
+// bionic/libc/bionic/__FD_chk.cpp
+extern "C" void __FD_SET_chk(int fd, fd_set* set, size_t set_size) {
+	...
+  if (__predict_false(fd >= FD_SETSIZE)) {
+    __fortify_chk_fail("FD_SET: file descriptor >= FD_SETSIZE", 0);
+  }
+  FD_SET(fd, set);
+}
+
+// bionic/libc/bionic/libc_logging.cpp
+void __fortify_chk_fail(const char* msg, uint32_t tag) {
+  if (tag != 0) {
+    __libc_android_log_event_uid(tag);
+  }
+  __libc_fatal("FORTIFY: %s", msg);
+}
+
+void __libc_fatal(const char* format, ...) {
+  va_list args;
+  va_start(args, format);
+  __libc_fatal(format, args);
+  va_end(args);
+  abort();
+  ^^^^^^^
+}
+
+Our suspension is that fd might be getting leaked at the camera portion of the kaios framework as the numbers look to be increasing faster when there is multiple camera switches per call. This has to be debugged further by kaios to see why the fd’s are increasing continuously.
+
+The backtrace of main thread in b2g main process shows that it is waiting for events coming. You can usually find this backtrace when checking a device which is idle at Launcher. So, it is normal and not related to the hang issue
+
+The crash or freeze happening at FD_SET is caused because eventually fd is crossing 1024 value due to FD leaks. 
+
+https://bugzilla.kaiostech.com/show_bug.cgi?id=95715
+
+According to the experience of debugging device stuck issues in KaiOS, the root cause may result from that b2g main process runs out of system resources, like file descriptor, storage space, virtual 4GB memory space for user space process, or blocks at waiting for a lock or synchronous binder transaction.
+
+
+on next system 
+
+Bug 95706 - Generate minidump_stackwalk binary for KaiOS Next.
+95703 No crashreporter enabled in KaiOS Next 
+Bug 96453 - Cannot generate crash report symbols in KaiOS Next
+https://bugzilla.kaiostech.com/show_bug.cgi?id=96842
+https://bugzilla.kaiostech.com/show_bug.cgi?id=95618
+https://bugzilla.kaiostech.com/show_bug.cgi?id=95734
+https://bugzilla.kaiostech.com/show_bug.cgi?id=102320
+
+https://bugzilla.kaiostech.com/show_bug.cgi?id=102319
+
+
+
+
