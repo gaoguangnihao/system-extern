@@ -108,6 +108,38 @@ fi
 echo "success !! preloader sign \n"
 sleep 3
 
+## clean out folder orign image
+
+  img_files=(
+   $OUTPUT_IMG_PATH/boot.img
+   $OUTPUT_IMG_PATH/lk.bin
+   $OUTPUT_IMG_PATH/preloader.bin
+   $OUTPUT_IMG_PATH/loader_ext.img
+   $OUTPUT_IMG_PATH/spmfw.bin
+   $OUTPUT_IMG_PATH/mcupmfw.img
+   $OUTPUT_IMG_PATH/trustzone.bin
+   $OUTPUT_IMG_PATH/logo.bin
+   $OUTPUT_IMG_PATH/md1rom.img
+   $OUTPUT_IMG_PATH/md1dsp.img
+   $OUTPUT_IMG_PATH/md1arm7.img
+   $OUTPUT_IMG_PATH/md3rom.img
+   $OUTPUT_IMG_PATH/mcupmfw.img
+   $OUTPUT_IMG_PATH/ramdisk.img
+   $OUTPUT_IMG_PATH/recovery.img
+   $OUTPUT_IMG_PATH/secro.img
+ )
+for img_file in ${img_files[@]};do
+
+	rm -vf ${img_file}
+
+	if [ "$?" != "0" ];then
+	  echo
+		echo "**** clean fail: ${img_file} ****"
+		echo
+	exit 129
+	fi
+done
+
 if [[ $SIGN_DA = "signda" ]]; then
    bash secure_chip_tools/kaios_sign_da.sh $DA_BIN_PATH $CERT1_PATH $DA_NAME $OUTPUT_IMG_PATH
 
