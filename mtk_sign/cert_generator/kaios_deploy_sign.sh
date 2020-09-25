@@ -151,6 +151,38 @@ else
 	#perl vendor/mediatek/proprietary/scripts/sign-image/SignTool.pl "${MTK_BASE_PROJECT}" "${MTK_PROJECT_NAME}" "${MTK_PATH_CUSTOM}" "${MTK_SEC_SECRO_AC_SUPPORT}" "${MTK_NAND_PAGE_SIZE}" "${PRODUCT_OUT}" "${OUT_DIR}"
 fi
 
+## clean out folder orign image
+
+  img_files=(
+   $IMG_DST/boot.img
+   $IMG_DST/preloader.bin
+   $IMG_DST/lk.bin
+   $IMG_DST/loader_ext.img
+   $IMG_DST/spmfw.bin
+   $IMG_DST/mcupmfw.img
+   $IMG_DST/trustzone.bin
+   $IMG_DST/logo.bin
+   $IMG_DST/md1rom.img
+   $IMG_DST/md1dsp.img
+   $IMG_DST/md1arm7.img
+   $IMG_DST/md3rom.img
+   $IMG_DST/mcupmfw.img
+   $IMG_DST/ramdisk.img
+   $IMG_DST/recovery.img
+   $IMG_DST/secro.img
+ )
+for img_file in ${img_files[@]};do
+
+	rm -vf ${img_file}
+
+	if [ "$?" != "0" ];then
+	  echo
+		echo "**** clean fail: ${img_file} ****"
+		echo
+	exit 129
+	fi
+done
+
 echo "******************************************"
 echo '*********KAIOS sign image End**********'
 echo "******************************************"
