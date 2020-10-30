@@ -1,0 +1,75 @@
+From 03442c33ca24f61c7125b1bb077a9fec6cde61ea Mon Sep 17 00:00:00 2001
+From: Gabriele Svelto <gsvelto@mozilla.com>
+Date: Thu, 30 Apr 2015 13:12:21 +0200
+Subject: [PATCH] Bug 1157030 - Stop special-casing the homescreen in the
+ process priority manager. r=khuey, r=dhylands
+
+---
+ b2g/app/b2g.js                     | 6 +-----
+ dom/ipc/ProcessPriorityManager.cpp | 4 +---
+ hal/Hal.cpp                        | 2 --
+ hal/HalTypes.h                     | 1 -
+ 4 files changed, 2 insertions(+), 11 deletions(-)
+
+diff --git a/b2g/app/b2g.js b/b2g/app/b2g.js
+index 6d874c6f1677..a1fc8f17ecf4 100644
+--- a/b2g/app/b2g.js
++++ b/b2g/app/b2g.js
+@@ -740,13 +740,9 @@ pref("hal.processPriorityManager.gonk.FOREGROUND_KEYBOARD.OomScoreAdjust", 200);
+ pref("hal.processPriorityManager.gonk.FOREGROUND_KEYBOARD.cgroup", "apps");
+ 
+ pref("hal.processPriorityManager.gonk.BACKGROUND_PERCEIVABLE.OomScoreAdjust", 400);
+-pref("hal.processPriorityManager.gonk.BACKGROUND_PERCEIVABLE.KillUnderKB", 7168);
++pref("hal.processPriorityManager.gonk.BACKGROUND_PERCEIVABLE.KillUnderKB", 8192);
+ pref("hal.processPriorityManager.gonk.BACKGROUND_PERCEIVABLE.cgroup", "apps/bg_perceivable");
+ 
+-pref("hal.processPriorityManager.gonk.BACKGROUND_HOMESCREEN.OomScoreAdjust", 534);
+-pref("hal.processPriorityManager.gonk.BACKGROUND_HOMESCREEN.KillUnderKB", 8192);
+-pref("hal.processPriorityManager.gonk.BACKGROUND_HOMESCREEN.cgroup", "apps/bg_non_interactive");
+-
+ pref("hal.processPriorityManager.gonk.BACKGROUND.OomScoreAdjust", 667);
+ pref("hal.processPriorityManager.gonk.BACKGROUND.KillUnderKB", 20480);
+ pref("hal.processPriorityManager.gonk.BACKGROUND.cgroup", "apps/bg_non_interactive");
+diff --git a/dom/ipc/ProcessPriorityManager.cpp b/dom/ipc/ProcessPriorityManager.cpp
+index 92474a933c87..f1d3d2dde4ec 100644
+--- a/dom/ipc/ProcessPriorityManager.cpp
++++ b/dom/ipc/ProcessPriorityManager.cpp
+@@ -1012,9 +1012,7 @@ ParticularProcessPriorityManager::ComputePriority()
+     return PROCESS_PRIORITY_BACKGROUND_PERCEIVABLE;
+   }
+ 
+-  return HasAppType("homescreen") ?
+-         PROCESS_PRIORITY_BACKGROUND_HOMESCREEN :
+-         PROCESS_PRIORITY_BACKGROUND;
++  return PROCESS_PRIORITY_BACKGROUND;
+ }
+ 
+ void
+diff --git a/hal/Hal.cpp b/hal/Hal.cpp
+index b633c7ad4554..a0150b9fa6df 100644
+--- a/hal/Hal.cpp
++++ b/hal/Hal.cpp
+@@ -888,8 +888,6 @@ ProcessPriorityToString(ProcessPriority aPriority)
+     return "FOREGROUND_KEYBOARD";
+   case PROCESS_PRIORITY_BACKGROUND_PERCEIVABLE:
+     return "BACKGROUND_PERCEIVABLE";
+-  case PROCESS_PRIORITY_BACKGROUND_HOMESCREEN:
+-    return "BACKGROUND_HOMESCREEN";
+   case PROCESS_PRIORITY_BACKGROUND:
+     return "BACKGROUND";
+   case PROCESS_PRIORITY_UNKNOWN:
+diff --git a/hal/HalTypes.h b/hal/HalTypes.h
+index 63e99a34eed9..f9bee1ab38fe 100644
+--- a/hal/HalTypes.h
++++ b/hal/HalTypes.h
+@@ -58,7 +58,6 @@ typedef Observer<SwitchEvent> SwitchObserver;
+ enum ProcessPriority {
+   PROCESS_PRIORITY_UNKNOWN = -1,
+   PROCESS_PRIORITY_BACKGROUND,
+-  PROCESS_PRIORITY_BACKGROUND_HOMESCREEN,
+   PROCESS_PRIORITY_BACKGROUND_PERCEIVABLE,
+   PROCESS_PRIORITY_FOREGROUND_KEYBOARD,
+   // The special class for the preallocated process, high memory priority but
+-- 
+2.19.0
+

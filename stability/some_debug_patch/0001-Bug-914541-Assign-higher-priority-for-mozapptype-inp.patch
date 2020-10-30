@@ -1,0 +1,122 @@
+From 064dc3f94ee6ce29170f073c68fd316f4cc7fdf7 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kan-Ru=20Chen=20=28=E9=99=B3=E4=BE=83=E5=A6=82=29?=
+ <kanru@kanru.info>
+Date: Tue, 24 Sep 2013 16:10:20 +0800
+Subject: [PATCH] Bug 914541 - Assign higher priority for
+ mozapptype=inputmethod. r=fabrice
+
+---
+ b2g/app/b2g.js                     | 7 +++++++
+ dom/ipc/ContentParent.cpp          | 9 ++++++---
+ dom/ipc/ProcessPriorityManager.cpp | 4 +++-
+ hal/Hal.cpp                        | 9 +++++++++
+ hal/HalTypes.h                     | 1 +
+ 5 files changed, 26 insertions(+), 4 deletions(-)
+
+diff --git a/b2g/app/b2g.js b/b2g/app/b2g.js
+index 8c528941c8ca..243789291c82 100644
+--- a/b2g/app/b2g.js
++++ b/b2g/app/b2g.js
+@@ -612,6 +612,10 @@ pref("dom.ipc.processPriorityManager.temporaryPriorityLockMS", 5000);
+ // /still/ have the same niceness; we'd effectively have erased NSPR's thread
+ // priorities.
+ 
++// The kernel can only accept 6 (OomScoreAdjust, KillUnderMB) pairs. But it is
++// okay, kernel will still kill processes with larger OomScoreAdjust first even
++// its OomScoreAdjust don't have a corresponding KillUnderMB.
++
+ pref("hal.processPriorityManager.gonk.MASTER.OomScoreAdjust", 0);
+ pref("hal.processPriorityManager.gonk.MASTER.KillUnderMB", 4);
+ pref("hal.processPriorityManager.gonk.MASTER.Nice", 0);
+@@ -624,6 +628,9 @@ pref("hal.processPriorityManager.gonk.FOREGROUND.OomScoreAdjust", 134);
+ pref("hal.processPriorityManager.gonk.FOREGROUND.KillUnderMB", 6);
+ pref("hal.processPriorityManager.gonk.FOREGROUND.Nice", 1);
+ 
++pref("hal.processPriorityManager.gonk.FOREGROUND_KEYBOARD.OomScoreAdjust", 200);
++pref("hal.processPriorityManager.gonk.FOREGROUND_KEYBOARD.Nice", 1);
++
+ pref("hal.processPriorityManager.gonk.BACKGROUND_PERCEIVABLE.OomScoreAdjust", 400);
+ pref("hal.processPriorityManager.gonk.BACKGROUND_PERCEIVABLE.KillUnderMB", 7);
+ pref("hal.processPriorityManager.gonk.BACKGROUND_PERCEIVABLE.Nice", 7);
+diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
+index f4cce346f363..d7520e37f8ce 100644
+--- a/dom/ipc/ContentParent.cpp
++++ b/dom/ipc/ContentParent.cpp
+@@ -495,14 +495,17 @@ PrivilegesForApp(mozIApplication* aApp)
+ ContentParent::GetInitialProcessPriority(Element* aFrameElement)
+ {
+     // Frames with mozapptype == critical which are expecting a system message
+-    // get FOREGROUND_HIGH priority.  All other frames get FOREGROUND priority.
++    // get FOREGROUND_HIGH priority.
+ 
+     if (!aFrameElement) {
+         return PROCESS_PRIORITY_FOREGROUND;
+     }
+ 
+-    if (!aFrameElement->AttrValueIs(kNameSpaceID_None, nsGkAtoms::mozapptype,
+-                                    NS_LITERAL_STRING("critical"), eCaseMatters)) {
++    if (aFrameElement->AttrValueIs(kNameSpaceID_None, nsGkAtoms::mozapptype,
++                                   NS_LITERAL_STRING("keyboard"), eCaseMatters)) {
++        return PROCESS_PRIORITY_FOREGROUND_KEYBOARD;
++    } else if (!aFrameElement->AttrValueIs(kNameSpaceID_None, nsGkAtoms::mozapptype,
++                                           NS_LITERAL_STRING("critical"), eCaseMatters)) {
+         return PROCESS_PRIORITY_FOREGROUND;
+     }
+ 
+diff --git a/dom/ipc/ProcessPriorityManager.cpp b/dom/ipc/ProcessPriorityManager.cpp
+index 081e45d669b8..0bd4a24cd530 100644
+--- a/dom/ipc/ProcessPriorityManager.cpp
++++ b/dom/ipc/ProcessPriorityManager.cpp
+@@ -855,7 +855,9 @@ ParticularProcessPriorityManager::ComputePriority()
+   }
+ 
+   if (isVisible) {
+-    return PROCESS_PRIORITY_FOREGROUND;
++    return HasAppType("keyboard") ?
++      PROCESS_PRIORITY_FOREGROUND_KEYBOARD :
++      PROCESS_PRIORITY_FOREGROUND;
+   }
+ 
+   if ((mHoldsCPUWakeLock || mHoldsHighPriorityWakeLock) &&
+diff --git a/hal/Hal.cpp b/hal/Hal.cpp
+index a05699eea12c..b1596bb3bed6 100644
+--- a/hal/Hal.cpp
++++ b/hal/Hal.cpp
+@@ -868,6 +868,8 @@ ProcessPriorityToString(ProcessPriority aPriority)
+     return "FOREGROUND_HIGH";
+   case PROCESS_PRIORITY_FOREGROUND:
+     return "FOREGROUND";
++  case PROCESS_PRIORITY_FOREGROUND_KEYBOARD:
++    return "FOREGROUND_KEYBOARD";
+   case PROCESS_PRIORITY_BACKGROUND_PERCEIVABLE:
+     return "BACKGROUND_PERCEIVABLE";
+   case PROCESS_PRIORITY_BACKGROUND_HOMESCREEN:
+@@ -914,6 +916,13 @@ ProcessPriorityToString(ProcessPriority aPriority,
+     if (aCPUPriority == PROCESS_CPU_PRIORITY_LOW) {
+       return "FOREGROUND:CPU_LOW";
+     }
++  case PROCESS_PRIORITY_FOREGROUND_KEYBOARD:
++    if (aCPUPriority == PROCESS_CPU_PRIORITY_NORMAL) {
++      return "FOREGROUND_KEYBOARD:CPU_NORMAL";
++    }
++    if (aCPUPriority == PROCESS_CPU_PRIORITY_LOW) {
++      return "FOREGROUND_KEYBOARD:CPU_LOW";
++    }
+   case PROCESS_PRIORITY_BACKGROUND_PERCEIVABLE:
+     if (aCPUPriority == PROCESS_CPU_PRIORITY_NORMAL) {
+       return "BACKGROUND_PERCEIVABLE:CPU_NORMAL";
+diff --git a/hal/HalTypes.h b/hal/HalTypes.h
+index 9b9649349f8b..925bdcb97df3 100644
+--- a/hal/HalTypes.h
++++ b/hal/HalTypes.h
+@@ -83,6 +83,7 @@ enum ProcessPriority {
+   PROCESS_PRIORITY_BACKGROUND,
+   PROCESS_PRIORITY_BACKGROUND_HOMESCREEN,
+   PROCESS_PRIORITY_BACKGROUND_PERCEIVABLE,
++  PROCESS_PRIORITY_FOREGROUND_KEYBOARD,
+   // Any priority greater than or equal to FOREGROUND is considered
+   // "foreground" for the purposes of priority testing, for example
+   // CurrentProcessIsForeground().
+-- 
+2.19.0
+
