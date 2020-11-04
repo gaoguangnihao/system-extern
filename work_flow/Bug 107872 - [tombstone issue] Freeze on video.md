@@ -2,6 +2,7 @@
 
 ### 1. dump stack
 
+```
 A409-28 16:54:02.990   238   238 F DEBUG   : Native Crash TIME: 3585579
 A409-28 16:54:02.990   238   238 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 A409-28 16:54:02.990   238   238 F DEBUG   : Build fingerprint: 'SPRD/sp9820e_1h20_project/sp9820e_1h20:6.0/KTU84P/20200928:user/release-keys'
@@ -28,6 +29,7 @@ A409-28 16:54:03.290   238   238 F DEBUG   :     #09 pc 0000bd5d  /system/lib/li
 A409-28 16:54:03.290   238   238 F DEBUG   :     #10 pc 00010115  /system/lib/libutils.so (_ZN7android6Thread11_threadLoopEPv+112)
 A409-28 16:54:03.290   238   238 F DEBUG   :     #11 pc 0003e8d3  /system/lib/libc.so (_ZL15__pthread_startPv+30)
 A409-28 16:54:03.290   238   238 F DEBUG   :     #12 pc 00018dcd  /system/lib/libc.so (__start_thread+6)
+```
 
 ### 2. Pull out libstagefright_omx.so and disassable.
 
