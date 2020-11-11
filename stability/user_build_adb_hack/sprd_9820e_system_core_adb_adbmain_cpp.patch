@@ -1,16 +1,31 @@
+diff --git a/adb/Android.mk b/adb/Android.mk
+index 1d711b9..da138bc 100644
+--- a/adb/Android.mk
++++ b/adb/Android.mk
+@@ -234,7 +234,7 @@ LOCAL_CFLAGS := \
+ 
+ LOCAL_CFLAGS += -DALLOW_ADBD_NO_AUTH=$(if $(filter user userdebug eng,$(TARGET_BUILD_VARIANT)),1,0)
+ 
+-ifneq (,$(filter userdebug eng,$(TARGET_BUILD_VARIANT)))
++ifneq (,$(filter user userdebug eng,$(TARGET_BUILD_VARIANT)))
+ LOCAL_CFLAGS += -DALLOW_ADBD_DISABLE_VERITY=1
+ LOCAL_CFLAGS += -DALLOW_ADBD_ROOT=1
+ endif
 diff --git a/adb/adb_main.cpp b/adb/adb_main.cpp
-index 45a21587..cf625ffe 100644
+old mode 100644
+new mode 100755
+index 45a2158..d8093eb
 --- a/adb/adb_main.cpp
 +++ b/adb/adb_main.cpp
 @@ -91,6 +91,11 @@ static void drop_capabilities_bounding_set_if_needed() {
          return;
      }
  #endif
-+	int kaios_root = 1;
-+	if (kaios_root)
-+	{
-+		return;
-+	}
++       int kaios_root = 1;
++       if (kaios_root)
++       {
++               return;
++       }
      int i;
      for (i = 0; prctl(PR_CAPBSET_READ, i, 0, 0, 0) >= 0; i++) {
          if (i == CAP_SETUID || i == CAP_SETGID) {
@@ -18,12 +33,28 @@ index 45a21587..cf625ffe 100644
  }
  
  static bool should_drop_privileges() {
-+
-+	int kaios_root = 1;
-+	if (kaios_root)
-+	{
-+	   return false;
-+	}
++       
++       int kaios_root = 1;
++       if (kaios_root)
++       {
++          return false;
++       }
  #if defined(ALLOW_ADBD_ROOT)
      char value[PROPERTY_VALUE_MAX];
  
+@@ -287,6 +298,7 @@ int adb_main(int is_daemon, int server_port)
+ 
+         D("Local port disabled\n");
+     } else {
++#if 0
+         if ((root_seclabel != NULL) && (is_selinux_enabled() > 0)) {
+             // b/12587913: fix setcon to allow const pointers
+             if (setcon((char *)root_seclabel) < 0) {
+@@ -297,6 +309,7 @@ int adb_main(int is_daemon, int server_port)
+         if (install_listener(local_name, "*smartsocket*", NULL, 0)) {
+             exit(1);
+         }
++#endif
+     }
+ 
+     int usb = 0;
