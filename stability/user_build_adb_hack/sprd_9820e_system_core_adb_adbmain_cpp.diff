@@ -1,0 +1,51 @@
+diff --git a/adb/Android.mk b/adb/Android.mk
+index 1d711b9a..da138bc8 100644
+--- a/adb/Android.mk
++++ b/adb/Android.mk
+@@ -234,7 +234,7 @@ LOCAL_CFLAGS := \
+ 
+ LOCAL_CFLAGS += -DALLOW_ADBD_NO_AUTH=$(if $(filter user userdebug eng,$(TARGET_BUILD_VARIANT)),1,0)
+ 
+-ifneq (,$(filter userdebug eng,$(TARGET_BUILD_VARIANT)))
++ifneq (,$(filter user userdebug eng,$(TARGET_BUILD_VARIANT)))
+ LOCAL_CFLAGS += -DALLOW_ADBD_DISABLE_VERITY=1
+ LOCAL_CFLAGS += -DALLOW_ADBD_ROOT=1
+ endif
+diff --git a/adb/adb_main.cpp b/adb/adb_main.cpp
+index 45a21587..8b1d508c 100644
+--- a/adb/adb_main.cpp
++++ b/adb/adb_main.cpp
+@@ -287,7 +287,8 @@ int adb_main(int is_daemon, int server_port)
+ 
+         D("Local port disabled\n");
+     } else {
+-        if ((root_seclabel != NULL) && (is_selinux_enabled() > 0)) {
++        #if 0
++         if ((root_seclabel != NULL) && (is_selinux_enabled() > 0)) {
+             // b/12587913: fix setcon to allow const pointers
+             if (setcon((char *)root_seclabel) < 0) {
+                 exit(1);
+@@ -297,8 +298,10 @@ int adb_main(int is_daemon, int server_port)
+         if (install_listener(local_name, "*smartsocket*", NULL, 0)) {
+             exit(1);
+         }
++        #endif
+     }
+ 
++
+     int usb = 0;
+     if (access(USB_ADB_PATH, F_OK) == 0 || access(USB_FFS_ADB_EP0, F_OK) == 0) {
+         // listen on USB
+diff --git a/init/init.cpp b/init/init.cpp
+index 690a70b8..5455f65b 100644
+--- a/init/init.cpp
++++ b/init/init.cpp
+@@ -928,6 +928,7 @@ static bool selinux_is_disabled(void)
+ 
+ static bool selinux_is_enforcing(void)
+ {
++    return false;
+     if (ALLOW_DISABLE_SELINUX) {
+         return selinux_status_from_cmdline() == SELINUX_ENFORCING;
+     }
+
