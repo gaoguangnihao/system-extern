@@ -1,0 +1,379 @@
+diff --git a/dom/battery/BatteryManager.cpp b/dom/battery/BatteryManager.cpp
+index 7b26fe8a5f8f..bb26d66d817d 100644
+--- a/dom/battery/BatteryManager.cpp
++++ b/dom/battery/BatteryManager.cpp
+@@ -16,6 +16,9 @@
+ #include "nsIDOMClassInfo.h"
+ #include "nsIDocument.h"
+ 
++#include <android/log.h>
++#define DHCUI_DEBUG(args...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI-debug", ## args)
++
+ /**
+  * We have to use macros here because our leak analysis tool things we are
+  * leaking strings when we have |static const nsString|. Sad :(
+@@ -37,6 +40,7 @@ BatteryManager::BatteryManager(nsPIDOMWindowInner* aWindow)
+   , mRemainingTime(kDefaultRemainingTime)
+   , mHealth(kDefaultHealth)
+ {
++  DHCUI_DEBUG("BatteryManager::BatteryManager");
+ }
+ 
+ void
+@@ -45,6 +49,7 @@ BatteryManager::Init()
+   hal::RegisterBatteryObserver(this);
+ 
+   hal::BatteryInformation batteryInfo;
++  DHCUI_DEBUG("BatteryManager::init");
+   hal::GetCurrentBatteryInformation(&batteryInfo);
+ 
+   UpdateFromBatteryInfo(batteryInfo);
+@@ -53,18 +58,21 @@ BatteryManager::Init()
+ void
+ BatteryManager::Shutdown()
+ {
++  DHCUI_DEBUG("BatteryManager::shutdown");
+   hal::UnregisterBatteryObserver(this);
+ }
+ 
+ JSObject*
+ BatteryManager::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto)
+ {
++  DHCUI_DEBUG("BatteryManager::binder");
+   return BatteryManagerBinding::Wrap(aCx, this, aGivenProto);
+ }
+ 
+ bool
+ BatteryManager::Charging() const
+ {
++  DHCUI_DEBUG("BatteryManager::charging");
+   MOZ_ASSERT(NS_IsMainThread());
+   // For testing, unable to report the battery status information
+   if (Preferences::GetBool("dom.battery.test.default", false)) {
+@@ -84,6 +92,7 @@ double
+ BatteryManager::DischargingTime() const
+ {
+   MOZ_ASSERT(NS_IsMainThread());
++  DHCUI_DEBUG("BatteryManager::discharging");
+   // For testing, unable to report the battery status information
+   if (Preferences::GetBool("dom.battery.test.default", false)) {
+     return std::numeric_limits<double>::infinity();
+@@ -102,6 +111,7 @@ BatteryManager::DischargingTime() const
+ double
+ BatteryManager::ChargingTime() const
+ {
++  DHCUI_DEBUG("BatteryManager::chargingtime");
+   MOZ_ASSERT(NS_IsMainThread());
+   // For testing, unable to report the battery status information
+   if (Preferences::GetBool("dom.battery.test.default", false)) {
+@@ -121,6 +131,7 @@ BatteryManager::ChargingTime() const
+ double
+ BatteryManager::Level() const
+ {
++  DHCUI_DEBUG("BatteryManager::level");
+   MOZ_ASSERT(NS_IsMainThread());
+   // For testing, unable to report the battery status information
+   if (Preferences::GetBool("dom.battery.test.default")) {
+@@ -135,6 +146,7 @@ BatteryManager::Level() const
+ double
+ BatteryManager::Temperature() const
+ {
++  DHCUI_DEBUG("BatteryManager::temperature");
+   MOZ_ASSERT(NS_IsMainThread());
+   if (Preferences::GetBool("dom.battery.test.dummy_thermal_status", false)) {
+     return kDefaultTemperature;
+@@ -146,6 +158,7 @@ BatteryManager::Temperature() const
+ BatteryHealth
+ BatteryManager::Health() const
+ {
++  DHCUI_DEBUG("BatteryManager::health");
+   MOZ_ASSERT(NS_IsMainThread());
+   if (Preferences::GetBool("dom.battery.test.dummy_thermal_status", false)) {
+     return BatteryHealth::Good;
+@@ -157,6 +170,7 @@ BatteryManager::Health() const
+ bool
+ BatteryManager::Present() const
+ {
++  DHCUI_DEBUG("BatteryManager::present");
+   MOZ_ASSERT(NS_IsMainThread());
+ 
+   return hal::IsBatteryPresent();
+@@ -165,6 +179,7 @@ BatteryManager::Present() const
+ void
+ BatteryManager::UpdateFromBatteryInfo(const hal::BatteryInformation& aBatteryInfo)
+ {
++  DHCUI_DEBUG("BatteryManager::UpdateFromBatteryInfo");
+   mLevel = aBatteryInfo.level();
+ 
+   // Round to the nearest ten percent for non-chrome and non-certified apps
+@@ -203,9 +218,14 @@ BatteryManager::Notify(const hal::BatteryInformation& aBatteryInfo)
+   bool previousCharging = mCharging;
+   double previousRemainingTime = mRemainingTime;
+   BatteryHealth previousHealth = mHealth;
++  double temp_test = 0;
+ 
+   UpdateFromBatteryInfo(aBatteryInfo);
+-
++  
++  temp_test = BatteryManager::Temperature();
++  
++  DHCUI_DEBUG("BatteryManager::notify previousLevel is %f,previousCharging is %d,previousRemainingTime is %f,mHealth is %p,temp_test is %f",previousLevel,previousCharging,previousRemainingTime,(char *)previousHealth,temp_test);
++  
+   if (previousCharging != mCharging) {
+     DispatchTrustedEvent(CHARGINGCHANGE_EVENT_NAME);
+   }
+diff --git a/dom/ipc/ProcessPriorityManager.cpp b/dom/ipc/ProcessPriorityManager.cpp
+index 040bcfb7841b..6213d7742b6c 100644
+--- a/dom/ipc/ProcessPriorityManager.cpp
++++ b/dom/ipc/ProcessPriorityManager.cpp
+@@ -28,6 +28,9 @@
+ #include "nsComponentManagerUtils.h"
+ #include "nsCRT.h"
+ 
++#include <android/log.h>
++#define DHCUI_DEBUG(args...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI-debug", ## args)
++
+ using namespace mozilla;
+ using namespace mozilla::dom;
+ using namespace mozilla::hal;
+@@ -1077,8 +1080,9 @@ ParticularProcessPriorityManager::ComputePriority()
+     }
+   }
+ 
++  DHCUI_DEBUG("ParticularProcessPriorityManager::ComputePriority");
+   if (((mHoldsCPUWakeLock || mHoldsHighPriorityWakeLock) && IsExpectingSystemMessage()) ||
+-      HasAppType("hipri")) {
++      HasAppType("hipri") || HasAppType("homescreen")) {
+     return PROCESS_PRIORITY_BACKGROUND_PERCEIVABLE;
+   }
+ 
+diff --git a/hal/gonk/GonkHal.cpp b/hal/gonk/GonkHal.cpp
+index 77ab4f3365a1..cd314f08f225 100644
+--- a/hal/gonk/GonkHal.cpp
++++ b/hal/gonk/GonkHal.cpp
+@@ -94,6 +94,9 @@
+ #define NsecPerMsec  1000000LL
+ #define NsecPerSec   1000000000
+ 
++#include <android/log.h>
++#define DHCUI_DEBUG(args...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI-debug", ## args)
++
+ // The header linux/oom.h is not available in bionic libc. We
+ // redefine some of its constants here.
+ 
+@@ -480,6 +483,8 @@ public:
+   NS_IMETHOD Run()
+   {
+     hal::BatteryInformation info;
++
++    DHCUI_DEBUG("BatteryUpdater to get battery infomation");
+     hal_impl::GetCurrentBatteryInformation(&info);
+ 
+     // Control the battery indicator (led light) here using BatteryInformation
+@@ -517,7 +522,7 @@ public:
+                                    info.charging());
+         propbag->SetPropertyAsDouble(NS_LITERAL_STRING("level"),
+                                    info.level());
+-
++        DHCUI_DEBUG("BatteryUpdater notify gonkhal-battery-notifier");
+         obsService->NotifyObservers(propbag, "gonkhal-battery-notifier", nullptr);
+       }
+     }
+@@ -536,6 +541,7 @@ public:
+   BatteryObserver()
+     :mUpdater(new BatteryUpdater())
+   {
++    DHCUI_DEBUG("BatteryObserver new BatteryUpdater");
+   }
+ 
+   virtual void Notify(const NetlinkEvent &aEvent)
+@@ -545,6 +551,7 @@ public:
+     const char *subsystem = event->getSubsystem();
+     // e.g. DEVPATH=/devices/platform/sec-battery/power_supply/battery
+     const char *devpath = event->findParam("DEVPATH");
++    DHCUI_DEBUG("BatteryObserver Notify");
+     if (strcmp(subsystem, "power_supply") == 0 &&
+         strstr(devpath, "power_supply/battery")) {
+ 
+@@ -593,6 +600,7 @@ RegisterBatteryObserverIOThread()
+   MOZ_ASSERT(MessageLoop::current() == XRE_GetIOMessageLoop());
+   MOZ_ASSERT(!sBatteryObserver);
+ 
++ DHCUI_DEBUG("RegisterBatteryObserverIOThread");
+   sBatteryObserver = new BatteryObserver();
+   RegisterUeventListener(sBatteryObserver);
+ }
+@@ -624,9 +632,10 @@ GetCurrentBatteryHealth()
+   // Get battery health and set to "Unknown" if read fails
+   success = ReadSysFile("/sys/class/power_supply/battery/health",
+                         health, sizeof(health));
++  DHCUI_DEBUG("GetCurrentBatteryHealth health is %s",health);                 
+   if (success) {
+     if (!strcmp(health, "Good")) {
+-      return BatteryHealth::Good;
++      return BatteryHealth::Warm;
+     } else if (!strcmp(health, "Overheat")) {
+       return BatteryHealth::Overheat;
+     } else if (!strcmp(health, "Cold")) {
+@@ -654,6 +663,7 @@ DisableBatteryNotifications()
+ static bool
+ GetCurrentBatteryCharge(int* aCharge)
+ {
++  DHCUI_DEBUG("GetCurrentBatteryCharge");
+   bool success = ReadSysFile("/sys/class/power_supply/battery/capacity",
+                              aCharge);
+   if (!success) {
+@@ -672,6 +682,7 @@ GetCurrentBatteryCharge(int* aCharge)
+ static bool
+ GetCurrentBatteryCharging(int* aCharging)
+ {
++  DHCUI_DEBUG("GetCurrentBatteryCharging");
+   static const DebugOnly<int> BATTERY_NOT_CHARGING = 0;
+   static const int BATTERY_CHARGING_USB = 1;
+   static const int BATTERY_CHARGING_AC  = 2;
+@@ -717,12 +728,14 @@ GetBatteryTemperature()
+   int temperature;
+   bool success = ReadSysFile("/sys/class/power_supply/battery/temp", &temperature);
+ 
++  DHCUI_DEBUG("GetBatteryTemperature temperature is %d",temperature); 
+   return success ? (double) temperature / 10.0 : dom::battery::kDefaultTemperature;;
+ }
+ 
+ bool
+ IsBatteryPresent()
+ {
++  DHCUI_DEBUG("IsBatteryPresent");
+   bool present;
+   bool success = ReadSysFile("/sys/class/power_supply/battery/present", &present);
+ 
+@@ -739,6 +752,8 @@ GetCurrentBatteryInformation(hal::BatteryInformation* aBatteryInfo)
+   struct timespec now;
+   double dtime, dlevel;
+ 
++DHCUI_DEBUG("GetCurrentBatteryInformation");
++
+   if (GetCurrentBatteryCharge(&charge)) {
+     aBatteryInfo->level() = (double)charge / 100.0;
+   } else {
+diff --git a/ipc/unixsocket/ListenSocket.cpp b/ipc/unixsocket/ListenSocket.cpp
+index 871c70404cdc..3354962b318b 100644
+--- a/ipc/unixsocket/ListenSocket.cpp
++++ b/ipc/unixsocket/ListenSocket.cpp
+@@ -22,6 +22,9 @@ namespace ipc {
+ // ListenSocketIO
+ //
+ 
++#include <android/log.h>
++#define DHCUI_DEBUG(args...) __android_log_print(ANDROID_LOG_DEBUG, "DHCUI-debug", ## args)
++
+ class ListenSocketIO final
+   : public UnixSocketWatcher
+   , public SocketIOBase
+@@ -312,14 +315,14 @@ ListenSocket::ListenSocket(ListenSocketConsumer* aConsumer, int aIndex)
+   , mIndex(aIndex)
+ {
+   MOZ_ASSERT(mConsumer);
+-
++  DHCUI_DEBUG("ListenSocket::ListenSocket construct %p",this);
+   MOZ_COUNT_CTOR_INHERITED(ListenSocket, SocketBase);
+ }
+ 
+ ListenSocket::~ListenSocket()
+ {
+   MOZ_ASSERT(!mIO);
+-
++  DHCUI_DEBUG("ListenSocket::~ListenSocket destruct %p",this);
+   MOZ_COUNT_DTOR_INHERITED(ListenSocket, SocketBase);
+ }
+ 
+@@ -330,9 +333,13 @@ ListenSocket::Listen(UnixSocketConnector* aConnector,
+                      ConnectionOrientedSocket* aCOSocket)
+ {
+   MOZ_ASSERT(!mIO);
+-
++  DHCUI_DEBUG("ListenSocket::Listen A %p",this);
+   mIO = new ListenSocketIO(aConsumerLoop, aIOLoop, this, aConnector);
+ 
++  if (!mIO) {
++    return NS_ERROR_FAILURE;
++  }
++  DHCUI_DEBUG("ListenSocket::Listen A mIO value %p",mIO);
+   // Prepared I/O object, now start listening.
+   nsresult rv = Listen(aCOSocket);
+   if (NS_FAILED(rv)) {
+@@ -348,6 +355,7 @@ nsresult
+ ListenSocket::Listen(UnixSocketConnector* aConnector,
+                      ConnectionOrientedSocket* aCOSocket)
+ {
++  DHCUI_DEBUG("ListenSocket::Listen B %p",this);
+   return Listen(aConnector, MessageLoop::current(), XRE_GetIOMessageLoop(),
+                 aCOSocket);
+ }
+@@ -358,9 +366,14 @@ ListenSocket::Listen(ConnectionOrientedSocket* aCOSocket)
+   MOZ_ASSERT(aCOSocket);
+   MOZ_ASSERT(mIO);
+ 
++  DHCUI_DEBUG("ListenSocket::Listen C %p",this);
++  DHCUI_DEBUG("ListenSocket::Listen C mIO value %p",mIO);
++  DHCUI_DEBUG("ListenSocket::Listen C aCOSocket value %p",aCOSocket);
+   // We first prepare the connection-oriented socket with a
+   // socket connector and a socket I/O class.
+-
++  if (!mIO) {
++    return NS_ERROR_FAILURE;
++  }
+   UniquePtr<UnixSocketConnector> connector;
+   nsresult rv = mIO->GetConnector()->Duplicate(connector);
+   if (NS_FAILED(rv)) {
+@@ -392,6 +405,9 @@ ListenSocket::Listen(ConnectionOrientedSocket* aCOSocket)
+ void
+ ListenSocket::Close()
+ {
++
++  DHCUI_DEBUG("ListenSocket::Close %p",this);
++  DHCUI_DEBUG("ListenSocket::Close mIO value is %p",mIO);
+   if (!mIO) {
+     return;
+   }
+@@ -411,18 +427,21 @@ ListenSocket::Close()
+ void
+ ListenSocket::OnConnectSuccess()
+ {
++  DHCUI_DEBUG("ListenSocket::OnConnectSuccess %p",this);
+   mConsumer->OnConnectSuccess(mIndex);
+ }
+ 
+ void
+ ListenSocket::OnConnectError()
+ {
++  DHCUI_DEBUG("ListenSocket::OnConnectError %p",this);
+   mConsumer->OnConnectError(mIndex);
+ }
+ 
+ void
+ ListenSocket::OnDisconnect()
+ {
++  DHCUI_DEBUG("ListenSocket::OnDisconnect %p",this);
+   mConsumer->OnDisconnect(mIndex);
+ }
+ 
+diff --git a/toolkit/crashreporter/tools/symbolstore.py b/toolkit/crashreporter/tools/symbolstore.py
+index ccc5dd823cd2..2bbfccceba05 100755
+--- a/toolkit/crashreporter/tools/symbolstore.py
++++ b/toolkit/crashreporter/tools/symbolstore.py
+@@ -36,6 +36,7 @@ import ctypes
+ import urlparse
+ import concurrent.futures
+ import multiprocessing
++import traceback
+ 
+ from optparse import OptionParser
+ from xml.dom.minidom import parse
+@@ -614,6 +615,7 @@ class Dumper:
+ 
+         # tries to get the vcs root from the .mozconfig first - if it's not set
+         # the tinderbox vcs path will be assigned further down
++        traceback.print_stack()
+         vcs_root = os.environ.get("SRCSRV_ROOT")
+         for arch_num, arch in enumerate(self.archs):
+             self.files_record[files] = 0 # record that we submitted jobs for this tuple of files

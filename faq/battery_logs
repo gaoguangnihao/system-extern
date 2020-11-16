@@ -1,0 +1,629 @@
+01-12 03:01:36.096   600   600 D VM_BMS  : wake_lock acquired
+01-12 03:01:36.096   600   600 D VM_BMS  : New BMS data - Size=56
+01-12 03:01:36.096   600   600 D VM_BMS  : Start process_bms_data
+01-12 03:01:36.099   600   600 D VM_BMS  : For batt_temp=443 fcc_mah=2012
+01-12 03:01:36.099   600   600 D VM_BMS  : For ocv=3741240 batt_temp=443 soc=25
+01-12 03:01:36.099   600   600 D VM_BMS  : fifo_count=5 acc_count=0
+01-12 03:01:36.100   600   600 D VM_BMS  : INIT: ocv=3741240 last_ocv=3741240 batt_temp=443 soc=25
+01-12 03:01:36.100   600   600 D VM_BMS  : For soc=25 batt_temp=443 slope=3600
+01-12 03:01:36.100   600   600 D VM_BMS  : For soc=25 batt_temp=443 rbatt_sf=82
+01-12 03:01:36.100   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=129, sf=82 batt_temp=443
+01-12 03:01:36.100   600   600 D VM_BMS  : For ocv=3741516 batt_temp=443 soc=25
+01-12 03:01:36.101   600   600 D VM_BMS  : FIFO=0 fifo_avg=3.852497 rbatt=0.179000 slope=0.360000 ibatt=-0.620776 ocv=3.741517 soc=25 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=160
+01-12 03:01:36.101   600   600 D VM_BMS  : For soc=25 batt_temp=443 slope=3600
+01-12 03:01:36.101   600   600 D VM_BMS  : For soc=25 batt_temp=443 rbatt_sf=82
+01-12 03:01:36.101   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=129, sf=82 batt_temp=443
+01-12 03:01:36.102   600   600 D VM_BMS  : For ocv=3741781 batt_temp=443 soc=25
+01-12 03:01:36.102   600   600 D VM_BMS  : FIFO=1 fifo_avg=3.848363 rbatt=0.179000 slope=0.360000 ibatt=-0.596168 ocv=3.741782 soc=25 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=160
+01-12 03:01:36.102   600   600 D VM_BMS  : For soc=25 batt_temp=443 slope=3600
+01-12 03:01:36.102   600   600 D VM_BMS  : For soc=25 batt_temp=443 rbatt_sf=82
+01-12 03:01:36.103   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=129, sf=82 batt_temp=443
+01-12 03:01:36.103   600   600 D VM_BMS  : For ocv=3742055 batt_temp=443 soc=26
+01-12 03:01:36.103   600   600 D VM_BMS  : FIFO=2 fifo_avg=3.852206 rbatt=0.179000 slope=0.360000 ibatt=-0.616133 ocv=3.742055 soc=26 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=160
+01-12 03:01:36.103   600   600 D VM_BMS  : For soc=26 batt_temp=443 slope=3600
+01-12 03:01:36.104   600   600 D VM_BMS  : For soc=26 batt_temp=443 rbatt_sf=83
+01-12 03:01:36.104   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=131, sf=83 batt_temp=443
+01-12 03:01:36.104   600   600 D VM_BMS  : For ocv=3742326 batt_temp=443 soc=26
+01-12 03:01:36.105   600   600 D VM_BMS  : FIFO=3 fifo_avg=3.852497 rbatt=0.181000 slope=0.360000 ibatt=-0.609428 ocv=3.742326 soc=26 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=160
+01-12 03:01:36.105   600   600 D VM_BMS  : For soc=26 batt_temp=443 slope=3600
+01-12 03:01:36.105   600   600 D VM_BMS  : For soc=26 batt_temp=443 rbatt_sf=83
+01-12 03:01:36.105   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=131, sf=83 batt_temp=443
+01-12 03:01:36.106   600   600 D VM_BMS  : For ocv=3742597 batt_temp=443 soc=26
+01-12 03:01:36.106   600   600 D VM_BMS  : FIFO=4 fifo_avg=3.852793 rbatt=0.181000 slope=0.360000 ibatt=-0.609565 ocv=3.742598 soc=26 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=160
+01-12 03:01:36.110   600   600 I VM_BMS  : power_supply_update: ocv_uv=3742597 ibatt=-609564 soc=26 seq_num=160
+01-12 03:01:36.110   600   600 D VM_BMS  : End process_bms_data
+01-12 03:01:36.110   600   600 D VM_BMS  : wake_lock released
+01-12 03:01:36.126   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:01:36.140   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:01:36.141   467   467 D DHCUI-debug: BatteryUpdater to get battery infomation
+01-12 03:01:36.141   467   467 D DHCUI-debug: GetCurrentBatteryInformation
+01-12 03:01:36.142   467   467 D DHCUI-debug: GetCurrentBatteryCharge
+01-12 03:01:36.148   467   467 D DHCUI-debug: GetBatteryTemperature temperature is 442
+01-12 03:01:36.148   467   467 D DHCUI-debug: GetCurrentBatteryHealth health is Good
+01-12 03:01:36.149   467   467 D DHCUI-debug: IsBatteryPresent
+01-12 03:01:36.149   467   467 D DHCUI-debug: GetCurrentBatteryCharging
+01-12 03:01:36.151   467   467 D DHCUI-debug: BatteryManager::UpdateFromBatteryInfo
+01-12 03:01:36.158   467   467 D DHCUI-debug: BatteryManager::temperature
+01-12 03:01:36.161   467   467 D DHCUI-debug: GetBatteryTemperature temperature is 443
+01-12 03:01:36.161   467   467 D DHCUI-debug: BatteryManager::notify previousLevel is 0.230000,previousCharging is 1,previousRemainingTime is 11165.000000,mHealth is 0x3,temp_test is 44.300000
+01-12 03:01:36.162   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:01:36.163   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:01:36.163   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:01:36.163   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:01:36.167   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:01:36.167   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:01:36.167   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:01:36.168   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:01:36.168   467   467 D DHCUI-debug: BatteryUpdater notify gonkhal-battery-notifier
+01-12 03:01:38.151  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:01:41.153  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:01:44.155  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:01:47.157  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:01:50.159  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:01:53.160  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:01:56.162  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:01:59.164  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:00.588   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 133: error 25 Not a typewriter
+01-12 03:02:00.588   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002510 syncobj
+01-12 03:02:00.757   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 132: error 25 Not a typewriter
+01-12 03:02:00.757   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x970026c0 syncobj
+01-12 03:02:01.081   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 131: error 25 Not a typewriter
+01-12 03:02:01.081   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002a60 syncobj
+01-12 03:02:01.448   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 133: error 25 Not a typewriter
+01-12 03:02:01.448   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x970027c0 syncobj
+01-12 03:02:01.448   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 133: error 25 Not a typewriter
+01-12 03:02:01.448   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x970027c0 syncobj
+01-12 03:02:01.451   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 133: error 25 Not a typewriter
+01-12 03:02:01.451   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x970027c0 syncobj
+01-12 03:02:02.166  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:04.081   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 131: error 25 Not a typewriter
+01-12 03:02:04.081   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002a60 syncobj
+01-12 03:02:05.168  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:08.169  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:11.171  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:14.173  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:17.175  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:20.177  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:23.179  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:24.243   600   600 D VM_BMS  : wake_lock acquired
+01-12 03:02:24.243   600   600 D VM_BMS  : New BMS data - Size=56
+01-12 03:02:24.243   600   600 D VM_BMS  : Start process_bms_data
+01-12 03:02:24.247   600   600 D VM_BMS  : For batt_temp=443 fcc_mah=2012
+01-12 03:02:24.247   600   600 D VM_BMS  : For ocv=3742597 batt_temp=443 soc=26
+01-12 03:02:24.247   600   600 D VM_BMS  : fifo_count=5 acc_count=0
+01-12 03:02:24.248   600   600 D VM_BMS  : INIT: ocv=3742597 last_ocv=3742597 batt_temp=443 soc=26
+01-12 03:02:24.248   600   600 D VM_BMS  : For soc=26 batt_temp=443 slope=3600
+01-12 03:02:24.248   600   600 D VM_BMS  : For soc=26 batt_temp=443 rbatt_sf=83
+01-12 03:02:24.248   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=131, sf=83 batt_temp=443
+01-12 03:02:24.249   600   600 D VM_BMS  : For ocv=3742868 batt_temp=443 soc=26
+01-12 03:02:24.249   600   600 D VM_BMS  : FIFO=0 fifo_avg=3.852793 rbatt=0.181000 slope=0.360000 ibatt=-0.608069 ocv=3.742868 soc=26 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=161
+01-12 03:02:24.249   600   600 D VM_BMS  : For soc=26 batt_temp=443 slope=3600
+01-12 03:02:24.250   600   600 D VM_BMS  : For soc=26 batt_temp=443 rbatt_sf=83
+01-12 03:02:24.250   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=131, sf=83 batt_temp=443
+01-12 03:02:24.250   600   600 D VM_BMS  : For ocv=3743138 batt_temp=443 soc=26
+01-12 03:02:24.250   600   600 D VM_BMS  : FIFO=1 fifo_avg=3.853076 rbatt=0.181000 slope=0.360000 ibatt=-0.608136 ocv=3.743139 soc=26 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=161
+01-12 03:02:24.251   600   600 D VM_BMS  : For soc=26 batt_temp=443 slope=3600
+01-12 03:02:24.251   600   600 D VM_BMS  : For soc=26 batt_temp=443 rbatt_sf=83
+01-12 03:02:24.251   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=131, sf=83 batt_temp=443
+01-12 03:02:24.251   600   600 D VM_BMS  : For ocv=3743403 batt_temp=443 soc=26
+01-12 03:02:24.252   600   600 D VM_BMS  : FIFO=2 fifo_avg=3.851010 rbatt=0.181000 slope=0.360000 ibatt=-0.595246 ocv=3.743403 soc=26 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=161
+01-12 03:02:24.252   600   600 D VM_BMS  : For soc=26 batt_temp=443 slope=3600
+01-12 03:02:24.252   600   600 D VM_BMS  : For soc=26 batt_temp=443 rbatt_sf=83
+01-12 03:02:24.253   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=131, sf=83 batt_temp=443
+01-12 03:02:24.253   600   600 D VM_BMS  : For ocv=3743670 batt_temp=443 soc=26
+01-12 03:02:24.253   600   600 D VM_BMS  : FIFO=3 fifo_avg=3.852180 rbatt=0.181000 slope=0.360000 ibatt=-0.600240 ocv=3.743670 soc=26 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=161
+01-12 03:02:24.254   600   600 D VM_BMS  : For soc=26 batt_temp=443 slope=3600
+01-12 03:02:24.254   600   600 D VM_BMS  : For soc=26 batt_temp=443 rbatt_sf=83
+01-12 03:02:24.254   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=131, sf=83 batt_temp=443
+01-12 03:02:24.255   600   600 D VM_BMS  : For ocv=3743937 batt_temp=443 soc=26
+01-12 03:02:24.255   600   600 D VM_BMS  : FIFO=4 fifo_avg=3.852485 rbatt=0.181000 slope=0.360000 ibatt=-0.600449 ocv=3.743937 soc=26 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=161
+01-12 03:02:24.257   600   600 I VM_BMS  : power_supply_update: ocv_uv=3743937 ibatt=-600448 soc=26 seq_num=161
+01-12 03:02:24.257   600   600 D VM_BMS  : End process_bms_data
+01-12 03:02:24.258   600   600 D VM_BMS  : wake_lock released
+01-12 03:02:26.180  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:29.182  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:32.184  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:35.187  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:38.189  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:41.190  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:44.192  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:47.194  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:50.196  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:53.198  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:56.200  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:02:59.202  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:00.586   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 144: error 25 Not a typewriter
+01-12 03:03:00.586   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002550 syncobj
+01-12 03:03:00.764   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 132: error 25 Not a typewriter
+01-12 03:03:00.764   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002a70 syncobj
+01-12 03:03:01.071   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 144: error 25 Not a typewriter
+01-12 03:03:01.071   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002a00 syncobj
+01-12 03:03:01.472   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 133: error 25 Not a typewriter
+01-12 03:03:01.473   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97045380 syncobj
+01-12 03:03:01.473   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 133: error 25 Not a typewriter
+01-12 03:03:01.473   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97045380 syncobj
+01-12 03:03:01.473   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 133: error 25 Not a typewriter
+01-12 03:03:01.473   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97045380 syncobj
+01-12 03:03:02.203  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:04.066   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 144: error 25 Not a typewriter
+01-12 03:03:04.067   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002a00 syncobj
+01-12 03:03:05.205  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:08.207  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:11.209  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:12.390   600   600 D VM_BMS  : wake_lock acquired
+01-12 03:03:12.390   600   600 D VM_BMS  : New BMS data - Size=56
+01-12 03:03:12.390   600   600 D VM_BMS  : Start process_bms_data
+01-12 03:03:12.393   600   600 D VM_BMS  : For batt_temp=443 fcc_mah=2012
+01-12 03:03:12.394   600   600 D VM_BMS  : For ocv=3743937 batt_temp=443 soc=26
+01-12 03:03:12.394   600   600 D VM_BMS  : fifo_count=5 acc_count=0
+01-12 03:03:12.394   600   600 D VM_BMS  : INIT: ocv=3743937 last_ocv=3743937 batt_temp=443 soc=26
+01-12 03:03:12.394   600   600 D VM_BMS  : For soc=26 batt_temp=443 slope=3600
+01-12 03:03:12.395   600   600 D VM_BMS  : For soc=26 batt_temp=443 rbatt_sf=83
+01-12 03:03:12.395   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=131, sf=83 batt_temp=443
+01-12 03:03:12.395   600   600 D VM_BMS  : For ocv=3744206 batt_temp=443 soc=26
+01-12 03:03:12.395   600   600 D VM_BMS  : FIFO=0 fifo_avg=3.853689 rbatt=0.181000 slope=0.360000 ibatt=-0.605619 ocv=3.744207 soc=26 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=162
+01-12 03:03:12.396   600   600 D VM_BMS  : For soc=26 batt_temp=443 slope=3600
+01-12 03:03:12.396   600   600 D VM_BMS  : For soc=26 batt_temp=443 rbatt_sf=83
+01-12 03:03:12.396   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=131, sf=83 batt_temp=443
+01-12 03:03:12.396   600   600 D VM_BMS  : For ocv=3744476 batt_temp=443 soc=26
+01-12 03:03:12.397   600   600 D VM_BMS  : FIFO=1 fifo_avg=3.854271 rbatt=0.181000 slope=0.360000 ibatt=-0.607347 ocv=3.744476 soc=26 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=162
+01-12 03:03:12.397   600   600 D VM_BMS  : For soc=26 batt_temp=443 slope=3600
+01-12 03:03:12.397   600   600 D VM_BMS  : For soc=26 batt_temp=443 rbatt_sf=83
+01-12 03:03:12.397   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=131, sf=83 batt_temp=443
+01-12 03:03:12.397   600   600 D VM_BMS  : For ocv=3744746 batt_temp=443 soc=26
+01-12 03:03:12.398   600   600 D VM_BMS  : FIFO=2 fifo_avg=3.854576 rbatt=0.181000 slope=0.360000 ibatt=-0.607540 ocv=3.744747 soc=26 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=162
+01-12 03:03:12.398   600   600 D VM_BMS  : For soc=26 batt_temp=443 slope=3600
+01-12 03:03:12.398   600   600 D VM_BMS  : For soc=26 batt_temp=443 rbatt_sf=83
+01-12 03:03:12.398   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=131, sf=83 batt_temp=443
+01-12 03:03:12.399   600   600 D VM_BMS  : For ocv=3745011 batt_temp=443 soc=27
+01-12 03:03:12.399   600   600 D VM_BMS  : FIFO=3 fifo_avg=3.852801 rbatt=0.181000 slope=0.360000 ibatt=-0.596256 ocv=3.745012 soc=27 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=162
+01-12 03:03:12.399   600   600 D VM_BMS  : For soc=27 batt_temp=443 slope=3600
+01-12 03:03:12.399   600   600 D VM_BMS  : For soc=27 batt_temp=443 rbatt_sf=84
+01-12 03:03:12.400   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=132, sf=84 batt_temp=443
+01-12 03:03:12.400   600   600 D VM_BMS  : For ocv=3745280 batt_temp=443 soc=27
+01-12 03:03:12.400   600   600 D VM_BMS  : FIFO=4 fifo_avg=3.855167 rbatt=0.182000 slope=0.360000 ibatt=-0.604512 ocv=3.745280 soc=27 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=162
+01-12 03:03:12.404   600   600 I VM_BMS  : power_supply_update: ocv_uv=3745280 ibatt=-604512 soc=27 seq_num=162
+01-12 03:03:12.404   600   600 D VM_BMS  : End process_bms_data
+01-12 03:03:12.407   600   600 D VM_BMS  : wake_lock released
+01-12 03:03:12.419   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:03:12.436   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:03:12.437   467   467 D DHCUI-debug: BatteryUpdater to get battery infomation
+01-12 03:03:12.437   467   467 D DHCUI-debug: GetCurrentBatteryInformation
+01-12 03:03:12.437   467   467 D DHCUI-debug: GetCurrentBatteryCharge
+01-12 03:03:12.443   467   467 D DHCUI-debug: GetBatteryTemperature temperature is 443
+01-12 03:03:12.444   467   467 D DHCUI-debug: GetCurrentBatteryHealth health is Good
+01-12 03:03:12.445   467   467 D DHCUI-debug: IsBatteryPresent
+01-12 03:03:12.446   467   467 D DHCUI-debug: GetCurrentBatteryCharging
+01-12 03:03:12.450   467   467 D DHCUI-debug: BatteryManager::UpdateFromBatteryInfo
+01-12 03:03:12.456   467   467 D DHCUI-debug: BatteryManager::temperature
+01-12 03:03:12.459   467   467 D DHCUI-debug: GetBatteryTemperature temperature is 443
+01-12 03:03:12.459   467   467 D DHCUI-debug: BatteryManager::notify previousLevel is 0.240000,previousCharging is 1,previousRemainingTime is 10944.000000,mHealth is 0x3,temp_test is 44.300000
+01-12 03:03:12.460   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:03:12.461   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:03:12.462   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:03:12.464   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:03:12.464   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:03:12.477   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:03:12.477   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:03:12.477   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:03:12.477   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:03:12.477   467   467 D DHCUI-debug: BatteryUpdater notify gonkhal-battery-notifier
+01-12 03:03:14.211  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:15.501   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 132: error 25 Not a typewriter
+01-12 03:03:15.501   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002340 syncobj
+01-12 03:03:17.213  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:20.214  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:23.216  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:26.218  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:29.220  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:32.222  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:32.774   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:03:32.775   467   467 D DHCUI-debug: BatteryUpdater to get battery infomation
+01-12 03:03:32.776   467   467 D DHCUI-debug: GetCurrentBatteryInformation
+01-12 03:03:32.776   467   467 D DHCUI-debug: GetCurrentBatteryCharge
+01-12 03:03:32.781   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:03:32.785   467   467 D DHCUI-debug: GetBatteryTemperature temperature is 443
+01-12 03:03:32.786   467   467 D DHCUI-debug: GetCurrentBatteryHealth health is Good
+01-12 03:03:32.786   467   467 D DHCUI-debug: IsBatteryPresent
+01-12 03:03:32.787   467   467 D DHCUI-debug: GetCurrentBatteryCharging
+01-12 03:03:32.789   467   467 D DHCUI-debug: BatteryManager::UpdateFromBatteryInfo
+01-12 03:03:32.797   467   467 D DHCUI-debug: BatteryManager::temperature
+01-12 03:03:32.800   467   467 D DHCUI-debug: GetBatteryTemperature temperature is 443
+01-12 03:03:32.801   467   467 D DHCUI-debug: BatteryManager::notify previousLevel is 0.250000,previousCharging is 1,previousRemainingTime is 7275.000000,mHealth is 0x3,temp_test is 44.300000
+01-12 03:03:32.802   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:03:32.802   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:03:32.802   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:03:32.802   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:03:32.805   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:03:32.805   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:03:32.806   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:03:32.806   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:03:32.806   467   467 D DHCUI-debug: BatteryUpdater notify gonkhal-battery-notifier
+01-12 03:03:35.223  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:38.225  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:41.227  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:44.229  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:47.231  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:50.233  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:53.234  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:56.236  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:03:59.238  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:00.529   600   600 D VM_BMS  : wake_lock acquired
+01-12 03:04:00.529   600   600 D VM_BMS  : New BMS data - Size=56
+01-12 03:04:00.529   600   600 D VM_BMS  : Start process_bms_data
+01-12 03:04:00.531   600   600 D VM_BMS  : For batt_temp=444 fcc_mah=2012
+01-12 03:04:00.531   600   600 D VM_BMS  : For ocv=3745280 batt_temp=444 soc=27
+01-12 03:04:00.531   600   600 D VM_BMS  : fifo_count=5 acc_count=0
+01-12 03:04:00.531   600   600 D VM_BMS  : INIT: ocv=3745280 last_ocv=3745280 batt_temp=444 soc=27
+01-12 03:04:00.531   600   600 D VM_BMS  : For soc=27 batt_temp=444 slope=3600
+01-12 03:04:00.531   600   600 D VM_BMS  : For soc=27 batt_temp=444 rbatt_sf=84
+01-12 03:04:00.531   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=132, sf=84 batt_temp=444
+01-12 03:04:00.531   600   600 D VM_BMS  : For ocv=3745546 batt_temp=444 soc=27
+01-12 03:04:00.532   600   600 D VM_BMS  : FIFO=0 fifo_avg=3.854342 rbatt=0.182000 slope=0.360000 ibatt=-0.598509 ocv=3.745547 soc=27 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=163
+01-12 03:04:00.532   600   600 D VM_BMS  : For soc=27 batt_temp=444 slope=3600
+01-12 03:04:00.532   600   600 D VM_BMS  : For soc=27 batt_temp=444 rbatt_sf=84
+01-12 03:04:00.532   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=132, sf=84 batt_temp=444
+01-12 03:04:00.532   600   600 D VM_BMS  : For ocv=3745810 batt_temp=444 soc=27
+01-12 03:04:00.532   600   600 D VM_BMS  : FIFO=1 fifo_avg=3.853751 rbatt=0.182000 slope=0.360000 ibatt=-0.593806 ocv=3.745811 soc=27 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=163
+01-12 03:04:00.532   600   600 D VM_BMS  : For soc=27 batt_temp=444 slope=3600
+01-12 03:04:00.532   600   600 D VM_BMS  : For soc=27 batt_temp=444 rbatt_sf=84
+01-12 03:04:00.532   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=132, sf=84 batt_temp=444
+01-12 03:04:00.532   600   600 D VM_BMS  : For ocv=3746076 batt_temp=444 soc=27
+01-12 03:04:00.532   600   600 D VM_BMS  : FIFO=2 fifo_avg=3.854924 rbatt=0.182000 slope=0.360000 ibatt=-0.598795 ocv=3.746077 soc=27 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=163
+01-12 03:04:00.532   600   600 D VM_BMS  : For soc=27 batt_temp=444 slope=3600
+01-12 03:04:00.532   600   600 D VM_BMS  : For soc=27 batt_temp=444 rbatt_sf=84
+01-12 03:04:00.532   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=132, sf=84 batt_temp=444
+01-12 03:04:00.532   600   600 D VM_BMS  : For ocv=3746345 batt_temp=444 soc=27
+01-12 03:04:00.532   600   600 D VM_BMS  : FIFO=3 fifo_avg=3.856102 rbatt=0.182000 slope=0.360000 ibatt=-0.603799 ocv=3.746345 soc=27 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=163
+01-12 03:04:00.533   600   600 D VM_BMS  : For soc=27 batt_temp=444 slope=3600
+01-12 03:04:00.533   600   600 D VM_BMS  : For soc=27 batt_temp=444 rbatt_sf=84
+01-12 03:04:00.533   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=132, sf=84 batt_temp=444
+01-12 03:04:00.533   600   600 D VM_BMS  : For ocv=3746614 batt_temp=444 soc=27
+01-12 03:04:00.533   600   600 D VM_BMS  : FIFO=4 fifo_avg=3.856715 rbatt=0.182000 slope=0.360000 ibatt=-0.605687 ocv=3.746615 soc=27 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=163
+01-12 03:04:00.533   600   600 I VM_BMS  : power_supply_update: ocv_uv=3746614 ibatt=-605687 soc=27 seq_num=163
+01-12 03:04:00.533   600   600 D VM_BMS  : End process_bms_data
+01-12 03:04:00.533   600   600 D VM_BMS  : wake_lock released
+01-12 03:04:00.607   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 131: error 25 Not a typewriter
+01-12 03:04:00.607   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x9702b370 syncobj
+01-12 03:04:00.813   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 60: error 25 Not a typewriter
+01-12 03:04:00.813   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002c50 syncobj
+01-12 03:04:01.100   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 132: error 25 Not a typewriter
+01-12 03:04:01.100   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x9703dd10 syncobj
+01-12 03:04:01.493   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 133: error 25 Not a typewriter
+01-12 03:04:01.494   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002b70 syncobj
+01-12 03:04:01.495   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 133: error 25 Not a typewriter
+01-12 03:04:01.495   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002b70 syncobj
+01-12 03:04:01.496   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 133: error 25 Not a typewriter
+01-12 03:04:01.496   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002b70 syncobj
+01-12 03:04:02.240  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:04.069   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 132: error 25 Not a typewriter
+01-12 03:04:04.069   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x9703dd10 syncobj
+01-12 03:04:05.241  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:08.243  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:11.245  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:14.247  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:17.249  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:20.250  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:23.251  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:26.253  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:29.255  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:32.256  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:35.258  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:38.260  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:41.262  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:44.263  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:47.265  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:48.671   600   600 D VM_BMS  : wake_lock acquired
+01-12 03:04:48.672   600   600 D VM_BMS  : New BMS data - Size=56
+01-12 03:04:48.672   600   600 D VM_BMS  : Start process_bms_data
+01-12 03:04:48.674   600   600 D VM_BMS  : For batt_temp=443 fcc_mah=2012
+01-12 03:04:48.674   600   600 D VM_BMS  : For ocv=3746614 batt_temp=443 soc=27
+01-12 03:04:48.674   600   600 D VM_BMS  : fifo_count=5 acc_count=0
+01-12 03:04:48.675   600   600 D VM_BMS  : INIT: ocv=3746614 last_ocv=3746614 batt_temp=443 soc=27
+01-12 03:04:48.675   600   600 D VM_BMS  : For soc=27 batt_temp=443 slope=3600
+01-12 03:04:48.675   600   600 D VM_BMS  : For soc=27 batt_temp=443 rbatt_sf=84
+01-12 03:04:48.675   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=132, sf=84 batt_temp=443
+01-12 03:04:48.675   600   600 D VM_BMS  : For ocv=3746876 batt_temp=443 soc=27
+01-12 03:04:48.675   600   600 D VM_BMS  : FIFO=0 fifo_avg=3.854065 rbatt=0.182000 slope=0.360000 ibatt=-0.589669 ocv=3.746876 soc=27 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=164
+01-12 03:04:48.675   600   600 D VM_BMS  : For soc=27 batt_temp=443 slope=3600
+01-12 03:04:48.675   600   600 D VM_BMS  : For soc=27 batt_temp=443 rbatt_sf=84
+01-12 03:04:48.675   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=132, sf=84 batt_temp=443
+01-12 03:04:48.676   600   600 D VM_BMS  : For ocv=3747145 batt_temp=443 soc=27
+01-12 03:04:48.676   600   600 D VM_BMS  : FIFO=1 fifo_avg=3.857021 rbatt=0.182000 slope=0.360000 ibatt=-0.604453 ocv=3.747145 soc=27 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=164
+01-12 03:04:48.676   600   600 D VM_BMS  : For soc=27 batt_temp=443 slope=3600
+01-12 03:04:48.676   600   600 D VM_BMS  : For soc=27 batt_temp=443 rbatt_sf=84
+01-12 03:04:48.676   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=132, sf=84 batt_temp=443
+01-12 03:04:48.676   600   600 D VM_BMS  : For ocv=3747413 batt_temp=443 soc=27
+01-12 03:04:48.676   600   600 D VM_BMS  : FIFO=2 fifo_avg=3.857010 rbatt=0.182000 slope=0.360000 ibatt=-0.602916 ocv=3.747413 soc=27 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=164
+01-12 03:04:48.677   600   600 D VM_BMS  : For soc=27 batt_temp=443 slope=3600
+01-12 03:04:48.677   600   600 D VM_BMS  : For soc=27 batt_temp=443 rbatt_sf=84
+01-12 03:04:48.677   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=132, sf=84 batt_temp=443
+01-12 03:04:48.677   600   600 D VM_BMS  : For ocv=3747681 batt_temp=443 soc=27
+01-12 03:04:48.677   600   600 D VM_BMS  : FIFO=3 fifo_avg=3.857318 rbatt=0.182000 slope=0.360000 ibatt=-0.603136 ocv=3.747682 soc=27 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=164
+01-12 03:04:48.677   600   600 D VM_BMS  : For soc=27 batt_temp=443 slope=3600
+01-12 03:04:48.677   600   600 D VM_BMS  : For soc=27 batt_temp=443 rbatt_sf=84
+01-12 03:04:48.677   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=132, sf=84 batt_temp=443
+01-12 03:04:48.677   600   600 D VM_BMS  : For ocv=3747948 batt_temp=443 soc=27
+01-12 03:04:48.678   600   600 D VM_BMS  : FIFO=4 fifo_avg=3.857029 rbatt=0.182000 slope=0.360000 ibatt=-0.600079 ocv=3.747948 soc=27 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=164
+01-12 03:04:48.679   600   600 I VM_BMS  : power_supply_update: ocv_uv=3747948 ibatt=-600079 soc=27 seq_num=164
+01-12 03:04:48.679   600   600 D VM_BMS  : End process_bms_data
+01-12 03:04:48.679   600   600 D VM_BMS  : wake_lock released
+01-12 03:04:50.267  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:53.269  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:56.271  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:04:59.273  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:05:00.592   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 145: error 25 Not a typewriter
+01-12 03:05:00.593   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x9702f5b0 syncobj
+01-12 03:05:00.779   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 131: error 25 Not a typewriter
+01-12 03:05:00.779   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002460 syncobj
+01-12 03:05:01.043   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 144: error 25 Not a typewriter
+01-12 03:05:01.043   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97031390 syncobj
+01-12 03:05:01.422   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 132: error 25 Not a typewriter
+01-12 03:05:01.422   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x9702f780 syncobj
+01-12 03:05:01.428   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 132: error 25 Not a typewriter
+01-12 03:05:01.429   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x9702f780 syncobj
+01-12 03:05:01.429   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 132: error 25 Not a typewriter
+01-12 03:05:01.429   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x9702f780 syncobj
+01-12 03:05:02.275  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:05:04.072   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 133: error 25 Not a typewriter
+01-12 03:05:04.072   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002410 syncobj
+01-12 03:05:05.277  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:05:08.279  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:05:11.280  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:05:14.282  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:05:17.285  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:05:18.084   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:18.090   467  3045 I MozMtp  : sessionEnded: 
+01-12 03:05:18.091   467  3045 I MozMtp  : Run: MozMtpServer finished
+01-12 03:05:18.091   467  3045 I MozMtp  : ~MozMtpStorage: Storage destructed for Volume sdcard mStorageID 0x00010001
+01-12 03:05:18.091   467  3045 I MozMtp  : StorageUnavailable: Removing mStorageID 0x00010001 from MtpServer
+01-12 03:05:18.092   467  3045 I MozMtp  : StorageUnavailable: Removing mStorageID 0x00010001 from MozMtpDatabse
+01-12 03:05:18.095   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:18.095   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:18.098   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:18.099   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:18.108   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:18.108   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:05:18.108   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:18.109   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:05:18.111   467   724 I AutoMounter: Stopping MtpServer
+01-12 03:05:18.111   467   724 I AutoMounter: SetUsbFunction(default) sys.usb.config from 'mtp,adb' to 'diag,serial_cdev,rmnet,adb'
+01-12 03:05:18.113   467  3045 I MozMtp  : ~MozMtpStorage: Storage destructed for Volume sdcard1 mStorageID 0x00020001
+01-12 03:05:18.113   467  3045 I MozMtp  : StorageUnavailable: Removing mStorageID 0x00020001 from MtpServer
+01-12 03:05:18.113   467  3045 I MozMtp  : StorageUnavailable: Removing mStorageID 0x00020001 from MozMtpDatabse
+01-12 03:05:18.115   467   724 I AutoMounter: AutoMounter state changed from MTP_STARTED to IDLE
+01-12 03:05:18.115   467   724 I AutoMounter: UpdateState: ums:A0C0E0 mtp:A1C0E1 mode:3 usb:0 tryToShare:0 state:IDLE
+01-12 03:05:18.115   467   724 I AutoMounter: UpdateState: Volume sdcard is Mounted and inserted @ /data/usbmsc_mnt gen 1 locked 0 sharing x
+01-12 03:05:18.115   467   724 I AutoMounter: UpdateState: Volume sdcard1 is Mounted and inserted @ /mnt/media_rw/9E66-4C79 gen 2 locked 0 sharing dis
+01-12 03:05:18.115   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:18.119   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:18.120   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:18.124   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:18.128   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:18.152   467   467 I Gecko   : XXX FIXME : Dispatch a mozChromeEvent: mtp-state-changed
+01-12 03:05:18.196   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 131: error 25 Not a typewriter
+01-12 03:05:18.196   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002b70 syncobj
+01-12 03:05:18.671   467   467 I Gecko   : [SUB1] QCONTENT_HELPER Received observer notification: mozsettings-changed
+01-12 03:05:18.671   467   467 I Gecko   : [SUB0] QCONTENT_HELPER Received observer notification: mozsettings-changed
+01-12 03:05:20.287  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:05:20.372   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:20.373   467   467 D DHCUI-debug: BatteryUpdater to get battery infomation
+01-12 03:05:20.373   467   467 D DHCUI-debug: GetCurrentBatteryInformation
+01-12 03:05:20.373   467   467 D DHCUI-debug: GetCurrentBatteryCharge
+01-12 03:05:20.380   467   467 D DHCUI-debug: GetBatteryTemperature temperature is 669
+01-12 03:05:20.380   467   467 D DHCUI-debug: GetCurrentBatteryHealth health is Overheat
+01-12 03:05:20.381   467   467 D DHCUI-debug: IsBatteryPresent
+01-12 03:05:20.381   467   467 D DHCUI-debug: GetCurrentBatteryCharging
+01-12 03:05:20.383   467   467 D DHCUI-debug: BatteryManager::UpdateFromBatteryInfo
+01-12 03:05:20.390   467   467 D DHCUI-debug: BatteryManager::temperature
+01-12 03:05:20.393   467   467 D DHCUI-debug: GetBatteryTemperature temperature is 700
+01-12 03:05:20.394   467   467 D DHCUI-debug: BatteryManager::notify previousLevel is 0.260000,previousCharging is 1,previousRemainingTime is 1480.000000,mHealth is 0x3,temp_test is 70.000000
+01-12 03:05:20.395   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:20.396   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:05:20.397   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:20.397   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:20.399   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:20.399   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:05:20.415   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:20.415   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:20.416   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:05:20.416   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:20.416   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:05:20.419   467   467 D DHCUI-debug: BatteryManager::present
+01-12 03:05:20.419   467   467 D DHCUI-debug: IsBatteryPresent
+01-12 03:05:20.419   467   467 D DHCUI-debug: BatteryManager::health
+01-12 03:05:20.479   467   467 I FocusManager: << focus() called >>
+01-12 03:05:20.479   467   467 I FocusManager:    trying to set focus on, tag: DIV, id: , class: content p-ul
+01-12 03:05:20.497   467   467 I FocusManager:    current focused element, tag: IFRAME, id: browser0, class: browser
+01-12 03:05:20.497   467   467 I FocusManager: <- blur on, tag: IFRAME, id: browser0, class: browser
+01-12 03:05:20.498  2837  2837 I FocusManager: <- blur on, tag: DIV, id: main-view, class: is-focus
+01-12 03:05:20.508   467   467 I FocusManager: -> focus is now on, tag: DIV, id: , class: content p-ul
+01-12 03:05:20.557   467   467 I FocusManager: << focus() called >>
+01-12 03:05:20.557   467   467 I FocusManager:    trying to set focus on, tag: DIV, id: , class: content p-ul
+01-12 03:05:20.568   467   467 I FocusManager: Warning: element is already focused.
+01-12 03:05:20.583   467   467 D DHCUI-debug: BatteryUpdater notify gonkhal-battery-notifier
+01-12 03:05:20.583   467   467 D QLOC-OSAgent: POWERSTATE: 0
+01-12 03:05:20.583   467   467 E IzatSvc_OSObserver: I/LocTech-Label :: OSOBSERVER :: Data Items In
+01-12 03:05:20.584   467   467 E IzatSvc_OSObserver: I/LocTech-Value :: Data Item Value: IS_POWER_CONNECTED: false
+01-12 03:05:20.584   467  1619 E LocSvc_api_v02: I/---> locClientSendReq line 2035 QMI_LOC_SET_EXTERNAL_POWER_CONFIG_REQ_V02
+01-12 03:05:20.584   467  1628 E LocSvc_libulp: I/int ulp_msg_process_system_update(UlpSystemEvent): systemEvent:3 
+01-12 03:05:20.585   467  1628 E LocSvc_libulp: I/int ulp_msg_process_start_req(), at ulp state = 1
+01-12 03:05:20.585   467  1632 E LocSvc_ApiV02: I/<--- void globalRespCb(locClientHandleType, uint32_t, locClientRespIndUnionType, uint32_t, void*) line 117 QMI_LOC_SET_EXTERNAL_POWER_CONFIG_REQ_V02
+01-12 03:05:20.614   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 60: error 25 Not a typewriter
+01-12 03:05:20.614   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x970026a0 syncobj
+01-12 03:05:22.196   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:22.197   467   467 D DHCUI-debug: BatteryUpdater to get battery infomation
+01-12 03:05:22.198   467   467 D DHCUI-debug: GetCurrentBatteryInformation
+01-12 03:05:22.198   467   467 D DHCUI-debug: GetCurrentBatteryCharge
+01-12 03:05:22.204   467   467 D DHCUI-debug: GetBatteryTemperature temperature is 459
+01-12 03:05:22.206   467   467 D DHCUI-debug: GetCurrentBatteryHealth health is Good
+01-12 03:05:22.206   467   467 D DHCUI-debug: IsBatteryPresent
+01-12 03:05:22.206   467   467 D DHCUI-debug: GetCurrentBatteryCharging
+01-12 03:05:22.209   467   467 D DHCUI-debug: BatteryManager::UpdateFromBatteryInfo
+01-12 03:05:22.212   467   467 D DHCUI-debug: BatteryManager::temperature
+01-12 03:05:22.216   467   467 D DHCUI-debug: GetBatteryTemperature temperature is 457
+01-12 03:05:22.216   467   467 D DHCUI-debug: BatteryManager::notify previousLevel is 0.260000,previousCharging is 0,previousRemainingTime is -1.000000,mHealth is 0x1,temp_test is 45.700000
+01-12 03:05:22.218   467   467 D DHCUI-debug: BatteryManager::present
+01-12 03:05:22.219   467   467 D DHCUI-debug: IsBatteryPresent
+01-12 03:05:22.219   467   467 D DHCUI-debug: BatteryManager::health
+01-12 03:05:22.220   467   467 D DHCUI-debug: BatteryManager::health
+01-12 03:05:22.221   467   467 D DHCUI-debug: BatteryUpdater notify gonkhal-battery-notifier
+01-12 03:05:23.289  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:05:23.543   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 60: error 25 Not a typewriter
+01-12 03:05:23.544   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x970026a0 syncobj
+01-12 03:05:26.290  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:05:29.292  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:05:30.481   467   467 I FocusManager: << focus() called >>
+01-12 03:05:30.481   467   467 I FocusManager:    trying to set focus on, tag: IFRAME, id: browser0, class: browser
+01-12 03:05:30.484   467   467 I FocusManager:    current focused element, NULL, tag: , id: , class: 
+01-12 03:05:30.484   467   467 I FocusManager: <- blur on, NULL, tag: , id: , class: 
+01-12 03:05:30.484   467   467 I FocusManager: -> focus is now on, tag: IFRAME, id: browser0, class: browser
+01-12 03:05:30.486  2837  2837 I FocusManager: * WindowRaised *
+01-12 03:05:30.486  2837  2837 I FocusManager: -> focus is now on, tag: DIV, id: main-view, class: 
+01-12 03:05:30.513   467   467 I Gecko   : [BrowserElement] event type: keydown, key: Enter, target: [object HTMLDivElement], class: content p-ul
+01-12 03:05:30.533   467   467 I Gecko   : [BrowserElement] event type: keydown, key: MicrophoneToggle, target: [object HTMLIFrameElement], src: app://launcher.gaiamobile.org/index.html, id: browser0, class: browser
+01-12 03:05:30.542   467   467 I Gecko   : [BrowserElement] event type: keyup, key: Enter, target: [object HTMLIFrameElement], src: app://launcher.gaiamobile.org/index.html, id: browser0, class: browser
+01-12 03:05:30.566   467   467 I Gecko   : [BrowserElement] event type: keyup, key: MicrophoneToggle, target: [object HTMLIFrameElement], src: app://launcher.gaiamobile.org/index.html, id: browser0, class: browser
+01-12 03:05:30.570   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 132: error 25 Not a typewriter
+01-12 03:05:30.570   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002560 syncobj
+01-12 03:05:30.570   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 132: error 25 Not a typewriter
+01-12 03:05:30.571   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002560 syncobj
+01-12 03:05:30.585  2837  2837 I Gecko   : [BrowserElement] event type: keydown, key: MicrophoneToggle, target: [object HTMLDivElement], id: main-view, class: is-focus
+01-12 03:05:30.592  2837  2837 I Gecko   : [BrowserElement] event type: keyup, key: Enter, target: [object HTMLDivElement], id: main-view, class: is-focus
+01-12 03:05:30.595  2837  2837 I Gecko   : [BrowserElement] event type: keyup, key: MicrophoneToggle, target: [object HTMLDivElement], id: main-view, class: is-focus
+01-12 03:05:32.294  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:05:33.552   467  1777 W Adreno-GSL: <wait_on_sync_fd:117>: fd 132: error 25 Not a typewriter
+01-12 03:05:33.553   467  1777 W Adreno-EGL: <qeglDrvAPI_eglDestroyImageKHR:5085>: failed to wait for 0x97002560 syncobj
+01-12 03:05:35.296  1698  1698 E sdcard  : missing packages.list; retrying
+01-12 03:05:36.541   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:36.543   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:36.821   600   600 D VM_BMS  : wake_lock acquired
+01-12 03:05:36.821   600   600 D VM_BMS  : New BMS data - Size=56
+01-12 03:05:36.821   600   600 D VM_BMS  : Start process_bms_data
+01-12 03:05:36.825   600   600 D VM_BMS  : For batt_temp=448 fcc_mah=2012
+01-12 03:05:36.825   600   600 D VM_BMS  : For ocv=3747948 batt_temp=448 soc=27
+01-12 03:05:36.825   600   600 D VM_BMS  : fifo_count=5 acc_count=0
+01-12 03:05:36.825   600   600 D VM_BMS  : INIT: ocv=3747948 last_ocv=3747948 batt_temp=448 soc=27
+01-12 03:05:36.826   600   600 D VM_BMS  : For soc=27 batt_temp=448 slope=3800
+01-12 03:05:36.826   600   600 D VM_BMS  : For soc=27 batt_temp=448 rbatt_sf=84
+01-12 03:05:36.826   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=132, sf=84 batt_temp=448
+01-12 03:05:36.826   600   600 D VM_BMS  : For ocv=3748239 batt_temp=448 soc=28
+01-12 03:05:36.827   600   600 D VM_BMS  : FIFO=0 fifo_avg=3.860786 rbatt=0.182000 slope=0.380000 ibatt=-0.619190 ocv=3.748239 soc=28 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=165
+01-12 03:05:36.827   600   600 D VM_BMS  : For soc=28 batt_temp=448 slope=3800
+01-12 03:05:36.827   600   600 D VM_BMS  : For soc=28 batt_temp=448 rbatt_sf=85
+01-12 03:05:36.827   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=134, sf=85 batt_temp=448
+01-12 03:05:36.827   600   600 D VM_BMS  : For ocv=3748520 batt_temp=448 soc=28
+01-12 03:05:36.828   600   600 D VM_BMS  : FIFO=1 fifo_avg=3.858427 rbatt=0.184000 slope=0.380000 ibatt=-0.598084 ocv=3.748520 soc=28 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=165
+01-12 03:05:36.828   600   600 D VM_BMS  : For soc=28 batt_temp=448 slope=3800
+01-12 03:05:36.828   600   600 D VM_BMS  : For soc=28 batt_temp=448 rbatt_sf=85
+01-12 03:05:36.828   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=134, sf=85 batt_temp=448
+01-12 03:05:36.829   600   600 D VM_BMS  : For ocv=3748809 batt_temp=448 soc=28
+01-12 03:05:36.829   600   600 D VM_BMS  : FIFO=2 fifo_avg=3.861968 rbatt=0.184000 slope=0.380000 ibatt=-0.615779 ocv=3.748809 soc=28 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=165
+01-12 03:05:36.829   600   600 D VM_BMS  : For soc=28 batt_temp=448 slope=3800
+01-12 03:05:36.829   600   600 D VM_BMS  : For soc=28 batt_temp=448 rbatt_sf=85
+01-12 03:05:36.830   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=134, sf=85 batt_temp=448
+01-12 03:05:36.830   600   600 D VM_BMS  : For ocv=3748761 batt_temp=448 soc=28
+01-12 03:05:36.830   600   600 D VM_BMS  : FIFO=3 fifo_avg=3.730104 rbatt=0.184000 slope=0.380000 ibatt=0.101529 ocv=3.748761 soc=28 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=165
+01-12 03:05:36.830   600   600 D VM_BMS  : For soc=28 batt_temp=448 slope=3800
+01-12 03:05:36.831   600   600 D VM_BMS  : For soc=28 batt_temp=448 rbatt_sf=85
+01-12 03:05:36.831   600   600 D VM_BMS  : rbatt_mohm_default=158, rbatt_mohm=134, sf=85 batt_temp=448
+01-12 03:05:36.831   600   600 D VM_BMS  : For ocv=3748740 batt_temp=448 soc=28
+01-12 03:05:36.831   600   600 D VM_BMS  : FIFO=4 fifo_avg=3.740744 rbatt=0.184000 slope=0.380000 ibatt=0.043514 ocv=3.748740 soc=28 fcc_ah=2.012000 sample_count=128 sample_interval=70 seq_num=165
+01-12 03:05:36.836   600   600 I VM_BMS  : power_supply_update: ocv_uv=3748740 ibatt=43514 soc=28 seq_num=165
+01-12 03:05:36.836   600   600 D VM_BMS  : End process_bms_data
+01-12 03:05:36.837   600   600 D VM_BMS  : wake_lock released
+01-12 03:05:36.849   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:36.858   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:36.959   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:36.964   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:36.964   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:05:36.965   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:36.966   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:36.967   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:05:36.992   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:36.996   467   467 D DHCUI-debug: BatteryUpdater to get battery infomation
+01-12 03:05:36.997   467   467 D DHCUI-debug: GetCurrentBatteryInformation
+01-12 03:05:36.997   467   467 D DHCUI-debug: GetCurrentBatteryCharge
+01-12 03:05:37.003   467   467 D DHCUI-debug: GetBatteryTemperature temperature is 446
+01-12 03:05:37.003   467   467 D DHCUI-debug: GetCurrentBatteryHealth health is Good
+01-12 03:05:37.004   467   467 D DHCUI-debug: IsBatteryPresent
+01-12 03:05:37.004   467   467 D DHCUI-debug: GetCurrentBatteryCharging
+01-12 03:05:37.007   467   467 D DHCUI-debug: BatteryManager::UpdateFromBatteryInfo
+01-12 03:05:37.010   467   467 D DHCUI-debug: BatteryManager::temperature
+01-12 03:05:37.012   467   467 D DHCUI-debug: GetBatteryTemperature temperature is 446
+01-12 03:05:37.013   467   467 D DHCUI-debug: BatteryManager::notify previousLevel is 0.260000,previousCharging is 0,previousRemainingTime is -1.000000,mHealth is 0x3,temp_test is 44.600000
+01-12 03:05:37.014   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:37.016   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:05:37.016   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:37.016   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:37.017   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:37.017   467   467 D DHCUI-debug: BatteryManager::level
+01-12 03:05:37.026   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:37.026   467   467 D DHCUI-debug: BatteryManager::charging
+01-12 03:05:37.029   467   467 I WakeLock: Acquire cpu wakelock
+01-12 03:05:37.031   467   467 D DHCUI-debug: BatteryUpdater notify gonkhal-battery-notifier
+01-12 03:05:37.032   467   467 D QLOC-OSAgent: POWERSTATE: 1
+01-12 03:05:37.032   467   467 E IzatSvc_OSObserver: I/LocTech-Label :: OSOBSERVER :: Data Items In
+01-12 03:05:37.032   467   467 E IzatSvc_OSObserver: I/LocTech-Value :: Data Item Value: IS_POWER_CONNECTED: true
+01-12 03:05:37.032   467  1619 E LocSvc_api_v02: I/---> locClientSendReq line 2035 QMI_LOC_SET_EXTERNAL_POWER_CONFIG_REQ_V02
+01-12 03:05:37.033   467  1628 E LocSvc_libulp: I/int ulp_msg_process_system_update(UlpSystemEvent): systemEvent:2 
+01-12 03:05:37.033   467  1628 E LocSvc_libulp: I/int ulp_msg_process_start_req(), at ulp state = 1
+01-12 03:05:37.033   467  1632 E LocSvc_ApiV02: I/<--- void globalRespCb(locClientHandleType, uint32_t, locClientRespIndUnionType, uint32_t, void*) line 117 QMI_LOC_SET_EXTERNAL_POWER_CONFIG_REQ_V02
+01-12 03:05:37.103   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:37.110   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:37.112   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:37.114   467   724 I AutoMounter: SetUsbFunction(mtp) sys.usb.config from 'diag,serial_cdev,rmnet,adb' to 'mtp,adb'
+01-12 03:05:37.117   467   724 I AutoMounter: AutoMounter state changed from IDLE to MTP_CONFIGURING
+01-12 03:05:37.117   467   724 I AutoMounter: UpdateState: ums:A0C0E0 mtp:A1C0E1 mode:3 usb:1 tryToShare:0 state:MTP_CONFIGURING
+01-12 03:05:37.117   467   724 I AutoMounter: UpdateState: Volume sdcard is Mounted and inserted @ /data/usbmsc_mnt gen 1 locked 0 sharing x
+01-12 03:05:37.117   467   724 I AutoMounter: UpdateState: Volume sdcard1 is Mounted and inserted @ /mnt/media_rw/9E66-4C79 gen 2 locked 0 sharing dis
+01-12 03:05:37.121   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:37.171   467  3097 W AudioTrack: AUDIO_OUTPUT_FLAG_FAST denied by client; transfer 1,track 44100 Hz, output 48000 Hz
+01-12 03:05:37.178   451   960 D audio_hw_primary: start_output_stream: enter: stream(0x86ee81c8)usecase(1: low-latency-playback) devices(0x2)
+01-12 03:05:37.179   451   960 D audio_hw_primary: select_devices: out_snd_device(2: speaker) in_snd_device(0: )
+01-12 03:05:37.179   451   960 D hardware_info: hw_info_append_hw_type : device_name = speaker
+01-12 03:05:37.179   451   960 D audio_hw_primary: enable_snd_device: snd_device(2: speaker)
+01-12 03:05:37.182   451   960 W audio_hw_utils: audio_extn_utils_update_stream_app_type_cfg: App type could not be selected. Falling back to default
+01-12 03:05:37.182   451   960 I audio_hw_primary: select_devices Selected apptype: 69936
+01-12 03:05:37.182   451   960 D ACDB-LOADER: ACDB -> send_audio_cal, acdb_id = 14, path =  0
+01-12 03:05:37.182   451   960 D ACDB-LOADER: ACDB -> send_asm_topology
+01-12 03:05:37.182   451   960 D ACDB-LOADER: ACDB -> ACDB_CMD_GET_AUDPROC_STREAM_TOPOLOGY_ID
+01-12 03:05:37.183   451   960 D ACDB-LOADER: ACDB -> send_adm_topology
+01-12 03:05:37.183   451   960 D ACDB-LOADER: ACDB -> ACDB_CMD_GET_AUDPROC_COMMON_TOPOLOGY_ID
+01-12 03:05:37.183   451   960 D ACDB-LOADER: ACDB -> send_audtable
+01-12 03:05:37.183   451   960 D ACDB-LOADER: ACDB -> ACDB_CMD_GET_AUDPROC_COMMON_TABLE_SIZE
+01-12 03:05:37.184   451   960 D ACDB-LOADER: ACDB -> ACDB_CMD_GET_AUDPROC_COMMON_TABLE
+01-12 03:05:37.184   451   960 D ACDB-LOADER: ACDB -> AUDIO_SET_AUDPROC_CAL
+01-12 03:05:37.184   451   960 D ACDB-LOADER: ACDB -> send_audvoltable
+01-12 03:05:37.184   451   960 D ACDB-LOADER: ACDB -> ACDB_CMD_GET_AUDPROC_GAIN_DEP_STEP_TABLE
+01-12 03:05:37.184   451   960 D ACDB-LOADER: ACDB -> AUDIO_SET_AUDPROC_VOL_CAL
+01-12 03:05:37.184   451   960 D ACDB-LOADER: ACDB -> send_afe_cal
+01-12 03:05:37.184   451   960 D ACDB-LOADER: ACDB -> ACDB_CMD_GET_AFE_COMMON_TABLE
+01-12 03:05:37.184   451   960 D ACDB-LOADER: ACDB -> AUDIO_SET_AFE_CAL
+01-12 03:05:37.184   451   960 D ACDB-LOADER: ACDB -> send_hw_delay : acdb_id = 14 path = 0
+01-12 03:05:37.184   451   960 D ACDB-LOADER: ACDB -> ACDB_AVSYNC_INFO: ACDB_CMD_GET_DEVICE_PROPERTY
+01-12 03:05:37.192   451   960 I audio_hw_utils: audio_extn_utils_send_app_type_cfg app_type 69936, acdb_dev_id 14, sample_rate 48000
+01-12 03:05:37.192   451   960 D audio_hw_primary: enable_audio_route: apply mixer and update path: low-latency-playback
+01-12 03:05:37.193   451   960 D audio_hw_primary: select_devices: done
+01-12 03:05:37.215   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:37.216   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:37.217   451   960 D audio_hw_primary: start_output_stream: exit
+01-12 03:05:37.218   451   959 E FastThread: did not receive expected priority boost
+01-12 03:05:37.219   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:37.242   467   724 I AutoMounter: UpdateState: ums:A0C0E0 mtp:A1C0E1 mode:3 usb:0 tryToShare:0 state:MTP_CONFIGURING
+01-12 03:05:37.242   467   724 I AutoMounter: UpdateState: Volume sdcard is Mounted and inserted @ /data/usbmsc_mnt gen 1 locked 0 sharing x
+01-12 03:05:37.242   467   724 I AutoMounter: UpdateState: Volume sdcard1 is Mounted and inserted @ /mnt/media_rw/9E66-4C79 gen 2 locked 0 sharing dis
+01-12 03:05:37.290   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:37.292   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:37.295   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:37.486   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:37.630   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:37.642   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:37.643   467   724 D DHCUI-debug: BatteryObserver Notify
+01-12 03:05:37.644   467   724 I AutoMounter: Starting MtpServer
+01-12 03:05:37.645   467   724 I MozMtp  : Init: Opened '/dev/mtp_usb' fd 167
+01-12 03:05:37.645   467   724 I AutoMounter: AutoMounter state changed from MTP_CONFIGURING to MTP_STARTED
+01-12 03:05:37.645   467   724 I AutoMounter: UpdateState: ums:A0C0E0 mtp:A1C1E1 mode:3 usb:1 tryToShare:0 state:MTP_STARTED
+01-12 03:05:37.646   467   724 I AutoMounter: UpdateState: Volume sdcard is Mounted and inserted @ /data/usbmsc_mnt gen 1 locked 0 sharing x
+01-12 03:05:37.646   467   724 I AutoMounter: UpdateState: Volume sdcard1 is Mounted and inserted @ /mnt/media_rw/9E66-4C79 gen 2 locked 0 sharing dis
+
