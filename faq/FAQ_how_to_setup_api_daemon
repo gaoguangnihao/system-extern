@@ -1,6 +1,6 @@
-1. sure your env code is latest 
-2. install rust https://www.rust-lang.org/tools/install (then set env variable path)
-3. install nodejs/npm https://nodejs.org/en/download/package-manager/
+1. please make sure your code env is latest (daemon)
+2. install rust ,see https://www.rust-lang.org/tools/install (then set env variable path)
+3. install nodejs/npm see https://nodejs.org/en/download/package-manager/
 4. sudo apt install cmake clang libclang-dev
 5. rustup target add armv7-linux-androideabi
 6. cargo install bindgen
