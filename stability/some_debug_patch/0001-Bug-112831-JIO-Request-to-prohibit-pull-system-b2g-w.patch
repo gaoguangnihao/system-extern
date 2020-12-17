@@ -1,0 +1,25 @@
+From 6bd26189dd84984304bf03cf91dcfda3c0d687d7 Mon Sep 17 00:00:00 2001
+From: "dahui.cui" <dahui.cui@kaiostech.com>
+Date: Thu, 17 Dec 2020 10:47:27 +0800
+Subject: [PATCH] Bug 112831 - [JIO]Request to prohibit pull system b2g webapps
+ folder under shell permission. r=Jin,Seinlin
+
+---
+ libcutils/fs_config.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/libcutils/fs_config.c b/libcutils/fs_config.c
+index 9195551b7..baa03e3d1 100644
+--- a/libcutils/fs_config.c
++++ b/libcutils/fs_config.c
+@@ -93,6 +93,7 @@ static const struct fs_path_config android_dirs[] = {
+     { 00755, AID_ROOT,   AID_SHELL,  0, "system/vendor" },
+     { 00755, AID_ROOT,   AID_SHELL,  0, "system/xbin" },
+     { 00755, AID_ROOT,   AID_ROOT,   0, "system/etc/ppp" },
++    { 00770, AID_ROOT,   AID_ROOT, 0, "system/b2g/webapps" },
+     { 00755, AID_ROOT,   AID_SHELL,  0, "vendor" },
+     { 00777, AID_ROOT,   AID_ROOT,   0, "sdcard" },
+     { 00755, AID_ROOT,   AID_ROOT,   0, 0 },
+-- 
+2.19.0
+
