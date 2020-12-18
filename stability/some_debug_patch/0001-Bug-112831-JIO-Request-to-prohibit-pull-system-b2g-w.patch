@@ -16,7 +16,7 @@ index 9195551b7..baa03e3d1 100644
      { 00755, AID_ROOT,   AID_SHELL,  0, "system/vendor" },
      { 00755, AID_ROOT,   AID_SHELL,  0, "system/xbin" },
      { 00755, AID_ROOT,   AID_ROOT,   0, "system/etc/ppp" },
-+    { 00770, AID_ROOT,   AID_ROOT, 0, "system/b2g/webapps" },
++    { 00750, AID_ROOT,   AID_ROOT, 0, "system/b2g/webapps" },
      { 00755, AID_ROOT,   AID_SHELL,  0, "vendor" },
      { 00777, AID_ROOT,   AID_ROOT,   0, "sdcard" },
      { 00755, AID_ROOT,   AID_ROOT,   0, 0 },
